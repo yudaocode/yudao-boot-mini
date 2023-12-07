@@ -33,13 +33,6 @@
             <artifactId>opentracing-util</artifactId> <!-- aliyun 短信需要，进行链路追踪 -->
         </dependency>
 
-        <!-- Test 测试相关 -->
-        <dependency>
-            <groupId>cn.iocoder.boot</groupId>
-            <artifactId>yudao-spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-
         <!-- 工具类相关 -->
         <dependency>
             <groupId>com.google.guava</groupId>
