@@ -1,7 +1,7 @@
 <p align="center">
  <img src="https://img.shields.io/badge/Spring%20Boot-3.2.0-blue.svg" alt="Downloads">
  <img src="https://img.shields.io/badge/Vue-3.2-blue.svg" alt="Downloads">
- <img src="https://img.shields.io/github/license/YunaiV/ruoyi-vue-pro"/>
+ <img src="https://img.shields.io/github/license/YunaiV/ruoyi-vue-pro" alt="Downloads" />
 </p>
 
 **严肃声明：现在、未来都不会有商业版本，所有代码全部开源!！**
@@ -98,7 +98,7 @@
 
 ![开源项目对比](/.image/common/project-vs.png)
 
-③ 代码整洁、架构整洁，遵循《阿里巴巴 Java 开发手册》规范，代码注释详细，57000 行 Java 代码，22000 行代码注释。
+③ 代码整洁、架构整洁，遵循《阿里巴巴 Java 开发手册》规范，代码注释详细，113770 行 Java 代码，42462 行代码注释。
 
 ## 🤝 项目外包
 
