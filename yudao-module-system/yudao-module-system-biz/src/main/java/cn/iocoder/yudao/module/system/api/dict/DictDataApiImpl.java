@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * 字典数据 API 实现类
@@ -35,6 +36,12 @@ public class DictDataApiImpl implements DictDataApi {
     public DictDataRespDTO parseDictData(String dictType, String label) {
         DictDataDO dictData = dictDataService.parseDictData(dictType, label);
         return BeanUtils.toBean(dictData, DictDataRespDTO.class);
+    }
+
+    @Override
+    public List<DictDataRespDTO> getDictDataList(String dictType) {
+        List<DictDataDO> list = dictDataService.getDictDataListByDictType(dictType);
+        return BeanUtils.toBean(list, DictDataRespDTO.class);
     }
 
 }
