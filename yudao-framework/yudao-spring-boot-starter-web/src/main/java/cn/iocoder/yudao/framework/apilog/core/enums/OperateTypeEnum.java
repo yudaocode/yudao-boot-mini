@@ -1,6 +1,5 @@
-package cn.iocoder.yudao.framework.operatelog.core.enums;
+package cn.iocoder.yudao.framework.apilog.core.enums;
 
-import cn.iocoder.yudao.framework.operatelog.core.annotations.OperateLog;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -15,9 +14,6 @@ public enum OperateTypeEnum {
 
     /**
      * 查询
-     *
-     * 绝大多数情况下，不会记录查询动作，因为过于大量显得没有意义。
-     * 在有需要的时候，通过声明 {@link OperateLog} 注解来记录
      */
     GET(1),
     /**
