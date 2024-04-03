@@ -1,11 +1,11 @@
 package cn.iocoder.yudao.module.infra.controller.admin.job;
 
+import cn.iocoder.yudao.framework.apilog.core.annotations.ApiAccessLog;
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.pojo.PageParam;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.excel.core.util.ExcelUtils;
-import cn.iocoder.yudao.framework.operatelog.core.annotations.OperateLog;
 import cn.iocoder.yudao.module.infra.controller.admin.job.vo.log.JobLogPageReqVO;
 import cn.iocoder.yudao.module.infra.controller.admin.job.vo.log.JobLogRespVO;
 import cn.iocoder.yudao.module.infra.dal.dataobject.job.JobLogDO;
@@ -26,8 +26,8 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 
+import static cn.iocoder.yudao.framework.apilog.core.enums.OperateTypeEnum.EXPORT;
 import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
-import static cn.iocoder.yudao.framework.operatelog.core.enums.OperateTypeEnum.EXPORT;
 
 @Tag(name = "管理后台 - 定时任务日志")
 @RestController
@@ -58,7 +58,7 @@ public class JobLogController {
     @GetMapping("/export-excel")
     @Operation(summary = "导出定时任务日志 Excel")
     @PreAuthorize("@ss.hasPermission('infra:job:export')")
-    @OperateLog(type = EXPORT)
+    @ApiAccessLog(operateType = EXPORT)
     public void exportJobLogExcel(@Valid JobLogPageReqVO exportReqVO,
                                   HttpServletResponse response) throws IOException {
         exportReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);

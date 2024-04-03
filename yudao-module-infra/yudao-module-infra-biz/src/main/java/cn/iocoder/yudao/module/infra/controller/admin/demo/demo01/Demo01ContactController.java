@@ -1,11 +1,11 @@
 package cn.iocoder.yudao.module.infra.controller.admin.demo.demo01;
 
+import cn.iocoder.yudao.framework.apilog.core.annotations.ApiAccessLog;
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.pojo.PageParam;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.excel.core.util.ExcelUtils;
-import cn.iocoder.yudao.framework.operatelog.core.annotations.OperateLog;
 import cn.iocoder.yudao.module.infra.controller.admin.demo.demo01.vo.Demo01ContactPageReqVO;
 import cn.iocoder.yudao.module.infra.controller.admin.demo.demo01.vo.Demo01ContactRespVO;
 import cn.iocoder.yudao.module.infra.controller.admin.demo.demo01.vo.Demo01ContactSaveReqVO;
@@ -24,8 +24,8 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 
+import static cn.iocoder.yudao.framework.apilog.core.enums.OperateTypeEnum.EXPORT;
 import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
-import static cn.iocoder.yudao.framework.operatelog.core.enums.OperateTypeEnum.EXPORT;
 
 @Tag(name = "管理后台 - 示例联系人")
 @RestController
@@ -80,7 +80,7 @@ public class Demo01ContactController {
     @GetMapping("/export-excel")
     @Operation(summary = "导出示例联系人 Excel")
     @PreAuthorize("@ss.hasPermission('infra:demo01-contact:export')")
-    @OperateLog(type = EXPORT)
+    @ApiAccessLog(operateType = EXPORT)
     public void exportDemo01ContactExcel(@Valid Demo01ContactPageReqVO pageReqVO,
               HttpServletResponse response) throws IOException {
         pageReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
