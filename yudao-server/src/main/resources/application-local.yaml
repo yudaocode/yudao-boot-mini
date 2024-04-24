@@ -135,16 +135,6 @@ lock4j:
   acquire-timeout: 3000 # 获取分布式锁超时时间，默认为 3000 毫秒
   expire: 30000 # 分布式锁的超时时间，默认为 30 毫秒
 
-# Resilience4j 配置项
-resilience4j:
-  ratelimiter:
-    instances:
-      backendA:
-        limit-for-period: 1 # 每个周期内，允许的请求数。默认为 50
-        limit-refresh-period: 60s # 每个周期的时长，单位：微秒。默认为 500
-        timeout-duration: 1s # 被限流时，阻塞等待的时长，单位：微秒。默认为 5s
-        register-health-indicator: true # 是否注册到健康监测
-
 --- #################### 监控相关配置 ####################
 
 # Actuator 监控端点的配置项
@@ -175,12 +165,12 @@ logging:
     # 配置自己写的 MyBatis Mapper 打印日志
     cn.iocoder.yudao.module.bpm.dal.mysql: debug
     cn.iocoder.yudao.module.infra.dal.mysql: debug
+    cn.iocoder.yudao.module.infra.dal.mysql.logger.ApiErrorLogMapper: INFO # 配置 ApiErrorLogMapper 的日志级别为 info，避免和 GlobalExceptionHandler 重复打印
     cn.iocoder.yudao.module.infra.dal.mysql.job.JobLogMapper: INFO # 配置 JobLogMapper 的日志级别为 info
     cn.iocoder.yudao.module.infra.dal.mysql.file.FileConfigMapper: INFO # 配置 FileConfigMapper 的日志级别为 info
     cn.iocoder.yudao.module.pay.dal.mysql: debug
-    cn.iocoder.yudao.module.pay.dal.mysql.notify.PayNotifyTaskMapper: INFO # 配置 JobLogMapper 的日志级别为 info
+    cn.iocoder.yudao.module.pay.dal.mysql.notify.PayNotifyTaskMapper: INFO # 配置 PayNotifyTaskMapper 的日志级别为 info
     cn.iocoder.yudao.module.system.dal.mysql: debug
-    cn.iocoder.yudao.module.system.dal.mysql.sensitiveword.SensitiveWordMapper: INFO # 配置 SensitiveWordMapper 的日志级别为 info
     cn.iocoder.yudao.module.system.dal.mysql.sms.SmsChannelMapper: INFO # 配置 SmsChannelMapper 的日志级别为 info
     cn.iocoder.yudao.module.tool.dal.mysql: debug
     cn.iocoder.yudao.module.member.dal.mysql: debug
@@ -236,8 +226,6 @@ yudao:
     order-notify-url: http://yunai.natapp1.cc/admin-api/pay/notify/order # 支付渠道的【支付】回调地址
     refund-notify-url: http://yunai.natapp1.cc/admin-api/pay/notify/refund # 支付渠道的【退款】回调地址
   access-log: # 访问日志的配置项
-    enable: false
-  error-code: # 错误码相关配置项
     enable: false
   demo: false # 关闭演示模式
   tencent-lbs-key: TVDBZ-TDILD-4ON4B-PFDZA-RNLKH-VVF6E # QQ 地图的密钥 https://lbs.qq.com/service/staticV2/staticGuide/staticDoc
