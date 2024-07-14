@@ -112,7 +112,7 @@
 
 * 通用模块（必选）：系统功能、基础设施
 * 通用模块（可选）：工作流程、支付系统、数据报表、会员中心
-* 业务系统（按需）：ERP 系统、CRM 系统、商城系统、微信公众号
+* 业务系统（按需）：ERP 系统、CRM 系统、商城系统、微信公众号、AI 大模型
 
 > 友情提示：本项目基于 RuoYi-Vue 修改，**重构优化**后端的代码，**美化**前端的界面。
 >
@@ -220,11 +220,11 @@
 
 ### 商城系统
 
+演示地址：<https://doc.iocoder.cn/mall-preview/>
+
 ![功能图](/.image/common/mall-feature.png)
 
 ![功能图](/.image/common/mall-preview.png)
-
-演示地址：<https://doc.iocoder.cn/mall-preview/>
 
 ### 会员中心
 
@@ -238,15 +238,23 @@
 
 ### ERP 系统
 
-![功能图](/.image/common/erp-feature.png)
-
 演示地址：<https://doc.iocoder.cn/erp-preview/>
+
+![功能图](/.image/common/erp-feature.png)
 
 ### CRM 系统
 
+演示地址：<https://doc.iocoder.cn/crm-preview/>
+
 ![功能图](/.image/common/crm-feature.png)
 
-演示地址：<https://doc.iocoder.cn/crm-preview/>
+### AI 大模型
+
+演示地址：<https://doc.iocoder.cn/ai-preview/>
+
+![功能图](/.image/common/ai-feature.png)
+
+![功能图](/.image/common/ai-preview.gif)
 
 ## 🐨 技术栈
 
@@ -265,6 +273,7 @@
 | `yudao-module-mall`   | 商城系统的 Module 模块    |
 | `yudao-module-erp`    | ERP 系统的 Module 模块  |
 | `yudao-module-crm`    | CRM 系统的 Module 模块  |
+| `yudao-module-ai`     | AI 大模型的 Module 模块  |
 | `yudao-module-mp`     | 微信公众号的 Module 模块   |
 | `yudao-module-report` | 大屏报表 Module 模块     |
 
