@@ -139,6 +139,14 @@ public class AuthController {
         return success(true);
     }
 
+    @PostMapping("/reset-password")
+    @PermitAll
+    @Operation(summary = "重置密码")
+    public CommonResult<Boolean> resetPassword(@RequestBody @Valid AuthResetPasswordReqVO reqVO) {
+        authService.resetPassword(reqVO);
+        return success(true);
+    }
+
     // ========== 社交登录相关 ==========
 
     @GetMapping("/social-auth-redirect")
