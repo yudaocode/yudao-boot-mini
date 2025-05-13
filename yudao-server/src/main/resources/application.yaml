@@ -273,60 +273,11 @@ yudao:
   tenant: # 多租户相关配置项
     enable: true
     ignore-urls:
-      - /admin-api/system/tenant/get-id-by-name # 基于名字获取租户，不许带租户编号
-      - /admin-api/system/tenant/get-by-website # 基于域名获取租户，不许带租户编号
-      - /admin-api/system/tenant/simple-list # 获取租户列表，不许带租户编号
-      - /admin-api/system/captcha/get # 获取图片验证码，和租户无关
-      - /admin-api/system/captcha/check # 校验图片验证码，和租户无关
-      - /admin-api/infra/file/*/get/** # 获取图片，和租户无关
-      - /admin-api/system/sms/callback/* # 短信回调接口，无法带上租户编号
-      - /admin-api/pay/notify/** # 支付回调通知，不携带租户编号
       - /jmreport/* # 积木报表，无法携带租户编号
-      - /admin-api/mp/open/** # 微信公众号开放平台，微信回调接口，无法携带租户编号
+    ignore-visit-urls:
+      - /admin-api/system/user/profile/**
+      - /admin-api/system/auth/**
     ignore-tables:
-      - system_tenant
-      - system_tenant_package
-      - system_dict_data
-      - system_dict_type
-      - system_error_code
-      - system_menu
-      - system_sms_channel
-      - system_sms_template
-      - system_sms_log
-      - system_sensitive_word
-      - system_oauth2_client
-      - system_mail_account
-      - system_mail_template
-      - system_mail_log
-      - system_notify_template
-      - infra_codegen_column
-      - infra_codegen_table
-      - infra_config
-      - infra_file_config
-      - infra_file
-      - infra_file_content
-      - infra_job
-      - infra_job_log
-      - infra_job_log
-      - iot_plugin_info
-      - iot_plugin_instance
-      - infra_data_source_config
-      - jimu_dict
-      - jimu_dict_item
-      - jimu_report
-      - jimu_report_data_source
-      - jimu_report_db
-      - jimu_report_db_field
-      - jimu_report_db_param
-      - jimu_report_link
-      - jimu_report_map
-      - jimu_report_share
-      - rep_demo_dxtj
-      - rep_demo_employee
-      - rep_demo_gongsi
-      - rep_demo_jianpiao
-      - tmp_report_data_1
-      - tmp_report_data_income
     ignore-caches:
       - user_role_ids
       - permission_menu_ids
@@ -348,8 +299,9 @@ yudao:
       pay-expire-time: 2h # 支付的过期时间
       receive-expire-time: 14d # 收货的过期时间
       comment-expire-time: 7d # 评论的过期时间
+      status-sync-to-wxa-enable: true # 是否同步订单状态到微信小程序
     express:
-      client: KD_NIAO
+      client: kd_100
       kd-niao:
         api-key: cb022f1e-48f1-4c4a-a723-9001ac9676b8
         business-id: 1809751
