@@ -84,7 +84,7 @@ public class SocialClientApiImpl implements SocialClientApi {
 
         // 2. 获得社交用户
         SocialUserRespDTO socialUser = socialUserService.getSocialUserByUserId(reqDTO.getUserType(), reqDTO.getUserId(),
-                SocialTypeEnum.WECHAT_MINI_APP.getType());
+                SocialTypeEnum.WECHAT_MINI_PROGRAM.getType());
         if (StrUtil.isBlankIfStr(socialUser.getOpenid())) {
             log.warn("[sendWxaSubscribeMessage][reqDTO({}) 发送订阅消息失败，原因：会员 openid 缺失]", reqDTO);
             return;
@@ -92,6 +92,16 @@ public class SocialClientApiImpl implements SocialClientApi {
 
         // 3. 发送订阅消息
         socialClientService.sendSubscribeMessage(reqDTO, template.getPriTmplId(), socialUser.getOpenid());
+    }
+
+    @Override
+    public void uploadWxaOrderShippingInfo(Integer userType, SocialWxaOrderUploadShippingInfoReqDTO reqDTO) {
+        socialClientService.uploadWxaOrderShippingInfo(userType, reqDTO);
+    }
+
+    @Override
+    public void notifyWxaOrderConfirmReceive(Integer userType, SocialWxaOrderNotifyConfirmReceiveReqDTO reqDTO) {
+        socialClientService.notifyWxaOrderConfirmReceive(userType, reqDTO);
     }
 
 }

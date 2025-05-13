@@ -5,9 +5,9 @@ import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.module.system.controller.admin.socail.vo.user.SocialUserBindReqVO;
-import cn.iocoder.yudao.module.system.controller.admin.socail.vo.user.SocialUserUnbindReqVO;
 import cn.iocoder.yudao.module.system.controller.admin.socail.vo.user.SocialUserPageReqVO;
 import cn.iocoder.yudao.module.system.controller.admin.socail.vo.user.SocialUserRespVO;
+import cn.iocoder.yudao.module.system.controller.admin.socail.vo.user.SocialUserUnbindReqVO;
 import cn.iocoder.yudao.module.system.convert.social.SocialUserConvert;
 import cn.iocoder.yudao.module.system.dal.dataobject.social.SocialUserDO;
 import cn.iocoder.yudao.module.system.service.social.SocialUserService;
@@ -20,8 +20,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.util.List;
 
 import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
+import static cn.iocoder.yudao.framework.common.util.collection.CollectionUtils.convertList;
 import static cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils.getLoginUserId;
 
 @Tag(name = "管理后台 - 社交用户")
@@ -46,6 +48,15 @@ public class SocialUserController {
     public CommonResult<Boolean> socialUnbind(@RequestBody SocialUserUnbindReqVO reqVO) {
         socialUserService.unbindSocialUser(getLoginUserId(), UserTypeEnum.ADMIN.getValue(), reqVO.getType(), reqVO.getOpenid());
         return CommonResult.success(true);
+    }
+
+    @GetMapping("/get-bind-list")
+    @Operation(summary = "获得绑定社交用户列表")
+    public CommonResult<List<SocialUserRespVO>> getBindSocialUserList() {
+        List<SocialUserDO> list = socialUserService.getSocialUserList(getLoginUserId(), UserTypeEnum.ADMIN.getValue());
+        return success(convertList(list, socialUser -> new SocialUserRespVO() // 返回精简信息
+                .setId(socialUser.getId()).setType(socialUser.getType()).setOpenid(socialUser.getOpenid())
+                .setNickname(socialUser.getNickname()).setAvatar(socialUser.getNickname())));
     }
 
     // ==================== 社交用户 CRUD ====================
