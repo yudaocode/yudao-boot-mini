@@ -33,14 +33,6 @@
             <groupId>cn.iocoder.boot</groupId>
             <artifactId>yudao-spring-boot-starter-mybatis</artifactId>
         </dependency>
-
-        <!-- 业务组件 -->
-        <dependency>
-            <groupId>cn.iocoder.boot</groupId>
-            <artifactId>yudao-module-system-api</artifactId> <!-- 需要使用它，进行数据权限的获取 -->
-            <version>${revision}</version>
-        </dependency>
-
     </dependencies>
 
 </project>
