@@ -6,6 +6,7 @@ import cn.iocoder.yudao.module.system.controller.admin.sms.vo.template.SmsTempla
 import cn.iocoder.yudao.module.system.dal.dataobject.sms.SmsTemplateDO;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -37,6 +38,13 @@ public interface SmsTemplateService {
      * @param id 编号
      */
     void deleteSmsTemplate(Long id);
+
+    /**
+     * 批量删除短信模板
+     *
+     * @param ids 编号数组
+     */
+    void deleteSmsTemplateList(List<Long> ids);
 
     /**
      * 获得短信模板

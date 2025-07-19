@@ -40,6 +40,13 @@ public interface MailTemplateService {
     void deleteMailTemplate(Long id);
 
     /**
+     * 批量删除邮件模版
+     *
+     * @param ids 编号列表
+     */
+    void deleteMailTemplateList(List<Long> ids);
+
+    /**
      * 获取邮件模版
      *
      * @param id 编号

@@ -54,6 +54,15 @@ public class MailTemplateController {
         return success(true);
     }
 
+    @DeleteMapping("/delete-list")
+    @Operation(summary = "批量删除邮件模版")
+    @Parameter(name = "ids", description = "编号列表", required = true)
+    @PreAuthorize("@ss.hasPermission('system:mail-template:delete')")
+    public CommonResult<Boolean> deleteMailTemplateList(@RequestParam("ids") List<Long> ids) {
+        mailTempleService.deleteMailTemplateList(ids);
+        return success(true);
+    }
+
     @GetMapping("/get")
     @Operation(summary = "获得邮件模版")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")

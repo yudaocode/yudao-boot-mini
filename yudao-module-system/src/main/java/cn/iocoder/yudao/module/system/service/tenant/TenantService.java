@@ -50,6 +50,13 @@ public interface TenantService {
     void deleteTenant(Long id);
 
     /**
+     * 批量删除租户
+     *
+     * @param ids 编号数组
+     */
+    void deleteTenantList(List<Long> ids);
+
+    /**
      * 获得租户
      *
      * @param id 编号

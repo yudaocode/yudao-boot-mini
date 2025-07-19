@@ -54,6 +54,15 @@ public class SmsChannelController {
         return success(true);
     }
 
+    @DeleteMapping("/delete-list")
+    @Parameter(name = "ids", description = "编号列表", required = true)
+    @Operation(summary = "批量删除短信渠道")
+    @PreAuthorize("@ss.hasPermission('system:sms-channel:delete')")
+    public CommonResult<Boolean> deleteSmsChannelList(@RequestParam("ids") List<Long> ids) {
+        smsChannelService.deleteSmsChannelList(ids);
+        return success(true);
+    }
+
     @GetMapping("/get")
     @Operation(summary = "获得短信渠道")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")

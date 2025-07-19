@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.util.List;
 
 import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 
@@ -44,6 +45,16 @@ public class OAuth2TokenController {
     @PreAuthorize("@ss.hasPermission('system:oauth2-token:delete')")
     public CommonResult<Boolean> deleteAccessToken(@RequestParam("accessToken") String accessToken) {
         authService.logout(accessToken, LoginLogTypeEnum.LOGOUT_DELETE.getType());
+        return success(true);
+    }
+
+    @DeleteMapping("/delete-list")
+    @Operation(summary = "批量删除访问令牌")
+    @Parameter(name = "accessTokens", description = "访问令牌数组", required = true)
+    @PreAuthorize("@ss.hasPermission('system:oauth2-token:delete')")
+    public CommonResult<Boolean> deleteAccessTokenList(@RequestParam("accessTokens") List<String> accessTokens) {
+        accessTokens.forEach(accessToken ->
+                authService.logout(accessToken, LoginLogTypeEnum.LOGOUT_DELETE.getType()));
         return success(true);
     }
 

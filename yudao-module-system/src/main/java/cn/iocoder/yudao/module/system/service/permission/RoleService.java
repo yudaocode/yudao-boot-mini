@@ -41,6 +41,13 @@ public interface RoleService {
     void deleteRole(Long id);
 
     /**
+     * 批量删除角色
+     *
+     * @param ids 角色编号数组
+     */
+    void deleteRoleList(List<Long> ids);
+
+    /**
      * 设置角色的数据权限
      *
      * @param id 角色编号

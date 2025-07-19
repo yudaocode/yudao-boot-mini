@@ -38,6 +38,13 @@ public interface TenantPackageService {
     void deleteTenantPackage(Long id);
 
     /**
+     * 批量删除租户套餐
+     *
+     * @param ids 编号数组
+     */
+    void deleteTenantPackageList(List<Long> ids);
+
+    /**
      * 获得租户套餐
      *
      * @param id 编号

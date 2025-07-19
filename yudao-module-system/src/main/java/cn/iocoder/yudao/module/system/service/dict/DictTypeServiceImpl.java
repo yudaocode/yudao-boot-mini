@@ -88,6 +88,21 @@ public class DictTypeServiceImpl implements DictTypeService {
     }
 
     @Override
+    public void deleteDictTypeList(List<Long> ids) {
+        // 1. 校验是否有字典数据
+        List<DictTypeDO> dictTypes = dictTypeMapper.selectByIds(ids);
+        dictTypes.forEach(dictType -> {
+            if (dictDataService.getDictDataCountByDictType(dictType.getType()) > 0) {
+                throw exception(DICT_TYPE_HAS_CHILDREN);
+            }
+        });
+
+        // 2. 批量删除字典类型
+        LocalDateTime now = LocalDateTime.now();
+        ids.forEach(id -> dictTypeMapper.updateToDelete(id, now));
+    }
+
+    @Override
     public List<DictTypeDO> getDictTypeList() {
         return dictTypeMapper.selectList();
     }

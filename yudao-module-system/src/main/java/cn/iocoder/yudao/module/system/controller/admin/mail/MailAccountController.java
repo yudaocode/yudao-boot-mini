@@ -54,6 +54,15 @@ public class MailAccountController {
         return success(true);
     }
 
+    @DeleteMapping("/delete-list")
+    @Operation(summary = "批量删除邮箱账号")
+    @Parameter(name = "ids", description = "编号列表", required = true)
+    @PreAuthorize("@ss.hasPermission('system:mail-account:delete')")
+    public CommonResult<Boolean> deleteMailAccountList(@RequestParam("ids") List<Long> ids) {
+        mailAccountService.deleteMailAccountList(ids);
+        return success(true);
+    }
+
     @GetMapping("/get")
     @Operation(summary = "获得邮箱账号")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")

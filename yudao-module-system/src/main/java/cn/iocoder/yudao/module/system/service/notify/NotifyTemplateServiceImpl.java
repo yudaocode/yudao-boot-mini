@@ -85,6 +85,13 @@ public class NotifyTemplateServiceImpl implements NotifyTemplateService {
         notifyTemplateMapper.deleteById(id);
     }
 
+    @Override
+    @CacheEvict(cacheNames = RedisKeyConstants.NOTIFY_TEMPLATE,
+            allEntries = true) // allEntries 清空所有缓存，因为 id 不是直接的缓存 code，不好清理
+    public void deleteNotifyTemplateList(List<Long> ids) {
+        notifyTemplateMapper.deleteByIds(ids);
+    }
+
     private void validateNotifyTemplateExists(Long id) {
         if (notifyTemplateMapper.selectById(id) == null) {
             throw exception(NOTIFY_TEMPLATE_NOT_EXISTS);

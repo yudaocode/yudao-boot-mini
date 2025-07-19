@@ -57,6 +57,15 @@ public class MenuController {
         return success(true);
     }
 
+    @DeleteMapping("/delete-list")
+    @Operation(summary = "批量删除菜单")
+    @Parameter(name = "ids", description = "编号列表", required = true)
+    @PreAuthorize("@ss.hasPermission('system:menu:delete')")
+    public CommonResult<Boolean> deleteMenuList(@RequestParam("ids") List<Long> ids) {
+        menuService.deleteMenuList(ids);
+        return success(true);
+    }
+
     @GetMapping("/list")
     @Operation(summary = "获取菜单列表", description = "用于【菜单管理】界面")
     @PreAuthorize("@ss.hasPermission('system:menu:query')")

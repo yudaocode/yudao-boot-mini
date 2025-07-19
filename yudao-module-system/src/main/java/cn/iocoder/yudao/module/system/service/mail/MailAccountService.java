@@ -39,6 +39,13 @@ public interface MailAccountService {
     void deleteMailAccount(Long id);
 
     /**
+     * 批量删除邮箱账号
+     *
+     * @param ids 编号列表
+     */
+    void deleteMailAccountList(List<Long> ids);
+
+    /**
      * 获取邮箱账号信息
      *
      * @param id 编号

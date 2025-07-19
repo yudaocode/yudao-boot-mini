@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.util.List;
 
 import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 
@@ -54,6 +55,15 @@ public class SocialClientController {
     @PreAuthorize("@ss.hasPermission('system:social-client:delete')")
     public CommonResult<Boolean> deleteSocialClient(@RequestParam("id") Long id) {
         socialClientService.deleteSocialClient(id);
+        return success(true);
+    }
+
+    @DeleteMapping("/delete-list")
+    @Parameter(name = "ids", description = "编号列表", required = true)
+    @Operation(summary = "批量删除社交客户端")
+    @PreAuthorize("@ss.hasPermission('system:social-client:delete')")
+    public CommonResult<Boolean> deleteSocialClientList(@RequestParam("ids") List<Long> ids) {
+        socialClientService.deleteSocialClientList(ids);
         return success(true);
     }
 

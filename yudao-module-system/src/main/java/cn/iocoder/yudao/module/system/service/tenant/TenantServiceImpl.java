@@ -225,6 +225,15 @@ public class TenantServiceImpl implements TenantService {
         tenantMapper.deleteById(id);
     }
 
+    @Override
+    public void deleteTenantList(List<Long> ids) {
+        // 1. 校验存在
+        ids.forEach(this::validateUpdateTenant);
+
+        // 2. 批量删除
+        tenantMapper.deleteByIds(ids);
+    }
+
     private TenantDO validateUpdateTenant(Long id) {
         TenantDO tenant = tenantMapper.selectById(id);
         if (tenant == null) {

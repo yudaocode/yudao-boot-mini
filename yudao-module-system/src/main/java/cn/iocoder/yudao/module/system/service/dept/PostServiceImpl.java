@@ -58,8 +58,13 @@ public class PostServiceImpl implements PostService {
     public void deletePost(Long id) {
         // 校验是否存在
         validatePostExists(id);
-        // 删除部门
+        // 删除岗位
         postMapper.deleteById(id);
+    }
+
+    @Override
+    public void deletePostList(List<Long> ids) {
+        postMapper.deleteByIds(ids);
     }
 
     private void validatePostForCreateOrUpdate(Long id, String name, String code) {
@@ -113,7 +118,7 @@ public class PostServiceImpl implements PostService {
         if (CollUtil.isEmpty(ids)) {
             return Collections.emptyList();
         }
-        return postMapper.selectBatchIds(ids);
+        return postMapper.selectByIds(ids);
     }
 
     @Override
@@ -137,7 +142,7 @@ public class PostServiceImpl implements PostService {
             return;
         }
         // 获得岗位信息
-        List<PostDO> posts = postMapper.selectBatchIds(ids);
+        List<PostDO> posts = postMapper.selectByIds(ids);
         Map<Long, PostDO> postMap = convertMap(posts, PostDO::getId);
         // 校验
         ids.forEach(id -> {

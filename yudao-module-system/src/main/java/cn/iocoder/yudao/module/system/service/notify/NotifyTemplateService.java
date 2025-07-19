@@ -6,6 +6,7 @@ import cn.iocoder.yudao.module.system.controller.admin.notify.vo.template.Notify
 import cn.iocoder.yudao.module.system.dal.dataobject.notify.NotifyTemplateDO;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -36,6 +37,13 @@ public interface NotifyTemplateService {
      * @param id 编号
      */
     void deleteNotifyTemplate(Long id);
+
+    /**
+     * 批量删除站内信模版
+     *
+     * @param ids 编号列表
+     */
+    void deleteNotifyTemplateList(List<Long> ids);
 
     /**
      * 获得站内信模版

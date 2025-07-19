@@ -76,6 +76,19 @@ public class TenantPackageServiceImpl implements TenantPackageService {
         tenantPackageMapper.deleteById(id);
     }
 
+    @Override
+    public void deleteTenantPackageList(List<Long> ids) {
+        // 1. 校验是否有租户正在使用该套餐
+        for (Long id : ids) {
+            if (tenantService.getTenantCountByPackageId(id) > 0) {
+                throw exception(TENANT_PACKAGE_USED);
+            }
+        }
+
+        // 2. 批量删除
+        tenantPackageMapper.deleteByIds(ids);
+    }
+
     private TenantPackageDO validateTenantPackageExists(Long id) {
         TenantPackageDO tenantPackage = tenantPackageMapper.selectById(id);
         if (tenantPackage == null) {
