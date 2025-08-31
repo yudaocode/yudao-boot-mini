@@ -7,12 +7,9 @@ spring:
   autoconfigure:
     # noinspection SpringBootApplicationYaml
     exclude:
+      - com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure # 排除 Druid 的自动配置，使用 dynamic-datasource-spring-boot-starter 配置多数据源
       - org.springframework.ai.vectorstore.qdrant.autoconfigure.QdrantVectorStoreAutoConfiguration # 禁用 AI 模块的 Qdrant，手动创建
       - org.springframework.ai.vectorstore.milvus.autoconfigure.MilvusVectorStoreAutoConfiguration # 禁用 AI 模块的 Milvus，手动创建
-  # 数据源配置项
-  autoconfigure:
-    exclude:
-      - com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure # 排除 Druid 的自动配置，使用 dynamic-datasource-spring-boot-starter 配置多数据源
   datasource:
     druid: # Druid 【监控】相关的全局配置
       web-stat-filter:
@@ -204,27 +201,3 @@ justauth:
     type: REDIS
     prefix: 'social_auth_state:' # 缓存前缀，目前只对 Redis 缓存生效，默认 JUSTAUTH::STATE::
     timeout: 24h # 超时时长，目前只对 Redis 缓存生效，默认 3 分钟
-
-
---- #################### iot相关配置 TODO 芋艿：再瞅瞅 ####################
-iot:
-  emq:
-    # 账号
-    username: anhaohao
-    # 密码
-    password: ahh@123456
-    # 主机地址
-    hostUrl: tcp://chaojiniu.top:1883
-    # 客户端Id，不能相同，采用随机数 ${random.value}
-    client-id: ${random.int}
-    # 默认主题
-    default-topic: test
-    # 保持连接
-    keepalive: 60
-    # 清除会话(设置为false,断开连接，重连后使用原来的会话 保留订阅的主题，能接收离线期间的消息)
-    clearSession: true
-
-
-# 插件配置
-pf4j:
-  pluginsDir: ${user.home}/plugins # 插件目录

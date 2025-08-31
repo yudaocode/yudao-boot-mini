@@ -16,6 +16,7 @@ import cn.iocoder.yudao.framework.common.util.monitor.TracerUtils;
 import cn.iocoder.yudao.framework.common.util.servlet.ServletUtils;
 import cn.iocoder.yudao.framework.web.core.util.WebFrameworkUtils;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+import com.google.common.util.concurrent.UncheckedExecutionException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -31,6 +32,7 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -90,6 +92,9 @@ public class GlobalExceptionHandler {
         }
         if (ex instanceof ValidationException) {
             return validationException((ValidationException) ex);
+        }
+        if (ex instanceof MaxUploadSizeExceededException) {
+            return maxUploadSizeExceededExceptionHandler((MaxUploadSizeExceededException) ex);
         }
         if (ex instanceof NoHandlerFoundException) {
             return noHandlerFoundExceptionHandler((NoHandlerFoundException) ex);
@@ -173,6 +178,7 @@ public class GlobalExceptionHandler {
      * 例如说，接口上设置了 @RequestBody 实体中 xx 属性类型为 Integer，结果传递 xx 参数类型为 String
      */
     @ExceptionHandler(HttpMessageNotReadableException.class)
+    @SuppressWarnings("PatternVariableCanBeUsed")
     public CommonResult<?> methodArgumentTypeInvalidFormatExceptionHandler(HttpMessageNotReadableException ex) {
         log.warn("[methodArgumentTypeInvalidFormatExceptionHandler]", ex);
         if (ex.getCause() instanceof InvalidFormatException) {
@@ -203,6 +209,14 @@ public class GlobalExceptionHandler {
         log.warn("[constraintViolationExceptionHandler]", ex);
         // 无法拼接明细的错误信息，因为 Dubbo Consumer 抛出 ValidationException 异常时，是直接的字符串信息，且人类不可读
         return CommonResult.error(BAD_REQUEST);
+    }
+
+    /**
+     * 处理上传文件过大异常
+     */
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    public CommonResult<?> maxUploadSizeExceededExceptionHandler(MaxUploadSizeExceededException ex) {
+        return CommonResult.error(BAD_REQUEST.getCode(), "上传文件过大，请调整后重试");
     }
 
     /**
@@ -253,6 +267,16 @@ public class GlobalExceptionHandler {
     }
 
     /**
+     * 处理 Guava UncheckedExecutionException
+     *
+     * 例如说，缓存加载报错，可见 <a href="https://t.zsxq.com/UszdH">https://t.zsxq.com/UszdH</a>
+     */
+    @ExceptionHandler(value = UncheckedExecutionException.class)
+    public CommonResult<?> uncheckedExecutionExceptionHandler(HttpServletRequest req, UncheckedExecutionException ex) {
+        return allExceptionHandler(req, ex.getCause());
+    }
+
+    /**
      * 处理业务异常 ServiceException
      *
      * 例如说，商品库存不足，用户手机号已存在。
@@ -282,6 +306,12 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = Exception.class)
     public CommonResult<?> defaultExceptionHandler(HttpServletRequest req, Throwable ex) {
+        // 特殊：如果是 ServiceException 的异常，则直接返回
+        // 例如说：https://gitee.com/zhijiantianya/yudao-cloud/issues/ICSSRM、https://gitee.com/zhijiantianya/yudao-cloud/issues/ICT6FM
+        if (ex.getCause() != null && ex.getCause() instanceof ServiceException) {
+            return serviceExceptionHandler((ServiceException) ex.getCause());
+        }
+
         // 情况一：处理表不存在的异常
         CommonResult<?> tableNotExistsResult = handleTableNotExists(ex);
         if (tableNotExistsResult != null) {
