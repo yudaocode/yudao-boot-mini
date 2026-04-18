@@ -7,6 +7,7 @@ package cn.iocoder.yudao.module.infra.api.config;
  */
 public interface ConfigApi {
 
+
     /**
      * 根据参数键查询参数值
      *
