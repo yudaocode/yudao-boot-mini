@@ -18,7 +18,6 @@ import static cn.iocoder.yudao.framework.common.util.collection.CollectionUtils.
 /**
  * 字典工具类
  *
- * @author 芋道源码
  */
 @Slf4j
 public class DictFrameworkUtils {

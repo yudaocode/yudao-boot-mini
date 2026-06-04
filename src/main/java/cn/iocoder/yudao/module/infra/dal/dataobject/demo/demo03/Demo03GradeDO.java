@@ -9,7 +9,6 @@ import lombok.*;
 /**
  * 学生班级 DO
  *
- * @author 芋道源码
  */
 @TableName("yudao_demo03_grade")
 @KeySequence("yudao_demo03_grade_seq") // 用于 Oracle、PostgreSQL、Kingbase、DB2、H2 数据库的主键自增。如果是 MySQL 等数据库，可不写。

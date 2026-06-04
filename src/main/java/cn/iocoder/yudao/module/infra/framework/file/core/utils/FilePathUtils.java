@@ -12,7 +12,6 @@ import static cn.iocoder.yudao.module.infra.enums.ErrorCodeConstants.FILE_PATH_I
 /**
  * 文件路径工具类
  *
- * @author 芋道源码
  */
 public class FilePathUtils {
 

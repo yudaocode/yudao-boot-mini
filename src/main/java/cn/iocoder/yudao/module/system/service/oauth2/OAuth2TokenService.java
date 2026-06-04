@@ -11,7 +11,6 @@ import java.util.List;
  *
  * 从功能上，和 Spring Security OAuth 的 DefaultTokenServices + JdbcTokenStore 的功能，提供访问令牌、刷新令牌的操作
  *
- * @author 芋道源码
  */
 public interface OAuth2TokenService {
 

@@ -9,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * 基于 Redis 的 {@link WebSocketMessageSender} 实现类
  *
- * @author 芋道源码
  */
 @Slf4j
 public class RedisWebSocketMessageSender extends AbstractWebSocketMessageSender {

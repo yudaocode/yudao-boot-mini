@@ -9,7 +9,6 @@ import java.io.InputStream;
 /**
  * IO 工具类，用于 {@link cn.hutool.core.io.IoUtil} 缺失的方法
  *
- * @author 芋道源码
  */
 public class IoUtils {
 

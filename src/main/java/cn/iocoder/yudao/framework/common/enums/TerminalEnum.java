@@ -9,7 +9,6 @@ import java.util.Arrays;
 /**
  * 终端的枚举
  *
- * @author 芋道源码
  */
 @RequiredArgsConstructor
 @Getter

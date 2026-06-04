@@ -16,7 +16,6 @@ import java.util.Map;
 /**
  * 基于 MyBatis Plus 多租户的功能，实现 DB 层面的多租户的功能
  *
- * @author 芋道源码
  */
 public class TenantDatabaseInterceptor implements TenantLineHandler {
 

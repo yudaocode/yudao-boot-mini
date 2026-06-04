@@ -3,7 +3,6 @@ package cn.iocoder.yudao.module.system.service.member;
 /**
  * Member Service 接口
  *
- * @author 芋道源码
  */
 public interface MemberService {
 

@@ -8,7 +8,6 @@ import jakarta.validation.constraints.NotEmpty;
 /**
  * Swagger 配置属性
  *
- * @author 芋道源码
  */
 @ConfigurationProperties("yudao.swagger")
 @Data

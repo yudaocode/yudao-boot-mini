@@ -9,7 +9,6 @@ import java.util.Arrays;
 /**
  * 区域类型枚举
  *
- * @author 芋道源码
  */
 @AllArgsConstructor
 @Getter

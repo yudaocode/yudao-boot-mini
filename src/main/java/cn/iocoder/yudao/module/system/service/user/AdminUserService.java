@@ -21,7 +21,6 @@ import java.util.Map;
 /**
  * 后台用户 Service 接口
  *
- * @author 芋道源码
  */
 public interface AdminUserService {
 

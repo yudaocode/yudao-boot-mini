@@ -11,7 +11,6 @@ import java.util.concurrent.ExecutionException;
 /**
  * 基于 Kafka 的 {@link WebSocketMessageSender} 实现类
  *
- * @author 芋道源码
  */
 @Slf4j
 public class KafkaWebSocketMessageSender extends AbstractWebSocketMessageSender {

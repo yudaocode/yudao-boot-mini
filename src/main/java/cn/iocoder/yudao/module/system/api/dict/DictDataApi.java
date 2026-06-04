@@ -7,7 +7,6 @@ import java.util.Collection;
 /**
  * 字典数据 API 接口
  *
- * @author 芋道源码
  */
 public interface DictDataApi extends DictDataCommonApi {
 

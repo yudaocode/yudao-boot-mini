@@ -14,7 +14,6 @@ import java.util.concurrent.TimeUnit;
 /**
  * 幂等注解
  *
- * @author 芋道源码
  */
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)

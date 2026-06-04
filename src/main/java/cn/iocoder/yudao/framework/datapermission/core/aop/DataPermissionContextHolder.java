@@ -9,7 +9,6 @@ import java.util.List;
 /**
  * {@link DataPermission} 注解的 Context 上下文
  *
- * @author 芋道源码
  */
 public class DataPermissionContextHolder {
 

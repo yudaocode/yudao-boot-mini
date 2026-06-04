@@ -10,7 +10,6 @@ import java.util.*;
 /**
  * 部门 Service 接口
  *
- * @author 芋道源码
  */
 public interface DeptService {
 

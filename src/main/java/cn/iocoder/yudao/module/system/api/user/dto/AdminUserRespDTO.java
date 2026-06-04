@@ -8,7 +8,6 @@ import java.util.Set;
 /**
  * Admin 用户 Response DTO
  *
- * @author 芋道源码
  */
 @Data
 public class AdminUserRespDTO {

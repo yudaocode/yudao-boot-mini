@@ -18,7 +18,6 @@ import static cn.iocoder.yudao.module.infra.enums.ErrorCodeConstants.*;
 /**
  * 示例分类 Service 实现类
  *
- * @author 芋道源码
  */
 @Service
 @Validated

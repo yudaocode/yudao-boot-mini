@@ -15,7 +15,6 @@ import java.sql.SQLException;
 /**
  * JDBC 工具类
  *
- * @author 芋道源码
  */
 public class JdbcUtils {
 

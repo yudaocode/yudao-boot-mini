@@ -10,7 +10,6 @@ import static cn.iocoder.yudao.framework.web.core.util.WebFrameworkUtils.HEADER_
 /**
  * 多租户 Util
  *
- * @author 芋道源码
  */
 public class TenantUtils {
 

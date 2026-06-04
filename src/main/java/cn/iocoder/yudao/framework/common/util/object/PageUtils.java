@@ -14,7 +14,6 @@ import static java.util.Collections.singletonList;
 /**
  * {@link cn.iocoder.yudao.framework.common.pojo.PageParam} 工具类
  *
- * @author 芋道源码
  */
 public class PageUtils {
 

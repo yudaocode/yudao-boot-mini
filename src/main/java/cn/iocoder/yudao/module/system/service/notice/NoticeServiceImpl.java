@@ -18,7 +18,6 @@ import static cn.iocoder.yudao.module.system.enums.ErrorCodeConstants.NOTICE_NOT
 /**
  * 通知公告 Service 实现类
  *
- * @author 芋道源码
  */
 @Service
 public class NoticeServiceImpl implements NoticeService {

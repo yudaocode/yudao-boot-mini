@@ -8,7 +8,6 @@ import static cn.hutool.core.util.ArrayUtil.*;
 /**
  * 代码生成的场景枚举
  *
- * @author 芋道源码
  */
 @AllArgsConstructor
 @Getter

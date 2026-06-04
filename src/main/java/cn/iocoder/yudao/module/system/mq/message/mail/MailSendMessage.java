@@ -10,7 +10,6 @@ import java.util.Collection;
 /**
  * 邮箱发送消息
  *
- * @author 芋道源码
  */
 @Data
 public class MailSendMessage {

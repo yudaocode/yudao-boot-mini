@@ -14,7 +14,6 @@ import static cn.iocoder.yudao.module.infra.enums.ErrorCodeConstants.FILE_PATH_I
 /**
  * 本地文件客户端
  *
- * @author 芋道源码
  */
 public class LocalFileClient extends AbstractFileClient<LocalFileClientConfig> {
 

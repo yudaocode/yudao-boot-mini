@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 /**
  * 数据库配置类
  *
- * @author 芋道源码
  */
 @AutoConfiguration
 @EnableTransactionManagement(proxyTargetClass = true) // 启动事务管理

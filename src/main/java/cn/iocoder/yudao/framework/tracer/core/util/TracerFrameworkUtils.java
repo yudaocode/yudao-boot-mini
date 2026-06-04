@@ -11,7 +11,6 @@ import java.util.Map;
 /**
  * 链路追踪 Util
  *
- * @author 芋道源码
  */
 public class TracerFrameworkUtils {
 

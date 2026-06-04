@@ -17,7 +17,6 @@ import java.lang.reflect.Method;
 /**
  * 基于 Spring EL 表达式，
  *
- * @author 芋道源码
  */
 public class ExpressionIdempotentKeyResolver implements IdempotentKeyResolver {
 

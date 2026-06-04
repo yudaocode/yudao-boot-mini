@@ -9,7 +9,6 @@ import java.util.List;
 /**
  * VO 数据翻译 Utils
  *
- * @author 芋道源码
  */
 public class TranslateUtils {
 

@@ -7,7 +7,6 @@ import jakarta.validation.Valid;
 /**
  * 登录日志的 API 接口
  *
- * @author 芋道源码
  */
 public interface LoginLogApi {
 

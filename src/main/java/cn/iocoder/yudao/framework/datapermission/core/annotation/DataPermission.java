@@ -8,7 +8,6 @@ import java.lang.annotation.*;
  * 数据权限注解
  * 可声明在类或者方法上，标识使用的数据权限规则
  *
- * @author 芋道源码
  */
 @Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)

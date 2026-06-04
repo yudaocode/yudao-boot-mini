@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 /**
  * API 错误日志
  *
- * @author 芋道源码
  */
 @Data
 public class ApiErrorLogCreateReqDTO {

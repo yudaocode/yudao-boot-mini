@@ -16,7 +16,6 @@ import java.util.List;
 /**
  * 数据权限的自动配置类
  *
- * @author 芋道源码
  */
 @AutoConfiguration
 public class YudaoDataPermissionAutoConfiguration {

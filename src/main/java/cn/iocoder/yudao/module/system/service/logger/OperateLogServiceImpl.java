@@ -15,7 +15,6 @@ import org.springframework.validation.annotation.Validated;
 /**
  * 操作日志 Service 实现类
  *
- * @author 芋道源码
  */
 @Service
 @Validated

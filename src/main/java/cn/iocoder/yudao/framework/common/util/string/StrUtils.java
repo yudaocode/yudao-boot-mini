@@ -14,7 +14,6 @@ import java.util.stream.Collectors;
 /**
  * 字符串工具类
  *
- * @author 芋道源码
  */
 public class StrUtils {
 

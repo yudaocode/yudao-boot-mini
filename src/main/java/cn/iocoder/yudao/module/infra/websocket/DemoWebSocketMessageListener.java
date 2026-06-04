@@ -13,7 +13,6 @@ import org.springframework.web.socket.WebSocketSession;
 /**
  * WebSocket 示例：单发消息
  *
- * @author 芋道源码
  */
 @Component
 public class DemoWebSocketMessageListener implements WebSocketMessageListener<DemoSendMessage> {

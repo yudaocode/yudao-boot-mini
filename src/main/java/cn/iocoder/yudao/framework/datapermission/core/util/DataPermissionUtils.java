@@ -9,7 +9,6 @@ import java.util.concurrent.Callable;
 /**
  * 数据权限 Util
  *
- * @author 芋道源码
  */
 public class DataPermissionUtils {
 
