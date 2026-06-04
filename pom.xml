@@ -37,7 +37,6 @@
         <redisson.version>4.4.0</redisson.version>
         <dm8.jdbc.version>8.1.3.140</dm8.jdbc.version>
         <kingbase.jdbc.version>9.0.1.jre7</kingbase.jdbc.version>
-        <opengauss.jdbc.version>7.0.0-RC3-og</opengauss.jdbc.version>
         <taos.version>3.8.3</taos.version>
 <!-- 服务保障相关 -->
         <lock4j.version>2.2.7</lock4j.version>
@@ -174,18 +173,6 @@
             <artifactId>kingbase8</artifactId>
             <version>${kingbase.jdbc.version}</version>
             <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.opengauss</groupId>
-            <artifactId>opengauss-jdbc</artifactId>
-            <version>${opengauss.jdbc.version}</version>
-            <optional>true</optional>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-api</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.taosdata.jdbc</groupId>
