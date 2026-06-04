@@ -6,9 +6,6 @@ cn.iocoder.yudao.framework.quartz.config.YudaoQuartzAutoConfiguration
 cn.iocoder.yudao.framework.quartz.config.YudaoAsyncAutoConfiguration
 cn.iocoder.yudao.framework.tracer.config.YudaoTracerAutoConfiguration
 cn.iocoder.yudao.framework.tracer.config.YudaoMetricsAutoConfiguration
-cn.iocoder.yudao.framework.mq.redis.config.YudaoRedisMQProducerAutoConfiguration
-cn.iocoder.yudao.framework.mq.redis.config.YudaoRedisMQConsumerAutoConfiguration
-cn.iocoder.yudao.framework.mq.rabbitmq.config.YudaoRabbitMQAutoConfiguration
 cn.iocoder.yudao.framework.datasource.config.YudaoDataSourceAutoConfiguration
 cn.iocoder.yudao.framework.mybatis.config.YudaoMybatisAutoConfiguration
 cn.iocoder.yudao.framework.translate.config.YudaoTranslateAutoConfiguration

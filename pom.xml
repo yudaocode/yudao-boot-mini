@@ -39,9 +39,7 @@
         <kingbase.jdbc.version>9.0.1.jre7</kingbase.jdbc.version>
         <opengauss.jdbc.version>7.0.0-RC3-og</opengauss.jdbc.version>
         <taos.version>3.8.3</taos.version>
-        <!-- 消息队列 -->
-        <rocketmq-spring.version>2.3.5</rocketmq-spring.version>
-        <!-- 服务保障相关 -->
+<!-- 服务保障相关 -->
         <lock4j.version>2.2.7</lock4j.version>
         <!-- 监控相关 -->
         <skywalking.version>9.6.0</skywalking.version>
@@ -268,25 +266,7 @@
             <artifactId>jackson-datatype-jsr310</artifactId>
         </dependency>
 
-        <!-- ==================== 消息队列（可选）==================== -->
-        <dependency>
-            <groupId>org.springframework.kafka</groupId>
-            <artifactId>spring-kafka</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.amqp</groupId>
-            <artifactId>spring-rabbit</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.rocketmq</groupId>
-            <artifactId>rocketmq-spring-boot-starter</artifactId>
-            <version>${rocketmq-spring.version}</version>
-            <optional>true</optional>
-        </dependency>
-
-        <!-- ==================== 服务保障 ==================== -->
+<!-- ==================== 服务保障 ==================== -->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>lock4j-redisson-spring-boot-starter</artifactId>
