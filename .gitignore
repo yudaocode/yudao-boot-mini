@@ -52,3 +52,5 @@ application-my.yaml
 
 /yudao-ui-app/unpackage/
 **/.DS_Store
+yudao-ui/yudao-ui-admin-vue3/package-lock.json
+LOG_FILE_IS_UNDEFINED
