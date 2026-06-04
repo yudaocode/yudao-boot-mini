@@ -64,9 +64,6 @@
         <mockito-inline.version>5.2.0</mockito-inline.version>
         <!-- 三方云服务相关 -->
         <awssdk.version>2.44.0</awssdk.version>
-        <justauth.version>1.16.7</justauth.version>
-        <justauth-starter.version>1.4.0</justauth-starter.version>
-        <weixin-java.version>4.8.2-20260501.180637</weixin-java.version>
     </properties>
 
     <dependencies>
@@ -410,28 +407,6 @@
             <groupId>software.amazon.awssdk</groupId>
             <artifactId>s3</artifactId>
             <version>${awssdk.version}</version>
-        </dependency>
-
-        <!-- ==================== 三方认证 ==================== -->
-        <dependency>
-            <groupId>me.zhyd.oauth</groupId>
-            <artifactId>JustAuth</artifactId>
-            <version>${justauth.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.xkcoding.justauth</groupId>
-            <artifactId>justauth-spring-boot-starter</artifactId>
-            <version>${justauth-starter.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.binarywang</groupId>
-            <artifactId>wx-java-mp-spring-boot-starter</artifactId>
-            <version>${weixin-java.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.binarywang</groupId>
-            <artifactId>wx-java-miniapp-spring-boot-starter</artifactId>
-            <version>${weixin-java.version}</version>
         </dependency>
 
         <!-- ==================== 验证码 ==================== -->

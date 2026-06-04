@@ -1,6 +1,11 @@
 package cn.iocoder.yudao.module.system.service.auth;
 
-import cn.iocoder.yudao.module.system.controller.admin.auth.vo.*;
+import cn.iocoder.yudao.module.system.controller.admin.auth.vo.AuthLoginReqVO;
+import cn.iocoder.yudao.module.system.controller.admin.auth.vo.AuthLoginRespVO;
+import cn.iocoder.yudao.module.system.controller.admin.auth.vo.AuthRegisterReqVO;
+import cn.iocoder.yudao.module.system.controller.admin.auth.vo.AuthResetPasswordReqVO;
+import cn.iocoder.yudao.module.system.controller.admin.auth.vo.AuthSmsLoginReqVO;
+import cn.iocoder.yudao.module.system.controller.admin.auth.vo.AuthSmsSendReqVO;
 import cn.iocoder.yudao.module.system.dal.dataobject.user.AdminUserDO;
 
 import jakarta.validation.Valid;
@@ -52,14 +57,6 @@ public interface AdminAuthService {
      * @return 登录结果
      */
     AuthLoginRespVO smsLogin(AuthSmsLoginReqVO reqVO);
-
-    /**
-     * 社交快捷登录，使用 code 授权码
-     *
-     * @param reqVO 登录信息
-     * @return 登录结果
-     */
-    AuthLoginRespVO socialLogin(@Valid AuthSocialLoginReqVO reqVO);
 
     /**
      * 刷新访问令牌
