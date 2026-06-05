@@ -1,6 +1,6 @@
 package com.muang.ai.claw.module.system.controller.admin.sms;
 
-import com.muang.ai.claw.common.pojo.CommonResult;
+import com.muang.ai.claw.common.core.CommonResult;
 import com.muang.ai.claw.util.servlet.ServletUtils;
 import com.muang.ai.claw.config.tenant.core.aop.TenantIgnore;
 import com.muang.ai.claw.module.system.framework.sms.core.enums.SmsChannelEnum;
@@ -13,7 +13,7 @@ import jakarta.annotation.Resource;
 import jakarta.annotation.security.PermitAll;
 import jakarta.servlet.http.HttpServletRequest;
 
-import static com.muang.ai.claw.common.pojo.CommonResult.success;
+import static com.muang.ai.claw.common.core.CommonResult.success;
 
 @Tag(name = "管理后台 - 短信回调")
 @RestController

@@ -1,7 +1,7 @@
 package com.muang.ai.claw.config.web.core.filter;
 
 import cn.hutool.core.util.StrUtil;
-import com.muang.ai.claw.common.pojo.CommonResult;
+import com.muang.ai.claw.common.core.CommonResult;
 import com.muang.ai.claw.util.servlet.ServletUtils;
 import com.muang.ai.claw.config.web.core.util.WebFrameworkUtils;
 import org.springframework.web.filter.OncePerRequestFilter;

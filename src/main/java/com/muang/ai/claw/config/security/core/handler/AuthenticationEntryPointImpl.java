@@ -1,7 +1,7 @@
 package com.muang.ai.claw.config.security.core.handler;
 
 import com.muang.ai.claw.common.exception.enums.GlobalErrorCodeConstants;
-import com.muang.ai.claw.common.pojo.CommonResult;
+import com.muang.ai.claw.common.core.CommonResult;
 import com.muang.ai.claw.util.servlet.ServletUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.AuthenticationException;

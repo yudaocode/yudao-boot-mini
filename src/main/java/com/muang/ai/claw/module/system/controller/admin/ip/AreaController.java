@@ -1,11 +1,11 @@
 package com.muang.ai.claw.module.system.controller.admin.ip;
 
 import cn.hutool.core.lang.Assert;
-import com.muang.ai.claw.common.pojo.CommonResult;
+import com.muang.ai.claw.common.core.CommonResult;
 import com.muang.ai.claw.util.object.BeanUtils;
-import com.muang.ai.claw.common.ip.core.Area;
-import com.muang.ai.claw.common.ip.core.utils.AreaUtils;
-import com.muang.ai.claw.common.ip.core.utils.IPUtils;
+import com.muang.ai.claw.config.ip.Area;
+import com.muang.ai.claw.config.ip.utils.AreaUtils;
+import com.muang.ai.claw.config.ip.utils.IPUtils;
 import com.muang.ai.claw.module.system.controller.admin.ip.vo.AreaNodeRespVO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import static com.muang.ai.claw.common.pojo.CommonResult.success;
+import static com.muang.ai.claw.common.core.CommonResult.success;
 
 @Tag(name = "管理后台 - 地区")
 @RestController

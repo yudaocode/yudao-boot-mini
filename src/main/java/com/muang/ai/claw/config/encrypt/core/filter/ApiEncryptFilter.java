@@ -6,7 +6,7 @@ import cn.hutool.crypto.asymmetric.AsymmetricDecryptor;
 import cn.hutool.crypto.asymmetric.AsymmetricEncryptor;
 import cn.hutool.crypto.symmetric.SymmetricDecryptor;
 import cn.hutool.crypto.symmetric.SymmetricEncryptor;
-import com.muang.ai.claw.common.pojo.CommonResult;
+import com.muang.ai.claw.common.core.CommonResult;
 import com.muang.ai.claw.util.object.ObjectUtils;
 import com.muang.ai.claw.util.servlet.ServletUtils;
 import com.muang.ai.claw.config.encrypt.config.ApiEncryptProperties;

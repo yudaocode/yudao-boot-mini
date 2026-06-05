@@ -1,7 +1,7 @@
 package com.muang.ai.claw.module.infra.service.job;
 
 import cn.hutool.extra.spring.SpringUtil;
-import com.muang.ai.claw.common.pojo.PageResult;
+import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.config.quartz.core.handler.JobHandler;
 import com.muang.ai.claw.config.quartz.core.scheduler.SchedulerManager;

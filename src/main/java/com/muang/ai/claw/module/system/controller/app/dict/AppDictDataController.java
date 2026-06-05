@@ -1,7 +1,7 @@
 package com.muang.ai.claw.module.system.controller.app.dict;
 
 import com.muang.ai.claw.constant.CommonStatusEnum;
-import com.muang.ai.claw.common.pojo.CommonResult;
+import com.muang.ai.claw.common.core.CommonResult;
 import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.module.system.controller.app.dict.vo.AppDictDataRespVO;
 import com.muang.ai.claw.module.system.dal.dataobject.dict.DictDataDO;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import jakarta.annotation.Resource;
 import java.util.List;
 
-import static com.muang.ai.claw.common.pojo.CommonResult.success;
+import static com.muang.ai.claw.common.core.CommonResult.success;
 
 @Tag(name = "用户 App - 字典数据")
 @RestController

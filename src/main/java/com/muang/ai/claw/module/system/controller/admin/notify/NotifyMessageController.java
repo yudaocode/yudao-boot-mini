@@ -2,8 +2,8 @@ package com.muang.ai.claw.module.system.controller.admin.notify;
 
 import com.muang.ai.claw.config.apilog.core.annotation.ApiAccessLog;
 import com.muang.ai.claw.constant.UserTypeEnum;
-import com.muang.ai.claw.common.pojo.CommonResult;
-import com.muang.ai.claw.common.pojo.PageResult;
+import com.muang.ai.claw.common.core.CommonResult;
+import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.module.system.controller.admin.notify.vo.message.NotifyMessageMyPageReqVO;
 import com.muang.ai.claw.module.system.controller.admin.notify.vo.message.NotifyMessagePageReqVO;
@@ -21,7 +21,7 @@ import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import java.util.List;
 
-import static com.muang.ai.claw.common.pojo.CommonResult.success;
+import static com.muang.ai.claw.common.core.CommonResult.success;
 import static com.muang.ai.claw.config.security.core.util.SecurityFrameworkUtils.getLoginUserId;
 
 @Tag(name = "管理后台 - 我的站内信")

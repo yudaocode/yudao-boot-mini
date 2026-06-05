@@ -4,15 +4,15 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.func.Func1;
 import cn.hutool.core.lang.func.LambdaUtil;
 import cn.hutool.core.util.ArrayUtil;
-import com.muang.ai.claw.common.pojo.PageParam;
-import com.muang.ai.claw.common.pojo.SortablePageParam;
-import com.muang.ai.claw.common.pojo.SortingField;
+import com.muang.ai.claw.common.core.PageParam;
+import com.muang.ai.claw.common.core.SortablePageParam;
+import com.muang.ai.claw.common.core.SortingField;
 import org.springframework.util.Assert;
 
 import static java.util.Collections.singletonList;
 
 /**
- * {@link com.muang.ai.claw.common.pojo.PageParam} 工具类
+ * {@link PageParam} 工具类
  *
  */
 public class PageUtils {

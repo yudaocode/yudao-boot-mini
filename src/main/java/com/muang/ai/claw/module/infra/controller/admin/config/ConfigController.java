@@ -1,10 +1,10 @@
 package com.muang.ai.claw.module.infra.controller.admin.config;
 
 import com.muang.ai.claw.config.apilog.core.annotation.ApiAccessLog;
-import com.muang.ai.claw.common.pojo.CommonResult;
-import com.muang.ai.claw.common.pojo.PageParam;
-import com.muang.ai.claw.common.pojo.PageResult;
-import com.muang.ai.claw.common.excel.core.util.ExcelUtils;
+import com.muang.ai.claw.common.core.CommonResult;
+import com.muang.ai.claw.common.core.PageParam;
+import com.muang.ai.claw.common.core.PageResult;
+import com.muang.ai.claw.config.excel.util.ExcelUtils;
 import com.muang.ai.claw.module.infra.controller.admin.config.vo.ConfigPageReqVO;
 import com.muang.ai.claw.module.infra.controller.admin.config.vo.ConfigRespVO;
 import com.muang.ai.claw.module.infra.controller.admin.config.vo.ConfigSaveReqVO;
@@ -27,7 +27,7 @@ import java.util.List;
 
 import static com.muang.ai.claw.config.apilog.core.enums.OperateTypeEnum.EXPORT;
 import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
-import static com.muang.ai.claw.common.pojo.CommonResult.success;
+import static com.muang.ai.claw.common.core.CommonResult.success;
 
 @Tag(name = "管理后台 - 参数配置")
 @RestController

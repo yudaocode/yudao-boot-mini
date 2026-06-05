@@ -2,7 +2,7 @@ package com.muang.ai.claw.module.infra.service.codegen;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
-import com.muang.ai.claw.common.pojo.PageResult;
+import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.config.mybatis.core.util.JdbcUtils;
 import com.muang.ai.claw.module.infra.controller.admin.codegen.vo.CodegenCreateListReqVO;

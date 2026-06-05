@@ -1,7 +1,7 @@
 package com.muang.ai.claw.module.system.controller.admin.sms;
 
-import com.muang.ai.claw.common.pojo.CommonResult;
-import com.muang.ai.claw.common.pojo.PageResult;
+import com.muang.ai.claw.common.core.CommonResult;
+import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.module.system.controller.admin.sms.vo.channel.SmsChannelPageReqVO;
 import com.muang.ai.claw.module.system.controller.admin.sms.vo.channel.SmsChannelRespVO;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Comparator;
 import java.util.List;
 
-import static com.muang.ai.claw.common.pojo.CommonResult.success;
+import static com.muang.ai.claw.common.core.CommonResult.success;
 
 @Tag(name = "管理后台 - 短信渠道")
 @RestController

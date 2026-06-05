@@ -1,6 +1,6 @@
 package com.muang.ai.claw.module.system.dal.mysql.user;
 
-import com.muang.ai.claw.common.pojo.PageResult;
+import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.config.mybatis.core.mapper.BaseMapperX;
 import com.muang.ai.claw.config.mybatis.core.query.LambdaQueryWrapperX;
 import com.muang.ai.claw.module.system.controller.admin.user.vo.user.UserPageReqVO;

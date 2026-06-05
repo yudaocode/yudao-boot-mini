@@ -1,7 +1,7 @@
 package com.muang.ai.claw.util.object;
 
 import cn.hutool.core.bean.BeanUtil;
-import com.muang.ai.claw.common.pojo.PageResult;
+import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.util.collection.CollectionUtils;
 
 import java.util.List;

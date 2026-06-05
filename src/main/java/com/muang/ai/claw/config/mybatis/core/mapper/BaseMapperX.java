@@ -1,10 +1,10 @@
 package com.muang.ai.claw.config.mybatis.core.mapper;
 
 import cn.hutool.core.collection.CollUtil;
-import com.muang.ai.claw.common.pojo.PageParam;
-import com.muang.ai.claw.common.pojo.PageResult;
-import com.muang.ai.claw.common.pojo.SortablePageParam;
-import com.muang.ai.claw.common.pojo.SortingField;
+import com.muang.ai.claw.common.core.PageParam;
+import com.muang.ai.claw.common.core.PageResult;
+import com.muang.ai.claw.common.core.SortablePageParam;
+import com.muang.ai.claw.common.core.SortingField;
 import com.muang.ai.claw.config.mybatis.core.util.JdbcUtils;
 import com.muang.ai.claw.config.mybatis.core.util.MyBatisUtils;
 import com.baomidou.mybatisplus.annotation.DbType;

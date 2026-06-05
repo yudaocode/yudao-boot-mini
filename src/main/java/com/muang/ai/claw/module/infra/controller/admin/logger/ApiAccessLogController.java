@@ -1,11 +1,11 @@
 package com.muang.ai.claw.module.infra.controller.admin.logger;
 
 import com.muang.ai.claw.config.apilog.core.annotation.ApiAccessLog;
-import com.muang.ai.claw.common.pojo.CommonResult;
-import com.muang.ai.claw.common.pojo.PageParam;
-import com.muang.ai.claw.common.pojo.PageResult;
+import com.muang.ai.claw.common.core.CommonResult;
+import com.muang.ai.claw.common.core.PageParam;
+import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.util.object.BeanUtils;
-import com.muang.ai.claw.common.excel.core.util.ExcelUtils;
+import com.muang.ai.claw.config.excel.util.ExcelUtils;
 import com.muang.ai.claw.module.infra.controller.admin.logger.vo.apiaccesslog.ApiAccessLogPageReqVO;
 import com.muang.ai.claw.module.infra.controller.admin.logger.vo.apiaccesslog.ApiAccessLogRespVO;
 import com.muang.ai.claw.module.infra.dal.dataobject.logger.ApiAccessLogDO;
@@ -27,7 +27,7 @@ import java.io.IOException;
 import java.util.List;
 
 import static com.muang.ai.claw.config.apilog.core.enums.OperateTypeEnum.EXPORT;
-import static com.muang.ai.claw.common.pojo.CommonResult.success;
+import static com.muang.ai.claw.common.core.CommonResult.success;
 
 @Tag(name = "管理后台 - API 访问日志")
 @RestController

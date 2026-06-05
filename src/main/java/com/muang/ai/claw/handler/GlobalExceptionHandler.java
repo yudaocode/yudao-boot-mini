@@ -9,7 +9,7 @@ import com.muang.ai.claw.common.biz.infra.logger.ApiErrorLogCommonApi;
 import com.muang.ai.claw.common.biz.infra.logger.dto.ApiErrorLogCreateReqDTO;
 import com.muang.ai.claw.common.exception.ServiceException;
 import com.muang.ai.claw.common.exception.util.ServiceExceptionUtil;
-import com.muang.ai.claw.common.pojo.CommonResult;
+import com.muang.ai.claw.common.core.CommonResult;
 import com.muang.ai.claw.util.collection.SetUtils;
 import com.muang.ai.claw.util.json.JsonUtils;
 import com.muang.ai.claw.util.monitor.TracerUtils;

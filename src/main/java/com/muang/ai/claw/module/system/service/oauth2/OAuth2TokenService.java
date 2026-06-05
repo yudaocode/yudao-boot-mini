@@ -8,7 +8,7 @@ import cn.hutool.core.util.StrUtil;
 import com.muang.ai.claw.constant.UserTypeEnum;
 import com.muang.ai.claw.common.exception.ServiceException;
 import com.muang.ai.claw.common.exception.enums.GlobalErrorCodeConstants;
-import com.muang.ai.claw.common.pojo.PageResult;
+import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.util.date.DateUtils;
 import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.config.security.core.LoginUser;

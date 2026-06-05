@@ -2,8 +2,8 @@ package com.muang.ai.claw.module.system.controller.admin.notice;
 
 import cn.hutool.core.lang.Assert;
 import com.muang.ai.claw.constant.UserTypeEnum;
-import com.muang.ai.claw.common.pojo.CommonResult;
-import com.muang.ai.claw.common.pojo.PageResult;
+import com.muang.ai.claw.common.core.CommonResult;
+import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.module.infra.api.websocket.WebSocketSenderApi;
 import com.muang.ai.claw.module.system.controller.admin.notice.vo.NoticePageReqVO;
@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.muang.ai.claw.common.pojo.CommonResult.success;
+import static com.muang.ai.claw.common.core.CommonResult.success;
 
 @Tag(name = "管理后台 - 通知公告")
 @RestController

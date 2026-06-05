@@ -2,7 +2,7 @@ package com.muang.ai.claw.module.infra.dal.dataobject.logger;
 
 import com.muang.ai.claw.config.apilog.core.enums.OperateTypeEnum;
 import com.muang.ai.claw.constant.UserTypeEnum;
-import com.muang.ai.claw.common.pojo.CommonResult;
+import com.muang.ai.claw.common.core.CommonResult;
 import com.muang.ai.claw.config.mybatis.core.dataobject.BaseDO;
 import com.baomidou.mybatisplus.annotation.KeySequence;
 import com.baomidou.mybatisplus.annotation.TableId;

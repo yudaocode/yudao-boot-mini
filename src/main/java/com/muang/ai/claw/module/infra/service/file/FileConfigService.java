@@ -3,7 +3,7 @@ package com.muang.ai.claw.module.infra.service.file;
 import cn.hutool.core.io.resource.ResourceUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
-import com.muang.ai.claw.common.pojo.PageResult;
+import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.util.json.JsonUtils;
 import com.muang.ai.claw.util.validation.ValidationUtils;
 import com.muang.ai.claw.module.infra.controller.admin.file.vo.config.FileConfigPageReqVO;

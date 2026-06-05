@@ -1,6 +1,6 @@
 package com.muang.ai.claw.module.system.controller.admin.user.vo.user;
 
-import com.muang.ai.claw.common.pojo.PageParam;
+import com.muang.ai.claw.common.core.PageParam;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -5,7 +5,7 @@ import cn.hutool.core.util.StrUtil;
 import com.muang.ai.claw.common.biz.system.oauth2.OAuth2TokenCommonApi;
 import com.muang.ai.claw.common.biz.system.oauth2.dto.OAuth2AccessTokenCheckRespDTO;
 import com.muang.ai.claw.common.exception.ServiceException;
-import com.muang.ai.claw.common.pojo.CommonResult;
+import com.muang.ai.claw.common.core.CommonResult;
 import com.muang.ai.claw.util.servlet.ServletUtils;
 import com.muang.ai.claw.config.security.config.SecurityProperties;
 import com.muang.ai.claw.config.security.core.LoginUser;

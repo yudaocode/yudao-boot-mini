@@ -2,7 +2,7 @@ package com.muang.ai.claw.config.tenant.core.security;
 
 import cn.hutool.core.collection.CollUtil;
 import com.muang.ai.claw.common.exception.enums.GlobalErrorCodeConstants;
-import com.muang.ai.claw.common.pojo.CommonResult;
+import com.muang.ai.claw.common.core.CommonResult;
 import com.muang.ai.claw.util.servlet.ServletUtils;
 import com.muang.ai.claw.config.security.core.LoginUser;
 import com.muang.ai.claw.config.security.core.util.SecurityFrameworkUtils;

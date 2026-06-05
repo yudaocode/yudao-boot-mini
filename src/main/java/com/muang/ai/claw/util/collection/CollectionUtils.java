@@ -3,7 +3,7 @@ package com.muang.ai.claw.util.collection;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.ArrayUtil;
-import com.muang.ai.claw.common.pojo.PageResult;
+import com.muang.ai.claw.common.core.PageResult;
 import com.google.common.collect.ImmutableMap;
 
 import java.util.*;

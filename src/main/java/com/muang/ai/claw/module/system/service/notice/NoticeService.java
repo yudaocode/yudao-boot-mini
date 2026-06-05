@@ -1,6 +1,6 @@
 package com.muang.ai.claw.module.system.service.notice;
 
-import com.muang.ai.claw.common.pojo.PageResult;
+import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.module.system.controller.admin.notice.vo.NoticePageReqVO;
 import com.muang.ai.claw.module.system.controller.admin.notice.vo.NoticeSaveReqVO;

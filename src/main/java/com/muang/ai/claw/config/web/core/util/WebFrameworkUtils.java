@@ -3,7 +3,7 @@ package com.muang.ai.claw.config.web.core.util;
 import cn.hutool.core.util.NumberUtil;
 import com.muang.ai.claw.constant.TerminalEnum;
 import com.muang.ai.claw.constant.UserTypeEnum;
-import com.muang.ai.claw.common.pojo.CommonResult;
+import com.muang.ai.claw.common.core.CommonResult;
 import com.muang.ai.claw.config.web.config.WebProperties;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.http.HttpServletRequest;

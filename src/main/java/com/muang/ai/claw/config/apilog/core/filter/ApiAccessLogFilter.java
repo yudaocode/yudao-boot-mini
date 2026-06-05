@@ -12,7 +12,7 @@ import com.muang.ai.claw.config.apilog.core.enums.OperateTypeEnum;
 import com.muang.ai.claw.common.biz.infra.logger.ApiAccessLogCommonApi;
 import com.muang.ai.claw.common.biz.infra.logger.dto.ApiAccessLogCreateReqDTO;
 import com.muang.ai.claw.common.exception.enums.GlobalErrorCodeConstants;
-import com.muang.ai.claw.common.pojo.CommonResult;
+import com.muang.ai.claw.common.core.CommonResult;
 import com.muang.ai.claw.util.json.JsonUtils;
 import com.muang.ai.claw.util.monitor.TracerUtils;
 import com.muang.ai.claw.util.servlet.ServletUtils;

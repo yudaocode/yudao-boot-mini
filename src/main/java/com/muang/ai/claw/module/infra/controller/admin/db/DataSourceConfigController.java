@@ -1,6 +1,6 @@
 package com.muang.ai.claw.module.infra.controller.admin.db;
 
-import com.muang.ai.claw.common.pojo.CommonResult;
+import com.muang.ai.claw.common.core.CommonResult;
 import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.module.infra.controller.admin.db.vo.DataSourceConfigRespVO;
 import com.muang.ai.claw.module.infra.controller.admin.db.vo.DataSourceConfigSaveReqVO;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.muang.ai.claw.common.pojo.CommonResult.success;
+import static com.muang.ai.claw.common.core.CommonResult.success;
 
 @Tag(name = "管理后台 - 数据源配置")
 @RestController

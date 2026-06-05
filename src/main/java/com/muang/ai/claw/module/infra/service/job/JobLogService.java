@@ -2,7 +2,7 @@ package com.muang.ai.claw.module.infra.service.job;
 
 import com.muang.ai.claw.config.quartz.core.service.JobLogFrameworkService;
 
-import com.muang.ai.claw.common.pojo.PageResult;
+import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.module.infra.controller.admin.job.vo.log.JobLogPageReqVO;
 import com.muang.ai.claw.module.infra.dal.dataobject.job.JobLogDO;
 import com.muang.ai.claw.module.infra.dal.mysql.job.JobLogMapper;

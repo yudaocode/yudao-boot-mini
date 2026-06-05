@@ -1,7 +1,7 @@
 package com.muang.ai.claw.module.system.service.dict;
 
 import cn.hutool.core.util.StrUtil;
-import com.muang.ai.claw.common.pojo.PageResult;
+import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.util.date.LocalDateTimeUtils;
 import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.module.system.controller.admin.dict.vo.type.DictTypePageReqVO;

@@ -2,11 +2,11 @@ package com.muang.ai.claw.module.system.controller.admin.dept;
 
 import com.muang.ai.claw.config.apilog.core.annotation.ApiAccessLog;
 import com.muang.ai.claw.constant.CommonStatusEnum;
-import com.muang.ai.claw.common.pojo.CommonResult;
-import com.muang.ai.claw.common.pojo.PageParam;
-import com.muang.ai.claw.common.pojo.PageResult;
+import com.muang.ai.claw.common.core.CommonResult;
+import com.muang.ai.claw.common.core.PageParam;
+import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.util.object.BeanUtils;
-import com.muang.ai.claw.common.excel.core.util.ExcelUtils;
+import com.muang.ai.claw.config.excel.util.ExcelUtils;
 import com.muang.ai.claw.module.system.controller.admin.dept.vo.post.PostPageReqVO;
 import com.muang.ai.claw.module.system.controller.admin.dept.vo.post.PostRespVO;
 import com.muang.ai.claw.module.system.controller.admin.dept.vo.post.PostSaveReqVO;
@@ -29,7 +29,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import static com.muang.ai.claw.config.apilog.core.enums.OperateTypeEnum.EXPORT;
-import static com.muang.ai.claw.common.pojo.CommonResult.success;
+import static com.muang.ai.claw.common.core.CommonResult.success;
 
 @Tag(name = "管理后台 - 岗位")
 @RestController

@@ -2,8 +2,8 @@ package com.muang.ai.claw.module.system.controller.admin.tenant.vo.tenant;
 
 import cn.idev.excel.annotation.ExcelIgnoreUnannotated;
 import cn.idev.excel.annotation.ExcelProperty;
-import com.muang.ai.claw.common.excel.core.annotations.DictFormat;
-import com.muang.ai.claw.common.excel.core.convert.DictConvert;
+import com.muang.ai.claw.config.excel.annotations.DictFormat;
+import com.muang.ai.claw.config.excel.convert.DictConvert;
 import com.muang.ai.claw.module.system.enums.DictTypeConstants;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;

@@ -1,7 +1,7 @@
 package com.muang.ai.claw.module.system.controller.admin.permission;
 
 import cn.hutool.core.collection.CollUtil;
-import com.muang.ai.claw.common.pojo.CommonResult;
+import com.muang.ai.claw.common.core.CommonResult;
 import com.muang.ai.claw.module.system.controller.admin.permission.vo.permission.PermissionAssignRoleDataScopeReqVO;
 import com.muang.ai.claw.module.system.controller.admin.permission.vo.permission.PermissionAssignRoleMenuReqVO;
 import com.muang.ai.claw.module.system.controller.admin.permission.vo.permission.PermissionAssignUserRoleReqVO;
@@ -18,7 +18,7 @@ import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import java.util.Set;
 
-import static com.muang.ai.claw.common.pojo.CommonResult.success;
+import static com.muang.ai.claw.common.core.CommonResult.success;
 
 /**
  * 权限 Controller，提供赋予用户、角色的权限的 API 接口

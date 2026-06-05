@@ -5,7 +5,7 @@ import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.muang.ai.claw.constant.UserTypeEnum;
-import com.muang.ai.claw.common.pojo.CommonResult;
+import com.muang.ai.claw.common.core.CommonResult;
 import com.muang.ai.claw.util.http.HttpUtils;
 import com.muang.ai.claw.util.json.JsonUtils;
 import com.muang.ai.claw.module.system.controller.admin.oauth2.vo.open.OAuth2OpenAccessTokenRespVO;
@@ -38,7 +38,7 @@ import java.util.Map;
 
 import static com.muang.ai.claw.common.exception.enums.GlobalErrorCodeConstants.BAD_REQUEST;
 import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception0;
-import static com.muang.ai.claw.common.pojo.CommonResult.success;
+import static com.muang.ai.claw.common.core.CommonResult.success;
 import static com.muang.ai.claw.util.collection.CollectionUtils.convertList;
 import static com.muang.ai.claw.config.security.core.util.SecurityFrameworkUtils.getLoginUserId;
 
