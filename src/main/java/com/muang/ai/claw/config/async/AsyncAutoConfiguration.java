@@ -1,4 +1,4 @@
-package com.muang.ai.claw.config.quartz.config;
+package com.muang.ai.claw.config.async;
 
 import com.alibaba.ttl.TtlRunnable;
 import org.springframework.context.annotation.Configuration;
@@ -6,14 +6,18 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.core.task.SimpleAsyncTaskExecutor;
 
 /**
- * 异步任务 Configuration
+ * 异步任务 & 定时任务 Configuration
+ *
+ * 基于 Spring 原生的 @Async / @Scheduled 实现，替代原本的 Quartz 调度
  */
 @Configuration
 @EnableAsync
+@EnableScheduling
 public class AsyncAutoConfiguration {
 
     @Bean

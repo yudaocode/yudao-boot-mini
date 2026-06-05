@@ -1,21 +1,21 @@
 package com.muang.ai.claw.module.infra.job.logger;
 
-import com.muang.ai.claw.config.quartz.core.handler.JobHandler;
 import com.muang.ai.claw.config.tenant.core.aop.TenantIgnore;
 import com.muang.ai.claw.module.infra.service.logger.ApiAccessLogService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import jakarta.annotation.Resource;
 
 /**
- * 物理删除 N 天前的访问日志的 Job
+ * 物理删除 N 天前的访问日志的定时任务
  *
  * @author j-sentinel
  */
 @Component
 @Slf4j
-public class AccessLogCleanJob implements JobHandler {
+public class AccessLogCleanJob {
 
     @Resource
     private ApiAccessLogService apiAccessLogService;
@@ -30,12 +30,14 @@ public class AccessLogCleanJob implements JobHandler {
      */
     private static final Integer DELETE_LIMIT = 100;
 
-    @Override
+    /**
+     * 每天凌晨 1 点执行
+     */
+    @Scheduled(cron = "0 0 1 * * ?")
     @TenantIgnore
-    public String execute(String param) {
+    public void execute() {
         Integer count = apiAccessLogService.cleanAccessLog(JOB_CLEAN_RETAIN_DAY, DELETE_LIMIT);
         log.info("[execute][定时执行清理访问日志数量 ({}) 个]", count);
-        return String.format("定时执行清理访问日志数量 %s 个", count);
     }
 
 }

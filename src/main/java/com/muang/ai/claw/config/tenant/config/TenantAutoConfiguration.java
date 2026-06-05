@@ -8,7 +8,6 @@ import com.muang.ai.claw.config.security.core.service.SecurityFrameworkService;
 import com.muang.ai.claw.config.tenant.core.aop.TenantIgnore;
 import com.muang.ai.claw.config.tenant.core.aop.TenantIgnoreAspect;
 import com.muang.ai.claw.config.tenant.core.db.TenantDatabaseInterceptor;
-import com.muang.ai.claw.config.tenant.core.job.TenantJobAspect;
 import com.muang.ai.claw.config.tenant.core.redis.TenantRedisCacheManager;
 import com.muang.ai.claw.config.tenant.core.security.TenantSecurityWebFilter;
 import com.muang.ai.claw.config.tenant.core.service.TenantFrameworkService;
@@ -146,13 +145,6 @@ public class TenantAutoConfiguration {
             }
         }
         return ignoreUrls;
-    }
-
-    // ========== Job ==========
-
-    @Bean
-    public TenantJobAspect tenantJobAspect(TenantFrameworkService tenantFrameworkService) {
-        return new TenantJobAspect(tenantFrameworkService);
     }
 
     // ========== Redis ==========
