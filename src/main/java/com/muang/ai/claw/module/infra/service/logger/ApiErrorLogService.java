@@ -51,8 +51,8 @@ public class ApiErrorLogService {
         }
     }
 
-    public PageResult<ApiErrorLogDO> getApiErrorLogPage(ApiErrorLogPageForm pageReqVO) {
-        return apiErrorLogMapper.selectPage(pageReqVO);
+    public PageResult<ApiErrorLogDO> getApiErrorLogPage(ApiErrorLogPageForm pageForm) {
+        return apiErrorLogMapper.selectPage(pageForm);
     }
 
     public ApiErrorLogDO getApiErrorLog(Long id) {

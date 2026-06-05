@@ -1,19 +1,14 @@
 package com.muang.ai.claw.module.infra.service.logger;
 
-<<<<<<< HEAD
-import com.muang.ai.claw.common.biz.infra.logger.dto.ApiAccessLogCreateReqDTO;
 import com.muang.ai.claw.common.core.PageResult;
-=======
-import com.muang.ai.claw.module.infra.api.logger.dto.ApiAccessLogCreateReqDTO;
-import com.muang.ai.claw.common.pojo.PageResult;
->>>>>>> 8bb99fac675d4686e2ba796e33021f47267a1e36
-import com.muang.ai.claw.util.object.BeanUtils;
-import com.muang.ai.claw.util.string.StrUtils;
 import com.muang.ai.claw.config.tenant.core.context.TenantContextHolder;
 import com.muang.ai.claw.config.tenant.core.util.TenantUtils;
-import com.muang.ai.claw.module.infra.controller.admin.logger.vo.apiaccesslog.ApiAccessLogPageReqVO;
+import com.muang.ai.claw.module.infra.api.logger.dto.ApiAccessLogCreateReqDTO;
+import com.muang.ai.claw.module.infra.controller.admin.logger.vo.apiaccesslog.ApiAccessLogPageForm;
 import com.muang.ai.claw.module.infra.dal.dataobject.logger.ApiAccessLogDO;
 import com.muang.ai.claw.module.infra.dal.mysql.logger.ApiAccessLogMapper;
+import com.muang.ai.claw.util.object.BeanUtils;
+import com.muang.ai.claw.util.string.StrUtils;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -52,7 +47,7 @@ public class ApiAccessLogService {
         return apiAccessLogMapper.selectById(id);
     }
 
-    public PageResult<ApiAccessLogDO> getApiAccessLogPage(ApiAccessLogPageReqVO pageReqVO) {
+    public PageResult<ApiAccessLogDO> getApiAccessLogPage(ApiAccessLogPageForm pageReqVO) {
         return apiAccessLogMapper.selectPage(pageReqVO);
     }
 
