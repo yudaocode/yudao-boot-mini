@@ -7,15 +7,15 @@ import com.muang.ai.claw.constant.WebFilterOrderEnum;
 import com.muang.ai.claw.config.web.config.WebProperties;
 import com.muang.ai.claw.config.web.config.WebAutoConfiguration;
 import jakarta.servlet.Filter;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-@AutoConfiguration(after = WebAutoConfiguration.class)
+@Configuration
 public class ApiLogAutoConfiguration implements WebMvcConfigurer {
 
     /**

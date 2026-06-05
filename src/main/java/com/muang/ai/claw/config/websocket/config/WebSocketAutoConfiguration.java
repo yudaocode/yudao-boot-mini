@@ -8,7 +8,7 @@ import com.muang.ai.claw.config.websocket.core.sender.local.LocalWebSocketMessag
 import com.muang.ai.claw.config.websocket.core.session.WebSocketSessionHandlerDecorator;
 import com.muang.ai.claw.config.websocket.core.session.WebSocketSessionManager;
 import com.muang.ai.claw.config.websocket.core.session.WebSocketSessionManagerImpl;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -19,7 +19,7 @@ import org.springframework.web.socket.server.HandshakeInterceptor;
 
 import java.util.List;
 
-@AutoConfiguration
+@Configuration
 @EnableWebSocket
 @ConditionalOnProperty(prefix = "yudao.websocket", value = "enable", matchIfMissing = true)
 @EnableConfigurationProperties(WebSocketProperties.class)

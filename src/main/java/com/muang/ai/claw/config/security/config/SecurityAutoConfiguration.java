@@ -9,8 +9,8 @@ import com.muang.ai.claw.config.security.core.handler.AuthenticationEntryPointIm
 import com.muang.ai.claw.config.security.core.service.SecurityFrameworkService;
 import com.muang.ai.claw.handler.GlobalExceptionHandler;
 import jakarta.annotation.Resource;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.beans.factory.config.MethodInvokingFactoryBean;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -27,7 +27,7 @@ import org.springframework.security.web.access.AccessDeniedHandler;
  * 参见 https://stackoverflow.com/questions/53847050/spring-boot-delegatebuilder-cannot-be-null-on-autowiring-authenticationmanager 文档。
  *
  */
-@AutoConfiguration
+@Configuration
 @AutoConfigureOrder(-1) // 目的：先于 Spring Security 自动配置，避免一键改包后，org.* 基础包无法生效
 @EnableConfigurationProperties(SecurityProperties.class)
 public class SecurityAutoConfiguration {

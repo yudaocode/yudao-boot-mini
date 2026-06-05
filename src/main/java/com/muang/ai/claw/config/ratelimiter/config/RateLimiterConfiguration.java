@@ -6,12 +6,12 @@ import com.muang.ai.claw.config.ratelimiter.core.keyresolver.impl.*;
 import com.muang.ai.claw.config.ratelimiter.core.redis.RateLimiterRedisDAO;
 import com.muang.ai.claw.config.redis.config.RedisAutoConfiguration;
 import org.redisson.api.RedissonClient;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Bean;
 
 import java.util.List;
 
-@AutoConfiguration(after = RedisAutoConfiguration.class)
+@Configuration
 public class RateLimiterConfiguration {
 
     @Bean

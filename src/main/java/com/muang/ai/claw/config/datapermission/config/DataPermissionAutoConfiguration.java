@@ -8,7 +8,7 @@ import com.muang.ai.claw.config.datapermission.core.rule.DataPermissionRuleFacto
 import com.muang.ai.claw.config.mybatis.core.util.MyBatisUtils;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.DataPermissionInterceptor;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Bean;
 
 import java.util.List;
@@ -17,7 +17,7 @@ import java.util.List;
  * 数据权限的自动配置类
  *
  */
-@AutoConfiguration
+@Configuration
 public class DataPermissionAutoConfiguration {
 
     @Bean

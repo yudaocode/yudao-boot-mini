@@ -5,7 +5,7 @@ import com.muang.ai.claw.config.encrypt.core.filter.ApiEncryptFilter;
 import com.muang.ai.claw.config.web.config.WebProperties;
 import com.muang.ai.claw.handler.GlobalExceptionHandler;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -14,7 +14,7 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 
 import static com.muang.ai.claw.config.web.config.WebAutoConfiguration.createFilterBean;
 
-@AutoConfiguration
+@Configuration
 @Slf4j
 @EnableConfigurationProperties(ApiEncryptProperties.class)
 @ConditionalOnProperty(prefix = "yudao.api-encrypt", name = "enable", havingValue = "true")

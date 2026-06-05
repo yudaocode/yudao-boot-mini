@@ -2,7 +2,7 @@ package com.muang.ai.claw.config.redis.config;
 
 import cn.hutool.core.util.StrUtil;
 import com.muang.ai.claw.config.redis.core.TimeoutRedisCacheManager;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.annotation.EnableCaching;
@@ -24,7 +24,7 @@ import static com.muang.ai.claw.config.redis.config.RedisAutoConfiguration.build
 /**
  * Cache 配置类，基于 Redis 实现
  */
-@AutoConfiguration
+@Configuration
 @EnableConfigurationProperties({CacheProperties.class, RedisCacheProperties.class})
 @EnableCaching
 public class CacheAutoConfiguration {

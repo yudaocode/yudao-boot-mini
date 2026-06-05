@@ -5,7 +5,7 @@ import com.muang.ai.claw.config.xss.core.clean.JsoupXssCleaner;
 import com.muang.ai.claw.config.xss.core.clean.XssCleaner;
 import com.muang.ai.claw.config.xss.core.filter.XssFilter;
 import com.muang.ai.claw.config.xss.core.json.XssStringJsonDeserializer;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -18,7 +18,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import static com.muang.ai.claw.config.web.config.WebAutoConfiguration.createFilterBean;
 
-@AutoConfiguration
+@Configuration
 @EnableConfigurationProperties(XssProperties.class)
 @ConditionalOnProperty(prefix = "yudao.xss", name = "enable", havingValue = "true", matchIfMissing = true) // 设置为 false 时，禁用
 public class XssAutoConfiguration implements WebMvcConfigurer {

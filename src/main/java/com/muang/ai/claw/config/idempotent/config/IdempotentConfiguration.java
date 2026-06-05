@@ -6,14 +6,14 @@ import com.muang.ai.claw.config.idempotent.core.keyresolver.impl.ExpressionIdemp
 import com.muang.ai.claw.config.idempotent.core.keyresolver.IdempotentKeyResolver;
 import com.muang.ai.claw.config.idempotent.core.keyresolver.impl.UserIdempotentKeyResolver;
 import com.muang.ai.claw.config.idempotent.core.redis.IdempotentRedisDAO;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
 import com.muang.ai.claw.config.redis.config.RedisAutoConfiguration;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
 import java.util.List;
 
-@AutoConfiguration(after = RedisAutoConfiguration.class)
+@Configuration
 public class IdempotentConfiguration {
 
     @Bean

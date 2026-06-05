@@ -3,7 +3,7 @@ package com.muang.ai.claw.config.signature.config;
 import com.muang.ai.claw.config.redis.config.RedisAutoConfiguration;
 import com.muang.ai.claw.config.signature.core.aop.ApiSignatureAspect;
 import com.muang.ai.claw.config.signature.core.redis.ApiSignatureRedisDAO;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
@@ -12,7 +12,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
  *
  * @author Zhougang
  */
-@AutoConfiguration(after = RedisAutoConfiguration.class)
+@Configuration
 public class ApiSignatureAutoConfiguration {
 
     @Bean

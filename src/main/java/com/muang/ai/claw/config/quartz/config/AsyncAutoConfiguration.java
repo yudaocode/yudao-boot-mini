@@ -1,9 +1,9 @@
 package com.muang.ai.claw.config.quartz.config;
 
 import com.alibaba.ttl.TtlRunnable;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -12,7 +12,7 @@ import org.springframework.core.task.SimpleAsyncTaskExecutor;
 /**
  * 异步任务 Configuration
  */
-@AutoConfiguration
+@Configuration
 @EnableAsync
 public class AsyncAutoConfiguration {
 

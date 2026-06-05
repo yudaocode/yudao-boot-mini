@@ -2,10 +2,10 @@ package com.muang.ai.claw.config.dict.config;
 
 import com.muang.ai.claw.module.system.api.dict.DictDataApi;
 import com.muang.ai.claw.config.dict.core.DictFrameworkUtils;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Bean;
 
-@AutoConfiguration
+@Configuration
 public class DictAutoConfiguration {
 
     @Bean

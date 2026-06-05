@@ -2,10 +2,10 @@ package com.muang.ai.claw.config.translate.config;
 
 import com.muang.ai.claw.config.translate.core.TranslateUtils;
 import com.fhs.trans.service.impl.TransService;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Bean;
 
-@AutoConfiguration
+@Configuration
 public class TranslateAutoConfiguration {
 
     @Bean

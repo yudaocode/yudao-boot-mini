@@ -10,8 +10,8 @@ import com.muang.ai.claw.handler.GlobalResponseBodyHandler;
 import com.muang.ai.claw.config.web.core.util.WebFrameworkUtils;
 import com.google.common.collect.Maps;
 import jakarta.servlet.Filter;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.web.client.RestTemplateAutoConfiguration;
@@ -32,7 +32,7 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 import java.util.Map;
 import java.util.function.Predicate;
 
-@AutoConfiguration
+@Configuration
 @EnableConfigurationProperties(WebProperties.class)
 public class WebAutoConfiguration {
 
