@@ -22,6 +22,7 @@ import java.util.*;
 
 import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
 import static com.muang.ai.claw.util.collection.CollectionUtils.convertSet;
+import static com.muang.ai.claw.util.collection.CollectionUtils.convertMap;
 import static com.muang.ai.claw.module.system.enums.ErrorCodeConstants.*;
 
 /**
@@ -163,6 +164,11 @@ public class DeptService {
         return deptMapper.selectById(id);
     }
 
+    public Map<Long, DeptDO> getDeptMap(Collection<Long> ids) {
+        List<DeptDO> list = getDeptList(ids);
+        return convertMap(list, DeptDO::getId);
+    }
+
     public List<DeptDO> getDeptList(Collection<Long> ids) {
         if (CollUtil.isEmpty(ids)) {
             return Collections.emptyList();
@@ -174,6 +180,10 @@ public class DeptService {
         List<DeptDO> list = deptMapper.selectList(reqVO);
         list.sort(Comparator.comparing(DeptDO::getSort));
         return list;
+    }
+
+    public List<DeptDO> getChildDeptList(Long id) {
+        return getChildDeptList(Collections.singleton(id));
     }
 
     public List<DeptDO> getChildDeptList(Collection<Long> ids) {

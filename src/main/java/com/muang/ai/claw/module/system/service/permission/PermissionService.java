@@ -174,6 +174,10 @@ public class PermissionService {
         roleMenuMapper.deleteListByMenuId(menuId);
     }
 
+    public Set<Long> getRoleMenuListByRoleId(Long roleId) {
+        return getRoleMenuListByRoleId(Collections.singleton(roleId));
+    }
+
     public Set<Long> getRoleMenuListByRoleId(Collection<Long> roleIds) {
         if (CollUtil.isEmpty(roleIds)) {
             return Collections.emptySet();

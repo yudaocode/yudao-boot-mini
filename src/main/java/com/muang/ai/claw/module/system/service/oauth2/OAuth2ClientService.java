@@ -110,6 +110,10 @@ public class OAuth2ClientService {
         return oauth2ClientMapper.selectPage(pageReqVO);
     }
 
+    public OAuth2ClientDO validOAuthClientFromCache(String clientId) {
+        return validOAuthClientFromCache(clientId, null, null, null, null);
+    }
+
     public OAuth2ClientDO validOAuthClientFromCache(String clientId, String clientSecret, String authorizedGrantType,
                                                     Collection<String> scopes, String redirectUri) {
         // 校验客户端存在、且开启

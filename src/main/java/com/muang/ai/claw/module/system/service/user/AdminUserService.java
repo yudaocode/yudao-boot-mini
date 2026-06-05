@@ -305,6 +305,13 @@ public class AdminUserService {
         return userMapper.selectByIds(userIds);
     }
 
+    public Map<Long, AdminUserDO> getUserMap(Collection<Long> ids) {
+        if (CollUtil.isEmpty(ids)) {
+            return new HashMap<>();
+        }
+        return convertMap(getUserList(ids), AdminUserDO::getId);
+    }
+
     public List<AdminUserDO> getUserList(Collection<Long> ids) {
         if (CollUtil.isEmpty(ids)) {
             return Collections.emptyList();

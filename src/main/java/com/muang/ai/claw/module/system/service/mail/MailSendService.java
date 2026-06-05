@@ -54,6 +54,22 @@ public class MailSendService {
     @Resource
     private MailProducer mailProducer;
 
+    public Long sendSingleMailToAdmin(Long userId,
+                                      Collection<String> toMails, Collection<String> ccMails, Collection<String> bccMails,
+                                      String templateCode, Map<String, Object> templateParams,
+                                      File... attachments) {
+        return sendSingleMail(toMails, ccMails, bccMails, userId, UserTypeEnum.ADMIN.getValue(),
+                templateCode, templateParams, attachments);
+    }
+
+    public Long sendSingleMailToMember(Long userId,
+                                       Collection<String> toMails, Collection<String> ccMails, Collection<String> bccMails,
+                                       String templateCode, Map<String, Object> templateParams,
+                                       File... attachments) {
+        return sendSingleMail(toMails, ccMails, bccMails, userId, UserTypeEnum.MEMBER.getValue(),
+                templateCode, templateParams, attachments);
+    }
+
     public Long sendSingleMail(Collection<String> toMails, Collection<String> ccMails, Collection<String> bccMails,
                                Long userId, Integer userType,
                                String templateCode, Map<String, Object> templateParams,
