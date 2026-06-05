@@ -1,7 +1,7 @@
 package com.muang.ai.claw.common.xss.core.json;
 
 import com.muang.ai.claw.util.servlet.ServletUtils;
-import com.muang.ai.claw.config.XssProperties;
+import com.muang.ai.claw.common.xss.config.XssProperties;
 import com.muang.ai.claw.common.xss.core.clean.XssCleaner;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;

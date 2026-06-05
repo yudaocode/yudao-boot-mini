@@ -5,7 +5,7 @@ import com.muang.ai.claw.common.exception.enums.GlobalErrorCodeConstants;
 import com.muang.ai.claw.common.security.core.LoginUser;
 import com.muang.ai.claw.common.security.core.service.SecurityFrameworkService;
 import com.muang.ai.claw.common.security.core.util.SecurityFrameworkUtils;
-import com.muang.ai.claw.config.TenantProperties;
+import com.muang.ai.claw.common.tenant.config.TenantProperties;
 import com.muang.ai.claw.common.tenant.core.context.TenantContextHolder;
 import com.muang.ai.claw.common.web.core.util.WebFrameworkUtils;
 import jakarta.servlet.http.HttpServletRequest;

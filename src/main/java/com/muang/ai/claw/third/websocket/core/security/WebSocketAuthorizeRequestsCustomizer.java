@@ -1,7 +1,7 @@
 package com.muang.ai.claw.third.websocket.core.security;
 
-import com.muang.ai.claw.config.AuthorizeRequestsCustomizer;
-import com.muang.ai.claw.config.WebSocketProperties;
+import com.muang.ai.claw.common.security.config.AuthorizeRequestsCustomizer;
+import com.muang.ai.claw.third.websocket.config.WebSocketProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer;

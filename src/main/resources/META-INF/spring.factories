@@ -1,2 +1,2 @@
 org.springframework.boot.env.EnvironmentPostProcessor=\
-  com.muang.ai.claw.config.IdTypeEnvironmentPostProcessor
+  com.muang.ai.claw.common.mybatis.config.IdTypeEnvironmentPostProcessor

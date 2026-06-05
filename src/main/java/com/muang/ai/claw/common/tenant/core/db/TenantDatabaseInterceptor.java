@@ -1,6 +1,6 @@
 package com.muang.ai.claw.common.tenant.core.db;
 
-import com.muang.ai.claw.config.TenantProperties;
+import com.muang.ai.claw.common.tenant.config.TenantProperties;
 import com.muang.ai.claw.common.tenant.core.aop.TenantIgnore;
 import com.muang.ai.claw.common.tenant.core.context.TenantContextHolder;
 import com.baomidou.mybatisplus.core.metadata.TableInfo;

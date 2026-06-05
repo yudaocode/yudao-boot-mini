@@ -1,6 +1,6 @@
 package com.muang.ai.claw.common.tenant.core.aop;
 
-import com.muang.ai.claw.config.TenantProperties;
+import com.muang.ai.claw.common.tenant.config.TenantProperties;
 
 import java.lang.annotation.*;
 
