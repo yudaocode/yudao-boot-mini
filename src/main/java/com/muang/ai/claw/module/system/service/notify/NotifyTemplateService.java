@@ -1,89 +1,141 @@
 package com.muang.ai.claw.module.system.service.notify;
 
+import cn.hutool.core.util.ReUtil;
+import cn.hutool.core.util.StrUtil;
 import com.muang.ai.claw.common.pojo.PageResult;
+import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.module.system.controller.admin.notify.vo.template.NotifyTemplatePageReqVO;
 import com.muang.ai.claw.module.system.controller.admin.notify.vo.template.NotifyTemplateSaveReqVO;
 import com.muang.ai.claw.module.system.dal.dataobject.notify.NotifyTemplateDO;
-import jakarta.validation.Valid;
+import com.muang.ai.claw.module.system.dal.mysql.notify.NotifyTemplateMapper;
+import com.muang.ai.claw.module.system.dal.redis.RedisKeyConstants;
+import com.google.common.annotations.VisibleForTesting;
+import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
+
+import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
+import static com.muang.ai.claw.module.system.enums.ErrorCodeConstants.NOTIFY_TEMPLATE_CODE_DUPLICATE;
+import static com.muang.ai.claw.module.system.enums.ErrorCodeConstants.NOTIFY_TEMPLATE_NOT_EXISTS;
 
 /**
- * 站内信模版 Service 接口
+ * 站内信模版 Service 实现类
  *
  * @author xrcoder
  */
-public interface NotifyTemplateService {
+@Service
+@Validated
+@Slf4j
+public class NotifyTemplateService {
 
     /**
-     * 创建站内信模版
-     *
-     * @param createReqVO 创建信息
-     * @return 编号
+     * 正则表达式，匹配 {} 中的变量
      */
-    Long createNotifyTemplate(@Valid NotifyTemplateSaveReqVO createReqVO);
+    private static final Pattern PATTERN_PARAMS = Pattern.compile("\\{(.*?)}");
 
-    /**
-     * 更新站内信模版
-     *
-     * @param updateReqVO 更新信息
-     */
-    void updateNotifyTemplate(@Valid NotifyTemplateSaveReqVO updateReqVO);
+    @Resource
+    private NotifyTemplateMapper notifyTemplateMapper;
 
-    /**
-     * 删除站内信模版
-     *
-     * @param id 编号
-     */
-    void deleteNotifyTemplate(Long id);
+    public Long createNotifyTemplate(NotifyTemplateSaveReqVO createReqVO) {
+        // 校验站内信编码是否重复
+        validateNotifyTemplateCodeDuplicate(null, createReqVO.getCode());
 
-    /**
-     * 批量删除站内信模版
-     *
-     * @param ids 编号列表
-     */
-    void deleteNotifyTemplateList(List<Long> ids);
+        // 插入
+        NotifyTemplateDO notifyTemplate = BeanUtils.toBean(createReqVO, NotifyTemplateDO.class);
+        notifyTemplate.setParams(parseTemplateContentParams(notifyTemplate.getContent()));
+        notifyTemplateMapper.insert(notifyTemplate);
+        return notifyTemplate.getId();
+    }
 
-    /**
-     * 获得站内信模版
-     *
-     * @param id 编号
-     * @return 站内信模版
-     */
-    NotifyTemplateDO getNotifyTemplate(Long id);
+    @CacheEvict(cacheNames = RedisKeyConstants.NOTIFY_TEMPLATE,
+            allEntries = true) // allEntries 清空所有缓存，因为可能修改到 code 字段，不好清理
+    public void updateNotifyTemplate(NotifyTemplateSaveReqVO updateReqVO) {
+        // 校验存在
+        validateNotifyTemplateExists(updateReqVO.getId());
+        // 校验站内信编码是否重复
+        validateNotifyTemplateCodeDuplicate(updateReqVO.getId(), updateReqVO.getCode());
 
-    /**
-     * 获得站内信模板，从缓存中
-     *
-     * @param code 模板编码
-     * @return 站内信模板
-     */
-    NotifyTemplateDO getNotifyTemplateByCodeFromCache(String code);
+        // 更新
+        NotifyTemplateDO updateObj = BeanUtils.toBean(updateReqVO, NotifyTemplateDO.class);
+        updateObj.setParams(parseTemplateContentParams(updateObj.getContent()));
+        notifyTemplateMapper.updateById(updateObj);
+    }
 
-    /**
-     * 获得站内信模版分页
-     *
-     * @param pageReqVO 分页查询
-     * @return 站内信模版分页
-     */
-    PageResult<NotifyTemplateDO> getNotifyTemplatePage(NotifyTemplatePageReqVO pageReqVO);
+    @VisibleForTesting
+    public List<String> parseTemplateContentParams(String content) {
+        return ReUtil.findAllGroup1(PATTERN_PARAMS, content);
+    }
 
-    /**
-     * 获得指定状态的站内信模版列表
-     *
-     * @param status 状态
-     * @return 站内信模版列表
-     */
-    List<NotifyTemplateDO> getNotifyTemplateListByStatus(Integer status);
+    @CacheEvict(cacheNames = RedisKeyConstants.NOTIFY_TEMPLATE,
+            allEntries = true) // allEntries 清空所有缓存，因为 id 不是直接的缓存 code，不好清理
+    public void deleteNotifyTemplate(Long id) {
+        // 校验存在
+        validateNotifyTemplateExists(id);
+        // 删除
+        notifyTemplateMapper.deleteById(id);
+    }
+
+    @CacheEvict(cacheNames = RedisKeyConstants.NOTIFY_TEMPLATE,
+            allEntries = true) // allEntries 清空所有缓存，因为 id 不是直接的缓存 code，不好清理
+    public void deleteNotifyTemplateList(List<Long> ids) {
+        notifyTemplateMapper.deleteByIds(ids);
+    }
+
+    private void validateNotifyTemplateExists(Long id) {
+        if (notifyTemplateMapper.selectById(id) == null) {
+            throw exception(NOTIFY_TEMPLATE_NOT_EXISTS);
+        }
+    }
+
+    public NotifyTemplateDO getNotifyTemplate(Long id) {
+        return notifyTemplateMapper.selectById(id);
+    }
+
+    @Cacheable(cacheNames = RedisKeyConstants.NOTIFY_TEMPLATE, key = "#code",
+            unless = "#result == null")
+    public NotifyTemplateDO getNotifyTemplateByCodeFromCache(String code) {
+        return notifyTemplateMapper.selectByCode(code);
+    }
+
+    public PageResult<NotifyTemplateDO> getNotifyTemplatePage(NotifyTemplatePageReqVO pageReqVO) {
+        return notifyTemplateMapper.selectPage(pageReqVO);
+    }
+
+    public List<NotifyTemplateDO> getNotifyTemplateListByStatus(Integer status) {
+        return notifyTemplateMapper.selectListByStatus(status);
+    }
+
+    @VisibleForTesting
+    void validateNotifyTemplateCodeDuplicate(Long id, String code) {
+        NotifyTemplateDO template = notifyTemplateMapper.selectByCode(code);
+        if (template == null) {
+            return;
+        }
+        // 如果 id 为空，说明不用比较是否为相同 id 的字典类型
+        if (id == null) {
+            throw exception(NOTIFY_TEMPLATE_CODE_DUPLICATE, code);
+        }
+        if (!template.getId().equals(id)) {
+            throw exception(NOTIFY_TEMPLATE_CODE_DUPLICATE, code);
+        }
+    }
 
     /**
      * 格式化站内信内容
      *
      * @param content 站内信模板的内容
-     * @param params 站内信内容的参数
+     * @param params  站内信内容的参数
      * @return 格式化后的内容
      */
-    String formatNotifyTemplateContent(String content, Map<String, Object> params);
+    public String formatNotifyTemplateContent(String content, Map<String, Object> params) {
+        return StrUtil.format(content, params);
+    }
 
 }

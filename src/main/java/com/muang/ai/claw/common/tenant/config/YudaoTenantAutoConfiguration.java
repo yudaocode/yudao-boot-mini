@@ -12,7 +12,7 @@ import com.muang.ai.claw.common.tenant.core.job.TenantJobAspect;
 import com.muang.ai.claw.common.tenant.core.redis.TenantRedisCacheManager;
 import com.muang.ai.claw.common.tenant.core.security.TenantSecurityWebFilter;
 import com.muang.ai.claw.common.tenant.core.service.TenantFrameworkService;
-import com.muang.ai.claw.common.tenant.core.service.TenantFrameworkServiceImpl;
+import com.muang.ai.claw.common.tenant.core.service.TenantFrameworkService;
 import com.muang.ai.claw.common.tenant.core.web.TenantContextWebFilter;
 import com.muang.ai.claw.interceptor.TenantVisitContextInterceptor;
 import com.muang.ai.claw.common.web.config.WebProperties;
@@ -54,7 +54,7 @@ public class YudaoTenantAutoConfiguration {
 
     @Bean
     public TenantFrameworkService tenantFrameworkService(TenantCommonApi tenantApi) {
-        return new TenantFrameworkServiceImpl(tenantApi);
+        return new TenantFrameworkService(tenantApi);
     }
 
     // ========== AOP ==========

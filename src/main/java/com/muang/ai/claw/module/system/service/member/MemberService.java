@@ -1,25 +1,51 @@
 package com.muang.ai.claw.module.system.service.member;
 
+import cn.hutool.core.util.ClassUtil;
+import cn.hutool.core.util.ReflectUtil;
+import cn.hutool.extra.spring.SpringUtil;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
 /**
- * Member Service 接口
+ * Member Service 实现类
  *
  */
-public interface MemberService {
+@Service
+public class MemberService {
 
-    /**
-     * 获得会员用户的手机号码
-     *
-     * @param id 会员用户编号
-     * @return 手机号码
-     */
-    String getMemberUserMobile(Long id);
+    @Value("${yudao.info.base-package}")
+    private String basePackage;
 
-    /**
-     * 获得会员用户的邮箱
-     *
-     * @param id 会员用户编号
-     * @return 邮箱
-     */
-    String getMemberUserEmail(Long id);
+    private volatile Object memberUserApi;
+
+    public String getMemberUserMobile(Long id) {
+        Object user = getMemberUser(id);
+        if (user == null) {
+            return null;
+        }
+        return ReflectUtil.invoke(user, "getMobile");
+    }
+
+    public String getMemberUserEmail(Long id) {
+        Object user = getMemberUser(id);
+        if (user == null) {
+            return null;
+        }
+        return ReflectUtil.invoke(user, "getEmail");
+    }
+
+    private Object getMemberUser(Long id) {
+        if (id == null) {
+            return null;
+        }
+        return ReflectUtil.invoke(getMemberUserApi(), "getUser", id);
+    }
+
+    private Object getMemberUserApi() {
+        if (memberUserApi == null) {
+            memberUserApi = SpringUtil.getBean(ClassUtil.loadClass(String.format("%s.module.member.api.user.MemberUserApi", basePackage)));
+        }
+        return memberUserApi;
+    }
 
 }

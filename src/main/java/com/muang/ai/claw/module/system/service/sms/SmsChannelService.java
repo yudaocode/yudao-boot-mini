@@ -1,88 +1,107 @@
 package com.muang.ai.claw.module.system.service.sms;
 
 import com.muang.ai.claw.common.pojo.PageResult;
+import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.module.system.controller.admin.sms.vo.channel.SmsChannelPageReqVO;
 import com.muang.ai.claw.module.system.controller.admin.sms.vo.channel.SmsChannelSaveReqVO;
 import com.muang.ai.claw.module.system.dal.dataobject.sms.SmsChannelDO;
+import com.muang.ai.claw.module.system.dal.mysql.sms.SmsChannelMapper;
 import com.muang.ai.claw.module.system.framework.sms.core.client.SmsClient;
-import jakarta.validation.Valid;
+import com.muang.ai.claw.module.system.framework.sms.core.client.SmsClientFactory;
+import com.muang.ai.claw.module.system.framework.sms.core.property.SmsChannelProperties;
+import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
+import static com.muang.ai.claw.module.system.enums.ErrorCodeConstants.SMS_CHANNEL_HAS_CHILDREN;
+import static com.muang.ai.claw.module.system.enums.ErrorCodeConstants.SMS_CHANNEL_NOT_EXISTS;
+
 /**
- * 短信渠道 Service 接口
+ * 短信渠道 Service 实现类
  *
  * @author zzf
- * @since 2021/1/25 9:24
  */
-public interface SmsChannelService {
+@Service
+@Slf4j
+public class SmsChannelService {
 
-    /**
-     * 创建短信渠道
-     *
-     * @param createReqVO 创建信息
-     * @return 编号
-     */
-    Long createSmsChannel(@Valid SmsChannelSaveReqVO createReqVO);
+    @Resource
+    private SmsClientFactory smsClientFactory;
 
-    /**
-     * 更新短信渠道
-     *
-     * @param updateReqVO 更新信息
-     */
-    void updateSmsChannel(@Valid SmsChannelSaveReqVO updateReqVO);
+    @Resource
+    private SmsChannelMapper smsChannelMapper;
 
-    /**
-     * 删除短信渠道
-     *
-     * @param id 编号
-     */
-    void deleteSmsChannel(Long id);
+    @Resource
+    private SmsTemplateService smsTemplateService;
 
-    /**
-     * 批量删除短信渠道
-     *
-     * @param ids 编号数组
-     */
-    void deleteSmsChannelList(List<Long> ids);
+    public Long createSmsChannel(SmsChannelSaveReqVO createReqVO) {
+        SmsChannelDO channel = BeanUtils.toBean(createReqVO, SmsChannelDO.class);
+        smsChannelMapper.insert(channel);
+        return channel.getId();
+    }
 
-    /**
-     * 获得短信渠道
-     *
-     * @param id 编号
-     * @return 短信渠道
-     */
-    SmsChannelDO getSmsChannel(Long id);
+    public void updateSmsChannel(SmsChannelSaveReqVO updateReqVO) {
+        // 校验存在
+        validateSmsChannelExists(updateReqVO.getId());
+        // 更新
+        SmsChannelDO updateObj = BeanUtils.toBean(updateReqVO, SmsChannelDO.class);
+        smsChannelMapper.updateById(updateObj);
+    }
 
-    /**
-     * 获得所有短信渠道列表
-     *
-     * @return 短信渠道列表
-     */
-    List<SmsChannelDO> getSmsChannelList();
+    public void deleteSmsChannel(Long id) {
+        // 校验存在
+        validateSmsChannelExists(id);
+        // 校验是否有在使用该账号的模版
+        if (smsTemplateService.getSmsTemplateCountByChannelId(id) > 0) {
+            throw exception(SMS_CHANNEL_HAS_CHILDREN);
+        }
+        // 删除
+        smsChannelMapper.deleteById(id);
+    }
 
-    /**
-     * 获得短信渠道分页
-     *
-     * @param pageReqVO 分页查询
-     * @return 短信渠道分页
-     */
-    PageResult<SmsChannelDO> getSmsChannelPage(SmsChannelPageReqVO pageReqVO);
+    public void deleteSmsChannelList(List<Long> ids) {
+        // 1. 校验是否有在使用该账号的模版
+        ids.forEach(id -> {
+            if (smsTemplateService.getSmsTemplateCountByChannelId(id) > 0) {
+                throw exception(SMS_CHANNEL_HAS_CHILDREN);
+            }
+        });
 
-    /**
-     * 获得短信客户端
-     *
-     * @param id 编号
-     * @return 短信客户端
-     */
-    SmsClient getSmsClient(Long id);
+        // 2. 批量删除
+        smsChannelMapper.deleteByIds(ids);
+    }
 
-    /**
-     * 获得短信客户端
-     *
-     * @param code 编码
-     * @return 短信客户端
-     */
-    SmsClient getSmsClient(String code);
+    private SmsChannelDO validateSmsChannelExists(Long id) {
+        SmsChannelDO channel = smsChannelMapper.selectById(id);
+        if (channel == null) {
+            throw exception(SMS_CHANNEL_NOT_EXISTS);
+        }
+        return channel;
+    }
+
+    public SmsChannelDO getSmsChannel(Long id) {
+        return smsChannelMapper.selectById(id);
+    }
+
+    public List<SmsChannelDO> getSmsChannelList() {
+        return smsChannelMapper.selectList();
+    }
+
+    public PageResult<SmsChannelDO> getSmsChannelPage(SmsChannelPageReqVO pageReqVO) {
+        return smsChannelMapper.selectPage(pageReqVO);
+    }
+
+    public SmsClient getSmsClient(Long id) {
+        SmsChannelDO channel = smsChannelMapper.selectById(id);
+        SmsChannelProperties properties = BeanUtils.toBean(channel, SmsChannelProperties.class);
+        return smsClientFactory.createOrUpdateSmsClient(properties);
+    }
+
+    public SmsClient getSmsClient(String code) {
+        return smsClientFactory.getSmsClient(code);
+    }
 
 }

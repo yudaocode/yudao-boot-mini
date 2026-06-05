@@ -1,77 +1,185 @@
 package com.muang.ai.claw.module.system.service.sms;
 
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.exceptions.ExceptionUtil;
+import cn.hutool.core.lang.Assert;
+import cn.hutool.core.util.StrUtil;
+import com.muang.ai.claw.common.core.KeyValue;
+import com.muang.ai.claw.constant.CommonStatusEnum;
+import com.muang.ai.claw.constant.UserTypeEnum;
+import com.muang.ai.claw.common.datapermission.core.annotation.DataPermission;
+import com.muang.ai.claw.module.system.framework.sms.core.client.SmsClient;
+import com.muang.ai.claw.module.system.framework.sms.core.client.dto.SmsReceiveRespDTO;
+import com.muang.ai.claw.module.system.framework.sms.core.client.dto.SmsSendRespDTO;
+import com.muang.ai.claw.module.system.dal.dataobject.sms.SmsChannelDO;
+import com.muang.ai.claw.module.system.dal.dataobject.sms.SmsTemplateDO;
+import com.muang.ai.claw.module.system.dal.dataobject.user.AdminUserDO;
 import com.muang.ai.claw.module.system.mq.message.sms.SmsSendMessage;
+import com.muang.ai.claw.module.system.mq.producer.sms.SmsProducer;
+import com.muang.ai.claw.module.system.service.member.MemberService;
+import com.muang.ai.claw.module.system.service.user.AdminUserService;
+import com.google.common.annotations.VisibleForTesting;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
+import jakarta.annotation.Resource;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
+import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
+import static com.muang.ai.claw.module.system.enums.ErrorCodeConstants.*;
 
 /**
- * 短信发送 Service 接口
+ * 短信发送 Service 发送的实现
  *
  */
-public interface SmsSendService {
+@Service
+@Slf4j
+public class SmsSendService {
 
-    /**
-     * 发送单条短信给管理后台的用户
-     *
-     * 在 mobile 为空时，使用 userId 加载对应管理员的手机号
-     *
-     * @param mobile 手机号
-     * @param userId 用户编号
-     * @param templateCode 短信模板编号
-     * @param templateParams 短信模板参数
-     * @return 发送日志编号
-     */
-    Long sendSingleSmsToAdmin(String mobile, Long userId,
-                              String templateCode, Map<String, Object> templateParams);
+    @Resource
+    private AdminUserService adminUserService;
+    @Resource
+    private MemberService memberService;
+    @Resource
+    private SmsChannelService smsChannelService;
+    @Resource
+    private SmsTemplateService smsTemplateService;
+    @Resource
+    private SmsLogService smsLogService;
 
-    /**
-     * 发送单条短信给用户 APP 的用户
-     *
-     * 在 mobile 为空时，使用 userId 加载对应会员的手机号
-     *
-     * @param mobile 手机号
-     * @param userId 用户编号
-     * @param templateCode 短信模板编号
-     * @param templateParams 短信模板参数
-     * @return 发送日志编号
-     */
-    Long sendSingleSmsToMember(String mobile, Long userId,
-                               String templateCode, Map<String, Object> templateParams);
+    @Resource
+    private SmsProducer smsProducer;
 
-    /**
-     * 发送单条短信给用户
-     *
-     * @param mobile 手机号
-     * @param userId 用户编号
-     * @param userType 用户类型
-     * @param templateCode 短信模板编号
-     * @param templateParams 短信模板参数
-     * @return 发送日志编号
-     */
-    Long sendSingleSms(String mobile, Long userId, Integer userType,
-                       String templateCode, Map<String, Object> templateParams);
+    @DataPermission(enable = false) // 发送短信时，无需考虑数据权限
+    public Long sendSingleSmsToAdmin(String mobile, Long userId, String templateCode, Map<String, Object> templateParams) {
+        // 如果 mobile 为空，则加载用户编号对应的手机号
+        if (StrUtil.isEmpty(mobile)) {
+            AdminUserDO user = adminUserService.getUser(userId);
+            if (user != null) {
+                mobile = user.getMobile();
+            }
+        }
+        // 执行发送
+        return sendSingleSms(mobile, userId, UserTypeEnum.ADMIN.getValue(), templateCode, templateParams);
+    }
 
-    default void sendBatchSms(List<String> mobiles, List<Long> userIds, Integer userType,
+    public Long sendSingleSmsToMember(String mobile, Long userId, String templateCode, Map<String, Object> templateParams) {
+        // 如果 mobile 为空，则加载用户编号对应的手机号
+        if (StrUtil.isEmpty(mobile)) {
+            mobile = memberService.getMemberUserMobile(userId);
+        }
+        // 执行发送
+        return sendSingleSms(mobile, userId, UserTypeEnum.MEMBER.getValue(), templateCode, templateParams);
+    }
+
+    public Long sendSingleSms(String mobile, Long userId, Integer userType,
                               String templateCode, Map<String, Object> templateParams) {
-        throw new UnsupportedOperationException("暂时不支持该操作，感兴趣可以实现该功能哟！");
+        // 校验短信模板是否合法
+        SmsTemplateDO template = validateSmsTemplate(templateCode);
+        // 校验短信渠道是否合法
+        SmsChannelDO smsChannel = validateSmsChannel(template.getChannelId());
+
+        // 校验手机号码是否存在
+        mobile = validateMobile(mobile);
+        // 构建有序的模板参数。为什么放在这个位置，是提前保证模板参数的正确性，而不是到了插入发送日志
+        List<KeyValue<String, Object>> newTemplateParams = buildTemplateParams(template, templateParams);
+
+        // 创建发送日志。如果模板被禁用，则不发送短信，只记录日志
+        Boolean isSend = CommonStatusEnum.ENABLE.getStatus().equals(template.getStatus())
+                && CommonStatusEnum.ENABLE.getStatus().equals(smsChannel.getStatus());
+        String content = smsTemplateService.formatSmsTemplateContent(template.getContent(), templateParams);
+        Long sendLogId = smsLogService.createSmsLog(mobile, userId, userType, isSend, template, content, templateParams);
+
+        // 发送 MQ 消息，异步执行发送短信
+        if (isSend) {
+            smsProducer.sendSmsSendMessage(sendLogId, mobile, template.getChannelId(),
+                    template.getApiTemplateId(), newTemplateParams);
+        }
+        return sendLogId;
+    }
+
+    @VisibleForTesting
+    SmsChannelDO validateSmsChannel(Long channelId) {
+        // 获得短信模板。考虑到效率，从缓存中获取
+        SmsChannelDO channelDO = smsChannelService.getSmsChannel(channelId);
+        // 短信模板不存在
+        if (channelDO == null) {
+            throw exception(SMS_CHANNEL_NOT_EXISTS);
+        }
+        return channelDO;
+    }
+
+    @VisibleForTesting
+    SmsTemplateDO validateSmsTemplate(String templateCode) {
+        // 获得短信模板。考虑到效率，从缓存中获取
+        SmsTemplateDO template = smsTemplateService.getSmsTemplateByCodeFromCache(templateCode);
+        // 短信模板不存在
+        if (template == null) {
+            throw exception(SMS_SEND_TEMPLATE_NOT_EXISTS);
+        }
+        return template;
     }
 
     /**
-     * 执行真正的短信发送
-     * 注意，该方法仅仅提供给 MQ Consumer 使用
+     * 将参数模板，处理成有序的 KeyValue 数组
+     * <p>
+     * 原因是，部分短信平台并不是使用 key 作为参数，而是数组下标，例如说 <a href="https://cloud.tencent.com/document/product/382/39023">腾讯云</a>
      *
-     * @param message 短信
+     * @param template       短信模板
+     * @param templateParams 原始参数
+     * @return 处理后的参数
      */
-    void doSendSms(SmsSendMessage message);
+    @VisibleForTesting
+    List<KeyValue<String, Object>> buildTemplateParams(SmsTemplateDO template, Map<String, Object> templateParams) {
+        return template.getParams().stream().map(key -> {
+            Object value = templateParams.get(key);
+            if (value == null) {
+                throw exception(SMS_SEND_MOBILE_TEMPLATE_PARAM_MISS, key);
+            }
+            return new KeyValue<>(key, value);
+        }).collect(Collectors.toList());
+    }
 
-    /**
-     * 接收短信的接收结果
-     *
-     * @param channelCode 渠道编码
-     * @param text 结果内容
-     * @throws Throwable 处理失败时，抛出异常
-     */
-    void receiveSmsStatus(String channelCode, String text) throws Throwable;
+    @VisibleForTesting
+    public String validateMobile(String mobile) {
+        if (StrUtil.isEmpty(mobile)) {
+            throw exception(SMS_SEND_MOBILE_NOT_EXISTS);
+        }
+        return mobile;
+    }
+
+    public void doSendSms(SmsSendMessage message) {
+        // 获得渠道对应的 SmsClient 客户端
+        SmsClient smsClient = smsChannelService.getSmsClient(message.getChannelId());
+        Assert.notNull(smsClient, "短信客户端({}) 不存在", message.getChannelId());
+        // 发送短信
+        try {
+            SmsSendRespDTO sendResponse = smsClient.sendSms(message.getLogId(), message.getMobile(),
+                    message.getApiTemplateId(), message.getTemplateParams());
+            smsLogService.updateSmsSendResult(message.getLogId(), sendResponse.getSuccess(),
+                    sendResponse.getApiCode(), sendResponse.getApiMsg(),
+                    sendResponse.getApiRequestId(), sendResponse.getSerialNo());
+        } catch (Throwable ex) {
+            log.error("[doSendSms][发送短信异常，日志编号({})]", message.getLogId(), ex);
+            smsLogService.updateSmsSendResult(message.getLogId(), false,
+                    "EXCEPTION", ExceptionUtil.getRootCauseMessage(ex), null, null);
+        }
+    }
+
+    public void receiveSmsStatus(String channelCode, String text) throws Throwable {
+        // 获得渠道对应的 SmsClient 客户端
+        SmsClient smsClient = smsChannelService.getSmsClient(channelCode);
+        Assert.notNull(smsClient, "短信客户端({}) 不存在", channelCode);
+        // 解析内容
+        List<SmsReceiveRespDTO> receiveResults = smsClient.parseSmsReceiveStatus(text);
+        if (CollUtil.isEmpty(receiveResults)) {
+            return;
+        }
+        // 更新短信日志的接收结果. 因为量一般不大，所以先使用 for 循环更新
+        receiveResults.forEach(result -> smsLogService.updateSmsReceiveResult(result.getLogId(), result.getSerialNo(),
+                result.getSuccess(), result.getReceiveTime(), result.getErrorCode(), result.getErrorMsg()));
+    }
 
 }

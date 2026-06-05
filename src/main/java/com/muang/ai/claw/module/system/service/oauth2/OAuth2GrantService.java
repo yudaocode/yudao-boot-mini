@@ -1,112 +1,96 @@
 package com.muang.ai.claw.module.system.service.oauth2;
 
+import cn.hutool.core.lang.Assert;
+import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
+import com.muang.ai.claw.constant.UserTypeEnum;
 import com.muang.ai.claw.module.system.dal.dataobject.oauth2.OAuth2AccessTokenDO;
+import com.muang.ai.claw.module.system.dal.dataobject.oauth2.OAuth2CodeDO;
+import com.muang.ai.claw.module.system.dal.dataobject.user.AdminUserDO;
+import com.muang.ai.claw.module.system.enums.ErrorCodeConstants;
+import com.muang.ai.claw.module.system.service.auth.AdminAuthService;
+import org.springframework.stereotype.Service;
 
+import jakarta.annotation.Resource;
 import java.util.List;
 
+import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
+
 /**
- * OAuth2 授予 Service 接口
- *
- * 从功能上，和 Spring Security OAuth 的 TokenGranter 的功能，提供访问令牌、刷新令牌的操作
- *
- * 将自身的 AdminUser 用户，授权给第三方应用，采用 OAuth2.0 的协议。
- *
- * 问题：为什么自身也作为一个第三方应用，也走这套流程呢？
- * 回复：当然可以这么做，采用 password 模式。考虑到大多数开发者使用不到这个特性，OAuth2.0 毕竟有一定学习成本，所以暂时没有采取这种方式。
+ * OAuth2 授予 Service 实现类
  *
  */
-public interface OAuth2GrantService {
+@Service
+public class OAuth2GrantService {
 
-    /**
-     * 简化模式
-     *
-     * 对应 Spring Security OAuth2 的 ImplicitTokenGranter 功能
-     *
-     * @param userId 用户编号
-     * @param userType 用户类型
-     * @param clientId 客户端编号
-     * @param scopes 授权范围
-     * @return 访问令牌
-     */
-    OAuth2AccessTokenDO grantImplicit(Long userId, Integer userType,
-                                      String clientId, List<String> scopes);
+    @Resource
+    private OAuth2TokenService oauth2TokenService;
+    @Resource
+    private OAuth2CodeService oauth2CodeService;
+    @Resource
+    private AdminAuthService adminAuthService;
 
-    /**
-     * 授权码模式，第一阶段，获得 code 授权码
-     *
-     * 对应 Spring Security OAuth2 的 AuthorizationEndpoint 的 generateCode 方法
-     *
-     * @param userId 用户编号
-     * @param userType 用户类型
-     * @param clientId 客户端编号
-     * @param scopes 授权范围
-     * @param redirectUri 重定向 URI
-     * @param state 状态
-     * @return 授权码
-     */
-    String grantAuthorizationCodeForCode(Long userId, Integer userType,
-                                         String clientId, List<String> scopes,
-                                         String redirectUri, String state);
+    public OAuth2AccessTokenDO grantImplicit(Long userId, Integer userType,
+                                             String clientId, List<String> scopes) {
+        return oauth2TokenService.createAccessToken(userId, userType, clientId, scopes);
+    }
 
-    /**
-     * 授权码模式，第二阶段，获得 accessToken 访问令牌
-     *
-     * 对应 Spring Security OAuth2 的 AuthorizationCodeTokenGranter 功能
-     *
-     * @param clientId 客户端编号
-     * @param code 授权码
-     * @param redirectUri 重定向 URI
-     * @param state 状态
-     * @return 访问令牌
-     */
-    OAuth2AccessTokenDO grantAuthorizationCodeForAccessToken(String clientId, String code,
-                                                             String redirectUri, String state);
+    public String grantAuthorizationCodeForCode(Long userId, Integer userType,
+                                                String clientId, List<String> scopes,
+                                                String redirectUri, String state) {
+        return oauth2CodeService.createAuthorizationCode(userId, userType, clientId, scopes,
+                redirectUri, state).getCode();
+    }
 
-    /**
-     * 密码模式
-     *
-     * 对应 Spring Security OAuth2 的 ResourceOwnerPasswordTokenGranter 功能
-     *
-     * @param username 账号
-     * @param password 密码
-     * @param clientId 客户端编号
-     * @param scopes 授权范围
-     * @return 访问令牌
-     */
-    OAuth2AccessTokenDO grantPassword(String username, String password,
-                                      String clientId, List<String> scopes);
+    public OAuth2AccessTokenDO grantAuthorizationCodeForAccessToken(String clientId, String code,
+                                                                    String redirectUri, String state) {
+        OAuth2CodeDO codeDO = oauth2CodeService.consumeAuthorizationCode(code);
+        Assert.notNull(codeDO, "授权码不能为空"); // 防御性编程
+        // 校验 clientId 是否匹配
+        if (!StrUtil.equals(clientId, codeDO.getClientId())) {
+            throw exception(ErrorCodeConstants.OAUTH2_GRANT_CLIENT_ID_MISMATCH);
+        }
+        // 校验 redirectUri 是否匹配
+        if (!StrUtil.equals(redirectUri, codeDO.getRedirectUri())) {
+            throw exception(ErrorCodeConstants.OAUTH2_GRANT_REDIRECT_URI_MISMATCH);
+        }
+        // 校验 state 是否匹配
+        state = StrUtil.nullToDefault(state, ""); // 数据库 state 为 null 时，会设置为 "" 空串
+        if (!StrUtil.equals(state, codeDO.getState())) {
+            throw exception(ErrorCodeConstants.OAUTH2_GRANT_STATE_MISMATCH);
+        }
 
-    /**
-     * 刷新模式
-     *
-     * 对应 Spring Security OAuth2 的 ResourceOwnerPasswordTokenGranter 功能
-     *
-     * @param refreshToken 刷新令牌
-     * @param clientId 客户端编号
-     * @return 访问令牌
-     */
-    OAuth2AccessTokenDO grantRefreshToken(String refreshToken, String clientId);
+        // 创建访问令牌
+        return oauth2TokenService.createAccessToken(codeDO.getUserId(), codeDO.getUserType(),
+                codeDO.getClientId(), codeDO.getScopes());
+    }
 
-    /**
-     * 客户端模式
-     *
-     * 对应 Spring Security OAuth2 的 ClientCredentialsTokenGranter 功能
-     *
-     * @param clientId 客户端编号
-     * @param scopes 授权范围
-     * @return 访问令牌
-     */
-    OAuth2AccessTokenDO grantClientCredentials(String clientId, List<String> scopes);
+    public OAuth2AccessTokenDO grantPassword(String username, String password, String clientId, List<String> scopes) {
+        // 使用账号 + 密码进行登录
+        AdminUserDO user = adminAuthService.authenticate(username, password);
+        Assert.notNull(user, "用户不能为空！"); // 防御性编程
 
-    /**
-     * 移除访问令牌
-     *
-     * 对应 Spring Security OAuth2 的 ConsumerTokenServices 的 revokeToken 方法
-     *
-     * @param accessToken 访问令牌
-     * @param clientId 客户端编号
-     * @return 是否移除到
-     */
-    boolean revokeToken(String clientId, String accessToken);
+        // 创建访问令牌
+        return oauth2TokenService.createAccessToken(user.getId(), UserTypeEnum.ADMIN.getValue(), clientId, scopes);
+    }
+
+    public OAuth2AccessTokenDO grantRefreshToken(String refreshToken, String clientId) {
+        return oauth2TokenService.refreshAccessToken(refreshToken, clientId);
+    }
+
+    public OAuth2AccessTokenDO grantClientCredentials(String clientId, List<String> scopes) {
+        // 特殊：https://yuanbao.tencent.com/bot/app/share/chat/wFj642xSZHHx
+        return oauth2TokenService.createAccessToken(0L, UserTypeEnum.ADMIN.getValue(), clientId, scopes);
+    }
+
+    public boolean revokeToken(String clientId, String accessToken) {
+        // 先查询，保证 clientId 时匹配的
+        OAuth2AccessTokenDO accessTokenDO = oauth2TokenService.getAccessToken(accessToken);
+        if (accessTokenDO == null || ObjectUtil.notEqual(clientId, accessTokenDO.getClientId())) {
+            return false;
+        }
+        // 再删除
+        return oauth2TokenService.removeAccessToken(accessToken) != null;
+    }
 
 }

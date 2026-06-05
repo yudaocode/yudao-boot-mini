@@ -4,74 +4,84 @@ import com.muang.ai.claw.common.pojo.PageResult;
 import com.muang.ai.claw.module.system.controller.admin.sms.vo.log.SmsLogPageReqVO;
 import com.muang.ai.claw.module.system.dal.dataobject.sms.SmsLogDO;
 import com.muang.ai.claw.module.system.dal.dataobject.sms.SmsTemplateDO;
+import com.muang.ai.claw.module.system.dal.mysql.sms.SmsLogMapper;
+import com.muang.ai.claw.module.system.enums.sms.SmsReceiveStatusEnum;
+import com.muang.ai.claw.module.system.enums.sms.SmsSendStatusEnum;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
+import jakarta.annotation.Resource;
 
 import java.time.LocalDateTime;
 import java.util.Map;
+import java.util.Objects;
 
 /**
- * 短信日志 Service 接口
+ * 短信日志 Service 实现类
  *
  * @author zzf
- * @since 13:48 2021/3/2
  */
-public interface SmsLogService {
+@Slf4j
+@Service
+public class SmsLogService {
 
-    /**
-     * 创建短信日志
-     *
-     * @param mobile 手机号
-     * @param userId 用户编号
-     * @param userType 用户类型
-     * @param isSend 是否发送
-     * @param template 短信模板
-     * @param templateContent 短信内容
-     * @param templateParams 短信参数
-     * @return 发送日志编号
-     */
-    Long createSmsLog(String mobile, Long userId, Integer userType, Boolean isSend,
-                      SmsTemplateDO template, String templateContent, Map<String, Object> templateParams);
+    @Resource
+    private SmsLogMapper smsLogMapper;
 
-    /**
-     * 更新日志的发送结果
-     *
-     * @param id 日志编号
-     * @param success 发送是否成功
-     * @param apiSendCode 短信 API 发送结果的编码
-     * @param apiSendMsg 短信 API 发送失败的提示
-     * @param apiRequestId 短信 API 发送返回的唯一请求 ID
-     * @param apiSerialNo 短信 API 发送返回的序号
-     */
-    void updateSmsSendResult(Long id, Boolean success,
-                             String apiSendCode, String apiSendMsg,
-                             String apiRequestId, String apiSerialNo);
+    public Long createSmsLog(String mobile, Long userId, Integer userType, Boolean isSend,
+                             SmsTemplateDO template, String templateContent, Map<String, Object> templateParams) {
+        SmsLogDO.SmsLogDOBuilder logBuilder = SmsLogDO.builder();
+        // 根据是否要发送，设置状态
+        logBuilder.sendStatus(Objects.equals(isSend, true) ? SmsSendStatusEnum.INIT.getStatus()
+                : SmsSendStatusEnum.IGNORE.getStatus());
+        // 设置手机相关字段
+        logBuilder.mobile(mobile).userId(userId).userType(userType);
+        // 设置模板相关字段
+        logBuilder.templateId(template.getId()).templateCode(template.getCode()).templateType(template.getType());
+        logBuilder.templateContent(templateContent).templateParams(templateParams)
+                .apiTemplateId(template.getApiTemplateId());
+        // 设置渠道相关字段
+        logBuilder.channelId(template.getChannelId()).channelCode(template.getChannelCode());
+        // 设置接收相关字段
+        logBuilder.receiveStatus(SmsReceiveStatusEnum.INIT.getStatus());
 
-    /**
-     * 更新日志的接收结果
-     *
-     * @param id 日志编号
-     * @param apiSerialNo 发送编号
-     * @param success 是否接收成功
-     * @param receiveTime 用户接收时间
-     * @param apiReceiveCode API 接收结果的编码
-     * @param apiReceiveMsg API 接收结果的说明
-     */
-    void updateSmsReceiveResult(Long id, String apiSerialNo, Boolean success,
-                                LocalDateTime receiveTime, String apiReceiveCode, String apiReceiveMsg);
+        // 插入数据库
+        SmsLogDO logDO = logBuilder.build();
+        smsLogMapper.insert(logDO);
+        return logDO.getId();
+    }
 
-    /**
-     * 获得短信日志
-     *
-     * @param id 日志编号
-     * @return 短信日志
-     */
-    SmsLogDO getSmsLog(Long id);
+    public void updateSmsSendResult(Long id, Boolean success,
+                                    String apiSendCode, String apiSendMsg,
+                                    String apiRequestId, String apiSerialNo) {
+        SmsSendStatusEnum sendStatus = success ? SmsSendStatusEnum.SUCCESS : SmsSendStatusEnum.FAILURE;
+        smsLogMapper.updateById(SmsLogDO.builder().id(id)
+                .sendStatus(sendStatus.getStatus()).sendTime(LocalDateTime.now())
+                .apiSendCode(apiSendCode).apiSendMsg(apiSendMsg)
+                .apiRequestId(apiRequestId).apiSerialNo(apiSerialNo).build());
+    }
 
-    /**
-     * 获得短信日志分页
-     *
-     * @param pageReqVO 分页查询
-     * @return 短信日志分页
-     */
-    PageResult<SmsLogDO> getSmsLogPage(SmsLogPageReqVO pageReqVO);
+    public void updateSmsReceiveResult(Long id, String apiSerialNo, Boolean success, LocalDateTime receiveTime,
+                                       String apiReceiveCode, String apiReceiveMsg) {
+        SmsReceiveStatusEnum receiveStatus = Objects.equals(success, true) ?
+                SmsReceiveStatusEnum.SUCCESS : SmsReceiveStatusEnum.FAILURE;
+        if (id == null || id == 0) {
+            SmsLogDO log = smsLogMapper.selectByApiSerialNo(apiSerialNo);
+            if (log == null) {
+                return;
+            }
+            id = log.getId();
+        }
+        smsLogMapper.updateById(SmsLogDO.builder().id(id).receiveStatus(receiveStatus.getStatus())
+                .receiveTime(receiveTime).apiReceiveCode(apiReceiveCode).apiReceiveMsg(apiReceiveMsg).build());
+    }
+
+    public SmsLogDO getSmsLog(Long id) {
+        return smsLogMapper.selectById(id);
+    }
+
+    public PageResult<SmsLogDO> getSmsLogPage(SmsLogPageReqVO pageReqVO) {
+        return smsLogMapper.selectPage(pageReqVO);
+    }
 
 }

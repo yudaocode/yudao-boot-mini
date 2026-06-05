@@ -1,55 +1,83 @@
 package com.muang.ai.claw.module.system.service.notify;
 
-import java.util.List;
+import com.muang.ai.claw.constant.CommonStatusEnum;
+import com.muang.ai.claw.constant.UserTypeEnum;
+import com.muang.ai.claw.module.system.dal.dataobject.notify.NotifyTemplateDO;
+import com.google.common.annotations.VisibleForTesting;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
+
+import jakarta.annotation.Resource;
 import java.util.Map;
+import java.util.Objects;
+
+import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
+import static com.muang.ai.claw.module.system.enums.ErrorCodeConstants.*;
 
 /**
- * 站内信发送 Service 接口
+ * 站内信发送 Service 实现类
  *
  * @author xrcoder
  */
-public interface NotifySendService {
+@Service
+@Validated
+@Slf4j
+public class NotifySendService {
 
-    /**
-     * 发送单条站内信给管理后台的用户
-     *
-     * 在 mobile 为空时，使用 userId 加载对应管理员的手机号
-     *
-     * @param userId 用户编号
-     * @param templateCode 短信模板编号
-     * @param templateParams 短信模板参数
-     * @return 发送日志编号
-     */
-    Long sendSingleNotifyToAdmin(Long userId,
-                                 String templateCode, Map<String, Object> templateParams);
-    /**
-     * 发送单条站内信给用户 APP 的用户
-     *
-     * 在 mobile 为空时，使用 userId 加载对应会员的手机号
-     *
-     * @param userId 用户编号
-     * @param templateCode 站内信模板编号
-     * @param templateParams 站内信模板参数
-     * @return 发送日志编号
-     */
-    Long sendSingleNotifyToMember(Long userId,
-                                  String templateCode, Map<String, Object> templateParams);
+    @Resource
+    private NotifyTemplateService notifyTemplateService;
 
-    /**
-     * 发送单条站内信给用户
-     *
-     * @param userId 用户编号
-     * @param userType 用户类型
-     * @param templateCode 站内信模板编号
-     * @param templateParams 站内信模板参数
-     * @return 发送日志编号
-     */
-    Long sendSingleNotify( Long userId, Integer userType,
-                           String templateCode, Map<String, Object> templateParams);
+    @Resource
+    private NotifyMessageService notifyMessageService;
 
-    default void sendBatchNotify(List<String> mobiles, List<Long> userIds, Integer userType,
-                                 String templateCode, Map<String, Object> templateParams) {
-        throw new UnsupportedOperationException("暂时不支持该操作，感兴趣可以实现该功能哟！");
+    public Long sendSingleNotifyToAdmin(Long userId, String templateCode, Map<String, Object> templateParams) {
+        return sendSingleNotify(userId, UserTypeEnum.ADMIN.getValue(), templateCode, templateParams);
     }
 
+    public Long sendSingleNotifyToMember(Long userId, String templateCode, Map<String, Object> templateParams) {
+        return sendSingleNotify(userId, UserTypeEnum.MEMBER.getValue(), templateCode, templateParams);
+    }
+
+    public Long sendSingleNotify(Long userId, Integer userType, String templateCode, Map<String, Object> templateParams) {
+        // 校验模版
+        NotifyTemplateDO template = validateNotifyTemplate(templateCode);
+        if (Objects.equals(template.getStatus(), CommonStatusEnum.DISABLE.getStatus())) {
+            log.info("[sendSingleNotify][模版({})已经关闭，无法给用户({}/{})发送]", templateCode, userId, userType);
+            return null;
+        }
+        // 校验参数
+        validateTemplateParams(template, templateParams);
+
+        // 发送站内信
+        String content = notifyTemplateService.formatNotifyTemplateContent(template.getContent(), templateParams);
+        return notifyMessageService.createNotifyMessage(userId, userType, template, content, templateParams);
+    }
+
+    @VisibleForTesting
+    public NotifyTemplateDO validateNotifyTemplate(String templateCode) {
+        // 获得站内信模板。考虑到效率，从缓存中获取
+        NotifyTemplateDO template = notifyTemplateService.getNotifyTemplateByCodeFromCache(templateCode);
+        // 站内信模板不存在
+        if (template == null) {
+            throw exception(NOTICE_NOT_FOUND);
+        }
+        return template;
+    }
+
+    /**
+     * 校验站内信模版参数是否确实
+     *
+     * @param template 邮箱模板
+     * @param templateParams 参数列表
+     */
+    @VisibleForTesting
+    public void validateTemplateParams(NotifyTemplateDO template, Map<String, Object> templateParams) {
+        template.getParams().forEach(key -> {
+            Object value = templateParams.get(key);
+            if (value == null) {
+                throw exception(NOTIFY_SEND_TEMPLATE_PARAM_MISS, key);
+            }
+        });
+    }
 }

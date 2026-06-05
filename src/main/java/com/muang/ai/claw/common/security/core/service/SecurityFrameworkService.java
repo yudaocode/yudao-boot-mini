@@ -1,58 +1,77 @@
 package com.muang.ai.claw.common.security.core.service;
 
+import cn.hutool.core.collection.CollUtil;
+import com.muang.ai.claw.common.biz.system.permission.PermissionCommonApi;
+import com.muang.ai.claw.common.security.core.LoginUser;
+import com.muang.ai.claw.common.security.core.util.SecurityFrameworkUtils;
+import lombok.AllArgsConstructor;
+
+import java.util.Arrays;
+
+import static com.muang.ai.claw.common.security.core.util.SecurityFrameworkUtils.getLoginUserId;
+import static com.muang.ai.claw.common.security.core.util.SecurityFrameworkUtils.skipPermissionCheck;
+
 /**
- * Security 框架 Service 接口，定义权限相关的校验操作
+ * 默认的 {@link SecurityFrameworkService} 实现类
  *
  */
-public interface SecurityFrameworkService {
+@AllArgsConstructor
+public class SecurityFrameworkService {
 
-    /**
-     * 判断是否有权限
-     *
-     * @param permission 权限
-     * @return 是否
-     */
-    boolean hasPermission(String permission);
+    private final PermissionCommonApi permissionApi;
 
-    /**
-     * 判断是否有权限，任一一个即可
-     *
-     * @param permissions 权限
-     * @return 是否
-     */
-    boolean hasAnyPermissions(String... permissions);
+    public boolean hasPermission(String permission) {
+        return hasAnyPermissions(permission);
+    }
 
-    /**
-     * 判断是否有角色
-     *
-     * 注意，角色使用的是 SysRoleDO 的 code 标识
-     *
-     * @param role 角色
-     * @return 是否
-     */
-    boolean hasRole(String role);
+    public boolean hasAnyPermissions(String... permissions) {
+        // 特殊：跨租户访问
+        if (skipPermissionCheck()) {
+            return true;
+        }
 
-    /**
-     * 判断是否有角色，任一一个即可
-     *
-     * @param roles 角色数组
-     * @return 是否
-     */
-    boolean hasAnyRoles(String... roles);
+        // 权限校验
+        Long userId = getLoginUserId();
+        if (userId == null) {
+            return false;
+        }
+        return permissionApi.hasAnyPermissions(userId, permissions);
+    }
 
-    /**
-     * 判断是否有授权
-     *
-     * @param scope 授权
-     * @return 是否
-     */
-    boolean hasScope(String scope);
+    public boolean hasRole(String role) {
+        return hasAnyRoles(role);
+    }
 
-    /**
-     * 判断是否有授权范围，任一一个即可
-     *
-     * @param scope 授权范围数组
-     * @return 是否
-     */
-    boolean hasAnyScopes(String... scope);
+    public boolean hasAnyRoles(String... roles) {
+        // 特殊：跨租户访问
+        if (skipPermissionCheck()) {
+            return true;
+        }
+
+        // 权限校验
+        Long userId = getLoginUserId();
+        if (userId == null) {
+            return false;
+        }
+        return permissionApi.hasAnyRoles(userId, roles);
+    }
+
+    public boolean hasScope(String scope) {
+        return hasAnyScopes(scope);
+    }
+
+    public boolean hasAnyScopes(String... scope) {
+        // 特殊：跨租户访问
+        if (skipPermissionCheck()) {
+            return true;
+        }
+
+        // 权限校验
+        LoginUser user = SecurityFrameworkUtils.getLoginUser();
+        if (user == null) {
+            return false;
+        }
+        return CollUtil.containsAny(user.getScopes(), Arrays.asList(scope));
+    }
+
 }

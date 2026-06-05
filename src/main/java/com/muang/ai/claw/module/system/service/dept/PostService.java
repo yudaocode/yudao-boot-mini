@@ -1,90 +1,148 @@
 package com.muang.ai.claw.module.system.service.dept;
 
+import cn.hutool.core.collection.CollUtil;
+import com.muang.ai.claw.constant.CommonStatusEnum;
 import com.muang.ai.claw.common.pojo.PageResult;
+import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.module.system.controller.admin.dept.vo.post.PostPageReqVO;
 import com.muang.ai.claw.module.system.controller.admin.dept.vo.post.PostSaveReqVO;
 import com.muang.ai.claw.module.system.dal.dataobject.dept.PostDO;
-import org.springframework.lang.Nullable;
+import com.muang.ai.claw.module.system.dal.mysql.dept.PostMapper;
+import jakarta.annotation.Resource;
+import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+
+import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
+import static com.muang.ai.claw.util.collection.CollectionUtils.convertMap;
+import static com.muang.ai.claw.module.system.enums.ErrorCodeConstants.*;
 
 /**
- * 岗位 Service 接口
+ * 岗位 Service 实现类
  *
  */
-public interface PostService {
+@Service
+@Validated
+public class PostService {
 
-    /**
-     * 创建岗位
-     *
-     * @param createReqVO 岗位信息
-     * @return 岗位编号
-     */
-    Long createPost(PostSaveReqVO createReqVO);
+    @Resource
+    private PostMapper postMapper;
 
-    /**
-     * 更新岗位
-     *
-     * @param updateReqVO 岗位信息
-     */
-    void updatePost(PostSaveReqVO updateReqVO);
+    public Long createPost(PostSaveReqVO createReqVO) {
+        // 校验正确性
+        validatePostForCreateOrUpdate(null, createReqVO.getName(), createReqVO.getCode());
 
-    /**
-     * 删除岗位信息
-     *
-     * @param id 岗位编号
-     */
-    void deletePost(Long id);
+        // 插入岗位
+        PostDO post = BeanUtils.toBean(createReqVO, PostDO.class);
+        postMapper.insert(post);
+        return post.getId();
+    }
 
-    /**
-     * 批量删除岗位信息
-     *
-     * @param ids 岗位编号数组
-     */
-    void deletePostList(List<Long> ids);
+    public void updatePost(PostSaveReqVO updateReqVO) {
+        // 校验正确性
+        validatePostForCreateOrUpdate(updateReqVO.getId(), updateReqVO.getName(), updateReqVO.getCode());
 
-    /**
-     * 获得岗位列表
-     *
-     * @param ids 岗位编号数组
-     * @return 部门列表
-     */
-    List<PostDO> getPostList(@Nullable Collection<Long> ids);
+        // 更新岗位
+        PostDO updateObj = BeanUtils.toBean(updateReqVO, PostDO.class);
+        postMapper.updateById(updateObj);
+    }
 
-    /**
-     * 获得符合条件的岗位列表
-     *
-     * @param ids 岗位编号数组。如果为空，不进行筛选
-     * @param statuses 状态数组。如果为空，不进行筛选
-     * @return 部门列表
-     */
-    List<PostDO> getPostList(@Nullable Collection<Long> ids,
-                             @Nullable Collection<Integer> statuses);
+    public void deletePost(Long id) {
+        // 校验是否存在
+        validatePostExists(id);
+        // 删除岗位
+        postMapper.deleteById(id);
+    }
 
-    /**
-     * 获得岗位分页列表
-     *
-     * @param reqVO 分页条件
-     * @return 部门分页列表
-     */
-    PageResult<PostDO> getPostPage(PostPageReqVO reqVO);
+    public void deletePostList(List<Long> ids) {
+        postMapper.deleteByIds(ids);
+    }
 
-    /**
-     * 获得岗位信息
-     *
-     * @param id 岗位编号
-     * @return 岗位信息
-     */
-    PostDO getPost(Long id);
+    private void validatePostForCreateOrUpdate(Long id, String name, String code) {
+        // 校验自己存在
+        validatePostExists(id);
+        // 校验岗位名的唯一性
+        validatePostNameUnique(id, name);
+        // 校验岗位编码的唯一性
+        validatePostCodeUnique(id, code);
+    }
 
-    /**
-     * 校验岗位们是否有效。如下情况，视为无效：
-     * 1. 岗位编号不存在
-     * 2. 岗位被禁用
-     *
-     * @param ids 岗位编号数组
-     */
-    void validatePostList(Collection<Long> ids);
+    private void validatePostNameUnique(Long id, String name) {
+        PostDO post = postMapper.selectByName(name);
+        if (post == null) {
+            return;
+        }
+        // 如果 id 为空，说明不用比较是否为相同 id 的岗位
+        if (id == null) {
+            throw exception(POST_NAME_DUPLICATE);
+        }
+        if (!post.getId().equals(id)) {
+            throw exception(POST_NAME_DUPLICATE);
+        }
+    }
 
+    private void validatePostCodeUnique(Long id, String code) {
+        PostDO post = postMapper.selectByCode(code);
+        if (post == null) {
+            return;
+        }
+        // 如果 id 为空，说明不用比较是否为相同 id 的岗位
+        if (id == null) {
+            throw exception(POST_CODE_DUPLICATE);
+        }
+        if (!post.getId().equals(id)) {
+            throw exception(POST_CODE_DUPLICATE);
+        }
+    }
+
+    private void validatePostExists(Long id) {
+        if (id == null) {
+            return;
+        }
+        if (postMapper.selectById(id) == null) {
+            throw exception(POST_NOT_FOUND);
+        }
+    }
+
+    public List<PostDO> getPostList(Collection<Long> ids) {
+        if (CollUtil.isEmpty(ids)) {
+            return Collections.emptyList();
+        }
+        return postMapper.selectByIds(ids);
+    }
+
+    public List<PostDO> getPostList(Collection<Long> ids, Collection<Integer> statuses) {
+        return postMapper.selectList(ids, statuses);
+    }
+
+    public PageResult<PostDO> getPostPage(PostPageReqVO reqVO) {
+        return postMapper.selectPage(reqVO);
+    }
+
+    public PostDO getPost(Long id) {
+        return postMapper.selectById(id);
+    }
+
+    public void validatePostList(Collection<Long> ids) {
+        if (CollUtil.isEmpty(ids)) {
+            return;
+        }
+        // 获得岗位信息
+        List<PostDO> posts = postMapper.selectByIds(ids);
+        Map<Long, PostDO> postMap = convertMap(posts, PostDO::getId);
+        // 校验
+        ids.forEach(id -> {
+            PostDO post = postMap.get(id);
+            if (post == null) {
+                throw exception(POST_NOT_FOUND);
+            }
+            if (!CommonStatusEnum.ENABLE.getStatus().equals(post.getStatus())) {
+                throw exception(POST_NOT_ENABLE, post.getName());
+            }
+        });
+    }
 }

@@ -1,97 +1,152 @@
 package com.muang.ai.claw.module.system.service.oauth2;
 
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
+import cn.hutool.extra.spring.SpringUtil;
+import com.muang.ai.claw.constant.CommonStatusEnum;
 import com.muang.ai.claw.common.pojo.PageResult;
+import com.muang.ai.claw.util.object.BeanUtils;
+import com.muang.ai.claw.util.string.StrUtils;
 import com.muang.ai.claw.module.system.controller.admin.oauth2.vo.client.OAuth2ClientPageReqVO;
 import com.muang.ai.claw.module.system.controller.admin.oauth2.vo.client.OAuth2ClientSaveReqVO;
 import com.muang.ai.claw.module.system.dal.dataobject.oauth2.OAuth2ClientDO;
-import jakarta.validation.Valid;
+import com.muang.ai.claw.module.system.dal.mysql.oauth2.OAuth2ClientMapper;
+import com.muang.ai.claw.module.system.dal.redis.RedisKeyConstants;
+import com.google.common.annotations.VisibleForTesting;
+import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.Collection;
 import java.util.List;
 
+import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
+import static com.muang.ai.claw.module.system.enums.ErrorCodeConstants.*;
+
 /**
- * OAuth2.0 Client Service 接口
- *
- * 从功能上，和 JdbcClientDetailsService 的功能，提供客户端的操作
+ * OAuth2.0 Client Service 实现类
  *
  */
-public interface OAuth2ClientService {
+@Service
+@Validated
+@Slf4j
+public class OAuth2ClientService {
 
-    /**
-     * 创建 OAuth2 客户端
-     *
-     * @param createReqVO 创建信息
-     * @return 编号
-     */
-    Long createOAuth2Client(@Valid OAuth2ClientSaveReqVO createReqVO);
+    @Resource
+    private OAuth2ClientMapper oauth2ClientMapper;
 
-    /**
-     * 更新 OAuth2 客户端
-     *
-     * @param updateReqVO 更新信息
-     */
-    void updateOAuth2Client(@Valid OAuth2ClientSaveReqVO updateReqVO);
+    public Long createOAuth2Client(OAuth2ClientSaveReqVO createReqVO) {
+        validateClientIdExists(null, createReqVO.getClientId());
+        // 插入
+        OAuth2ClientDO client = BeanUtils.toBean(createReqVO, OAuth2ClientDO.class);
+        oauth2ClientMapper.insert(client);
+        return client.getId();
+    }
 
-    /**
-     * 删除 OAuth2 客户端
-     *
-     * @param id 编号
-     */
-    void deleteOAuth2Client(Long id);
+    @CacheEvict(cacheNames = RedisKeyConstants.OAUTH_CLIENT,
+            allEntries = true) // allEntries 清空所有缓存，因为可能修改到 clientId 字段，不好清理
+    public void updateOAuth2Client(OAuth2ClientSaveReqVO updateReqVO) {
+        // 校验存在
+        validateOAuth2ClientExists(updateReqVO.getId());
+        // 校验 Client 未被占用
+        validateClientIdExists(updateReqVO.getId(), updateReqVO.getClientId());
 
-    /**
-     * 批量删除 OAuth2 客户端
-     *
-     * @param ids 编号数组
-     */
-    void deleteOAuth2ClientList(List<Long> ids);
+        // 更新
+        OAuth2ClientDO updateObj = BeanUtils.toBean(updateReqVO, OAuth2ClientDO.class);
+        oauth2ClientMapper.updateById(updateObj);
+    }
 
-    /**
-     * 获得 OAuth2 客户端
-     *
-     * @param id 编号
-     * @return OAuth2 客户端
-     */
-    OAuth2ClientDO getOAuth2Client(Long id);
+    @CacheEvict(cacheNames = RedisKeyConstants.OAUTH_CLIENT,
+            allEntries = true) // allEntries 清空所有缓存，因为 id 不是直接的缓存 key，不好清理
+    public void deleteOAuth2Client(Long id) {
+        // 校验存在
+        validateOAuth2ClientExists(id);
+        // 删除
+        oauth2ClientMapper.deleteById(id);
+    }
 
-    /**
-     * 获得 OAuth2 客户端，从缓存中
-     *
-     * @param clientId 客户端编号
-     * @return OAuth2 客户端
-     */
-    OAuth2ClientDO getOAuth2ClientFromCache(String clientId);
+    @CacheEvict(cacheNames = RedisKeyConstants.OAUTH_CLIENT,
+            allEntries = true) // allEntries 清空所有缓存，因为 id 不是直接的缓存 key，不好清理
+    public void deleteOAuth2ClientList(List<Long> ids) {
+        oauth2ClientMapper.deleteByIds(ids);
+    }
 
-    /**
-     * 获得 OAuth2 客户端分页
-     *
-     * @param pageReqVO 分页查询
-     * @return OAuth2 客户端分页
-     */
-    PageResult<OAuth2ClientDO> getOAuth2ClientPage(OAuth2ClientPageReqVO pageReqVO);
+    private void validateOAuth2ClientExists(Long id) {
+        if (oauth2ClientMapper.selectById(id) == null) {
+            throw exception(OAUTH2_CLIENT_NOT_EXISTS);
+        }
+    }
 
-    /**
-     * 从缓存中，校验客户端是否合法
-     *
-     * @return 客户端
-     */
-    default OAuth2ClientDO validOAuthClientFromCache(String clientId) {
-        return validOAuthClientFromCache(clientId, null, null, null, null);
+    @VisibleForTesting
+    void validateClientIdExists(Long id, String clientId) {
+        OAuth2ClientDO client = oauth2ClientMapper.selectByClientId(clientId);
+        if (client == null) {
+            return;
+        }
+        // 如果 id 为空，说明不用比较是否为相同 id 的客户端
+        if (id == null) {
+            throw exception(OAUTH2_CLIENT_EXISTS);
+        }
+        if (!client.getId().equals(id)) {
+            throw exception(OAUTH2_CLIENT_EXISTS);
+        }
+    }
+
+    public OAuth2ClientDO getOAuth2Client(Long id) {
+        return oauth2ClientMapper.selectById(id);
+    }
+
+    @Cacheable(cacheNames = RedisKeyConstants.OAUTH_CLIENT, key = "#clientId",
+            unless = "#result == null")
+    public OAuth2ClientDO getOAuth2ClientFromCache(String clientId) {
+        return oauth2ClientMapper.selectByClientId(clientId);
+    }
+
+    public PageResult<OAuth2ClientDO> getOAuth2ClientPage(OAuth2ClientPageReqVO pageReqVO) {
+        return oauth2ClientMapper.selectPage(pageReqVO);
+    }
+
+    public OAuth2ClientDO validOAuthClientFromCache(String clientId, String clientSecret, String authorizedGrantType,
+                                                    Collection<String> scopes, String redirectUri) {
+        // 校验客户端存在、且开启
+        OAuth2ClientDO client = getSelf().getOAuth2ClientFromCache(clientId);
+        if (client == null) {
+            throw exception(OAUTH2_CLIENT_NOT_EXISTS);
+        }
+        if (CommonStatusEnum.isDisable(client.getStatus())) {
+            throw exception(OAUTH2_CLIENT_DISABLE);
+        }
+
+        // 校验客户端密钥
+        if (StrUtil.isNotEmpty(clientSecret) && ObjectUtil.notEqual(client.getSecret(), clientSecret)) {
+            throw exception(OAUTH2_CLIENT_CLIENT_SECRET_ERROR);
+        }
+        // 校验授权方式
+        if (StrUtil.isNotEmpty(authorizedGrantType) && !CollUtil.contains(client.getAuthorizedGrantTypes(), authorizedGrantType)) {
+            throw exception(OAUTH2_CLIENT_AUTHORIZED_GRANT_TYPE_NOT_EXISTS);
+        }
+        // 校验授权范围
+        if (CollUtil.isNotEmpty(scopes) && !CollUtil.containsAll(client.getScopes(), scopes)) {
+            throw exception(OAUTH2_CLIENT_SCOPE_OVER);
+        }
+        // 校验回调地址
+        if (StrUtil.isNotEmpty(redirectUri) && !StrUtils.startWithAny(redirectUri, client.getRedirectUris())) {
+            throw exception(OAUTH2_CLIENT_REDIRECT_URI_NOT_MATCH, redirectUri);
+        }
+        return client;
     }
 
     /**
-     * 从缓存中，校验客户端是否合法
+     * 获得自身的代理对象，解决 AOP 生效问题
      *
-     * 非空时，进行校验
-     *
-     * @param clientId 客户端编号
-     * @param clientSecret 客户端密钥
-     * @param authorizedGrantType 授权方式
-     * @param scopes 授权范围
-     * @param redirectUri 重定向地址
-     * @return 客户端
+     * @return 自己
      */
-    OAuth2ClientDO validOAuthClientFromCache(String clientId, String clientSecret, String authorizedGrantType,
-                                             Collection<String> scopes, String redirectUri);
+    private OAuth2ClientService getSelf() {
+        return SpringUtil.getBean(getClass());
+    }
 
 }

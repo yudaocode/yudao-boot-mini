@@ -1,51 +1,99 @@
 package com.muang.ai.claw.module.system.service.oauth2;
 
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.lang.Assert;
+import com.muang.ai.claw.util.date.DateUtils;
 import com.muang.ai.claw.module.system.dal.dataobject.oauth2.OAuth2ApproveDO;
+import com.muang.ai.claw.module.system.dal.dataobject.oauth2.OAuth2ClientDO;
+import com.muang.ai.claw.module.system.dal.mysql.oauth2.OAuth2ApproveMapper;
+import com.google.common.annotations.VisibleForTesting;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import jakarta.annotation.Resource;
+import java.time.LocalDateTime;
+import java.util.*;
+
+import static com.muang.ai.claw.util.collection.CollectionUtils.convertSet;
 
 /**
- * OAuth2 批准 Service 接口
- *
- * 从功能上，和 Spring Security OAuth 的 ApprovalStoreUserApprovalHandler 的功能，记录用户针对指定客户端的授权，减少手动确定。
+ * OAuth2 批准 Service 实现类
  *
  */
-public interface OAuth2ApproveService {
+@Service
+@Validated
+public class OAuth2ApproveService {
 
     /**
-     * 获得指定用户，针对指定客户端的指定授权，是否通过
-     *
-     * 参考 ApprovalStoreUserApprovalHandler 的 checkForPreApproval 方法
-     *
-     * @param userId 用户编号
-     * @param userType 用户类型
-     * @param clientId 客户端编号
-     * @param requestedScopes 授权范围
-     * @return 是否授权通过
+     * 批准的过期时间，默认 30 天
      */
-    boolean checkForPreApproval(Long userId, Integer userType, String clientId, Collection<String> requestedScopes);
+    private static final Integer TIMEOUT = 30 * 24 * 60 * 60; // 单位：秒
 
-    /**
-     * 在用户发起批准时，基于 scopes 的选项，计算最终是否通过
-     *
-     * @param userId 用户编号
-     * @param userType 用户类型
-     * @param clientId 客户端编号
-     * @param requestedScopes 授权范围
-     * @return 是否授权通过
-     */
-    boolean updateAfterApproval(Long userId, Integer userType, String clientId, Map<String, Boolean> requestedScopes);
+    @Resource
+    private OAuth2ClientService oauth2ClientService;
 
-    /**
-     * 获得用户的批准列表，排除已过期的
-     *
-     * @param userId 用户编号
-     * @param userType 用户类型
-     * @param clientId 客户端编号
-     * @return 是否授权通过
-     */
-    List<OAuth2ApproveDO> getApproveList(Long userId, Integer userType, String clientId);
+    @Resource
+    private OAuth2ApproveMapper oauth2ApproveMapper;
+
+    @Transactional
+    public boolean checkForPreApproval(Long userId, Integer userType, String clientId, Collection<String> requestedScopes) {
+        // 第一步，基于 Client 的自动授权计算，如果 scopes 都在自动授权中，则返回 true 通过
+        OAuth2ClientDO clientDO = oauth2ClientService.validOAuthClientFromCache(clientId);
+        Assert.notNull(clientDO, "客户端不能为空"); // 防御性编程
+        if (CollUtil.containsAll(clientDO.getAutoApproveScopes(), requestedScopes)) {
+            // gh-877 - if all scopes are auto approved, approvals still need to be added to the approval store.
+            LocalDateTime expireTime = LocalDateTime.now().plusSeconds(TIMEOUT);
+            for (String scope : requestedScopes) {
+                saveApprove(userId, userType, clientId, scope, true, expireTime);
+            }
+            return true;
+        }
+
+        // 第二步，算上用户已经批准的授权。如果 scopes 都包含，则返回 true
+        List<OAuth2ApproveDO> approveDOs = getApproveList(userId, userType, clientId);
+        Set<String> scopes = convertSet(approveDOs, OAuth2ApproveDO::getScope,
+                OAuth2ApproveDO::getApproved); // 只保留未过期的 + 同意的
+        return CollUtil.containsAll(scopes, requestedScopes);
+    }
+
+    @Transactional
+    public boolean updateAfterApproval(Long userId, Integer userType, String clientId, Map<String, Boolean> requestedScopes) {
+        // 如果 requestedScopes 为空，说明没有要求，则返回 true 通过
+        if (CollUtil.isEmpty(requestedScopes)) {
+            return true;
+        }
+
+        // 更新批准的信息
+        boolean success = false; // 需要至少有一个同意
+        LocalDateTime expireTime = LocalDateTime.now().plusSeconds(TIMEOUT);
+        for (Map.Entry<String, Boolean> entry : requestedScopes.entrySet()) {
+            if (entry.getValue()) {
+                success = true;
+            }
+            saveApprove(userId, userType, clientId, entry.getKey(), entry.getValue(), expireTime);
+        }
+        return success;
+    }
+
+    public List<OAuth2ApproveDO> getApproveList(Long userId, Integer userType, String clientId) {
+        List<OAuth2ApproveDO> approveDOs = oauth2ApproveMapper.selectListByUserIdAndUserTypeAndClientId(
+                userId, userType, clientId);
+        approveDOs.removeIf(o -> DateUtils.isExpired(o.getExpiresTime()));
+        return approveDOs;
+    }
+
+    @VisibleForTesting
+    void saveApprove(Long userId, Integer userType, String clientId,
+                     String scope, Boolean approved, LocalDateTime expireTime) {
+        // 先更新
+        OAuth2ApproveDO approveDO = new OAuth2ApproveDO().setUserId(userId).setUserType(userType)
+                .setClientId(clientId).setScope(scope).setApproved(approved).setExpiresTime(expireTime);
+        if (oauth2ApproveMapper.update(approveDO) == 1) {
+            return;
+        }
+        // 失败，则说明不存在，进行更新
+        oauth2ApproveMapper.insert(approveDO);
+    }
 
 }

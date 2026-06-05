@@ -1,38 +1,61 @@
 package com.muang.ai.claw.module.system.service.oauth2;
 
+import cn.hutool.core.util.IdUtil;
+import com.muang.ai.claw.util.date.DateUtils;
 import com.muang.ai.claw.module.system.dal.dataobject.oauth2.OAuth2CodeDO;
+import com.muang.ai.claw.module.system.dal.mysql.oauth2.OAuth2CodeMapper;
+import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
+import jakarta.annotation.Resource;
+import java.time.LocalDateTime;
 import java.util.List;
 
+import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
+import static com.muang.ai.claw.module.system.enums.ErrorCodeConstants.OAUTH2_CODE_EXPIRE;
+import static com.muang.ai.claw.module.system.enums.ErrorCodeConstants.OAUTH2_CODE_NOT_EXISTS;
+
 /**
- * OAuth2.0 授权码 Service 接口
- *
- * 从功能上，和 Spring Security OAuth 的 JdbcAuthorizationCodeServices 的功能，提供授权码的操作
+ * OAuth2.0 授权码 Service 实现类
  *
  */
-public interface OAuth2CodeService {
+@Service
+@Validated
+public class OAuth2CodeService {
 
     /**
-     * 创建授权码
-     *
-     * 参考 JdbcAuthorizationCodeServices 的 createAuthorizationCode 方法
-     *
-     * @param userId 用户编号
-     * @param userType 用户类型
-     * @param clientId 客户端编号
-     * @param scopes 授权范围
-     * @param redirectUri 重定向 URI
-     * @param state 状态
-     * @return 授权码的信息
+     * 授权码的过期时间，默认 5 分钟
      */
-    OAuth2CodeDO createAuthorizationCode(Long userId, Integer userType, String clientId,
-                                         List<String> scopes, String redirectUri, String state);
+    private static final Integer TIMEOUT = 5 * 60;
 
-    /**
-     * 使用授权码
-     *
-     * @param code 授权码
-     */
-    OAuth2CodeDO consumeAuthorizationCode(String code);
+    @Resource
+    private OAuth2CodeMapper oauth2CodeMapper;
+
+    public OAuth2CodeDO createAuthorizationCode(Long userId, Integer userType, String clientId,
+                                                List<String> scopes, String redirectUri, String state) {
+        OAuth2CodeDO codeDO = new OAuth2CodeDO().setCode(generateCode())
+                .setUserId(userId).setUserType(userType)
+                .setClientId(clientId).setScopes(scopes)
+                .setExpiresTime(LocalDateTime.now().plusSeconds(TIMEOUT))
+                .setRedirectUri(redirectUri).setState(state);
+        oauth2CodeMapper.insert(codeDO);
+        return codeDO;
+    }
+
+    public OAuth2CodeDO consumeAuthorizationCode(String code) {
+        OAuth2CodeDO codeDO = oauth2CodeMapper.selectByCode(code);
+        if (codeDO == null) {
+            throw exception(OAUTH2_CODE_NOT_EXISTS);
+        }
+        if (DateUtils.isExpired(codeDO.getExpiresTime())) {
+            throw exception(OAUTH2_CODE_EXPIRE);
+        }
+        oauth2CodeMapper.deleteById(codeDO.getId());
+        return codeDO;
+    }
+
+    private static String generateCode() {
+        return IdUtil.fastSimpleUUID();
+    }
 
 }

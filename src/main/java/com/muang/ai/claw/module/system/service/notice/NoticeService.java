@@ -1,60 +1,72 @@
 package com.muang.ai.claw.module.system.service.notice;
 
 import com.muang.ai.claw.common.pojo.PageResult;
+import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.module.system.controller.admin.notice.vo.NoticePageReqVO;
 import com.muang.ai.claw.module.system.controller.admin.notice.vo.NoticeSaveReqVO;
 import com.muang.ai.claw.module.system.dal.dataobject.notice.NoticeDO;
+import com.muang.ai.claw.module.system.dal.mysql.notice.NoticeMapper;
+import com.google.common.annotations.VisibleForTesting;
+import jakarta.annotation.Resource;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
+import static com.muang.ai.claw.module.system.enums.ErrorCodeConstants.NOTICE_NOT_FOUND;
+
 /**
- * 通知公告 Service 接口
+ * 通知公告 Service 实现类
+ *
  */
-public interface NoticeService {
+@Service
+public class NoticeService {
 
-    /**
-     * 创建通知公告
-     *
-     * @param createReqVO 通知公告
-     * @return 编号
-     */
-    Long createNotice(NoticeSaveReqVO createReqVO);
+    @Resource
+    private NoticeMapper noticeMapper;
 
-    /**
-     * 更新通知公告
-     *
-     * @param reqVO 通知公告
-     */
-    void updateNotice(NoticeSaveReqVO reqVO);
+    public Long createNotice(NoticeSaveReqVO createReqVO) {
+        NoticeDO notice = BeanUtils.toBean(createReqVO, NoticeDO.class);
+        noticeMapper.insert(notice);
+        return notice.getId();
+    }
 
-    /**
-     * 删除通知公告
-     *
-     * @param id 编号
-     */
-    void deleteNotice(Long id);
+    public void updateNotice(NoticeSaveReqVO updateReqVO) {
+        // 校验是否存在
+        validateNoticeExists(updateReqVO.getId());
+        // 更新通知公告
+        NoticeDO updateObj = BeanUtils.toBean(updateReqVO, NoticeDO.class);
+        noticeMapper.updateById(updateObj);
+    }
 
-    /**
-     * 批量删除通知公告
-     *
-     * @param ids 编号列表
-     */
-    void deleteNoticeList(List<Long> ids);
+    public void deleteNotice(Long id) {
+        // 校验是否存在
+        validateNoticeExists(id);
+        // 删除通知公告
+        noticeMapper.deleteById(id);
+    }
 
-    /**
-     * 获得通知公告分页列表
-     *
-     * @param reqVO 分页条件
-     * @return 部门分页列表
-     */
-    PageResult<NoticeDO> getNoticePage(NoticePageReqVO reqVO);
+    public void deleteNoticeList(List<Long> ids) {
+        noticeMapper.deleteByIds(ids);
+    }
 
-    /**
-     * 获得通知公告
-     *
-     * @param id 编号
-     * @return 通知公告
-     */
-    NoticeDO getNotice(Long id);
+    public PageResult<NoticeDO> getNoticePage(NoticePageReqVO reqVO) {
+        return noticeMapper.selectPage(reqVO);
+    }
+
+    public NoticeDO getNotice(Long id) {
+        return noticeMapper.selectById(id);
+    }
+
+    @VisibleForTesting
+    public void validateNoticeExists(Long id) {
+        if (id == null) {
+            return;
+        }
+        NoticeDO notice = noticeMapper.selectById(id);
+        if (notice == null) {
+            throw exception(NOTICE_NOT_FOUND);
+        }
+    }
 
 }

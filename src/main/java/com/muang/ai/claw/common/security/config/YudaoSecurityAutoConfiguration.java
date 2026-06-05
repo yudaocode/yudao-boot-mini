@@ -7,7 +7,7 @@ import com.muang.ai.claw.common.security.core.filter.TokenAuthenticationFilter;
 import com.muang.ai.claw.common.security.core.handler.AccessDeniedHandlerImpl;
 import com.muang.ai.claw.common.security.core.handler.AuthenticationEntryPointImpl;
 import com.muang.ai.claw.common.security.core.service.SecurityFrameworkService;
-import com.muang.ai.claw.common.security.core.service.SecurityFrameworkServiceImpl;
+import com.muang.ai.claw.common.security.core.service.SecurityFrameworkService;
 import com.muang.ai.claw.handler.GlobalExceptionHandler;
 import jakarta.annotation.Resource;
 import org.springframework.beans.factory.config.MethodInvokingFactoryBean;
@@ -74,7 +74,7 @@ public class YudaoSecurityAutoConfiguration {
 
     @Bean("ss") // 使用 Spring Security 的缩写，方便使用
     public SecurityFrameworkService securityFrameworkService(PermissionCommonApi permissionApi) {
-        return new SecurityFrameworkServiceImpl(permissionApi);
+        return new SecurityFrameworkService(permissionApi);
     }
 
     /**

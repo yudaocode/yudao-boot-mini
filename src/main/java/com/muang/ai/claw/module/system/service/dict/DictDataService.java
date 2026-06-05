@@ -1,117 +1,172 @@
 package com.muang.ai.claw.module.system.service.dict;
 
+import cn.hutool.core.collection.CollUtil;
+import com.muang.ai.claw.constant.CommonStatusEnum;
 import com.muang.ai.claw.common.pojo.PageResult;
+import com.muang.ai.claw.util.collection.CollectionUtils;
+import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.module.system.controller.admin.dict.vo.data.DictDataPageReqVO;
 import com.muang.ai.claw.module.system.controller.admin.dict.vo.data.DictDataSaveReqVO;
 import com.muang.ai.claw.module.system.dal.dataobject.dict.DictDataDO;
-import org.springframework.lang.Nullable;
+import com.muang.ai.claw.module.system.dal.dataobject.dict.DictTypeDO;
+import com.muang.ai.claw.module.system.dal.mysql.dict.DictDataMapper;
+import com.google.common.annotations.VisibleForTesting;
+import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+
+import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
+import static com.muang.ai.claw.module.system.enums.ErrorCodeConstants.*;
 
 /**
- * 字典数据 Service 接口
+ * 字典数据 Service 实现类
  *
  * @author ruoyi
  */
-public interface DictDataService {
+@Service
+@Slf4j
+public class DictDataService {
 
     /**
-     * 创建字典数据
-     *
-     * @param createReqVO 字典数据信息
-     * @return 字典数据编号
+     * 排序 dictType > sort
      */
-    Long createDictData(DictDataSaveReqVO createReqVO);
+    private static final Comparator<DictDataDO> COMPARATOR_TYPE_AND_SORT = Comparator
+            .comparing(DictDataDO::getDictType)
+            .thenComparingInt(DictDataDO::getSort);
 
-    /**
-     * 更新字典数据
-     *
-     * @param updateReqVO 字典数据信息
-     */
-    void updateDictData(DictDataSaveReqVO updateReqVO);
+    @Resource
+    private DictTypeService dictTypeService;
 
-    /**
-     * 删除字典数据
-     *
-     * @param id 字典数据编号
-     */
-    void deleteDictData(Long id);
+    @Resource
+    private DictDataMapper dictDataMapper;
 
-    /**
-     * 批量删除字典数据
-     *
-     * @param ids 字典数据编号列表
-     */
-    void deleteDictDataList(List<Long> ids);
+    public List<DictDataDO> getDictDataList(Integer status, String dictType) {
+        List<DictDataDO> list = dictDataMapper.selectListByStatusAndDictType(status, dictType);
+        list.sort(COMPARATOR_TYPE_AND_SORT);
+        return list;
+    }
 
-    /**
-     * 获得字典数据列表
-     *
-     * @param status   状态
-     * @param dictType 字典类型
-     * @return 字典数据全列表
-     */
-    List<DictDataDO> getDictDataList(@Nullable Integer status, @Nullable String dictType);
+    public PageResult<DictDataDO> getDictDataPage(DictDataPageReqVO pageReqVO) {
+        return dictDataMapper.selectPage(pageReqVO);
+    }
 
-    /**
-     * 获得字典数据分页列表
-     *
-     * @param pageReqVO 分页请求
-     * @return 字典数据分页列表
-     */
-    PageResult<DictDataDO> getDictDataPage(DictDataPageReqVO pageReqVO);
+    public DictDataDO getDictData(Long id) {
+        return dictDataMapper.selectById(id);
+    }
 
-    /**
-     * 获得字典数据详情
-     *
-     * @param id 字典数据编号
-     * @return 字典数据
-     */
-    DictDataDO getDictData(Long id);
+    public Long createDictData(DictDataSaveReqVO createReqVO) {
+        // 校验字典类型有效
+        validateDictTypeExists(createReqVO.getDictType());
+        // 校验字典数据的值的唯一性
+        validateDictDataValueUnique(null, createReqVO.getDictType(), createReqVO.getValue());
 
-    /**
-     * 获得指定字典类型的数据数量
-     *
-     * @param dictType 字典类型
-     * @return 数据数量
-     */
-    long getDictDataCountByDictType(String dictType);
+        // 插入字典类型
+        DictDataDO dictData = BeanUtils.toBean(createReqVO, DictDataDO.class);
+        dictDataMapper.insert(dictData);
+        return dictData.getId();
+    }
 
-    /**
-     * 校验字典数据们是否有效。如下情况，视为无效：
-     * 1. 字典数据不存在
-     * 2. 字典数据被禁用
-     *
-     * @param dictType 字典类型
-     * @param values   字典数据值的数组
-     */
-    void validateDictDataList(String dictType, Collection<String> values);
+    public void updateDictData(DictDataSaveReqVO updateReqVO) {
+        // 校验自己存在
+        validateDictDataExists(updateReqVO.getId());
+        // 校验字典类型有效
+        validateDictTypeExists(updateReqVO.getDictType());
+        // 校验字典数据的值的唯一性
+        validateDictDataValueUnique(updateReqVO.getId(), updateReqVO.getDictType(), updateReqVO.getValue());
 
-    /**
-     * 获得指定的字典数据
-     *
-     * @param dictType 字典类型
-     * @param value    字典数据值
-     * @return 字典数据
-     */
-    DictDataDO getDictData(String dictType, String value);
+        // 更新字典类型
+        DictDataDO updateObj = BeanUtils.toBean(updateReqVO, DictDataDO.class);
+        dictDataMapper.updateById(updateObj);
+    }
 
-    /**
-     * 解析获得指定的字典数据，从缓存中
-     *
-     * @param dictType 字典类型
-     * @param label    字典数据标签
-     * @return 字典数据
-     */
-    DictDataDO parseDictData(String dictType, String label);
+    public void deleteDictData(Long id) {
+        // 校验是否存在
+        validateDictDataExists(id);
 
-    /**
-     * 获得指定数据类型的字典数据列表
-     *
-     * @param dictType 字典类型
-     * @return 字典数据列表
-     */
-    List<DictDataDO> getDictDataListByDictType(String dictType);
+        // 删除字典数据
+        dictDataMapper.deleteById(id);
+    }
+
+    public void deleteDictDataList(List<Long> ids) {
+        dictDataMapper.deleteByIds(ids);
+    }
+
+    public long getDictDataCountByDictType(String dictType) {
+        return dictDataMapper.selectCountByDictType(dictType);
+    }
+
+    @VisibleForTesting
+    public void validateDictDataValueUnique(Long id, String dictType, String value) {
+        DictDataDO dictData = dictDataMapper.selectByDictTypeAndValue(dictType, value);
+        if (dictData == null) {
+            return;
+        }
+        // 如果 id 为空，说明不用比较是否为相同 id 的字典数据
+        if (id == null) {
+            throw exception(DICT_DATA_VALUE_DUPLICATE);
+        }
+        if (!dictData.getId().equals(id)) {
+            throw exception(DICT_DATA_VALUE_DUPLICATE);
+        }
+    }
+
+    @VisibleForTesting
+    public void validateDictDataExists(Long id) {
+        if (id == null) {
+            return;
+        }
+        DictDataDO dictData = dictDataMapper.selectById(id);
+        if (dictData == null) {
+            throw exception(DICT_DATA_NOT_EXISTS);
+        }
+    }
+
+    @VisibleForTesting
+    public void validateDictTypeExists(String type) {
+        DictTypeDO dictType = dictTypeService.getDictType(type);
+        if (dictType == null) {
+            throw exception(DICT_TYPE_NOT_EXISTS);
+        }
+        if (!CommonStatusEnum.ENABLE.getStatus().equals(dictType.getStatus())) {
+            throw exception(DICT_TYPE_NOT_ENABLE);
+        }
+    }
+
+    public void validateDictDataList(String dictType, Collection<String> values) {
+        if (CollUtil.isEmpty(values)) {
+            return;
+        }
+        Map<String, DictDataDO> dictDataMap = CollectionUtils.convertMap(
+                dictDataMapper.selectByDictTypeAndValues(dictType, values), DictDataDO::getValue);
+        // 校验
+        values.forEach(value -> {
+            DictDataDO dictData = dictDataMap.get(value);
+            if (dictData == null) {
+                throw exception(DICT_DATA_NOT_EXISTS);
+            }
+            if (!CommonStatusEnum.ENABLE.getStatus().equals(dictData.getStatus())) {
+                throw exception(DICT_DATA_NOT_ENABLE, dictData.getLabel());
+            }
+        });
+    }
+
+    public DictDataDO getDictData(String dictType, String value) {
+        return dictDataMapper.selectByDictTypeAndValue(dictType, value);
+    }
+
+    public DictDataDO parseDictData(String dictType, String label) {
+        return dictDataMapper.selectByDictTypeAndLabel(dictType, label);
+    }
+
+    public List<DictDataDO> getDictDataListByDictType(String dictType) {
+        List<DictDataDO> list = dictDataMapper.selectList(DictDataDO::getDictType, dictType);
+        list.sort(Comparator.comparing(DictDataDO::getSort));
+        return list;
+    }
 
 }

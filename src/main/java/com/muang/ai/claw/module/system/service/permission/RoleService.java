@@ -1,130 +1,259 @@
 package com.muang.ai.claw.module.system.service.permission;
 
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.util.ObjUtil;
+import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.extra.spring.SpringUtil;
+import com.muang.ai.claw.constant.CommonStatusEnum;
 import com.muang.ai.claw.common.pojo.PageResult;
+import com.muang.ai.claw.util.collection.CollectionUtils;
+import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.module.system.controller.admin.permission.vo.role.RolePageReqVO;
 import com.muang.ai.claw.module.system.controller.admin.permission.vo.role.RoleSaveReqVO;
 import com.muang.ai.claw.module.system.dal.dataobject.permission.RoleDO;
-import jakarta.validation.Valid;
+import com.muang.ai.claw.module.system.dal.mysql.permission.RoleMapper;
+import com.muang.ai.claw.module.system.dal.redis.RedisKeyConstants;
+import com.muang.ai.claw.module.system.enums.permission.DataScopeEnum;
+import com.muang.ai.claw.module.system.enums.permission.RoleCodeEnum;
+import com.muang.ai.claw.module.system.enums.permission.RoleTypeEnum;
+import com.google.common.annotations.VisibleForTesting;
+import com.mzt.logapi.context.LogRecordContext;
+import com.mzt.logapi.service.impl.DiffParseFunction;
+import com.mzt.logapi.starter.annotation.LogRecord;
+import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+
+import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
+import static com.muang.ai.claw.util.collection.CollectionUtils.convertMap;
+import static com.muang.ai.claw.module.system.enums.ErrorCodeConstants.*;
+import static com.muang.ai.claw.module.system.enums.LogRecordConstants.*;
 
 /**
- * 角色 Service 接口
+ * 角色 Service 实现类
  *
  */
-public interface RoleService {
+@Service
+@Slf4j
+public class RoleService {
+
+    @Resource
+    private PermissionService permissionService;
+
+    @Resource
+    private RoleMapper roleMapper;
+
+    @Transactional(rollbackFor = Exception.class)
+    @LogRecord(type = SYSTEM_ROLE_TYPE, subType = SYSTEM_ROLE_CREATE_SUB_TYPE, bizNo = "{{#role.id}}",
+            success = SYSTEM_ROLE_CREATE_SUCCESS)
+    public Long createRole(RoleSaveReqVO createReqVO, Integer type) {
+        // 1. 校验角色
+        validateRoleDuplicate(createReqVO.getName(), createReqVO.getCode(), null);
+
+        // 2. 插入到数据库
+        RoleDO role = BeanUtils.toBean(createReqVO, RoleDO.class)
+                .setType(ObjectUtil.defaultIfNull(type, RoleTypeEnum.CUSTOM.getType()))
+                .setStatus(ObjUtil.defaultIfNull(createReqVO.getStatus(), CommonStatusEnum.ENABLE.getStatus()))
+                .setDataScope(DataScopeEnum.ALL.getScope()); // 默认可查看所有数据。原因是，可能一些项目不需要项目权限
+        roleMapper.insert(role);
+
+        // 3. 记录操作日志上下文
+        LogRecordContext.putVariable("role", role);
+        return role.getId();
+    }
+
+    @CacheEvict(value = RedisKeyConstants.ROLE, key = "#updateReqVO.id")
+    @LogRecord(type = SYSTEM_ROLE_TYPE, subType = SYSTEM_ROLE_UPDATE_SUB_TYPE, bizNo = "{{#updateReqVO.id}}",
+            success = SYSTEM_ROLE_UPDATE_SUCCESS)
+    public void updateRole(RoleSaveReqVO updateReqVO) {
+        // 1.1 校验是否可以更新
+        RoleDO role = validateRoleForUpdate(updateReqVO.getId());
+        // 1.2 校验角色的唯一字段是否重复
+        validateRoleDuplicate(updateReqVO.getName(), updateReqVO.getCode(), updateReqVO.getId());
+
+        // 2. 更新到数据库
+        RoleDO updateObj = BeanUtils.toBean(updateReqVO, RoleDO.class);
+        roleMapper.updateById(updateObj);
+
+        // 3. 记录操作日志上下文
+        LogRecordContext.putVariable(DiffParseFunction.OLD_OBJECT, BeanUtils.toBean(role, RoleSaveReqVO.class));
+        LogRecordContext.putVariable("role", role);
+    }
+
+    @CacheEvict(value = RedisKeyConstants.ROLE, key = "#id")
+    public void updateRoleDataScope(Long id, Integer dataScope, Set<Long> dataScopeDeptIds) {
+        // 校验是否可以更新
+        validateRoleForUpdate(id);
+
+        // 更新数据范围
+        RoleDO updateObject = new RoleDO();
+        updateObject.setId(id);
+        updateObject.setDataScope(dataScope);
+        updateObject.setDataScopeDeptIds(dataScopeDeptIds);
+        roleMapper.updateById(updateObject);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @CacheEvict(value = RedisKeyConstants.ROLE, key = "#id")
+    @LogRecord(type = SYSTEM_ROLE_TYPE, subType = SYSTEM_ROLE_DELETE_SUB_TYPE, bizNo = "{{#id}}",
+            success = SYSTEM_ROLE_DELETE_SUCCESS)
+    public void deleteRole(Long id) {
+        // 1. 校验是否可以更新
+        RoleDO role = validateRoleForUpdate(id);
+
+        // 2.1 标记删除
+        roleMapper.deleteById(id);
+        // 2.2 删除相关数据
+        permissionService.processRoleDeleted(id);
+
+        // 3. 记录操作日志上下文
+        LogRecordContext.putVariable("role", role);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteRoleList(List<Long> ids) {
+        // 1. 校验是否可以删除
+        ids.forEach(this::validateRoleForUpdate);
+
+        // 2.1 标记删除
+        roleMapper.deleteByIds(ids);
+        // 2.2 删除相关数据
+        ids.forEach(id -> permissionService.processRoleDeleted(id));
+    }
 
     /**
-     * 创建角色
+     * 校验角色的唯一字段是否重复
      *
-     * @param createReqVO 创建角色信息
-     * @param type 角色类型
-     * @return 角色编号
-     */
-    Long createRole(@Valid RoleSaveReqVO createReqVO, Integer type);
-
-    /**
-     * 更新角色
+     * 1. 是否存在相同名字的角色
+     * 2. 是否存在相同编码的角色
      *
-     * @param updateReqVO 更新角色信息
+     * @param name 角色名字
+     * @param code 角色额编码
+     * @param id 角色编号
      */
-    void updateRole(@Valid RoleSaveReqVO updateReqVO);
+    @VisibleForTesting
+    void validateRoleDuplicate(String name, String code, Long id) {
+        // 0. 超级管理员，不允许创建
+        if (RoleCodeEnum.isSuperAdmin(code)) {
+            throw exception(ROLE_ADMIN_CODE_ERROR, code);
+        }
+        // 1. 该 name 名字被其它角色所使用
+        RoleDO role = roleMapper.selectByName(name);
+        if (role != null && !role.getId().equals(id)) {
+            throw exception(ROLE_NAME_DUPLICATE, name);
+        }
+        // 2. 是否存在相同编码的角色
+        if (!StringUtils.hasText(code)) {
+            return;
+        }
+        // 该 code 编码被其它角色所使用
+        role = roleMapper.selectByCode(code);
+        if (role != null && !role.getId().equals(id)) {
+            throw exception(ROLE_CODE_DUPLICATE, code);
+        }
+    }
 
     /**
-     * 删除角色
+     * 校验角色是否可以被更新
      *
      * @param id 角色编号
      */
-    void deleteRole(Long id);
+    @VisibleForTesting
+    RoleDO validateRoleForUpdate(Long id) {
+        RoleDO role = roleMapper.selectById(id);
+        if (role == null) {
+            throw exception(ROLE_NOT_EXISTS);
+        }
+        // 内置角色，不允许删除
+        if (RoleTypeEnum.SYSTEM.getType().equals(role.getType())) {
+            throw exception(ROLE_CAN_NOT_UPDATE_SYSTEM_TYPE_ROLE);
+        }
+        return role;
+    }
+
+    public RoleDO getRole(Long id) {
+        return roleMapper.selectById(id);
+    }
+
+    @Cacheable(value = RedisKeyConstants.ROLE, key = "#id",
+            unless = "#result == null")
+    public RoleDO getRoleFromCache(Long id) {
+        return roleMapper.selectById(id);
+    }
+
+
+    public List<RoleDO> getRoleListByStatus(Collection<Integer> statuses) {
+        return roleMapper.selectListByStatus(statuses);
+    }
+
+    public List<RoleDO> getRoleList() {
+        return roleMapper.selectList();
+    }
+
+    public List<RoleDO> getRoleList(Collection<Long> ids) {
+        if (CollectionUtil.isEmpty(ids)) {
+            return Collections.emptyList();
+        }
+        return roleMapper.selectByIds(ids);
+    }
+
+    public List<RoleDO> getRoleListFromCache(Collection<Long> ids) {
+        if (CollectionUtil.isEmpty(ids)) {
+            return Collections.emptyList();
+        }
+        // 这里采用 for 循环从缓存中获取，主要考虑 Spring CacheManager 无法批量操作的问题
+        RoleService self = getSelf();
+        return CollectionUtils.convertList(ids, self::getRoleFromCache);
+    }
+
+    public PageResult<RoleDO> getRolePage(RolePageReqVO reqVO) {
+        return roleMapper.selectPage(reqVO);
+    }
+
+    public boolean hasAnySuperAdmin(Collection<Long> ids) {
+        if (CollectionUtil.isEmpty(ids)) {
+            return false;
+        }
+        RoleService self = getSelf();
+        return ids.stream().anyMatch(id -> {
+            RoleDO role = self.getRoleFromCache(id);
+            return role != null && RoleCodeEnum.isSuperAdmin(role.getCode());
+        });
+    }
+
+    public void validateRoleList(Collection<Long> ids) {
+        if (CollUtil.isEmpty(ids)) {
+            return;
+        }
+        // 获得角色信息
+        List<RoleDO> roles = roleMapper.selectByIds(ids);
+        Map<Long, RoleDO> roleMap = convertMap(roles, RoleDO::getId);
+        // 校验
+        ids.forEach(id -> {
+            RoleDO role = roleMap.get(id);
+            if (role == null) {
+                throw exception(ROLE_NOT_EXISTS);
+            }
+            if (!CommonStatusEnum.ENABLE.getStatus().equals(role.getStatus())) {
+                throw exception(ROLE_IS_DISABLE, role.getName());
+            }
+        });
+    }
 
     /**
-     * 批量删除角色
+     * 获得自身的代理对象，解决 AOP 生效问题
      *
-     * @param ids 角色编号数组
+     * @return 自己
      */
-    void deleteRoleList(List<Long> ids);
-
-    /**
-     * 设置角色的数据权限
-     *
-     * @param id 角色编号
-     * @param dataScope 数据范围
-     * @param dataScopeDeptIds 部门编号数组
-     */
-    void updateRoleDataScope(Long id, Integer dataScope, Set<Long> dataScopeDeptIds);
-
-    /**
-     * 获得角色
-     *
-     * @param id 角色编号
-     * @return 角色
-     */
-    RoleDO getRole(Long id);
-
-    /**
-     * 获得角色，从缓存中
-     *
-     * @param id 角色编号
-     * @return 角色
-     */
-    RoleDO getRoleFromCache(Long id);
-
-    /**
-     * 获得角色列表
-     *
-     * @param ids 角色编号数组
-     * @return 角色列表
-     */
-    List<RoleDO> getRoleList(Collection<Long> ids);
-
-    /**
-     * 获得角色数组，从缓存中
-     *
-     * @param ids 角色编号数组
-     * @return 角色数组
-     */
-    List<RoleDO> getRoleListFromCache(Collection<Long> ids);
-
-    /**
-     * 获得角色列表
-     *
-     * @param statuses 筛选的状态
-     * @return 角色列表
-     */
-    List<RoleDO> getRoleListByStatus(Collection<Integer> statuses);
-
-    /**
-     * 获得所有角色列表
-     *
-     * @return 角色列表
-     */
-    List<RoleDO> getRoleList();
-
-    /**
-     * 获得角色分页
-     *
-     * @param reqVO 角色分页查询
-     * @return 角色分页结果
-     */
-    PageResult<RoleDO> getRolePage(RolePageReqVO reqVO);
-
-    /**
-     * 判断角色编号数组中，是否有管理员
-     *
-     * @param ids 角色编号数组
-     * @return 是否有管理员
-     */
-    boolean hasAnySuperAdmin(Collection<Long> ids);
-
-    /**
-     * 校验角色们是否有效。如下情况，视为无效：
-     * 1. 角色编号不存在
-     * 2. 角色被禁用
-     *
-     * @param ids 角色编号数组
-     */
-    void validateRoleList(Collection<Long> ids);
+    private RoleService getSelf() {
+        return SpringUtil.getBean(getClass());
+    }
 
 }

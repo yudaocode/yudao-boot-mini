@@ -1,88 +1,231 @@
 package com.muang.ai.claw.module.infra.service.file;
 
+import cn.hutool.core.date.LocalDateTimeUtil;
+import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.lang.Assert;
+import cn.hutool.core.util.RandomUtil;
+import cn.hutool.core.util.StrUtil;
+import cn.hutool.crypto.digest.DigestUtil;
 import com.muang.ai.claw.common.pojo.PageResult;
+import com.muang.ai.claw.util.http.HttpUtils;
+import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.module.infra.controller.admin.file.vo.file.FileCreateReqVO;
 import com.muang.ai.claw.module.infra.controller.admin.file.vo.file.FilePageReqVO;
 import com.muang.ai.claw.module.infra.controller.admin.file.vo.file.FilePresignedUrlRespVO;
 import com.muang.ai.claw.module.infra.dal.dataobject.file.FileDO;
-import jakarta.validation.constraints.NotEmpty;
+import com.muang.ai.claw.module.infra.dal.mysql.file.FileMapper;
+import com.muang.ai.claw.module.infra.framework.file.core.client.FileClient;
+import com.muang.ai.claw.module.infra.framework.file.core.utils.FilePathUtils;
+import com.muang.ai.claw.module.infra.framework.file.core.utils.FileTypeUtils;
+import com.google.common.annotations.VisibleForTesting;
+import jakarta.annotation.Resource;
+import lombok.SneakyThrows;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static cn.hutool.core.date.DatePattern.PURE_DATE_PATTERN;
+import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
+import static com.muang.ai.claw.module.infra.enums.ErrorCodeConstants.FILE_NOT_EXISTS;
+
 /**
- * 文件 Service 接口
+ * 文件 Service 实现类
  *
  */
-public interface FileService {
+@Service
+public class FileService {
 
     /**
-     * 获得文件分页
+     * 上传文件的前缀，是否包含日期（yyyyMMdd）
      *
-     * @param pageReqVO 分页查询
-     * @return 文件分页
+     * 目的：按照日期，进行分目录
      */
-    PageResult<FileDO> getFilePage(FilePageReqVO pageReqVO);
+    static boolean PATH_PREFIX_DATE_ENABLE = true;
+    /**
+     * 上传文件的后缀，是否启用
+     *
+     * 算法：当前时间戳（毫秒）+ 5 位随机数；目的是保证文件的唯一性，避免覆盖
+     * 定制：可按需调整成 UUID、或者其他方式
+     */
+    static boolean PATH_SUFFIX_TIMESTAMP_ENABLE = false;
+    /**
+     * 后缀是否作为上级目录
+     *
+     * true：{@code yyyyMMdd/<后缀>/原文件名.ext}；保留原文件名
+     * false：{@code yyyyMMdd/原文件名_<后缀>.ext}；后缀拼到文件名
+     */
+    static boolean PATH_SUFFIX_AS_DIRECTORY = true;
 
-    /**
-     * 保存文件，并返回文件的访问路径
-     *
-     * @param content   文件内容
-     * @param name      文件名称，允许空
-     * @param directory 目录，允许空
-     * @param type      文件的 MIME 类型，允许空
-     * @return 文件路径
-     */
-    String createFile(@NotEmpty(message = "文件内容不能为空") byte[] content,
-                      String name, String directory, String type);
+    @Resource
+    private FileConfigService fileConfigService;
 
-    /**
-     * 生成文件预签名地址信息，用于上传
-     *
-     * @param name      文件名
-     * @param directory 目录
-     * @return 预签名地址信息
-     */
-    FilePresignedUrlRespVO presignPutUrl(@NotEmpty(message = "文件名不能为空") String name,
-                                         String directory);
-    /**
-     * 生成文件预签名地址信息，用于读取
-     *
-     * @param url 完整的文件访问地址
-     * @param expirationSeconds 访问有效期，单位秒
-     * @return 文件预签名地址
-     */
-    String presignGetUrl(String url, Integer expirationSeconds);
+    @Resource
+    private FileMapper fileMapper;
 
-    /**
-     * 创建文件
-     *
-     * @param createReqVO 创建信息
-     * @return 编号
-     */
-    Long createFile(FileCreateReqVO createReqVO);
-    FileDO getFile(Long id);
+    public PageResult<FileDO> getFilePage(FilePageReqVO pageReqVO) {
+        return fileMapper.selectPage(pageReqVO);
+    }
 
-    /**
-     * 删除文件
-     *
-     * @param id 编号
-     */
-    void deleteFile(Long id) throws Exception;
+    @SneakyThrows
+    public String createFile(byte[] content, String name, String directory, String type) {
+        // 1.1 处理 name 的合法性，禁止携带目录路径
+        name = FilePathUtils.validateFileName(name);
 
-    /**
-     * 批量删除文件
-     *
-     * @param ids 编号列表
-     */
-    void deleteFileList(List<Long> ids) throws Exception;
+        // 1.2.1 处理 type 为空的情况
+        if (StrUtil.isEmpty(type)) {
+            type = FileTypeUtils.getMineType(content, name);
+        }
+        // 1.2.2 处理 name 为空的情况
+        if (StrUtil.isEmpty(name)) {
+            name = DigestUtil.sha256Hex(content);
+        }
+        if (StrUtil.isEmpty(FileUtil.extName(name))) {
+            // 如果 name 没有后缀 type，则补充后缀
+            String extension = FileTypeUtils.getExtension(type);
+            if (StrUtil.isNotEmpty(extension)) {
+                name = name + extension;
+            }
+        }
 
-    /**
-     * 获得文件内容
-     *
-     * @param configId 配置编号
-     * @param path     文件路径
-     * @return 文件内容
-     */
-    byte[] getFileContent(Long configId, String path) throws Exception;
+        // 2.1 生成上传的 path，需要保证唯一
+        String path = generateUploadPath(name, directory);
+        // 2.2 上传到文件存储器
+        FileClient client = fileConfigService.getMasterFileClient();
+        Assert.notNull(client, "客户端(master) 不能为空");
+        String url = client.upload(content, path, type);
+
+        // 3. 保存到数据库
+        fileMapper.insert(new FileDO().setConfigId(client.getId())
+                .setName(name).setPath(path).setUrl(url)
+                .setType(type).setSize((long) content.length));
+        return url;
+    }
+
+    @VisibleForTesting
+    String generateUploadPath(String name, String directory) {
+        // 1.1 处理 name 和 directory 的合法性
+        name = FilePathUtils.validateFileName(name);
+        FilePathUtils.validatePath(name);
+        FilePathUtils.validateDirectory(directory);
+        // 1.2 生成前缀、后缀
+        String prefix = null;
+        if (PATH_PREFIX_DATE_ENABLE) {
+            prefix = LocalDateTimeUtil.format(LocalDateTimeUtil.now(), PURE_DATE_PATTERN);
+        }
+        String suffix = null;
+        if (PATH_SUFFIX_TIMESTAMP_ENABLE) {
+            // 5 位随机数，避免同一毫秒内的重复
+            suffix = String.valueOf(System.currentTimeMillis()) + RandomUtil.randomInt(10000, 100000);
+        }
+
+        // 2.1 先拼接 suffix 后缀
+        if (StrUtil.isNotEmpty(suffix)) {
+            if (PATH_SUFFIX_AS_DIRECTORY) {
+                name = suffix + StrUtil.SLASH + name;
+            } else {
+                String ext = FileUtil.extName(name);
+                if (StrUtil.isNotEmpty(ext)) {
+                    name = FileUtil.mainName(name) + StrUtil.C_UNDERLINE + suffix + StrUtil.DOT + ext;
+                } else {
+                    name = name + StrUtil.C_UNDERLINE + suffix;
+                }
+            }
+        }
+        // 2.2 再拼接 prefix 前缀
+        if (StrUtil.isNotEmpty(prefix)) {
+            name = prefix + StrUtil.SLASH + name;
+        }
+        // 2.3 最后拼接 directory 目录
+        if (StrUtil.isNotEmpty(directory)) {
+            name = directory + StrUtil.SLASH + name;
+        }
+        return name;
+    }
+
+    @SneakyThrows
+    public FilePresignedUrlRespVO presignPutUrl(String name, String directory) {
+        // 1. 生成上传的 path，需要保证唯一
+        String path = generateUploadPath(name, directory);
+
+        // 2. 获取文件预签名地址
+        FileClient fileClient = fileConfigService.getMasterFileClient();
+        String uploadUrl = fileClient.presignPutUrl(path);
+        String visitUrl = fileClient.presignGetUrl(path, null);
+        return new FilePresignedUrlRespVO().setConfigId(fileClient.getId())
+                .setPath(path).setUploadUrl(uploadUrl).setUrl(visitUrl);
+    }
+
+    public String presignGetUrl(String url, Integer expirationSeconds) {
+        FileClient fileClient = fileConfigService.getMasterFileClient();
+        return fileClient.presignGetUrl(url, expirationSeconds);
+    }
+
+    public Long createFile(FileCreateReqVO createReqVO) {
+        // 1.1 校验参数的合法性
+        FilePathUtils.validatePath(createReqVO.getPath());
+        createReqVO.setName(FilePathUtils.validateFileName(createReqVO.getName()));
+        // 1.2 处理 URL 的合法性，移除 URL 中的查询参数（例如签名参数），保证 URL 的唯一性
+        createReqVO.setUrl(HttpUtils.removeUrlQuery(createReqVO.getUrl())); // 目的：移除私有桶情况下，URL 的签名参数
+
+        // 2. 保存到数据库
+        FileDO file = BeanUtils.toBean(createReqVO, FileDO.class);
+        fileMapper.insert(file);
+        return file.getId();
+    }
+
+    public FileDO getFile(Long id) {
+        return validateFileExists(id);
+    }
+
+    public void deleteFile(Long id) throws Exception {
+        // 1.1 校验存在
+        FileDO file = validateFileExists(id);
+        // 1.2 校验路径合法性，避免误删文件存储器中的其他文件
+        FilePathUtils.validatePath(file.getPath());
+
+        // 2.1 从文件存储器中删除
+        FileClient client = fileConfigService.getFileClient(file.getConfigId());
+        Assert.notNull(client, "客户端({}) 不能为空", file.getConfigId());
+        client.delete(file.getPath());
+
+        // 2.2 删除记录
+        fileMapper.deleteById(id);
+    }
+
+    @SneakyThrows
+    public void deleteFileList(List<Long> ids) {
+        // 删除文件
+        List<FileDO> files = fileMapper.selectByIds(ids);
+        for (FileDO file : files) {
+            FilePathUtils.validatePath(file.getPath());
+            // 获取客户端
+            FileClient client = fileConfigService.getFileClient(file.getConfigId());
+            Assert.notNull(client, "客户端({}) 不能为空", file.getPath());
+            // 删除文件
+            client.delete(file.getPath());
+        }
+
+        // 删除记录
+        fileMapper.deleteByIds(ids);
+    }
+
+    private FileDO validateFileExists(Long id) {
+        FileDO fileDO = fileMapper.selectById(id);
+        if (fileDO == null) {
+            throw exception(FILE_NOT_EXISTS);
+        }
+        return fileDO;
+    }
+
+    public byte[] getFileContent(Long configId, String path) throws Exception {
+        // 1. 校验路径合法性
+        FilePathUtils.validatePath(path);
+
+        // 2.1 获取客户端
+        FileClient client = fileConfigService.getFileClient(configId);
+        Assert.notNull(client, "客户端({}) 不能为空", configId);
+        // 2.2 获取文件内容
+        return client.getContent(path);
+    }
 
 }

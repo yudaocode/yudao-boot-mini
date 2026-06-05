@@ -1,59 +1,104 @@
 package com.muang.ai.claw.module.infra.service.db;
 
+import com.muang.ai.claw.util.object.BeanUtils;
+import com.muang.ai.claw.common.mybatis.core.util.JdbcUtils;
 import com.muang.ai.claw.module.infra.controller.admin.db.vo.DataSourceConfigSaveReqVO;
 import com.muang.ai.claw.module.infra.dal.dataobject.db.DataSourceConfigDO;
-import jakarta.validation.Valid;
+import com.muang.ai.claw.module.infra.dal.mysql.db.DataSourceConfigMapper;
+import com.baomidou.dynamic.datasource.creator.DataSourceProperty;
+import com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceProperties;
+import jakarta.annotation.Resource;
+import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
+import java.util.Objects;
+
+import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
+import static com.muang.ai.claw.module.infra.enums.ErrorCodeConstants.DATA_SOURCE_CONFIG_NOT_EXISTS;
+import static com.muang.ai.claw.module.infra.enums.ErrorCodeConstants.DATA_SOURCE_CONFIG_NOT_OK;
 
 /**
- * 数据源配置 Service 接口
+ * 数据源配置 Service 实现类
  *
  */
-public interface DataSourceConfigService {
+@Service
+@Validated
+public class DataSourceConfigService {
 
-    /**
-     * 创建数据源配置
-     *
-     * @param createReqVO 创建信息
-     * @return 编号
-     */
-    Long createDataSourceConfig(@Valid DataSourceConfigSaveReqVO createReqVO);
+    @Resource
+    private DataSourceConfigMapper dataSourceConfigMapper;
 
-    /**
-     * 更新数据源配置
-     *
-     * @param updateReqVO 更新信息
-     */
-    void updateDataSourceConfig(@Valid DataSourceConfigSaveReqVO updateReqVO);
+    @Resource
+    private DynamicDataSourceProperties dynamicDataSourceProperties;
 
-    /**
-     * 删除数据源配置
-     *
-     * @param id 编号
-     */
-    void deleteDataSourceConfig(Long id);
+    public Long createDataSourceConfig(DataSourceConfigSaveReqVO createReqVO) {
+        DataSourceConfigDO config = BeanUtils.toBean(createReqVO, DataSourceConfigDO.class);
+        validateConnectionOK(config);
 
-    /**
-     * 批量删除数据源配置
-     *
-     * @param ids 编号列表
-     */
-    void deleteDataSourceConfigList(List<Long> ids);
+        // 插入
+        dataSourceConfigMapper.insert(config);
+        // 返回
+        return config.getId();
+    }
 
-    /**
-     * 获得数据源配置
-     *
-     * @param id 编号
-     * @return 数据源配置
-     */
-    DataSourceConfigDO getDataSourceConfig(Long id);
+    public void updateDataSourceConfig(DataSourceConfigSaveReqVO updateReqVO) {
+        // 校验存在
+        validateDataSourceConfigExists(updateReqVO.getId());
+        DataSourceConfigDO updateObj = BeanUtils.toBean(updateReqVO, DataSourceConfigDO.class);
+        validateConnectionOK(updateObj);
 
-    /**
-     * 获得数据源配置列表
-     *
-     * @return 数据源配置列表
-     */
-    List<DataSourceConfigDO> getDataSourceConfigList();
+        // 更新
+        dataSourceConfigMapper.updateById(updateObj);
+    }
+
+    public void deleteDataSourceConfig(Long id) {
+        // 校验存在
+        validateDataSourceConfigExists(id);
+        // 删除
+        dataSourceConfigMapper.deleteById(id);
+    }
+
+    public void deleteDataSourceConfigList(List<Long> ids) {
+        dataSourceConfigMapper.deleteByIds(ids);
+    }
+
+    private void validateDataSourceConfigExists(Long id) {
+        if (dataSourceConfigMapper.selectById(id) == null) {
+            throw exception(DATA_SOURCE_CONFIG_NOT_EXISTS);
+        }
+    }
+
+    public DataSourceConfigDO getDataSourceConfig(Long id) {
+        // 如果 id 为 0，默认为 master 的数据源
+        if (Objects.equals(id, DataSourceConfigDO.ID_MASTER)) {
+            return buildMasterDataSourceConfig();
+        }
+        // 从 DB 中读取
+        return dataSourceConfigMapper.selectById(id);
+    }
+
+    public List<DataSourceConfigDO> getDataSourceConfigList() {
+        List<DataSourceConfigDO> result = dataSourceConfigMapper.selectList();
+        // 补充 master 数据源
+        result.add(0, buildMasterDataSourceConfig());
+        return result;
+    }
+
+    private void validateConnectionOK(DataSourceConfigDO config) {
+        boolean success = JdbcUtils.isConnectionOK(config.getUrl(), config.getUsername(), config.getPassword());
+        if (!success) {
+            throw exception(DATA_SOURCE_CONFIG_NOT_OK);
+        }
+    }
+
+    private DataSourceConfigDO buildMasterDataSourceConfig() {
+        String primary = dynamicDataSourceProperties.getPrimary();
+        DataSourceProperty dataSourceProperty = dynamicDataSourceProperties.getDatasource().get(primary);
+        return new DataSourceConfigDO().setId(DataSourceConfigDO.ID_MASTER).setName(primary)
+                .setUrl(dataSourceProperty.getUrl())
+                .setUsername(dataSourceProperty.getUsername())
+                .setPassword(dataSourceProperty.getPassword());
+    }
 
 }
