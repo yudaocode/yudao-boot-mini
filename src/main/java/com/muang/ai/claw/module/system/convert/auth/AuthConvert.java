@@ -3,11 +3,7 @@ package com.muang.ai.claw.module.system.convert.auth;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjUtil;
 import com.muang.ai.claw.util.object.BeanUtils;
-import com.muang.ai.claw.module.system.api.sms.dto.code.SmsCodeSendReqDTO;
-import com.muang.ai.claw.module.system.api.sms.dto.code.SmsCodeUseReqDTO;
 import com.muang.ai.claw.module.system.controller.admin.auth.vo.AuthPermissionInfoRespVO;
-import com.muang.ai.claw.module.system.controller.admin.auth.vo.AuthSmsLoginForm;
-import com.muang.ai.claw.module.system.controller.admin.auth.vo.AuthSmsSendForm;
 import com.muang.ai.claw.module.system.dal.dataobject.permission.MenuDO;
 import com.muang.ai.claw.module.system.dal.dataobject.permission.RoleDO;
 import com.muang.ai.claw.module.system.dal.dataobject.user.AdminUserDO;
@@ -76,9 +72,5 @@ public interface AuthConvert {
         // 获得到所有的根节点
         return filterList(treeNodeMap.values(), node -> ID_ROOT.equals(node.getParentId()));
     }
-
-    SmsCodeSendReqDTO convert(AuthSmsSendForm reqVO);
-
-    SmsCodeUseReqDTO convert(AuthSmsLoginForm reqVO, Integer scene, String usedIp);
 
 }

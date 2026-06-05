@@ -8,16 +8,12 @@ import com.muang.ai.claw.util.servlet.ServletUtils;
 import com.muang.ai.claw.util.validation.ValidationUtils;
 import com.muang.ai.claw.config.datapermission.core.annotation.DataPermission;
 import com.muang.ai.claw.module.system.api.logger.dto.LoginLogCreateReqDTO;
-import com.muang.ai.claw.module.system.api.sms.SmsCodeApi;
-import com.muang.ai.claw.module.system.api.sms.dto.code.SmsCodeUseReqDTO;
 import com.muang.ai.claw.module.system.controller.admin.auth.vo.*;
-import com.muang.ai.claw.module.system.convert.auth.AuthConvert;
 import com.muang.ai.claw.module.system.dal.dataobject.oauth2.OAuth2AccessTokenDO;
 import com.muang.ai.claw.module.system.dal.dataobject.user.AdminUserDO;
 import com.muang.ai.claw.module.system.constant.logger.LoginLogTypeEnum;
 import com.muang.ai.claw.module.system.constant.logger.LoginResultEnum;
 import com.muang.ai.claw.module.system.constant.oauth2.OAuth2ClientConstants;
-import com.muang.ai.claw.module.system.constant.sms.SmsSceneEnum;
 import com.muang.ai.claw.module.system.service.logger.LoginLogService;
 import com.muang.ai.claw.module.system.service.member.MemberService;
 import com.muang.ai.claw.module.system.service.oauth2.OAuth2TokenService;
@@ -32,12 +28,10 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
 
 import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
-import static com.muang.ai.claw.util.servlet.ServletUtils.getClientIP;
 import static com.muang.ai.claw.module.system.constant.ErrorCodeConstants.*;
 
 /**
@@ -60,8 +54,6 @@ public class AdminAuthService {
     private Validator validator;
     @Resource
     private CaptchaService captchaService;
-    @Resource
-    private SmsCodeApi smsCodeApi;
 
     /**
      * 验证码的开关，默认为 true
@@ -100,37 +92,6 @@ public class AdminAuthService {
 
         // 创建 Token 令牌，记录登录日志
         return createTokenAfterLoginSuccess(user.getId(), reqVO.getUsername(), LoginLogTypeEnum.LOGIN_USERNAME);
-    }
-
-    public void sendSmsCode(AuthSmsSendForm reqVO) {
-        // 如果是重置密码场景，需要校验图形验证码是否正确
-        if (Objects.equals(SmsSceneEnum.ADMIN_MEMBER_RESET_PASSWORD.getScene(), reqVO.getScene())) {
-            ResponseModel response = doValidateCaptcha(reqVO);
-            if (!response.isSuccess()) {
-                throw exception(AUTH_REGISTER_CAPTCHA_CODE_ERROR, response.getRepMsg());
-            }
-        }
-
-        // 登录场景，验证是否存在
-        if (userService.getUserByMobile(reqVO.getMobile()) == null) {
-            throw exception(AUTH_MOBILE_NOT_EXISTS);
-        }
-        // 发送验证码
-        smsCodeApi.sendSmsCode(AuthConvert.INSTANCE.convert(reqVO).setCreateIp(getClientIP()));
-    }
-
-    public AuthLoginRespVO smsLogin(AuthSmsLoginForm reqVO) {
-        // 校验验证码
-        smsCodeApi.useSmsCode(AuthConvert.INSTANCE.convert(reqVO, SmsSceneEnum.ADMIN_MEMBER_LOGIN.getScene(), getClientIP()));
-
-        // 获得用户信息
-        AdminUserDO user = userService.getUserByMobile(reqVO.getMobile());
-        if (user == null) {
-            throw exception(USER_NOT_EXISTS);
-        }
-
-        // 创建 Token 令牌，记录登录日志
-        return createTokenAfterLoginSuccess(user.getId(), reqVO.getMobile(), LoginLogTypeEnum.LOGIN_MOBILE);
     }
 
     private void createLoginLog(Long userId, String username,
@@ -248,20 +209,4 @@ public class AdminAuthService {
         }
     }
 
-    @Transactional(rollbackFor = Exception.class)
-    public void resetPassword(AuthResetPasswordForm reqVO) {
-        AdminUserDO userByMobile = userService.getUserByMobile(reqVO.getMobile());
-        if (userByMobile == null) {
-            throw exception(USER_MOBILE_NOT_EXISTS);
-        }
-
-        smsCodeApi.useSmsCode(new SmsCodeUseReqDTO()
-                .setCode(reqVO.getCode())
-                .setMobile(reqVO.getMobile())
-                .setScene(SmsSceneEnum.ADMIN_MEMBER_RESET_PASSWORD.getScene())
-                .setUsedIp(getClientIP())
-        );
-
-        userService.updateUserPassword(userByMobile.getId(), reqVO.getPassword());
-    }
 }

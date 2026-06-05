@@ -119,31 +119,4 @@ public class AuthController {
         return success(authService.register(registerReqVO));
     }
 
-    // ========== 短信登录相关 ==========
-
-    @PostMapping("/sms-login")
-    @PermitAll
-    @Operation(summary = "使用短信验证码登录")
-    // 可按需开启限流：https://github.com/YunaiV/ruoyi-vue-pro/issues/851
-    // @RateLimiter(time = 60, count = 6, keyResolver = ExpressionRateLimiterKeyResolver.class, keyArg = "#reqVO.mobile")
-    public CommonResult<AuthLoginRespVO> smsLogin(@RequestBody @Valid AuthSmsLoginForm reqVO) {
-        return success(authService.smsLogin(reqVO));
-    }
-
-    @PostMapping("/send-sms-code")
-    @PermitAll
-    @Operation(summary = "发送手机验证码")
-    public CommonResult<Boolean> sendLoginSmsCode(@RequestBody @Valid AuthSmsSendForm reqVO) {
-        authService.sendSmsCode(reqVO);
-        return success(true);
-    }
-
-    @PostMapping("/reset-password")
-    @PermitAll
-    @Operation(summary = "重置密码")
-    public CommonResult<Boolean> resetPassword(@RequestBody @Valid AuthResetPasswordForm reqVO) {
-        authService.resetPassword(reqVO);
-        return success(true);
-    }
-
 }

@@ -292,18 +292,8 @@ yudao:
       - user_role_ids
       - permission_menu_ids
       - oauth_client
-      - notify_template
-      - mail_account
-      - mail_template
-      - sms_template
       - iot:device
       - iot:thing_model_list
-  sms-code: # 短信验证码相关的配置项
-    expire-times: 10m
-    send-frequency: 1m
-    send-maximum-quantity-per-day: 10
-    begin-code: 9999 # 这里配置 9999 的原因是，测试方便。
-    end-code: 9999 # 这里配置 9999 的原因是，测试方便。
   trade:
     order:
       pay-expire-time: 2h # 支付的过期时间
