@@ -1,6 +1,6 @@
 package com.muang.ai.claw.common.xss.core.filter;
 
-import com.muang.ai.claw.common.xss.config.XssProperties;
+import com.muang.ai.claw.config.XssProperties;
 import com.muang.ai.claw.common.xss.core.clean.XssCleaner;
 import lombok.AllArgsConstructor;
 import org.springframework.util.PathMatcher;

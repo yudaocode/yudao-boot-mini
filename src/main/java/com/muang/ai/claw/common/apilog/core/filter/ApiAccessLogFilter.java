@@ -16,7 +16,7 @@ import com.muang.ai.claw.common.pojo.CommonResult;
 import com.muang.ai.claw.util.json.JsonUtils;
 import com.muang.ai.claw.util.monitor.TracerUtils;
 import com.muang.ai.claw.util.servlet.ServletUtils;
-import com.muang.ai.claw.common.web.config.WebProperties;
+import com.muang.ai.claw.config.WebProperties;
 import com.muang.ai.claw.common.web.core.filter.ApiRequestFilter;
 import com.muang.ai.claw.common.web.core.util.WebFrameworkUtils;
 import com.fasterxml.jackson.databind.JsonNode;

@@ -3,7 +3,7 @@ package com.muang.ai.claw.common.encrypt.core.filter;
 import cn.hutool.crypto.asymmetric.AsymmetricEncryptor;
 import cn.hutool.crypto.asymmetric.KeyType;
 import cn.hutool.crypto.symmetric.SymmetricEncryptor;
-import com.muang.ai.claw.common.encrypt.config.ApiEncryptProperties;
+import com.muang.ai.claw.config.ApiEncryptProperties;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.WriteListener;
 import jakarta.servlet.http.HttpServletResponse;

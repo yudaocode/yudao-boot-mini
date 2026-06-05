@@ -9,7 +9,7 @@ import com.muang.ai.claw.util.collection.CollectionUtils;
 import com.muang.ai.claw.util.date.DateUtils;
 import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.common.datapermission.core.annotation.DataPermission;
-import com.muang.ai.claw.common.tenant.config.TenantProperties;
+import com.muang.ai.claw.config.TenantProperties;
 import com.muang.ai.claw.common.tenant.core.context.TenantContextHolder;
 import com.muang.ai.claw.common.tenant.core.util.TenantUtils;
 import com.muang.ai.claw.module.system.controller.admin.permission.vo.role.RoleSaveReqVO;

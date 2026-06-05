@@ -4,7 +4,7 @@ import cn.hutool.core.util.NumberUtil;
 import com.muang.ai.claw.constant.TerminalEnum;
 import com.muang.ai.claw.constant.UserTypeEnum;
 import com.muang.ai.claw.common.pojo.CommonResult;
-import com.muang.ai.claw.common.web.config.WebProperties;
+import com.muang.ai.claw.config.WebProperties;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.context.request.RequestAttributes;

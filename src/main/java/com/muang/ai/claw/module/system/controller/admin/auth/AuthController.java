@@ -5,7 +5,7 @@ import cn.hutool.core.util.StrUtil;
 import com.muang.ai.claw.constant.CommonStatusEnum;
 import com.muang.ai.claw.common.pojo.CommonResult;
 import com.muang.ai.claw.common.datapermission.core.annotation.DataPermission;
-import com.muang.ai.claw.common.security.config.SecurityProperties;
+import com.muang.ai.claw.config.SecurityProperties;
 import com.muang.ai.claw.common.security.core.util.SecurityFrameworkUtils;
 import com.muang.ai.claw.module.system.controller.admin.auth.vo.*;
 import com.muang.ai.claw.module.system.convert.auth.AuthConvert;

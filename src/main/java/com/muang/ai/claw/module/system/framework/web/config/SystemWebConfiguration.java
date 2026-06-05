@@ -1,6 +1,6 @@
 package com.muang.ai.claw.module.system.framework.web.config;
 
-import com.muang.ai.claw.common.swagger.config.SwaggerAutoConfiguration;
+import com.muang.ai.claw.config.SwaggerAutoConfiguration;
 import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
