@@ -2,7 +2,7 @@ package com.muang.ai.claw.module.system.api.sms.dto.code;
 
 import com.muang.ai.claw.common.validation.InEnum;
 import com.muang.ai.claw.common.validation.Mobile;
-import com.muang.ai.claw.module.system.enums.sms.SmsSceneEnum;
+import com.muang.ai.claw.module.system.constant.sms.SmsSceneEnum;
 import lombok.Data;
 
 import jakarta.validation.constraints.NotEmpty;

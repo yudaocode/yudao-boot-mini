@@ -2,8 +2,8 @@ package com.muang.ai.claw.module.system.dal.dataobject.logger;
 
 import com.muang.ai.claw.constant.UserTypeEnum;
 import com.muang.ai.claw.config.mybatis.core.dataobject.BaseDO;
-import com.muang.ai.claw.module.system.enums.logger.LoginLogTypeEnum;
-import com.muang.ai.claw.module.system.enums.logger.LoginResultEnum;
+import com.muang.ai.claw.module.system.constant.logger.LoginLogTypeEnum;
+import com.muang.ai.claw.module.system.constant.logger.LoginResultEnum;
 import com.baomidou.mybatisplus.annotation.KeySequence;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;

@@ -7,7 +7,7 @@ import com.muang.ai.claw.constant.UserTypeEnum;
 import com.muang.ai.claw.module.system.dal.dataobject.oauth2.OAuth2AccessTokenDO;
 import com.muang.ai.claw.module.system.dal.dataobject.oauth2.OAuth2CodeDO;
 import com.muang.ai.claw.module.system.dal.dataobject.user.AdminUserDO;
-import com.muang.ai.claw.module.system.enums.ErrorCodeConstants;
+import com.muang.ai.claw.module.system.constant.ErrorCodeConstants;
 import com.muang.ai.claw.module.system.service.auth.AdminAuthService;
 import org.springframework.stereotype.Service;
 

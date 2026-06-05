@@ -1,7 +1,7 @@
 package com.muang.ai.claw.module.system.dal.dataobject.sms;
 
 import com.muang.ai.claw.config.tenant.core.aop.TenantIgnore;
-import com.muang.ai.claw.module.system.enums.sms.SmsTemplateTypeEnum;
+import com.muang.ai.claw.module.system.constant.sms.SmsTemplateTypeEnum;
 import com.muang.ai.claw.constant.CommonStatusEnum;
 import com.muang.ai.claw.config.mybatis.core.dataobject.BaseDO;
 import com.baomidou.mybatisplus.annotation.KeySequence;

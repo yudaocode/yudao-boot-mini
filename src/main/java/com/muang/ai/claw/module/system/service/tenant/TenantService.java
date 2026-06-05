@@ -21,8 +21,8 @@ import com.muang.ai.claw.module.system.dal.dataobject.permission.RoleDO;
 import com.muang.ai.claw.module.system.dal.dataobject.tenant.TenantDO;
 import com.muang.ai.claw.module.system.dal.dataobject.tenant.TenantPackageDO;
 import com.muang.ai.claw.module.system.dal.mysql.tenant.TenantMapper;
-import com.muang.ai.claw.module.system.enums.permission.RoleCodeEnum;
-import com.muang.ai.claw.module.system.enums.permission.RoleTypeEnum;
+import com.muang.ai.claw.module.system.constant.permission.RoleCodeEnum;
+import com.muang.ai.claw.module.system.constant.permission.RoleTypeEnum;
 import com.muang.ai.claw.module.system.service.permission.MenuService;
 import com.muang.ai.claw.module.system.service.permission.PermissionService;
 import com.muang.ai.claw.module.system.service.permission.RoleService;
@@ -42,7 +42,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
-import static com.muang.ai.claw.module.system.enums.ErrorCodeConstants.*;
+import static com.muang.ai.claw.module.system.constant.ErrorCodeConstants.*;
 import static java.util.Collections.singleton;
 
 /**

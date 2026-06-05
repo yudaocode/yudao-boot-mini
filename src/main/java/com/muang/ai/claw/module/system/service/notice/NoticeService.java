@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
-import static com.muang.ai.claw.module.system.enums.ErrorCodeConstants.NOTICE_NOT_FOUND;
+import static com.muang.ai.claw.module.system.constant.ErrorCodeConstants.NOTICE_NOT_FOUND;
 
 /**
  * 通知公告 Service 实现类

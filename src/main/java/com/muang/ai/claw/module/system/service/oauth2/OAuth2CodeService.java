@@ -12,8 +12,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
-import static com.muang.ai.claw.module.system.enums.ErrorCodeConstants.OAUTH2_CODE_EXPIRE;
-import static com.muang.ai.claw.module.system.enums.ErrorCodeConstants.OAUTH2_CODE_NOT_EXISTS;
+import static com.muang.ai.claw.module.system.constant.ErrorCodeConstants.OAUTH2_CODE_EXPIRE;
+import static com.muang.ai.claw.module.system.constant.ErrorCodeConstants.OAUTH2_CODE_NOT_EXISTS;
 
 /**
  * OAuth2.0 授权码 Service 实现类

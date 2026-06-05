@@ -14,8 +14,8 @@ import com.muang.ai.claw.module.infra.dal.dataobject.codegen.CodegenTableDO;
 import com.muang.ai.claw.module.infra.dal.dataobject.db.DataSourceConfigDO;
 import com.muang.ai.claw.module.infra.dal.mysql.codegen.CodegenColumnMapper;
 import com.muang.ai.claw.module.infra.dal.mysql.codegen.CodegenTableMapper;
-import com.muang.ai.claw.module.infra.enums.codegen.CodegenSceneEnum;
-import com.muang.ai.claw.module.infra.enums.codegen.CodegenTemplateTypeEnum;
+import com.muang.ai.claw.module.infra.constant.codegen.CodegenSceneEnum;
+import com.muang.ai.claw.module.infra.constant.codegen.CodegenTemplateTypeEnum;
 import com.muang.ai.claw.module.infra.framework.codegen.config.CodegenProperties;
 import com.muang.ai.claw.module.infra.service.codegen.inner.CodegenBuilder;
 import com.muang.ai.claw.module.infra.service.codegen.inner.CodegenEngine;
@@ -37,7 +37,7 @@ import java.util.stream.IntStream;
 import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
 import static com.muang.ai.claw.util.collection.CollectionUtils.convertMap;
 import static com.muang.ai.claw.util.collection.CollectionUtils.convertSet;
-import static com.muang.ai.claw.module.infra.enums.ErrorCodeConstants.*;
+import static com.muang.ai.claw.module.infra.constant.ErrorCodeConstants.*;
 
 /**
  * 代码生成 Service 实现类

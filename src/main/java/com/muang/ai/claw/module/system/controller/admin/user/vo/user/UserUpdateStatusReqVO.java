@@ -3,7 +3,7 @@ package com.muang.ai.claw.module.system.controller.admin.user.vo.user;
 import com.muang.ai.claw.constant.CommonStatusEnum;
 import com.muang.ai.claw.common.validation.InEnum;
 import com.muang.ai.claw.config.dict.validation.InDict;
-import com.muang.ai.claw.module.system.enums.DictTypeConstants;
+import com.muang.ai.claw.module.system.constant.DictTypeConstants;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;

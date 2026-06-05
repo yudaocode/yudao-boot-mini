@@ -1,7 +1,7 @@
 package com.muang.ai.claw.module.infra.framework.codegen.config;
 
-import com.muang.ai.claw.module.infra.enums.codegen.CodegenFrontTypeEnum;
-import com.muang.ai.claw.module.infra.enums.codegen.CodegenVOTypeEnum;
+import com.muang.ai.claw.module.infra.constant.codegen.CodegenFrontTypeEnum;
+import com.muang.ai.claw.module.infra.constant.codegen.CodegenVOTypeEnum;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.validation.annotation.Validated;

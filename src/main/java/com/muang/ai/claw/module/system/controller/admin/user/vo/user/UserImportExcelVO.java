@@ -3,7 +3,7 @@ package com.muang.ai.claw.module.system.controller.admin.user.vo.user;
 import cn.idev.excel.annotation.ExcelProperty;
 import com.muang.ai.claw.config.excel.annotations.DictFormat;
 import com.muang.ai.claw.config.excel.convert.DictConvert;
-import com.muang.ai.claw.module.system.enums.DictTypeConstants;
+import com.muang.ai.claw.module.system.constant.DictTypeConstants;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

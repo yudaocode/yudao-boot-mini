@@ -2,8 +2,8 @@ package com.muang.ai.claw.module.infra.dal.dataobject.codegen;
 
 import com.muang.ai.claw.config.mybatis.core.dataobject.BaseDO;
 import com.muang.ai.claw.config.tenant.core.aop.TenantIgnore;
-import com.muang.ai.claw.module.infra.enums.codegen.CodegenColumnHtmlTypeEnum;
-import com.muang.ai.claw.module.infra.enums.codegen.CodegenColumnListConditionEnum;
+import com.muang.ai.claw.module.infra.constant.codegen.CodegenColumnHtmlTypeEnum;
+import com.muang.ai.claw.module.infra.constant.codegen.CodegenColumnListConditionEnum;
 import com.baomidou.mybatisplus.annotation.KeySequence;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;

@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
-import static com.muang.ai.claw.module.system.enums.ErrorCodeConstants.*;
+import static com.muang.ai.claw.module.system.constant.ErrorCodeConstants.*;
 
 /**
  * 站内信发送 Service 实现类

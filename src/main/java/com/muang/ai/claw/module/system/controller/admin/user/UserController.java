@@ -11,7 +11,7 @@ import com.muang.ai.claw.module.system.controller.admin.user.vo.user.*;
 import com.muang.ai.claw.module.system.convert.user.UserConvert;
 import com.muang.ai.claw.module.system.dal.dataobject.dept.DeptDO;
 import com.muang.ai.claw.module.system.dal.dataobject.user.AdminUserDO;
-import com.muang.ai.claw.module.system.enums.common.SexEnum;
+import com.muang.ai.claw.module.system.constant.common.SexEnum;
 import com.muang.ai.claw.module.system.service.dept.DeptService;
 import com.muang.ai.claw.module.system.service.user.AdminUserService;
 import io.swagger.v3.oas.annotations.Operation;

@@ -12,7 +12,7 @@ import com.muang.ai.claw.module.system.convert.auth.AuthConvert;
 import com.muang.ai.claw.module.system.dal.dataobject.permission.MenuDO;
 import com.muang.ai.claw.module.system.dal.dataobject.permission.RoleDO;
 import com.muang.ai.claw.module.system.dal.dataobject.user.AdminUserDO;
-import com.muang.ai.claw.module.system.enums.logger.LoginLogTypeEnum;
+import com.muang.ai.claw.module.system.constant.logger.LoginLogTypeEnum;
 import com.muang.ai.claw.module.system.service.auth.AdminAuthService;
 import com.muang.ai.claw.module.system.service.permission.MenuService;
 import com.muang.ai.claw.module.system.service.permission.PermissionService;

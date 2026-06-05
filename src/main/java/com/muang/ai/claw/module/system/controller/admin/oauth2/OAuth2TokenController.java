@@ -6,7 +6,7 @@ import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.module.system.controller.admin.oauth2.vo.token.OAuth2AccessTokenPageReqVO;
 import com.muang.ai.claw.module.system.controller.admin.oauth2.vo.token.OAuth2AccessTokenRespVO;
 import com.muang.ai.claw.module.system.dal.dataobject.oauth2.OAuth2AccessTokenDO;
-import com.muang.ai.claw.module.system.enums.logger.LoginLogTypeEnum;
+import com.muang.ai.claw.module.system.constant.logger.LoginLogTypeEnum;
 import com.muang.ai.claw.module.system.service.auth.AdminAuthService;
 import com.muang.ai.claw.module.system.service.oauth2.OAuth2TokenService;
 import io.swagger.v3.oas.annotations.Operation;

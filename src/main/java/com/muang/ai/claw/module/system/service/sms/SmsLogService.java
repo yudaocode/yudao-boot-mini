@@ -5,8 +5,8 @@ import com.muang.ai.claw.module.system.controller.admin.sms.vo.log.SmsLogPageReq
 import com.muang.ai.claw.module.system.dal.dataobject.sms.SmsLogDO;
 import com.muang.ai.claw.module.system.dal.dataobject.sms.SmsTemplateDO;
 import com.muang.ai.claw.module.system.dal.mysql.sms.SmsLogMapper;
-import com.muang.ai.claw.module.system.enums.sms.SmsReceiveStatusEnum;
-import com.muang.ai.claw.module.system.enums.sms.SmsSendStatusEnum;
+import com.muang.ai.claw.module.system.constant.sms.SmsReceiveStatusEnum;
+import com.muang.ai.claw.module.system.constant.sms.SmsSendStatusEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

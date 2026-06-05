@@ -15,7 +15,7 @@ import com.muang.ai.claw.module.system.dal.dataobject.permission.UserRoleDO;
 import com.muang.ai.claw.module.system.dal.mysql.permission.RoleMenuMapper;
 import com.muang.ai.claw.module.system.dal.mysql.permission.UserRoleMapper;
 import com.muang.ai.claw.module.system.dal.redis.RedisKeyConstants;
-import com.muang.ai.claw.module.system.enums.permission.DataScopeEnum;
+import com.muang.ai.claw.module.system.constant.permission.DataScopeEnum;
 import com.muang.ai.claw.module.system.service.dept.DeptService;
 import com.muang.ai.claw.module.system.service.user.AdminUserService;
 import com.baomidou.dynamic.datasource.annotation.DSTransactional;

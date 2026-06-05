@@ -3,7 +3,7 @@ package com.muang.ai.claw.module.system.dal.dataobject.oauth2;
 import com.muang.ai.claw.constant.CommonStatusEnum;
 import com.muang.ai.claw.config.mybatis.core.dataobject.BaseDO;
 import com.muang.ai.claw.config.tenant.core.aop.TenantIgnore;
-import com.muang.ai.claw.module.system.enums.oauth2.OAuth2GrantTypeEnum;
+import com.muang.ai.claw.module.system.constant.oauth2.OAuth2GrantTypeEnum;
 import com.baomidou.mybatisplus.annotation.KeySequence;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;

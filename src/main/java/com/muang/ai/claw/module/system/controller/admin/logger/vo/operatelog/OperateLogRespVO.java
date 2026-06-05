@@ -4,7 +4,7 @@ import com.muang.ai.claw.config.excel.annotations.DictFormat;
 import com.muang.ai.claw.module.system.dal.dataobject.user.AdminUserDO;
 import cn.idev.excel.annotation.ExcelIgnoreUnannotated;
 import cn.idev.excel.annotation.ExcelProperty;
-import com.muang.ai.claw.module.system.enums.DictTypeConstants;
+import com.muang.ai.claw.module.system.constant.DictTypeConstants;
 import com.fhs.core.trans.anno.Trans;
 import com.fhs.core.trans.constant.TransType;
 import com.fhs.core.trans.vo.VO;

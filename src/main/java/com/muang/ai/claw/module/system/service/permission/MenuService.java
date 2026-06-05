@@ -10,7 +10,7 @@ import com.muang.ai.claw.module.system.controller.admin.permission.vo.menu.MenuS
 import com.muang.ai.claw.module.system.dal.dataobject.permission.MenuDO;
 import com.muang.ai.claw.module.system.dal.mysql.permission.MenuMapper;
 import com.muang.ai.claw.module.system.dal.redis.RedisKeyConstants;
-import com.muang.ai.claw.module.system.enums.permission.MenuTypeEnum;
+import com.muang.ai.claw.module.system.constant.permission.MenuTypeEnum;
 import com.muang.ai.claw.module.system.service.tenant.TenantService;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.Lists;
@@ -28,7 +28,7 @@ import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.excep
 import static com.muang.ai.claw.util.collection.CollectionUtils.convertList;
 import static com.muang.ai.claw.util.collection.CollectionUtils.convertMap;
 import static com.muang.ai.claw.module.system.dal.dataobject.permission.MenuDO.ID_ROOT;
-import static com.muang.ai.claw.module.system.enums.ErrorCodeConstants.*;
+import static com.muang.ai.claw.module.system.constant.ErrorCodeConstants.*;
 
 /**
  * 菜单 Service 实现

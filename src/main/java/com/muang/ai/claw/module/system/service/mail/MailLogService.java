@@ -7,7 +7,7 @@ import com.muang.ai.claw.module.system.dal.dataobject.mail.MailAccountDO;
 import com.muang.ai.claw.module.system.dal.dataobject.mail.MailLogDO;
 import com.muang.ai.claw.module.system.dal.dataobject.mail.MailTemplateDO;
 import com.muang.ai.claw.module.system.dal.mysql.mail.MailLogMapper;
-import com.muang.ai.claw.module.system.enums.mail.MailSendStatusEnum;
+import com.muang.ai.claw.module.system.constant.mail.MailSendStatusEnum;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 

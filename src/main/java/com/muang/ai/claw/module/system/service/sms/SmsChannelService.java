@@ -16,8 +16,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
-import static com.muang.ai.claw.module.system.enums.ErrorCodeConstants.SMS_CHANNEL_HAS_CHILDREN;
-import static com.muang.ai.claw.module.system.enums.ErrorCodeConstants.SMS_CHANNEL_NOT_EXISTS;
+import static com.muang.ai.claw.module.system.constant.ErrorCodeConstants.SMS_CHANNEL_HAS_CHILDREN;
+import static com.muang.ai.claw.module.system.constant.ErrorCodeConstants.SMS_CHANNEL_NOT_EXISTS;
 
 /**
  * 短信渠道 Service 实现类

@@ -2,7 +2,7 @@ package com.muang.ai.claw.module.infra.controller.admin.logger.vo.apierrorlog;
 
 import com.muang.ai.claw.config.excel.annotations.DictFormat;
 import com.muang.ai.claw.config.excel.convert.DictConvert;
-import com.muang.ai.claw.module.infra.enums.DictTypeConstants;
+import com.muang.ai.claw.module.infra.constant.DictTypeConstants;
 import cn.idev.excel.annotation.ExcelIgnoreUnannotated;
 import cn.idev.excel.annotation.ExcelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;

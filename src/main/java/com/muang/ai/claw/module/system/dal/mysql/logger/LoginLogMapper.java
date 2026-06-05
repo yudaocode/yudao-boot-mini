@@ -5,7 +5,7 @@ import com.muang.ai.claw.config.mybatis.core.mapper.BaseMapperX;
 import com.muang.ai.claw.config.mybatis.core.query.LambdaQueryWrapperX;
 import com.muang.ai.claw.module.system.controller.admin.logger.vo.loginlog.LoginLogPageReqVO;
 import com.muang.ai.claw.module.system.dal.dataobject.logger.LoginLogDO;
-import com.muang.ai.claw.module.system.enums.logger.LoginResultEnum;
+import com.muang.ai.claw.module.system.constant.logger.LoginResultEnum;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

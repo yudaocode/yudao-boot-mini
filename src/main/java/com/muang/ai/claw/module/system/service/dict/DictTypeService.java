@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
-import static com.muang.ai.claw.module.system.enums.ErrorCodeConstants.*;
+import static com.muang.ai.claw.module.system.constant.ErrorCodeConstants.*;
 
 /**
  * 字典类型 Service 实现类

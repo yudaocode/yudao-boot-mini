@@ -26,7 +26,7 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 
 import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
-import static com.muang.ai.claw.module.system.enums.ErrorCodeConstants.*;
+import static com.muang.ai.claw.module.system.constant.ErrorCodeConstants.*;
 
 /**
  * 邮箱发送 Service 实现类

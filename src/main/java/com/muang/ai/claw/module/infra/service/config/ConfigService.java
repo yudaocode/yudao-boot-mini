@@ -6,7 +6,7 @@ import com.muang.ai.claw.module.infra.controller.admin.config.vo.ConfigSaveReqVO
 import com.muang.ai.claw.module.infra.convert.config.ConfigConvert;
 import com.muang.ai.claw.module.infra.dal.dataobject.config.ConfigDO;
 import com.muang.ai.claw.module.infra.dal.mysql.config.ConfigMapper;
-import com.muang.ai.claw.module.infra.enums.config.ConfigTypeEnum;
+import com.muang.ai.claw.module.infra.constant.config.ConfigTypeEnum;
 import com.google.common.annotations.VisibleForTesting;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +16,7 @@ import org.springframework.validation.annotation.Validated;
 import java.util.List;
 
 import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
-import static com.muang.ai.claw.module.infra.enums.ErrorCodeConstants.*;
+import static com.muang.ai.claw.module.infra.constant.ErrorCodeConstants.*;
 
 /**
  * 参数配置 Service 实现类

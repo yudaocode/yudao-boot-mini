@@ -4,7 +4,7 @@ import com.muang.ai.claw.constant.UserTypeEnum;
 import com.muang.ai.claw.config.mybatis.core.dataobject.BaseDO;
 import com.muang.ai.claw.config.mybatis.core.type.StringListTypeHandler;
 import com.muang.ai.claw.config.tenant.core.aop.TenantIgnore;
-import com.muang.ai.claw.module.system.enums.mail.MailSendStatusEnum;
+import com.muang.ai.claw.module.system.constant.mail.MailSendStatusEnum;
 import com.baomidou.mybatisplus.annotation.KeySequence;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;

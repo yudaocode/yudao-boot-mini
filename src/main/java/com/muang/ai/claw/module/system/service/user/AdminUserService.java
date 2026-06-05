@@ -48,8 +48,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
 import static com.muang.ai.claw.util.collection.CollectionUtils.*;
-import static com.muang.ai.claw.module.system.enums.ErrorCodeConstants.*;
-import static com.muang.ai.claw.module.system.enums.LogRecordConstants.*;
+import static com.muang.ai.claw.module.system.constant.ErrorCodeConstants.*;
+import static com.muang.ai.claw.module.system.constant.LogRecordConstants.*;
 
 /**
  * 后台用户 Service 实现类

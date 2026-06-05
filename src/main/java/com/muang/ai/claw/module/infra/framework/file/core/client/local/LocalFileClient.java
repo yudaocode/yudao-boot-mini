@@ -9,7 +9,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
-import static com.muang.ai.claw.module.infra.enums.ErrorCodeConstants.FILE_PATH_INVALID;
+import static com.muang.ai.claw.module.infra.constant.ErrorCodeConstants.FILE_PATH_INVALID;
 
 /**
  * 本地文件客户端

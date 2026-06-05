@@ -29,7 +29,7 @@ import java.util.Objects;
 import java.util.regex.Pattern;
 
 import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
-import static com.muang.ai.claw.module.system.enums.ErrorCodeConstants.*;
+import static com.muang.ai.claw.module.system.constant.ErrorCodeConstants.*;
 
 /**
  * 短信模板 Service 实现类

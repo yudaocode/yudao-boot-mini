@@ -14,9 +14,9 @@ import com.muang.ai.claw.module.system.controller.admin.permission.vo.role.RoleS
 import com.muang.ai.claw.module.system.dal.dataobject.permission.RoleDO;
 import com.muang.ai.claw.module.system.dal.mysql.permission.RoleMapper;
 import com.muang.ai.claw.module.system.dal.redis.RedisKeyConstants;
-import com.muang.ai.claw.module.system.enums.permission.DataScopeEnum;
-import com.muang.ai.claw.module.system.enums.permission.RoleCodeEnum;
-import com.muang.ai.claw.module.system.enums.permission.RoleTypeEnum;
+import com.muang.ai.claw.module.system.constant.permission.DataScopeEnum;
+import com.muang.ai.claw.module.system.constant.permission.RoleCodeEnum;
+import com.muang.ai.claw.module.system.constant.permission.RoleTypeEnum;
 import com.google.common.annotations.VisibleForTesting;
 import com.mzt.logapi.context.LogRecordContext;
 import com.mzt.logapi.service.impl.DiffParseFunction;
@@ -33,8 +33,8 @@ import java.util.*;
 
 import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
 import static com.muang.ai.claw.util.collection.CollectionUtils.convertMap;
-import static com.muang.ai.claw.module.system.enums.ErrorCodeConstants.*;
-import static com.muang.ai.claw.module.system.enums.LogRecordConstants.*;
+import static com.muang.ai.claw.module.system.constant.ErrorCodeConstants.*;
+import static com.muang.ai.claw.module.system.constant.LogRecordConstants.*;
 
 /**
  * 角色 Service 实现类

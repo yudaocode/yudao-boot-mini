@@ -15,10 +15,10 @@ import com.muang.ai.claw.module.system.controller.admin.auth.vo.*;
 import com.muang.ai.claw.module.system.convert.auth.AuthConvert;
 import com.muang.ai.claw.module.system.dal.dataobject.oauth2.OAuth2AccessTokenDO;
 import com.muang.ai.claw.module.system.dal.dataobject.user.AdminUserDO;
-import com.muang.ai.claw.module.system.enums.logger.LoginLogTypeEnum;
-import com.muang.ai.claw.module.system.enums.logger.LoginResultEnum;
-import com.muang.ai.claw.module.system.enums.oauth2.OAuth2ClientConstants;
-import com.muang.ai.claw.module.system.enums.sms.SmsSceneEnum;
+import com.muang.ai.claw.module.system.constant.logger.LoginLogTypeEnum;
+import com.muang.ai.claw.module.system.constant.logger.LoginResultEnum;
+import com.muang.ai.claw.module.system.constant.oauth2.OAuth2ClientConstants;
+import com.muang.ai.claw.module.system.constant.sms.SmsSceneEnum;
 import com.muang.ai.claw.module.system.service.logger.LoginLogService;
 import com.muang.ai.claw.module.system.service.member.MemberService;
 import com.muang.ai.claw.module.system.service.oauth2.OAuth2TokenService;
@@ -39,7 +39,7 @@ import java.util.Objects;
 
 import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
 import static com.muang.ai.claw.util.servlet.ServletUtils.getClientIP;
-import static com.muang.ai.claw.module.system.enums.ErrorCodeConstants.*;
+import static com.muang.ai.claw.module.system.constant.ErrorCodeConstants.*;
 
 /**
  * Auth Service 实现类

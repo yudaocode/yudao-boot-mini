@@ -11,7 +11,7 @@ import com.muang.ai.claw.module.system.controller.admin.auth.vo.AuthSmsSendReqVO
 import com.muang.ai.claw.module.system.dal.dataobject.permission.MenuDO;
 import com.muang.ai.claw.module.system.dal.dataobject.permission.RoleDO;
 import com.muang.ai.claw.module.system.dal.dataobject.user.AdminUserDO;
-import com.muang.ai.claw.module.system.enums.permission.MenuTypeEnum;
+import com.muang.ai.claw.module.system.constant.permission.MenuTypeEnum;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 import org.slf4j.LoggerFactory;

@@ -10,7 +10,7 @@ import com.muang.ai.claw.module.infra.controller.admin.config.vo.ConfigRespVO;
 import com.muang.ai.claw.module.infra.controller.admin.config.vo.ConfigSaveReqVO;
 import com.muang.ai.claw.module.infra.convert.config.ConfigConvert;
 import com.muang.ai.claw.module.infra.dal.dataobject.config.ConfigDO;
-import com.muang.ai.claw.module.infra.enums.ErrorCodeConstants;
+import com.muang.ai.claw.module.infra.constant.ErrorCodeConstants;
 import com.muang.ai.claw.module.infra.service.config.ConfigService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

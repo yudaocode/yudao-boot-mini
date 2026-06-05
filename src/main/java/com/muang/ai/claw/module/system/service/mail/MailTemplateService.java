@@ -26,8 +26,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
-import static com.muang.ai.claw.module.system.enums.ErrorCodeConstants.MAIL_TEMPLATE_CODE_EXISTS;
-import static com.muang.ai.claw.module.system.enums.ErrorCodeConstants.MAIL_TEMPLATE_NOT_EXISTS;
+import static com.muang.ai.claw.module.system.constant.ErrorCodeConstants.MAIL_TEMPLATE_CODE_EXISTS;
+import static com.muang.ai.claw.module.system.constant.ErrorCodeConstants.MAIL_TEMPLATE_NOT_EXISTS;
 
 /**
  * 邮箱模版 Service 实现类

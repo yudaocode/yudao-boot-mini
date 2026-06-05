@@ -9,7 +9,7 @@ import com.muang.ai.claw.config.tenant.core.util.TenantUtils;
 import com.muang.ai.claw.module.infra.controller.admin.logger.vo.apierrorlog.ApiErrorLogPageReqVO;
 import com.muang.ai.claw.module.infra.dal.dataobject.logger.ApiErrorLogDO;
 import com.muang.ai.claw.module.infra.dal.mysql.logger.ApiErrorLogMapper;
-import com.muang.ai.claw.module.infra.enums.logger.ApiErrorLogProcessStatusEnum;
+import com.muang.ai.claw.module.infra.constant.logger.ApiErrorLogProcessStatusEnum;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -19,8 +19,8 @@ import java.time.LocalDateTime;
 
 import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
 import static com.muang.ai.claw.module.infra.dal.dataobject.logger.ApiErrorLogDO.REQUEST_PARAMS_MAX_LENGTH;
-import static com.muang.ai.claw.module.infra.enums.ErrorCodeConstants.API_ERROR_LOG_NOT_FOUND;
-import static com.muang.ai.claw.module.infra.enums.ErrorCodeConstants.API_ERROR_LOG_PROCESSED;
+import static com.muang.ai.claw.module.infra.constant.ErrorCodeConstants.API_ERROR_LOG_NOT_FOUND;
+import static com.muang.ai.claw.module.infra.constant.ErrorCodeConstants.API_ERROR_LOG_PROCESSED;
 
 /**
  * API 错误日志 Service 实现类

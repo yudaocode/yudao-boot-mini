@@ -6,7 +6,7 @@ import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.module.infra.controller.admin.job.vo.log.JobLogPageReqVO;
 import com.muang.ai.claw.module.infra.dal.dataobject.job.JobLogDO;
 import com.muang.ai.claw.module.infra.dal.mysql.job.JobLogMapper;
-import com.muang.ai.claw.module.infra.enums.job.JobLogStatusEnum;
+import com.muang.ai.claw.module.infra.constant.job.JobLogStatusEnum;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;

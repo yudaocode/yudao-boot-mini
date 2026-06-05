@@ -10,7 +10,7 @@ import com.muang.ai.claw.module.infra.controller.admin.job.vo.job.JobPageReqVO;
 import com.muang.ai.claw.module.infra.controller.admin.job.vo.job.JobSaveReqVO;
 import com.muang.ai.claw.module.infra.dal.dataobject.job.JobDO;
 import com.muang.ai.claw.module.infra.dal.mysql.job.JobMapper;
-import com.muang.ai.claw.module.infra.enums.job.JobStatusEnum;
+import com.muang.ai.claw.module.infra.constant.job.JobStatusEnum;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.SchedulerException;
@@ -24,7 +24,7 @@ import java.util.Objects;
 
 import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
 import static com.muang.ai.claw.util.collection.CollectionUtils.containsAny;
-import static com.muang.ai.claw.module.infra.enums.ErrorCodeConstants.*;
+import static com.muang.ai.claw.module.infra.constant.ErrorCodeConstants.*;
 
 /**
  * 定时任务 Service 实现类

@@ -15,8 +15,8 @@ import java.util.List;
 import java.util.Objects;
 
 import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
-import static com.muang.ai.claw.module.infra.enums.ErrorCodeConstants.DATA_SOURCE_CONFIG_NOT_EXISTS;
-import static com.muang.ai.claw.module.infra.enums.ErrorCodeConstants.DATA_SOURCE_CONFIG_NOT_OK;
+import static com.muang.ai.claw.module.infra.constant.ErrorCodeConstants.DATA_SOURCE_CONFIG_NOT_EXISTS;
+import static com.muang.ai.claw.module.infra.constant.ErrorCodeConstants.DATA_SOURCE_CONFIG_NOT_OK;
 
 /**
  * 数据源配置 Service 实现类

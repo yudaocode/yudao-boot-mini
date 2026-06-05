@@ -15,7 +15,7 @@ import com.muang.ai.claw.module.system.convert.oauth2.OAuth2OpenConvert;
 import com.muang.ai.claw.module.system.dal.dataobject.oauth2.OAuth2AccessTokenDO;
 import com.muang.ai.claw.module.system.dal.dataobject.oauth2.OAuth2ApproveDO;
 import com.muang.ai.claw.module.system.dal.dataobject.oauth2.OAuth2ClientDO;
-import com.muang.ai.claw.module.system.enums.oauth2.OAuth2GrantTypeEnum;
+import com.muang.ai.claw.module.system.constant.oauth2.OAuth2GrantTypeEnum;
 import com.muang.ai.claw.module.system.service.oauth2.OAuth2ApproveService;
 import com.muang.ai.claw.module.system.service.oauth2.OAuth2ClientService;
 import com.muang.ai.claw.module.system.service.oauth2.OAuth2GrantService;

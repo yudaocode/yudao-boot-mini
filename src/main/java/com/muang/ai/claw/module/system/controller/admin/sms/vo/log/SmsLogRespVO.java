@@ -3,7 +3,7 @@ package com.muang.ai.claw.module.system.controller.admin.sms.vo.log;
 import com.muang.ai.claw.config.excel.annotations.DictFormat;
 import com.muang.ai.claw.config.excel.convert.DictConvert;
 import com.muang.ai.claw.config.excel.convert.JsonConvert;
-import com.muang.ai.claw.module.system.enums.DictTypeConstants;
+import com.muang.ai.claw.module.system.constant.DictTypeConstants;
 import cn.idev.excel.annotation.ExcelIgnoreUnannotated;
 import cn.idev.excel.annotation.ExcelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;

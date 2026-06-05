@@ -8,7 +8,7 @@ import com.muang.ai.claw.module.system.api.sms.dto.code.SmsCodeUseReqDTO;
 import com.muang.ai.claw.module.system.api.sms.dto.code.SmsCodeValidateReqDTO;
 import com.muang.ai.claw.module.system.dal.dataobject.sms.SmsCodeDO;
 import com.muang.ai.claw.module.system.dal.mysql.sms.SmsCodeMapper;
-import com.muang.ai.claw.module.system.enums.sms.SmsSceneEnum;
+import com.muang.ai.claw.module.system.constant.sms.SmsSceneEnum;
 import com.muang.ai.claw.module.system.framework.sms.config.SmsCodeProperties;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 import static cn.hutool.core.util.RandomUtil.randomInt;
 import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
 import static com.muang.ai.claw.util.date.DateUtils.isToday;
-import static com.muang.ai.claw.module.system.enums.ErrorCodeConstants.*;
+import static com.muang.ai.claw.module.system.constant.ErrorCodeConstants.*;
 
 /**
  * 短信验证码 Service 实现类

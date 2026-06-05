@@ -17,8 +17,8 @@ import org.springframework.validation.annotation.Validated;
 import java.util.List;
 
 import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
-import static com.muang.ai.claw.module.system.enums.ErrorCodeConstants.MAIL_ACCOUNT_NOT_EXISTS;
-import static com.muang.ai.claw.module.system.enums.ErrorCodeConstants.MAIL_ACCOUNT_RELATE_TEMPLATE_EXISTS;
+import static com.muang.ai.claw.module.system.constant.ErrorCodeConstants.MAIL_ACCOUNT_NOT_EXISTS;
+import static com.muang.ai.claw.module.system.constant.ErrorCodeConstants.MAIL_ACCOUNT_RELATE_TEMPLATE_EXISTS;
 
 /**
  * 邮箱账号 Service 实现类

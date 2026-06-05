@@ -1,8 +1,8 @@
 package com.muang.ai.claw.module.infra.controller.admin.codegen.vo.table;
 
 import cn.hutool.core.util.ObjectUtil;
-import com.muang.ai.claw.module.infra.enums.codegen.CodegenSceneEnum;
-import com.muang.ai.claw.module.infra.enums.codegen.CodegenTemplateTypeEnum;
+import com.muang.ai.claw.module.infra.constant.codegen.CodegenSceneEnum;
+import com.muang.ai.claw.module.infra.constant.codegen.CodegenTemplateTypeEnum;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.AssertTrue;

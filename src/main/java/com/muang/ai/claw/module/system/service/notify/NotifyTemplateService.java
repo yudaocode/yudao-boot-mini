@@ -22,8 +22,8 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
-import static com.muang.ai.claw.module.system.enums.ErrorCodeConstants.NOTIFY_TEMPLATE_CODE_DUPLICATE;
-import static com.muang.ai.claw.module.system.enums.ErrorCodeConstants.NOTIFY_TEMPLATE_NOT_EXISTS;
+import static com.muang.ai.claw.module.system.constant.ErrorCodeConstants.NOTIFY_TEMPLATE_CODE_DUPLICATE;
+import static com.muang.ai.claw.module.system.constant.ErrorCodeConstants.NOTIFY_TEMPLATE_NOT_EXISTS;
 
 /**
  * 站内信模版 Service 实现类
