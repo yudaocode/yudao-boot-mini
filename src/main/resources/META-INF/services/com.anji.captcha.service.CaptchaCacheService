@@ -1,1 +1,1 @@
-com.muang.ai.claw.module.system.framework.captcha.core.RedisCaptchaServiceImpl
+com.muang.ai.claw.config.captcha.core.RedisCaptchaServiceImpl

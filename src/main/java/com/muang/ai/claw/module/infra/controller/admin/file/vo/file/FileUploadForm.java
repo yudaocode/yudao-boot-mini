@@ -1,6 +1,6 @@
 package com.muang.ai.claw.module.infra.controller.admin.file.vo.file;
 
-import com.muang.ai.claw.module.infra.framework.file.core.utils.FilePathUtils;
+import com.muang.ai.claw.config.file.core.utils.FilePathUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.AssertTrue;

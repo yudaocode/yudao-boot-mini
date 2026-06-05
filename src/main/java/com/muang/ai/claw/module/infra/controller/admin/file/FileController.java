@@ -31,7 +31,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import static com.muang.ai.claw.common.core.CommonResult.success;
-import static com.muang.ai.claw.module.infra.framework.file.core.utils.FileTypeUtils.writeAttachment;
+import static com.muang.ai.claw.config.file.core.utils.FileTypeUtils.writeAttachment;
 
 @Tag(name = "管理后台 - 文件存储")
 @RestController

@@ -6,9 +6,9 @@ import com.muang.ai.claw.module.system.controller.admin.sms.vo.channel.SmsChanne
 import com.muang.ai.claw.module.system.controller.admin.sms.vo.channel.SmsChannelSaveForm;
 import com.muang.ai.claw.module.system.dal.dataobject.sms.SmsChannelDO;
 import com.muang.ai.claw.module.system.dal.mysql.sms.SmsChannelMapper;
-import com.muang.ai.claw.module.system.framework.sms.core.client.SmsClient;
-import com.muang.ai.claw.module.system.framework.sms.core.client.SmsClientFactory;
-import com.muang.ai.claw.module.system.framework.sms.core.property.SmsChannelProperties;
+import com.muang.ai.claw.config.sms.core.client.SmsClient;
+import com.muang.ai.claw.config.sms.core.client.SmsClientFactory;
+import com.muang.ai.claw.config.sms.core.property.SmsChannelProperties;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

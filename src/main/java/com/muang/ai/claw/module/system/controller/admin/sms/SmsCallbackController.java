@@ -3,7 +3,7 @@ package com.muang.ai.claw.module.system.controller.admin.sms;
 import com.muang.ai.claw.common.core.CommonResult;
 import com.muang.ai.claw.util.servlet.ServletUtils;
 import com.muang.ai.claw.config.tenant.core.aop.TenantIgnore;
-import com.muang.ai.claw.module.system.framework.sms.core.enums.SmsChannelEnum;
+import com.muang.ai.claw.config.sms.core.enums.SmsChannelEnum;
 import com.muang.ai.claw.module.system.service.sms.SmsSendService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

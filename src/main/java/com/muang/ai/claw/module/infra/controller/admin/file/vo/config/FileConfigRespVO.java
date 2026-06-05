@@ -1,6 +1,6 @@
 package com.muang.ai.claw.module.infra.controller.admin.file.vo.config;
 
-import com.muang.ai.claw.module.infra.framework.file.core.client.FileClientConfig;
+import com.muang.ai.claw.config.file.core.client.FileClientConfig;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 

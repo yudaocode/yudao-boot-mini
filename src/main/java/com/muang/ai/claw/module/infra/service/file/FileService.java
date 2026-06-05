@@ -14,9 +14,9 @@ import com.muang.ai.claw.module.infra.controller.admin.file.vo.file.FilePageForm
 import com.muang.ai.claw.module.infra.controller.admin.file.vo.file.FilePresignedUrlRespVO;
 import com.muang.ai.claw.module.infra.dal.dataobject.file.FileDO;
 import com.muang.ai.claw.module.infra.dal.mysql.file.FileMapper;
-import com.muang.ai.claw.module.infra.framework.file.core.client.FileClient;
-import com.muang.ai.claw.module.infra.framework.file.core.utils.FilePathUtils;
-import com.muang.ai.claw.module.infra.framework.file.core.utils.FileTypeUtils;
+import com.muang.ai.claw.config.file.core.client.FileClient;
+import com.muang.ai.claw.config.file.core.utils.FilePathUtils;
+import com.muang.ai.claw.config.file.core.utils.FileTypeUtils;
 import com.google.common.annotations.VisibleForTesting;
 import jakarta.annotation.Resource;
 import lombok.SneakyThrows;

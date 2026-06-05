@@ -11,10 +11,10 @@ import com.muang.ai.claw.module.infra.controller.admin.file.vo.config.FileConfig
 import com.muang.ai.claw.module.infra.convert.file.FileConfigConvert;
 import com.muang.ai.claw.module.infra.dal.dataobject.file.FileConfigDO;
 import com.muang.ai.claw.module.infra.dal.mysql.file.FileConfigMapper;
-import com.muang.ai.claw.module.infra.framework.file.core.client.FileClient;
-import com.muang.ai.claw.module.infra.framework.file.core.client.FileClientConfig;
-import com.muang.ai.claw.module.infra.framework.file.core.client.FileClientFactory;
-import com.muang.ai.claw.module.infra.framework.file.core.enums.FileStorageEnum;
+import com.muang.ai.claw.config.file.core.client.FileClient;
+import com.muang.ai.claw.config.file.core.client.FileClientConfig;
+import com.muang.ai.claw.config.file.core.client.FileClientFactory;
+import com.muang.ai.claw.config.file.core.enums.FileStorageEnum;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import jakarta.annotation.Resource;

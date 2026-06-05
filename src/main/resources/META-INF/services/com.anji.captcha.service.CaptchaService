@@ -1,1 +1,1 @@
-com.muang.ai.claw.module.system.framework.captcha.core.PictureWordCaptchaServiceImpl
+com.muang.ai.claw.config.captcha.core.PictureWordCaptchaServiceImpl

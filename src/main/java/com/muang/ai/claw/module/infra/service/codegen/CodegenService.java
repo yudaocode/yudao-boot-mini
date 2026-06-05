@@ -16,7 +16,7 @@ import com.muang.ai.claw.module.infra.dal.mysql.codegen.CodegenColumnMapper;
 import com.muang.ai.claw.module.infra.dal.mysql.codegen.CodegenTableMapper;
 import com.muang.ai.claw.module.infra.constant.codegen.CodegenSceneEnum;
 import com.muang.ai.claw.module.infra.constant.codegen.CodegenTemplateTypeEnum;
-import com.muang.ai.claw.module.infra.framework.codegen.config.CodegenProperties;
+import com.muang.ai.claw.config.codegen.CodegenProperties;
 import com.muang.ai.claw.module.infra.service.codegen.inner.CodegenBuilder;
 import com.muang.ai.claw.module.infra.service.codegen.inner.CodegenEngine;
 import com.muang.ai.claw.module.infra.service.db.DataSourceConfigService;

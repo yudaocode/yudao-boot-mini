@@ -9,7 +9,7 @@ import com.muang.ai.claw.module.system.api.sms.dto.code.SmsCodeValidateReqDTO;
 import com.muang.ai.claw.module.system.dal.dataobject.sms.SmsCodeDO;
 import com.muang.ai.claw.module.system.dal.mysql.sms.SmsCodeMapper;
 import com.muang.ai.claw.module.system.constant.sms.SmsSceneEnum;
-import com.muang.ai.claw.module.system.framework.sms.config.SmsCodeProperties;
+import com.muang.ai.claw.config.sms.config.SmsCodeProperties;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 

@@ -35,7 +35,7 @@ import java.util.Map;
 
 import static com.muang.ai.claw.common.core.CommonResult.success;
 import static com.muang.ai.claw.config.security.core.util.SecurityFrameworkUtils.getLoginUserNickname;
-import static com.muang.ai.claw.module.infra.framework.file.core.utils.FileTypeUtils.writeAttachment;
+import static com.muang.ai.claw.config.file.core.utils.FileTypeUtils.writeAttachment;
 
 @Tag(name = "管理后台 - 代码生成器")
 @RestController

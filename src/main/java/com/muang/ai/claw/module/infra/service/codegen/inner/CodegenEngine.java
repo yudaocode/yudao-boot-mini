@@ -32,7 +32,7 @@ import com.muang.ai.claw.module.infra.constant.codegen.CodegenFrontTypeEnum;
 import com.muang.ai.claw.module.infra.constant.codegen.CodegenSceneEnum;
 import com.muang.ai.claw.module.infra.constant.codegen.CodegenTemplateTypeEnum;
 import com.muang.ai.claw.module.infra.constant.codegen.CodegenVOTypeEnum;
-import com.muang.ai.claw.module.infra.framework.codegen.config.CodegenProperties;
+import com.muang.ai.claw.config.codegen.CodegenProperties;
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.ImmutableTable;

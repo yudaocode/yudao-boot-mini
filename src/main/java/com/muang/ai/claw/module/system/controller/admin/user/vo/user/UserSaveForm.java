@@ -2,9 +2,9 @@ package com.muang.ai.claw.module.system.controller.admin.user.vo.user;
 
 import cn.hutool.core.util.ObjectUtil;
 import com.muang.ai.claw.common.validation.Mobile;
-import com.muang.ai.claw.module.system.framework.operatelog.core.DeptParseFunction;
-import com.muang.ai.claw.module.system.framework.operatelog.core.PostParseFunction;
-import com.muang.ai.claw.module.system.framework.operatelog.core.SexParseFunction;
+import com.muang.ai.claw.config.operatelog.core.DeptParseFunction;
+import com.muang.ai.claw.config.operatelog.core.PostParseFunction;
+import com.muang.ai.claw.config.operatelog.core.SexParseFunction;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mzt.logapi.starter.annotation.DiffLogField;
 import io.swagger.v3.oas.annotations.media.Schema;
