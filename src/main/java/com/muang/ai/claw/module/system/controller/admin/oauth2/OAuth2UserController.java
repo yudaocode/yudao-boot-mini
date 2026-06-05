@@ -2,13 +2,13 @@ package com.muang.ai.claw.module.system.controller.admin.oauth2;
 
 import cn.hutool.core.collection.CollUtil;
 import com.muang.ai.claw.common.core.CommonResult;
+import com.muang.ai.claw.module.system.entity.dept.DeptEntity;
 import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.module.system.controller.admin.oauth2.vo.user.OAuth2UserInfoRespVO;
 import com.muang.ai.claw.module.system.controller.admin.oauth2.vo.user.OAuth2UserUpdateForm;
 import com.muang.ai.claw.module.system.controller.admin.user.vo.profile.UserProfileUpdateForm;
-import com.muang.ai.claw.module.system.dal.dataobject.dept.DeptDO;
-import com.muang.ai.claw.module.system.dal.dataobject.dept.PostDO;
-import com.muang.ai.claw.module.system.dal.dataobject.user.AdminUserDO;
+import com.muang.ai.claw.module.system.entity.dept.PostEntity;
+import com.muang.ai.claw.module.system.entity.user.AdminUserEntity;
 import com.muang.ai.claw.module.system.service.dept.DeptService;
 import com.muang.ai.claw.module.system.service.dept.PostService;
 import com.muang.ai.claw.module.system.service.user.AdminUserService;
@@ -52,16 +52,16 @@ public class OAuth2UserController {
     @PreAuthorize("@ss.hasScope('user.read')") //
     public CommonResult<OAuth2UserInfoRespVO> getUserInfo() {
         // 获得用户基本信息
-        AdminUserDO user = userService.getUser(getLoginUserId());
+        AdminUserEntity user = userService.getUser(getLoginUserId());
         OAuth2UserInfoRespVO resp = BeanUtils.toBean(user, OAuth2UserInfoRespVO.class);
         // 获得部门信息
         if (user.getDeptId() != null) {
-            DeptDO dept = deptService.getDept(user.getDeptId());
+            DeptEntity dept = deptService.getDept(user.getDeptId());
             resp.setDept(BeanUtils.toBean(dept, OAuth2UserInfoRespVO.Dept.class));
         }
         // 获得岗位信息
         if (CollUtil.isNotEmpty(user.getPostIds())) {
-            List<PostDO> posts = postService.getPostList(user.getPostIds());
+            List<PostEntity> posts = postService.getPostList(user.getPostIds());
             resp.setPosts(BeanUtils.toBean(posts, OAuth2UserInfoRespVO.Post.class));
         }
         return success(resp);

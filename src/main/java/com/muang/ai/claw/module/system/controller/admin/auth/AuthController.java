@@ -9,9 +9,9 @@ import com.muang.ai.claw.config.security.config.SecurityProperties;
 import com.muang.ai.claw.config.security.core.util.SecurityFrameworkUtils;
 import com.muang.ai.claw.module.system.controller.admin.auth.vo.*;
 import com.muang.ai.claw.module.system.convert.auth.AuthConvert;
-import com.muang.ai.claw.module.system.dal.dataobject.permission.MenuDO;
-import com.muang.ai.claw.module.system.dal.dataobject.permission.RoleDO;
-import com.muang.ai.claw.module.system.dal.dataobject.user.AdminUserDO;
+import com.muang.ai.claw.module.system.entity.permission.MenuEntity;
+import com.muang.ai.claw.module.system.entity.permission.RoleEntity;
+import com.muang.ai.claw.module.system.entity.user.AdminUserEntity;
 import com.muang.ai.claw.module.system.constant.logger.LoginLogTypeEnum;
 import com.muang.ai.claw.module.system.service.auth.AdminAuthService;
 import com.muang.ai.claw.module.system.service.permission.MenuService;
@@ -90,7 +90,7 @@ public class AuthController {
     @DataPermission(enable = false) // 忽略数据权限，避免因为过滤，导致无法查询用户。类似：https://t.zsxq.com/LHnrp
     public CommonResult<AuthPermissionInfoRespVO> getPermissionInfo() {
         // 1.1 获得用户信息
-        AdminUserDO user = userService.getUser(getLoginUserId());
+        AdminUserEntity user = userService.getUser(getLoginUserId());
         if (user == null) {
             return success(null);
         }
@@ -100,12 +100,12 @@ public class AuthController {
         if (CollUtil.isEmpty(roleIds)) {
             return success(AuthConvert.INSTANCE.convert(user, Collections.emptyList(), Collections.emptyList()));
         }
-        List<RoleDO> roles = roleService.getRoleList(roleIds);
+        List<RoleEntity> roles = roleService.getRoleList(roleIds);
         roles.removeIf(role -> !CommonStatusEnum.ENABLE.getStatus().equals(role.getStatus())); // 移除禁用的角色
 
         // 1.3 获得菜单列表
-        Set<Long> menuIds = permissionService.getRoleMenuListByRoleId(convertSet(roles, RoleDO::getId));
-        List<MenuDO> menuList = menuService.getMenuList(menuIds);
+        Set<Long> menuIds = permissionService.getRoleMenuListByRoleId(convertSet(roles, RoleEntity::getId));
+        List<MenuEntity> menuList = menuService.getMenuList(menuIds);
         menuList = menuService.filterDisableMenus(menuList);
 
         // 2. 拼接结果返回

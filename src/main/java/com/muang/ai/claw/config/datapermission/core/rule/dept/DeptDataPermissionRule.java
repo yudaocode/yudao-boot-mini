@@ -3,13 +3,13 @@ package com.muang.ai.claw.config.datapermission.core.rule.dept;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
+import com.muang.ai.claw.common.core.BaseEntity;
 import com.muang.ai.claw.module.system.api.permission.PermissionApi;
 import com.muang.ai.claw.module.system.api.permission.dto.DeptDataPermissionRespDTO;
 import com.muang.ai.claw.constant.UserTypeEnum;
 import com.muang.ai.claw.util.collection.CollectionUtils;
 import com.muang.ai.claw.util.json.JsonUtils;
 import com.muang.ai.claw.config.datapermission.core.rule.DataPermissionRule;
-import com.muang.ai.claw.config.mybatis.core.dataobject.BaseDO;
 import com.muang.ai.claw.config.mybatis.core.util.MyBatisUtils;
 import com.muang.ai.claw.config.security.core.LoginUser;
 import com.muang.ai.claw.config.security.core.util.SecurityFrameworkUtils;
@@ -175,11 +175,11 @@ public class DeptDataPermissionRule implements DataPermissionRule {
 
     // ==================== 添加配置 ====================
 
-    public void addDeptColumn(Class<? extends BaseDO> entityClass) {
+    public void addDeptColumn(Class<? extends BaseEntity> entityClass) {
         addDeptColumn(entityClass, DEPT_COLUMN_NAME);
     }
 
-    public void addDeptColumn(Class<? extends BaseDO> entityClass, String columnName) {
+    public void addDeptColumn(Class<? extends BaseEntity> entityClass, String columnName) {
         String tableName = TableInfoHelper.getTableInfo(entityClass).getTableName();
        addDeptColumn(tableName, columnName);
     }
@@ -189,11 +189,11 @@ public class DeptDataPermissionRule implements DataPermissionRule {
         TABLE_NAMES.add(tableName);
     }
 
-    public void addUserColumn(Class<? extends BaseDO> entityClass) {
+    public void addUserColumn(Class<? extends BaseEntity> entityClass) {
         addUserColumn(entityClass, USER_COLUMN_NAME);
     }
 
-    public void addUserColumn(Class<? extends BaseDO> entityClass, String columnName) {
+    public void addUserColumn(Class<? extends BaseEntity> entityClass, String columnName) {
         String tableName = TableInfoHelper.getTableInfo(entityClass).getTableName();
         addUserColumn(tableName, columnName);
     }

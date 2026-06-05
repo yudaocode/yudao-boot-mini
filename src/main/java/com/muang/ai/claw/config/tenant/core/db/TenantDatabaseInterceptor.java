@@ -71,7 +71,7 @@ public class TenantDatabaseInterceptor implements TenantLineHandler {
             return true;
         }
         // 如果继承了 TenantBaseDO 基类，显然不忽略租户
-        if (TenantBaseDO.class.isAssignableFrom(tableInfo.getEntityType())) {
+        if (TenantBaseEntity.class.isAssignableFrom(tableInfo.getEntityType())) {
             return false;
         }
         // 如果添加了 @TenantIgnore 注解，则忽略租户

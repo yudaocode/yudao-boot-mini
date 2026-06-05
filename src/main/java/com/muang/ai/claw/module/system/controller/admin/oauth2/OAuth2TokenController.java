@@ -2,10 +2,10 @@ package com.muang.ai.claw.module.system.controller.admin.oauth2;
 
 import com.muang.ai.claw.common.core.CommonResult;
 import com.muang.ai.claw.common.core.PageResult;
+import com.muang.ai.claw.module.system.entity.oauth2.OAuth2AccessTokenEntity;
 import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.module.system.controller.admin.oauth2.vo.token.OAuth2AccessTokenPageForm;
 import com.muang.ai.claw.module.system.controller.admin.oauth2.vo.token.OAuth2AccessTokenRespVO;
-import com.muang.ai.claw.module.system.dal.dataobject.oauth2.OAuth2AccessTokenDO;
 import com.muang.ai.claw.module.system.constant.logger.LoginLogTypeEnum;
 import com.muang.ai.claw.module.system.service.auth.AdminAuthService;
 import com.muang.ai.claw.module.system.service.oauth2.OAuth2TokenService;
@@ -35,7 +35,7 @@ public class OAuth2TokenController {
     @Operation(summary = "获得访问令牌分页", description = "只返回有效期内的")
     @PreAuthorize("@ss.hasPermission('system:oauth2-token:page')")
     public CommonResult<PageResult<OAuth2AccessTokenRespVO>> getAccessTokenPage(@Valid OAuth2AccessTokenPageForm reqVO) {
-        PageResult<OAuth2AccessTokenDO> pageResult = oauth2TokenService.getAccessTokenPage(reqVO);
+        PageResult<OAuth2AccessTokenEntity> pageResult = oauth2TokenService.getAccessTokenPage(reqVO);
         return success(BeanUtils.toBean(pageResult, OAuth2AccessTokenRespVO.class));
     }
 

@@ -5,13 +5,13 @@ import com.muang.ai.claw.constant.CommonStatusEnum;
 import com.muang.ai.claw.common.core.CommonResult;
 import com.muang.ai.claw.common.core.PageParam;
 import com.muang.ai.claw.common.core.PageResult;
+import com.muang.ai.claw.module.system.entity.tenant.TenantEntity;
 import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.config.excel.util.ExcelUtils;
 import com.muang.ai.claw.config.tenant.core.aop.TenantIgnore;
 import com.muang.ai.claw.module.system.controller.admin.tenant.vo.tenant.TenantPageForm;
 import com.muang.ai.claw.module.system.controller.admin.tenant.vo.tenant.TenantRespVO;
 import com.muang.ai.claw.module.system.controller.admin.tenant.vo.tenant.TenantSaveForm;
-import com.muang.ai.claw.module.system.dal.dataobject.tenant.TenantDO;
 import com.muang.ai.claw.module.system.service.tenant.TenantService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -47,7 +47,7 @@ public class TenantController {
     @Operation(summary = "使用租户名，获得租户编号", description = "登录界面，根据用户的租户名，获得租户编号")
     @Parameter(name = "name", description = "租户名", required = true, example = "1024")
     public CommonResult<Long> getTenantIdByName(@RequestParam("name") String name) {
-        TenantDO tenant = tenantService.getTenantByName(name);
+        TenantEntity tenant = tenantService.getTenantByName(name);
         return success(tenant != null ? tenant.getId() : null);
     }
 
@@ -56,7 +56,7 @@ public class TenantController {
     @TenantIgnore
     @Operation(summary = "获取租户精简信息列表", description = "只包含被开启的租户，用于【首页】功能的选择租户选项")
     public CommonResult<List<TenantRespVO>> getTenantSimpleList() {
-        List<TenantDO> list = tenantService.getTenantListByStatus(CommonStatusEnum.ENABLE.getStatus());
+        List<TenantEntity> list = tenantService.getTenantListByStatus(CommonStatusEnum.ENABLE.getStatus());
         return success(convertList(list, tenantDO ->
                 new TenantRespVO().setId(tenantDO.getId()).setName(tenantDO.getName())));
     }
@@ -68,7 +68,7 @@ public class TenantController {
     @Parameter(name = "website", description = "域名", required = true, example = "www.iocoder.cn")
     public CommonResult<TenantRespVO> getTenantByWebsite(
             @RequestParam("website") @Pattern(regexp = "^[a-zA-Z0-9.-]+(:\\d{1,5})?$", message = "网站域名格式不正确") String website) {
-        TenantDO tenant = tenantService.getTenantByWebsite(website);
+        TenantEntity tenant = tenantService.getTenantByWebsite(website);
         if (tenant == null || CommonStatusEnum.isDisable(tenant.getStatus())) {
             return success(null);
         }
@@ -113,7 +113,7 @@ public class TenantController {
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
     @PreAuthorize("@ss.hasPermission('system:tenant:query')")
     public CommonResult<TenantRespVO> getTenant(@RequestParam("id") Long id) {
-        TenantDO tenant = tenantService.getTenant(id);
+        TenantEntity tenant = tenantService.getTenant(id);
         return success(BeanUtils.toBean(tenant, TenantRespVO.class));
     }
 
@@ -121,7 +121,7 @@ public class TenantController {
     @Operation(summary = "获得租户分页")
     @PreAuthorize("@ss.hasPermission('system:tenant:query')")
     public CommonResult<PageResult<TenantRespVO>> getTenantPage(@Valid TenantPageForm pageVO) {
-        PageResult<TenantDO> pageResult = tenantService.getTenantPage(pageVO);
+        PageResult<TenantEntity> pageResult = tenantService.getTenantPage(pageVO);
         return success(BeanUtils.toBean(pageResult, TenantRespVO.class));
     }
 
@@ -131,7 +131,7 @@ public class TenantController {
     @ApiAccessLog(operateType = EXPORT)
     public void exportTenantExcel(@Valid TenantPageForm exportReqVO, HttpServletResponse response) throws IOException {
         exportReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
-        List<TenantDO> list = tenantService.getTenantPage(exportReqVO).getList();
+        List<TenantEntity> list = tenantService.getTenantPage(exportReqVO).getList();
         // 导出 Excel
         ExcelUtils.write(response, "租户.xls", "数据", TenantRespVO.class,
                 BeanUtils.toBean(list, TenantRespVO.class));

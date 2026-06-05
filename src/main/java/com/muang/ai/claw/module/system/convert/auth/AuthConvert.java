@@ -2,11 +2,11 @@ package com.muang.ai.claw.module.system.convert.auth;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjUtil;
+import com.muang.ai.claw.module.system.entity.permission.MenuEntity;
+import com.muang.ai.claw.module.system.entity.permission.RoleEntity;
+import com.muang.ai.claw.module.system.entity.user.AdminUserEntity;
 import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.module.system.controller.admin.auth.vo.AuthPermissionInfoRespVO;
-import com.muang.ai.claw.module.system.dal.dataobject.permission.MenuDO;
-import com.muang.ai.claw.module.system.dal.dataobject.permission.RoleDO;
-import com.muang.ai.claw.module.system.dal.dataobject.user.AdminUserDO;
 import com.muang.ai.claw.module.system.constant.permission.MenuTypeEnum;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -16,19 +16,19 @@ import java.util.*;
 
 import static com.muang.ai.claw.util.collection.CollectionUtils.convertSet;
 import static com.muang.ai.claw.util.collection.CollectionUtils.filterList;
-import static com.muang.ai.claw.module.system.dal.dataobject.permission.MenuDO.ID_ROOT;
+import static com.muang.ai.claw.module.system.entity.permission.MenuEntity.ID_ROOT;
 
 @Mapper
 public interface AuthConvert {
 
     AuthConvert INSTANCE = Mappers.getMapper(AuthConvert.class);
 
-    default AuthPermissionInfoRespVO convert(AdminUserDO user, List<RoleDO> roleList, List<MenuDO> menuList) {
+    default AuthPermissionInfoRespVO convert(AdminUserEntity user, List<RoleEntity> roleList, List<MenuEntity> menuList) {
         return AuthPermissionInfoRespVO.builder()
                 .user(BeanUtils.toBean(user, AuthPermissionInfoRespVO.UserVO.class))
-                .roles(convertSet(roleList, RoleDO::getCode))
+                .roles(convertSet(roleList, RoleEntity::getCode))
                 // 权限标识信息
-                .permissions(convertSet(menuList, MenuDO::getPermission))
+                .permissions(convertSet(menuList, MenuEntity::getPermission))
                 // 菜单树
                 .menus(buildMenuTree(menuList))
                 .build();
@@ -40,14 +40,14 @@ public interface AuthConvert {
      * @param menuList 菜单列表
      * @return 菜单树
      */
-    default List<AuthPermissionInfoRespVO.MenuVO> buildMenuTree(List<MenuDO> menuList) {
+    default List<AuthPermissionInfoRespVO.MenuVO> buildMenuTree(List<MenuEntity> menuList) {
         if (CollUtil.isEmpty(menuList)) {
             return Collections.emptyList();
         }
         // 移除按钮
         menuList.removeIf(menu -> menu.getType().equals(MenuTypeEnum.BUTTON.getType()));
         // 排序，保证菜单的有序性
-        menuList.sort(Comparator.comparing(MenuDO::getSort));
+        menuList.sort(Comparator.comparing(MenuEntity::getSort));
 
         // 构建菜单树
         // 使用 LinkedHashMap 的原因，是为了排序 。实际也可以用 Stream API ，就是太丑了。

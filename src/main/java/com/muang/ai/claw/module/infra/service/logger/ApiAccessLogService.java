@@ -5,8 +5,8 @@ import com.muang.ai.claw.config.tenant.core.context.TenantContextHolder;
 import com.muang.ai.claw.config.tenant.core.util.TenantUtils;
 import com.muang.ai.claw.module.infra.api.logger.dto.ApiAccessLogCreateReqDTO;
 import com.muang.ai.claw.module.infra.controller.admin.logger.vo.apiaccesslog.ApiAccessLogPageForm;
-import com.muang.ai.claw.module.infra.dal.dataobject.logger.ApiAccessLogDO;
-import com.muang.ai.claw.module.infra.dal.mysql.logger.ApiAccessLogMapper;
+import com.muang.ai.claw.module.infra.entity.logger.ApiAccessLogEntity;
+import com.muang.ai.claw.module.infra.mapper.logger.ApiAccessLogMapper;
 import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.util.string.StrUtils;
 import jakarta.annotation.Resource;
@@ -16,8 +16,8 @@ import org.springframework.validation.annotation.Validated;
 
 import java.time.LocalDateTime;
 
-import static com.muang.ai.claw.module.infra.dal.dataobject.logger.ApiAccessLogDO.REQUEST_PARAMS_MAX_LENGTH;
-import static com.muang.ai.claw.module.infra.dal.dataobject.logger.ApiAccessLogDO.RESULT_MSG_MAX_LENGTH;
+import static com.muang.ai.claw.module.infra.entity.logger.ApiAccessLogEntity.REQUEST_PARAMS_MAX_LENGTH;
+import static com.muang.ai.claw.module.infra.entity.logger.ApiAccessLogEntity.RESULT_MSG_MAX_LENGTH;
 
 /**
  * API 访问日志 Service 实现类
@@ -32,7 +32,7 @@ public class ApiAccessLogService {
     private ApiAccessLogMapper apiAccessLogMapper;
 
     public void createApiAccessLog(ApiAccessLogCreateReqDTO createDTO) {
-        ApiAccessLogDO apiAccessLog = BeanUtils.toBean(createDTO, ApiAccessLogDO.class);
+        ApiAccessLogEntity apiAccessLog = BeanUtils.toBean(createDTO, ApiAccessLogEntity.class);
         apiAccessLog.setRequestParams(StrUtils.maxLength(apiAccessLog.getRequestParams(), REQUEST_PARAMS_MAX_LENGTH));
         apiAccessLog.setResultMsg(StrUtils.maxLength(apiAccessLog.getResultMsg(), RESULT_MSG_MAX_LENGTH));
         if (TenantContextHolder.getTenantId() != null) {
@@ -43,11 +43,11 @@ public class ApiAccessLogService {
         }
     }
 
-    public ApiAccessLogDO getApiAccessLog(Long id) {
+    public ApiAccessLogEntity getApiAccessLog(Long id) {
         return apiAccessLogMapper.selectById(id);
     }
 
-    public PageResult<ApiAccessLogDO> getApiAccessLogPage(ApiAccessLogPageForm pageReqVO) {
+    public PageResult<ApiAccessLogEntity> getApiAccessLogPage(ApiAccessLogPageForm pageReqVO) {
         return apiAccessLogMapper.selectPage(pageReqVO);
     }
 

@@ -1,6 +1,6 @@
 package com.muang.ai.claw.config.mybatis.core.handler;
 
-import com.muang.ai.claw.config.mybatis.core.dataobject.BaseDO;
+import com.muang.ai.claw.common.core.BaseEntity;
 import com.muang.ai.claw.config.security.core.util.SecurityFrameworkUtils;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import org.apache.ibatis.reflection.MetaObject;
@@ -20,27 +20,27 @@ public class DefaultDBFieldHandler implements MetaObjectHandler {
     @Override
     @SuppressWarnings("PatternVariableCanBeUsed")
     public void insertFill(MetaObject metaObject) {
-        if (Objects.nonNull(metaObject) && metaObject.getOriginalObject() instanceof BaseDO) {
-            BaseDO baseDO = (BaseDO) metaObject.getOriginalObject();
+        if (Objects.nonNull(metaObject) && metaObject.getOriginalObject() instanceof BaseEntity) {
+            BaseEntity baseEntity = (BaseEntity) metaObject.getOriginalObject();
 
             LocalDateTime current = LocalDateTime.now();
             // 创建时间为空，则以当前时间为插入时间
-            if (Objects.isNull(baseDO.getCreateTime())) {
-                baseDO.setCreateTime(current);
+            if (Objects.isNull(baseEntity.getCreateTime())) {
+                baseEntity.setCreateTime(current);
             }
             // 更新时间为空，则以当前时间为更新时间
-            if (Objects.isNull(baseDO.getUpdateTime())) {
-                baseDO.setUpdateTime(current);
+            if (Objects.isNull(baseEntity.getUpdateTime())) {
+                baseEntity.setUpdateTime(current);
             }
 
             Long userId = SecurityFrameworkUtils.getLoginUserId();
             // 当前登录用户不为空，创建人为空，则当前登录用户为创建人
-            if (Objects.nonNull(userId) && Objects.isNull(baseDO.getCreator())) {
-                baseDO.setCreator(userId.toString());
+            if (Objects.nonNull(userId) && Objects.isNull(baseEntity.getCreator())) {
+                baseEntity.setCreator(userId.toString());
             }
             // 当前登录用户不为空，更新人为空，则当前登录用户为更新人
-            if (Objects.nonNull(userId) && Objects.isNull(baseDO.getUpdater())) {
-                baseDO.setUpdater(userId.toString());
+            if (Objects.nonNull(userId) && Objects.isNull(baseEntity.getUpdater())) {
+                baseEntity.setUpdater(userId.toString());
             }
         }
     }

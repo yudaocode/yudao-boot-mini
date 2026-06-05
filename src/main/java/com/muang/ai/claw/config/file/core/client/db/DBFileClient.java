@@ -2,8 +2,8 @@ package com.muang.ai.claw.config.file.core.client.db;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.extra.spring.SpringUtil;
-import com.muang.ai.claw.module.infra.dal.dataobject.file.FileContentDO;
-import com.muang.ai.claw.module.infra.dal.mysql.file.FileContentMapper;
+import com.muang.ai.claw.module.infra.entity.file.FileContentEntity;
+import com.muang.ai.claw.module.infra.mapper.file.FileContentMapper;
 import com.muang.ai.claw.config.file.core.client.AbstractFileClient;
 
 import java.util.Comparator;
@@ -28,7 +28,7 @@ public class DBFileClient extends AbstractFileClient<DBFileClientConfig> {
 
     @Override
     public String upload(byte[] content, String path, String type) {
-        FileContentDO contentDO = new FileContentDO().setConfigId(getId())
+        FileContentEntity contentDO = new FileContentEntity().setConfigId(getId())
                 .setPath(path).setContent(content);
         fileContentMapper.insert(contentDO);
         // 拼接返回路径
@@ -42,12 +42,12 @@ public class DBFileClient extends AbstractFileClient<DBFileClientConfig> {
 
     @Override
     public byte[] getContent(String path) {
-        List<FileContentDO> list = fileContentMapper.selectListByConfigIdAndPath(getId(), path);
+        List<FileContentEntity> list = fileContentMapper.selectListByConfigIdAndPath(getId(), path);
         if (CollUtil.isEmpty(list)) {
             return null;
         }
         // 排序后，拿 id 最大的，即最后上传的
-        list.sort(Comparator.comparing(FileContentDO::getId));
+        list.sort(Comparator.comparing(FileContentEntity::getId));
         return CollUtil.getLast(list).getContent();
     }
 

@@ -1,38 +1,34 @@
 package com.muang.ai.claw.module.system.service.auth;
 
 import cn.hutool.core.util.ObjectUtil;
+import com.muang.ai.claw.config.datapermission.core.annotation.DataPermission;
 import com.muang.ai.claw.constant.CommonStatusEnum;
 import com.muang.ai.claw.constant.UserTypeEnum;
-import com.muang.ai.claw.util.object.BeanUtils;
-import com.muang.ai.claw.util.servlet.ServletUtils;
-import com.muang.ai.claw.util.validation.ValidationUtils;
-import com.muang.ai.claw.config.datapermission.core.annotation.DataPermission;
 import com.muang.ai.claw.module.system.api.logger.dto.LoginLogCreateReqDTO;
-import com.muang.ai.claw.module.system.controller.admin.auth.vo.*;
-import com.muang.ai.claw.module.system.dal.dataobject.oauth2.OAuth2AccessTokenDO;
-import com.muang.ai.claw.module.system.dal.dataobject.user.AdminUserDO;
 import com.muang.ai.claw.module.system.constant.logger.LoginLogTypeEnum;
 import com.muang.ai.claw.module.system.constant.logger.LoginResultEnum;
 import com.muang.ai.claw.module.system.constant.oauth2.OAuth2ClientConstants;
+import com.muang.ai.claw.module.system.controller.admin.auth.vo.AuthLoginForm;
+import com.muang.ai.claw.module.system.controller.admin.auth.vo.AuthLoginRespVO;
+import com.muang.ai.claw.module.system.controller.admin.auth.vo.AuthRegisterForm;
+import com.muang.ai.claw.module.system.entity.oauth2.OAuth2AccessTokenEntity;
+import com.muang.ai.claw.module.system.entity.user.AdminUserEntity;
 import com.muang.ai.claw.module.system.service.logger.LoginLogService;
 import com.muang.ai.claw.module.system.service.member.MemberService;
 import com.muang.ai.claw.module.system.service.oauth2.OAuth2TokenService;
 import com.muang.ai.claw.module.system.service.user.AdminUserService;
-import com.anji.captcha.model.common.ResponseModel;
-import com.anji.captcha.model.vo.CaptchaVO;
-import com.anji.captcha.service.CaptchaService;
-import com.google.common.annotations.VisibleForTesting;
+import com.muang.ai.claw.util.object.BeanUtils;
+import com.muang.ai.claw.util.servlet.ServletUtils;
 import jakarta.annotation.Resource;
 import jakarta.validation.Validator;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
 
 import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
-import static com.muang.ai.claw.module.system.constant.ErrorCodeConstants.*;
+import static com.muang.ai.claw.module.system.constant.ErrorCodeConstants.AUTH_LOGIN_BAD_CREDENTIALS;
+import static com.muang.ai.claw.module.system.constant.ErrorCodeConstants.AUTH_LOGIN_USER_DISABLED;
 
 /**
  * Auth Service 实现类
@@ -52,20 +48,11 @@ public class AdminAuthService {
     private MemberService memberService;
     @Resource
     private Validator validator;
-    @Resource
-    private CaptchaService captchaService;
 
-    /**
-     * 验证码的开关，默认为 true
-     */
-    @Value("${yudao.captcha.enable:true}")
-    @Setter // 为了单测：开启或者关闭验证码
-    private Boolean captchaEnable;
-
-    public AdminUserDO authenticate(String username, String password) {
+    public AdminUserEntity authenticate(String username, String password) {
         final LoginLogTypeEnum logTypeEnum = LoginLogTypeEnum.LOGIN_USERNAME;
         // 校验账号是否存在
-        AdminUserDO user = userService.getUserByUsername(username);
+        AdminUserEntity user = userService.getUserByUsername(username);
         if (user == null) {
             createLoginLog(null, username, logTypeEnum, LoginResultEnum.BAD_CREDENTIALS);
             throw exception(AUTH_LOGIN_BAD_CREDENTIALS);
@@ -84,11 +71,9 @@ public class AdminAuthService {
 
     @DataPermission(enable = false)
     public AuthLoginRespVO login(AuthLoginForm reqVO) {
-        // 校验验证码
-        validateCaptcha(reqVO);
 
         // 使用账号密码，进行登录
-        AdminUserDO user = authenticate(reqVO.getUsername(), reqVO.getPassword());
+        AdminUserEntity user = authenticate(reqVO.getUsername(), reqVO.getPassword());
 
         // 创建 Token 令牌，记录登录日志
         return createTokenAfterLoginSuccess(user.getId(), reqVO.getUsername(), LoginLogTypeEnum.LOGIN_USERNAME);
@@ -113,46 +98,24 @@ public class AdminAuthService {
         }
     }
 
-    @VisibleForTesting
-    void validateCaptcha(AuthLoginForm reqVO) {
-        ResponseModel response = doValidateCaptcha(reqVO);
-        // 校验验证码
-        if (!response.isSuccess()) {
-            // 创建登录失败日志（验证码不正确)
-            createLoginLog(null, reqVO.getUsername(), LoginLogTypeEnum.LOGIN_USERNAME, LoginResultEnum.CAPTCHA_CODE_ERROR);
-            throw exception(AUTH_LOGIN_CAPTCHA_CODE_ERROR, response.getRepMsg());
-        }
-    }
-
-    private ResponseModel doValidateCaptcha(CaptchaVerificationForm reqVO) {
-        // 如果验证码关闭，则不进行校验
-        if (!captchaEnable) {
-            return ResponseModel.success();
-        }
-        ValidationUtils.validate(validator, reqVO, CaptchaVerificationForm.CodeEnableGroup.class);
-        CaptchaVO captchaVO = new CaptchaVO();
-        captchaVO.setCaptchaVerification(reqVO.getCaptchaVerification());
-        return captchaService.verification(captchaVO);
-    }
-
     private AuthLoginRespVO createTokenAfterLoginSuccess(Long userId, String username, LoginLogTypeEnum logType) {
         // 插入登陆日志
         createLoginLog(userId, username, logType, LoginResultEnum.SUCCESS);
         // 创建访问令牌
-        OAuth2AccessTokenDO accessTokenDO = oauth2TokenService.createAccessToken(userId, getUserType().getValue(),
+        OAuth2AccessTokenEntity accessTokenDO = oauth2TokenService.createAccessToken(userId, getUserType().getValue(),
                 OAuth2ClientConstants.CLIENT_ID_DEFAULT, null);
         // 构建返回结果
         return BeanUtils.toBean(accessTokenDO, AuthLoginRespVO.class);
     }
 
     public AuthLoginRespVO refreshToken(String refreshToken) {
-        OAuth2AccessTokenDO accessTokenDO = oauth2TokenService.refreshAccessToken(refreshToken, OAuth2ClientConstants.CLIENT_ID_DEFAULT);
+        OAuth2AccessTokenEntity accessTokenDO = oauth2TokenService.refreshAccessToken(refreshToken, OAuth2ClientConstants.CLIENT_ID_DEFAULT);
         return BeanUtils.toBean(accessTokenDO, AuthLoginRespVO.class);
     }
 
     public void logout(String token, Integer logType) {
         // 删除访问令牌
-        OAuth2AccessTokenDO accessTokenDO = oauth2TokenService.removeAccessToken(token);
+        OAuth2AccessTokenEntity accessTokenDO = oauth2TokenService.removeAccessToken(token);
         if (accessTokenDO == null) {
             return;
         }
@@ -181,7 +144,7 @@ public class AdminAuthService {
         if (userId == null) {
             return null;
         }
-        AdminUserDO user = userService.getUser(userId);
+        AdminUserEntity user = userService.getUser(userId);
         return user != null ? user.getUsername() : null;
     }
 
@@ -191,7 +154,6 @@ public class AdminAuthService {
 
     public AuthLoginRespVO register(AuthRegisterForm registerReqVO) {
         // 1. 校验验证码
-        validateCaptcha(registerReqVO);
 
         // 2. 校验用户名是否已存在
         Long userId = userService.registerUser(registerReqVO);
@@ -200,13 +162,6 @@ public class AdminAuthService {
         return createTokenAfterLoginSuccess(userId, registerReqVO.getUsername(), LoginLogTypeEnum.LOGIN_USERNAME);
     }
 
-    @VisibleForTesting
-    void validateCaptcha(AuthRegisterForm reqVO) {
-        ResponseModel response = doValidateCaptcha(reqVO);
-        // 验证不通过
-        if (!response.isSuccess()) {
-            throw exception(AUTH_REGISTER_CAPTCHA_CODE_ERROR, response.getRepMsg());
-        }
-    }
+
 
 }

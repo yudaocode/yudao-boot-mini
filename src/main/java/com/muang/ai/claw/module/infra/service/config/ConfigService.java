@@ -4,8 +4,8 @@ import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.module.infra.controller.admin.config.vo.ConfigPageForm;
 import com.muang.ai.claw.module.infra.controller.admin.config.vo.ConfigSaveForm;
 import com.muang.ai.claw.module.infra.convert.config.ConfigConvert;
-import com.muang.ai.claw.module.infra.dal.dataobject.config.ConfigDO;
-import com.muang.ai.claw.module.infra.dal.mysql.config.ConfigMapper;
+import com.muang.ai.claw.module.infra.entity.config.ConfigEntity;
+import com.muang.ai.claw.module.infra.mapper.config.ConfigMapper;
 import com.muang.ai.claw.module.infra.constant.config.ConfigTypeEnum;
 import com.google.common.annotations.VisibleForTesting;
 import jakarta.annotation.Resource;
@@ -34,7 +34,7 @@ public class ConfigService {
         validateConfigKeyUnique(null, createReqVO.getKey());
 
         // 插入参数配置
-        ConfigDO config = ConfigConvert.INSTANCE.convert(createReqVO);
+        ConfigEntity config = ConfigConvert.INSTANCE.convert(createReqVO);
         config.setType(ConfigTypeEnum.CUSTOM.getType());
         configMapper.insert(config);
         return config.getId();
@@ -47,13 +47,13 @@ public class ConfigService {
         validateConfigKeyUnique(updateReqVO.getId(), updateReqVO.getKey());
 
         // 更新参数配置
-        ConfigDO updateObj = ConfigConvert.INSTANCE.convert(updateReqVO);
+        ConfigEntity updateObj = ConfigConvert.INSTANCE.convert(updateReqVO);
         configMapper.updateById(updateObj);
     }
 
     public void deleteConfig(Long id) {
         // 校验配置存在
-        ConfigDO config = validateConfigExists(id);
+        ConfigEntity config = validateConfigExists(id);
         // 内置配置，不允许删除
         if (ConfigTypeEnum.SYSTEM.getType().equals(config.getType())) {
             throw exception(CONFIG_CAN_NOT_DELETE_SYSTEM_TYPE);
@@ -64,7 +64,7 @@ public class ConfigService {
 
     public void deleteConfigList(List<Long> ids) {
         // 校验是否有内置配置
-        List<ConfigDO> configs = configMapper.selectByIds(ids);
+        List<ConfigEntity> configs = configMapper.selectByIds(ids);
         configs.forEach(config -> {
             if (ConfigTypeEnum.SYSTEM.getType().equals(config.getType())) {
                 throw exception(CONFIG_CAN_NOT_DELETE_SYSTEM_TYPE);
@@ -75,24 +75,24 @@ public class ConfigService {
         configMapper.deleteByIds(ids);
     }
 
-    public ConfigDO getConfig(Long id) {
+    public ConfigEntity getConfig(Long id) {
         return configMapper.selectById(id);
     }
 
-    public ConfigDO getConfigByKey(String key) {
+    public ConfigEntity getConfigByKey(String key) {
         return configMapper.selectByKey(key);
     }
 
-    public PageResult<ConfigDO> getConfigPage(ConfigPageForm pageReqVO) {
+    public PageResult<ConfigEntity> getConfigPage(ConfigPageForm pageReqVO) {
         return configMapper.selectPage(pageReqVO);
     }
 
     @VisibleForTesting
-    public ConfigDO validateConfigExists(Long id) {
+    public ConfigEntity validateConfigExists(Long id) {
         if (id == null) {
             return null;
         }
-        ConfigDO config = configMapper.selectById(id);
+        ConfigEntity config = configMapper.selectById(id);
         if (config == null) {
             throw exception(CONFIG_NOT_EXISTS);
         }
@@ -101,7 +101,7 @@ public class ConfigService {
 
     @VisibleForTesting
     public void validateConfigKeyUnique(Long id, String key) {
-        ConfigDO config = configMapper.selectByKey(key);
+        ConfigEntity config = configMapper.selectByKey(key);
         if (config == null) {
             return;
         }

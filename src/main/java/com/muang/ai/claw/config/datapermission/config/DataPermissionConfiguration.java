@@ -1,7 +1,7 @@
 package com.muang.ai.claw.config.datapermission.config;
 
-import com.muang.ai.claw.module.system.dal.dataobject.dept.DeptDO;
-import com.muang.ai.claw.module.system.dal.dataobject.user.AdminUserDO;
+import com.muang.ai.claw.module.system.entity.dept.DeptEntity;
+import com.muang.ai.claw.module.system.entity.user.AdminUserEntity;
 import com.muang.ai.claw.config.datapermission.core.rule.dept.DeptDataPermissionRuleCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,10 +17,10 @@ public class DataPermissionConfiguration {
     public DeptDataPermissionRuleCustomizer sysDeptDataPermissionRuleCustomizer() {
         return rule -> {
             // dept
-            rule.addDeptColumn(AdminUserDO.class);
-            rule.addDeptColumn(DeptDO.class, "id");
+            rule.addDeptColumn(AdminUserEntity.class);
+            rule.addDeptColumn(DeptEntity.class, "id");
             // user
-            rule.addUserColumn(AdminUserDO.class, "id");
+            rule.addUserColumn(AdminUserEntity.class, "id");
         };
     }
 

@@ -3,11 +3,11 @@ package com.muang.ai.claw.module.system.service.dept;
 import cn.hutool.core.collection.CollUtil;
 import com.muang.ai.claw.constant.CommonStatusEnum;
 import com.muang.ai.claw.common.core.PageResult;
+import com.muang.ai.claw.module.system.entity.dept.PostEntity;
 import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.module.system.controller.admin.dept.vo.post.PostPageForm;
 import com.muang.ai.claw.module.system.controller.admin.dept.vo.post.PostSaveForm;
-import com.muang.ai.claw.module.system.dal.dataobject.dept.PostDO;
-import com.muang.ai.claw.module.system.dal.mysql.dept.PostMapper;
+import com.muang.ai.claw.module.system.mapper.dept.PostMapper;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -37,7 +37,7 @@ public class PostService {
         validatePostForCreateOrUpdate(null, createReqVO.getName(), createReqVO.getCode());
 
         // 插入岗位
-        PostDO post = BeanUtils.toBean(createReqVO, PostDO.class);
+        PostEntity post = BeanUtils.toBean(createReqVO, PostEntity.class);
         postMapper.insert(post);
         return post.getId();
     }
@@ -47,7 +47,7 @@ public class PostService {
         validatePostForCreateOrUpdate(updateReqVO.getId(), updateReqVO.getName(), updateReqVO.getCode());
 
         // 更新岗位
-        PostDO updateObj = BeanUtils.toBean(updateReqVO, PostDO.class);
+        PostEntity updateObj = BeanUtils.toBean(updateReqVO, PostEntity.class);
         postMapper.updateById(updateObj);
     }
 
@@ -72,7 +72,7 @@ public class PostService {
     }
 
     private void validatePostNameUnique(Long id, String name) {
-        PostDO post = postMapper.selectByName(name);
+        PostEntity post = postMapper.selectByName(name);
         if (post == null) {
             return;
         }
@@ -86,7 +86,7 @@ public class PostService {
     }
 
     private void validatePostCodeUnique(Long id, String code) {
-        PostDO post = postMapper.selectByCode(code);
+        PostEntity post = postMapper.selectByCode(code);
         if (post == null) {
             return;
         }
@@ -108,22 +108,22 @@ public class PostService {
         }
     }
 
-    public List<PostDO> getPostList(Collection<Long> ids) {
+    public List<PostEntity> getPostList(Collection<Long> ids) {
         if (CollUtil.isEmpty(ids)) {
             return Collections.emptyList();
         }
         return postMapper.selectByIds(ids);
     }
 
-    public List<PostDO> getPostList(Collection<Long> ids, Collection<Integer> statuses) {
+    public List<PostEntity> getPostList(Collection<Long> ids, Collection<Integer> statuses) {
         return postMapper.selectList(ids, statuses);
     }
 
-    public PageResult<PostDO> getPostPage(PostPageForm reqVO) {
+    public PageResult<PostEntity> getPostPage(PostPageForm reqVO) {
         return postMapper.selectPage(reqVO);
     }
 
-    public PostDO getPost(Long id) {
+    public PostEntity getPost(Long id) {
         return postMapper.selectById(id);
     }
 
@@ -132,11 +132,11 @@ public class PostService {
             return;
         }
         // 获得岗位信息
-        List<PostDO> posts = postMapper.selectByIds(ids);
-        Map<Long, PostDO> postMap = convertMap(posts, PostDO::getId);
+        List<PostEntity> posts = postMapper.selectByIds(ids);
+        Map<Long, PostEntity> postMap = convertMap(posts, PostEntity::getId);
         // 校验
         ids.forEach(id -> {
-            PostDO post = postMap.get(id);
+            PostEntity post = postMap.get(id);
             if (post == null) {
                 throw exception(POST_NOT_FOUND);
             }

@@ -7,13 +7,13 @@ import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.digest.DigestUtil;
 import com.muang.ai.claw.common.core.PageResult;
+import com.muang.ai.claw.module.infra.entity.file.FileEntity;
 import com.muang.ai.claw.util.http.HttpUtils;
 import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.module.infra.controller.admin.file.vo.file.FileCreateForm;
 import com.muang.ai.claw.module.infra.controller.admin.file.vo.file.FilePageForm;
 import com.muang.ai.claw.module.infra.controller.admin.file.vo.file.FilePresignedUrlRespVO;
-import com.muang.ai.claw.module.infra.dal.dataobject.file.FileDO;
-import com.muang.ai.claw.module.infra.dal.mysql.file.FileMapper;
+import com.muang.ai.claw.module.infra.mapper.file.FileMapper;
 import com.muang.ai.claw.config.file.core.client.FileClient;
 import com.muang.ai.claw.config.file.core.utils.FilePathUtils;
 import com.muang.ai.claw.config.file.core.utils.FileTypeUtils;
@@ -62,7 +62,7 @@ public class FileService {
     @Resource
     private FileMapper fileMapper;
 
-    public PageResult<FileDO> getFilePage(FilePageForm pageReqVO) {
+    public PageResult<FileEntity> getFilePage(FilePageForm pageReqVO) {
         return fileMapper.selectPage(pageReqVO);
     }
 
@@ -95,7 +95,7 @@ public class FileService {
         String url = client.upload(content, path, type);
 
         // 3. 保存到数据库
-        fileMapper.insert(new FileDO().setConfigId(client.getId())
+        fileMapper.insert(new FileEntity().setConfigId(client.getId())
                 .setName(name).setPath(path).setUrl(url)
                 .setType(type).setSize((long) content.length));
         return url;
@@ -168,18 +168,18 @@ public class FileService {
         createReqVO.setUrl(HttpUtils.removeUrlQuery(createReqVO.getUrl())); // 目的：移除私有桶情况下，URL 的签名参数
 
         // 2. 保存到数据库
-        FileDO file = BeanUtils.toBean(createReqVO, FileDO.class);
+        FileEntity file = BeanUtils.toBean(createReqVO, FileEntity.class);
         fileMapper.insert(file);
         return file.getId();
     }
 
-    public FileDO getFile(Long id) {
+    public FileEntity getFile(Long id) {
         return validateFileExists(id);
     }
 
     public void deleteFile(Long id) throws Exception {
         // 1.1 校验存在
-        FileDO file = validateFileExists(id);
+        FileEntity file = validateFileExists(id);
         // 1.2 校验路径合法性，避免误删文件存储器中的其他文件
         FilePathUtils.validatePath(file.getPath());
 
@@ -195,8 +195,8 @@ public class FileService {
     @SneakyThrows
     public void deleteFileList(List<Long> ids) {
         // 删除文件
-        List<FileDO> files = fileMapper.selectByIds(ids);
-        for (FileDO file : files) {
+        List<FileEntity> files = fileMapper.selectByIds(ids);
+        for (FileEntity file : files) {
             FilePathUtils.validatePath(file.getPath());
             // 获取客户端
             FileClient client = fileConfigService.getFileClient(file.getConfigId());
@@ -209,8 +209,8 @@ public class FileService {
         fileMapper.deleteByIds(ids);
     }
 
-    private FileDO validateFileExists(Long id) {
-        FileDO fileDO = fileMapper.selectById(id);
+    private FileEntity validateFileExists(Long id) {
+        FileEntity fileDO = fileMapper.selectById(id);
         if (fileDO == null) {
             throw exception(FILE_NOT_EXISTS);
         }

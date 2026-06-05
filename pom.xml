@@ -40,7 +40,6 @@
 <!-- 服务保障相关 -->
         <lock4j.version>2.2.7</lock4j.version>
         <!-- 工具类相关 -->
-        <anji-plus-captcha.version>1.4.0</anji-plus-captcha.version>
         <jsoup.version>1.22.2</jsoup.version>
         <lombok.version>1.18.46</lombok.version>
         <mapstruct.version>1.6.3</mapstruct.version>
@@ -307,12 +306,6 @@
         </dependency>
 
         <!-- ==================== 验证码 ==================== -->
-        <dependency>
-            <groupId>com.anji-plus</groupId>
-            <artifactId>captcha-spring-boot-starter</artifactId>
-            <version>${anji-plus-captcha.version}</version>
-        </dependency>
-
         <!-- ==================== 测试 ==================== -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

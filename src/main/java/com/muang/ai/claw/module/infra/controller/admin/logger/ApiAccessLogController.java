@@ -8,7 +8,7 @@ import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.config.excel.util.ExcelUtils;
 import com.muang.ai.claw.module.infra.controller.admin.logger.vo.apiaccesslog.ApiAccessLogPageForm;
 import com.muang.ai.claw.module.infra.controller.admin.logger.vo.apiaccesslog.ApiAccessLogRespVO;
-import com.muang.ai.claw.module.infra.dal.dataobject.logger.ApiAccessLogDO;
+import com.muang.ai.claw.module.infra.entity.logger.ApiAccessLogEntity;
 import com.muang.ai.claw.module.infra.service.logger.ApiAccessLogService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -43,7 +43,7 @@ public class ApiAccessLogController {
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
     @PreAuthorize("@ss.hasPermission('infra:api-access-log:query')")
     public CommonResult<ApiAccessLogRespVO> getApiAccessLog(@RequestParam("id") Long id) {
-        ApiAccessLogDO apiAccessLog = apiAccessLogService.getApiAccessLog(id);
+        ApiAccessLogEntity apiAccessLog = apiAccessLogService.getApiAccessLog(id);
         return success(BeanUtils.toBean(apiAccessLog, ApiAccessLogRespVO.class));
     }
 
@@ -51,7 +51,7 @@ public class ApiAccessLogController {
     @Operation(summary = "获得API 访问日志分页")
     @PreAuthorize("@ss.hasPermission('infra:api-access-log:query')")
     public CommonResult<PageResult<ApiAccessLogRespVO>> getApiAccessLogPage(@Valid ApiAccessLogPageForm pageReqVO) {
-        PageResult<ApiAccessLogDO> pageResult = apiAccessLogService.getApiAccessLogPage(pageReqVO);
+        PageResult<ApiAccessLogEntity> pageResult = apiAccessLogService.getApiAccessLogPage(pageReqVO);
         return success(BeanUtils.toBean(pageResult, ApiAccessLogRespVO.class));
     }
 
@@ -62,7 +62,7 @@ public class ApiAccessLogController {
     public void exportApiAccessLogExcel(@Valid ApiAccessLogPageForm exportReqVO,
                                         HttpServletResponse response) throws IOException {
         exportReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
-        List<ApiAccessLogDO> list = apiAccessLogService.getApiAccessLogPage(exportReqVO).getList();
+        List<ApiAccessLogEntity> list = apiAccessLogService.getApiAccessLogPage(exportReqVO).getList();
         // 导出 Excel
         ExcelUtils.write(response, "API 访问日志.xls", "数据", ApiAccessLogRespVO.class,
                 BeanUtils.toBean(list, ApiAccessLogRespVO.class));

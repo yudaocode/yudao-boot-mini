@@ -6,8 +6,8 @@ import com.muang.ai.claw.config.tenant.core.util.TenantUtils;
 import com.muang.ai.claw.module.infra.api.logger.dto.ApiErrorLogCreateReqDTO;
 import com.muang.ai.claw.module.infra.constant.logger.ApiErrorLogProcessStatusEnum;
 import com.muang.ai.claw.module.infra.controller.admin.logger.vo.apierrorlog.ApiErrorLogPageForm;
-import com.muang.ai.claw.module.infra.dal.dataobject.logger.ApiErrorLogDO;
-import com.muang.ai.claw.module.infra.dal.mysql.logger.ApiErrorLogMapper;
+import com.muang.ai.claw.module.infra.entity.logger.ApiErrorLogEntity;
+import com.muang.ai.claw.module.infra.mapper.logger.ApiErrorLogMapper;
 import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.util.string.StrUtils;
 import jakarta.annotation.Resource;
@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
 import static com.muang.ai.claw.module.infra.constant.ErrorCodeConstants.API_ERROR_LOG_NOT_FOUND;
 import static com.muang.ai.claw.module.infra.constant.ErrorCodeConstants.API_ERROR_LOG_PROCESSED;
-import static com.muang.ai.claw.module.infra.dal.dataobject.logger.ApiErrorLogDO.REQUEST_PARAMS_MAX_LENGTH;
+import static com.muang.ai.claw.module.infra.entity.logger.ApiErrorLogEntity.REQUEST_PARAMS_MAX_LENGTH;
 
 /**
  * API 错误日志 Service 实现类
@@ -35,7 +35,7 @@ public class ApiErrorLogService {
     private ApiErrorLogMapper apiErrorLogMapper;
 
     public void createApiErrorLog(ApiErrorLogCreateReqDTO createDTO) {
-        ApiErrorLogDO apiErrorLog = BeanUtils.toBean(createDTO, ApiErrorLogDO.class)
+        ApiErrorLogEntity apiErrorLog = BeanUtils.toBean(createDTO, ApiErrorLogEntity.class)
                 .setProcessStatus(ApiErrorLogProcessStatusEnum.INIT.getStatus());
         apiErrorLog.setRequestParams(StrUtils.maxLength(apiErrorLog.getRequestParams(), REQUEST_PARAMS_MAX_LENGTH));
         try {
@@ -51,16 +51,16 @@ public class ApiErrorLogService {
         }
     }
 
-    public PageResult<ApiErrorLogDO> getApiErrorLogPage(ApiErrorLogPageForm pageForm) {
+    public PageResult<ApiErrorLogEntity> getApiErrorLogPage(ApiErrorLogPageForm pageForm) {
         return apiErrorLogMapper.selectPage(pageForm);
     }
 
-    public ApiErrorLogDO getApiErrorLog(Long id) {
+    public ApiErrorLogEntity getApiErrorLog(Long id) {
         return apiErrorLogMapper.selectById(id);
     }
 
     public void updateApiErrorLogProcess(Long id, Integer processStatus, Long processUserId) {
-        ApiErrorLogDO errorLog = apiErrorLogMapper.selectById(id);
+        ApiErrorLogEntity errorLog = apiErrorLogMapper.selectById(id);
         if (errorLog == null) {
             throw exception(API_ERROR_LOG_NOT_FOUND);
         }
@@ -68,7 +68,7 @@ public class ApiErrorLogService {
             throw exception(API_ERROR_LOG_PROCESSED);
         }
         // 标记处理
-        apiErrorLogMapper.updateById(ApiErrorLogDO.builder().id(id).processStatus(processStatus)
+        apiErrorLogMapper.updateById(ApiErrorLogEntity.builder().id(id).processStatus(processStatus)
                 .processUserId(processUserId).processTime(LocalDateTime.now()).build());
     }
 

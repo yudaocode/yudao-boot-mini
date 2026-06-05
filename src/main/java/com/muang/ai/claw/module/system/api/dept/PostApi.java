@@ -1,8 +1,8 @@
 package com.muang.ai.claw.module.system.api.dept;
 
+import com.muang.ai.claw.module.system.entity.dept.PostEntity;
 import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.module.system.api.dept.dto.PostRespDTO;
-import com.muang.ai.claw.module.system.dal.dataobject.dept.PostDO;
 import com.muang.ai.claw.module.system.service.dept.PostService;
 import org.springframework.stereotype.Service;
 import jakarta.annotation.Resource;
@@ -28,7 +28,7 @@ public class PostApi {
     }
 
     public List<PostRespDTO> getPostList(Collection<Long> ids) {
-        List<PostDO> list = postService.getPostList(ids);
+        List<PostEntity> list = postService.getPostList(ids);
         return BeanUtils.toBean(list, PostRespDTO.class);
     }
 

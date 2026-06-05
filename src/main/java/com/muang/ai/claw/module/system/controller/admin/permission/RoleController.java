@@ -5,12 +5,12 @@ import com.muang.ai.claw.constant.CommonStatusEnum;
 import com.muang.ai.claw.common.core.CommonResult;
 import com.muang.ai.claw.common.core.PageParam;
 import com.muang.ai.claw.common.core.PageResult;
+import com.muang.ai.claw.module.system.entity.permission.RoleEntity;
 import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.config.excel.util.ExcelUtils;
 import com.muang.ai.claw.module.system.controller.admin.permission.vo.role.RolePageForm;
 import com.muang.ai.claw.module.system.controller.admin.permission.vo.role.RoleRespVO;
 import com.muang.ai.claw.module.system.controller.admin.permission.vo.role.RoleSaveForm;
-import com.muang.ai.claw.module.system.dal.dataobject.permission.RoleDO;
 import com.muang.ai.claw.module.system.service.permission.RoleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -76,7 +76,7 @@ public class RoleController {
     @Operation(summary = "获得角色信息")
     @PreAuthorize("@ss.hasPermission('system:role:query')")
     public CommonResult<RoleRespVO> getRole(@RequestParam("id") Long id) {
-        RoleDO role = roleService.getRole(id);
+        RoleEntity role = roleService.getRole(id);
         return success(BeanUtils.toBean(role, RoleRespVO.class));
     }
 
@@ -84,15 +84,15 @@ public class RoleController {
     @Operation(summary = "获得角色分页")
     @PreAuthorize("@ss.hasPermission('system:role:query')")
     public CommonResult<PageResult<RoleRespVO>> getRolePage(RolePageForm pageReqVO) {
-        PageResult<RoleDO> pageResult = roleService.getRolePage(pageReqVO);
+        PageResult<RoleEntity> pageResult = roleService.getRolePage(pageReqVO);
         return success(BeanUtils.toBean(pageResult, RoleRespVO.class));
     }
 
     @GetMapping({"/list-all-simple", "/simple-list"})
     @Operation(summary = "获取角色精简信息列表", description = "只包含被开启的角色，主要用于前端的下拉选项")
     public CommonResult<List<RoleRespVO>> getSimpleRoleList() {
-        List<RoleDO> list = roleService.getRoleListByStatus(singleton(CommonStatusEnum.ENABLE.getStatus()));
-        list.sort(Comparator.comparing(RoleDO::getSort));
+        List<RoleEntity> list = roleService.getRoleListByStatus(singleton(CommonStatusEnum.ENABLE.getStatus()));
+        list.sort(Comparator.comparing(RoleEntity::getSort));
         return success(BeanUtils.toBean(list, RoleRespVO.class));
     }
 
@@ -102,7 +102,7 @@ public class RoleController {
     @PreAuthorize("@ss.hasPermission('system:role:export')")
     public void export(HttpServletResponse response, @Validated RolePageForm exportReqVO) throws IOException {
         exportReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
-        List<RoleDO> list = roleService.getRolePage(exportReqVO).getList();
+        List<RoleEntity> list = roleService.getRolePage(exportReqVO).getList();
         // 输出
         ExcelUtils.write(response, "角色数据.xls", "数据", RoleRespVO.class,
                 BeanUtils.toBean(list, RoleRespVO.class));

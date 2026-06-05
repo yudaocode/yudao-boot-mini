@@ -8,6 +8,8 @@ import com.muang.ai.claw.constant.CommonStatusEnum;
 import com.muang.ai.claw.constant.UserTypeEnum;
 import com.muang.ai.claw.common.exception.ServiceException;
 import com.muang.ai.claw.common.core.PageResult;
+import com.muang.ai.claw.module.system.entity.dept.UserPostEntity;
+import com.muang.ai.claw.module.system.entity.user.AdminUserEntity;
 import com.muang.ai.claw.util.collection.CollectionUtils;
 import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.util.validation.ValidationUtils;
@@ -20,11 +22,9 @@ import com.muang.ai.claw.module.system.controller.admin.user.vo.user.UserImportE
 import com.muang.ai.claw.module.system.controller.admin.user.vo.user.UserImportRespVO;
 import com.muang.ai.claw.module.system.controller.admin.user.vo.user.UserPageForm;
 import com.muang.ai.claw.module.system.controller.admin.user.vo.user.UserSaveForm;
-import com.muang.ai.claw.module.system.dal.dataobject.dept.DeptDO;
-import com.muang.ai.claw.module.system.dal.dataobject.dept.UserPostDO;
-import com.muang.ai.claw.module.system.dal.dataobject.user.AdminUserDO;
-import com.muang.ai.claw.module.system.dal.mysql.dept.UserPostMapper;
-import com.muang.ai.claw.module.system.dal.mysql.user.AdminUserMapper;
+import com.muang.ai.claw.module.system.entity.dept.DeptEntity;
+import com.muang.ai.claw.module.system.mapper.dept.UserPostMapper;
+import com.muang.ai.claw.module.system.mapper.user.AdminUserMapper;
 import com.muang.ai.claw.module.system.service.dept.DeptService;
 import com.muang.ai.claw.module.system.service.dept.PostService;
 import com.muang.ai.claw.module.system.service.oauth2.OAuth2TokenService;
@@ -102,14 +102,14 @@ public class AdminUserService {
         validateUserForCreateOrUpdate(null, createReqVO.getUsername(),
                 createReqVO.getMobile(), createReqVO.getEmail(), createReqVO.getDeptId(), createReqVO.getPostIds());
         // 2.1 插入用户
-        AdminUserDO user = BeanUtils.toBean(createReqVO, AdminUserDO.class);
+        AdminUserEntity user = BeanUtils.toBean(createReqVO, AdminUserEntity.class);
         user.setStatus(CommonStatusEnum.ENABLE.getStatus()); // 默认开启
         user.setPassword(encodePassword(createReqVO.getPassword())); // 加密密码
         userMapper.insert(user);
         // 2.2 插入关联岗位
         if (CollectionUtil.isNotEmpty(user.getPostIds())) {
             userPostMapper.insertBatch(convertList(user.getPostIds(),
-                    postId -> new UserPostDO().setUserId(user.getId()).setPostId(postId)));
+                    postId -> new UserPostEntity().setUserId(user.getId()).setPostId(postId)));
         }
 
         // 3. 记录操作日志上下文
@@ -133,7 +133,7 @@ public class AdminUserService {
         validateUserForCreateOrUpdate(null, registerReqVO.getUsername(), null, null, null, null);
 
         // 2. 插入用户
-        AdminUserDO user = BeanUtils.toBean(registerReqVO, AdminUserDO.class);
+        AdminUserEntity user = BeanUtils.toBean(registerReqVO, AdminUserEntity.class);
         user.setStatus(CommonStatusEnum.ENABLE.getStatus()); // 默认开启
         user.setPassword(encodePassword(registerReqVO.getPassword())); // 加密密码
         userMapper.insert(user);
@@ -146,11 +146,11 @@ public class AdminUserService {
     public void updateUser(UserSaveForm updateReqVO) {
         updateReqVO.setPassword(null); // 特殊：此处不更新密码
         // 1. 校验正确性
-        AdminUserDO oldUser = validateUserForCreateOrUpdate(updateReqVO.getId(), updateReqVO.getUsername(),
+        AdminUserEntity oldUser = validateUserForCreateOrUpdate(updateReqVO.getId(), updateReqVO.getUsername(),
                 updateReqVO.getMobile(), updateReqVO.getEmail(), updateReqVO.getDeptId(), updateReqVO.getPostIds());
 
         // 2.1 更新用户
-        AdminUserDO updateObj = BeanUtils.toBean(updateReqVO, AdminUserDO.class);
+        AdminUserEntity updateObj = BeanUtils.toBean(updateReqVO, AdminUserEntity.class);
         userMapper.updateById(updateObj);
         // 2.2 更新岗位
         updateUserPost(updateReqVO, updateObj);
@@ -160,9 +160,9 @@ public class AdminUserService {
         LogRecordContext.putVariable("user", oldUser);
     }
 
-    private void updateUserPost(UserSaveForm reqVO, AdminUserDO updateObj) {
+    private void updateUserPost(UserSaveForm reqVO, AdminUserEntity updateObj) {
         Long userId = reqVO.getId();
-        Set<Long> dbPostIds = convertSet(userPostMapper.selectListByUserId(userId), UserPostDO::getPostId);
+        Set<Long> dbPostIds = convertSet(userPostMapper.selectListByUserId(userId), UserPostEntity::getPostId);
         // 计算新增和删除的岗位编号
         Set<Long> postIds = CollUtil.emptyIfNull(updateObj.getPostIds());
         Collection<Long> createPostIds = CollUtil.subtract(postIds, dbPostIds);
@@ -170,7 +170,7 @@ public class AdminUserService {
         // 执行新增和删除。对于已经授权的岗位，不用做任何处理
         if (!CollectionUtil.isEmpty(createPostIds)) {
             userPostMapper.insertBatch(convertList(createPostIds,
-                    postId -> new UserPostDO().setUserId(userId).setPostId(postId)));
+                    postId -> new UserPostEntity().setUserId(userId).setPostId(postId)));
         }
         if (!CollectionUtil.isEmpty(deletePostIds)) {
             userPostMapper.deleteByUserIdAndPostId(userId, deletePostIds);
@@ -178,7 +178,7 @@ public class AdminUserService {
     }
 
     public void updateUserLogin(Long id, String loginIp) {
-        userMapper.updateById(new AdminUserDO().setId(id).setLoginIp(loginIp).setLoginDate(LocalDateTime.now()));
+        userMapper.updateById(new AdminUserEntity().setId(id).setLoginIp(loginIp).setLoginDate(LocalDateTime.now()));
     }
 
     public void updateUserProfile(Long id, UserProfileUpdateForm reqVO) {
@@ -187,14 +187,14 @@ public class AdminUserService {
         validateEmailUnique(id, reqVO.getEmail());
         validateMobileUnique(id, reqVO.getMobile());
         // 执行更新
-        userMapper.updateById(BeanUtils.toBean(reqVO, AdminUserDO.class).setId(id));
+        userMapper.updateById(BeanUtils.toBean(reqVO, AdminUserEntity.class).setId(id));
     }
 
     public void updateUserPassword(Long id, UserProfileUpdatePasswordForm reqVO) {
         // 校验旧密码密码
         validateOldPassword(id, reqVO.getOldPassword());
         // 执行更新
-        AdminUserDO updateObj = new AdminUserDO().setId(id);
+        AdminUserEntity updateObj = new AdminUserEntity().setId(id);
         updateObj.setPassword(encodePassword(reqVO.getNewPassword())); // 加密密码
         userMapper.updateById(updateObj);
     }
@@ -203,10 +203,10 @@ public class AdminUserService {
             success = SYSTEM_USER_UPDATE_PASSWORD_SUCCESS)
     public void updateUserPassword(Long id, String password) {
         // 1. 校验用户存在
-        AdminUserDO user = validateUserExists(id);
+        AdminUserEntity user = validateUserExists(id);
 
         // 2. 更新密码
-        AdminUserDO updateObj = new AdminUserDO();
+        AdminUserEntity updateObj = new AdminUserEntity();
         updateObj.setId(id);
         updateObj.setPassword(encodePassword(password)); // 加密密码
         userMapper.updateById(updateObj);
@@ -220,7 +220,7 @@ public class AdminUserService {
         // 校验用户存在
         validateUserExists(id);
         // 更新状态
-        AdminUserDO updateObj = new AdminUserDO();
+        AdminUserEntity updateObj = new AdminUserEntity();
         updateObj.setId(id);
         updateObj.setStatus(status);
         userMapper.updateById(updateObj);
@@ -236,7 +236,7 @@ public class AdminUserService {
             success = SYSTEM_USER_DELETE_SUCCESS)
     public void deleteUser(Long id) {
         // 1. 校验用户存在
-        AdminUserDO user = validateUserExists(id);
+        AdminUserEntity user = validateUserExists(id);
 
         // 2.1 删除用户
         userMapper.deleteById(id);
@@ -261,15 +261,15 @@ public class AdminUserService {
         });
     }
 
-    public AdminUserDO getUserByUsername(String username) {
+    public AdminUserEntity getUserByUsername(String username) {
         return userMapper.selectByUsername(username);
     }
 
-    public AdminUserDO getUserByMobile(String mobile) {
+    public AdminUserEntity getUserByMobile(String mobile) {
         return userMapper.selectByMobile(mobile);
     }
 
-    public PageResult<AdminUserDO> getUserPage(UserPageForm reqVO) {
+    public PageResult<AdminUserEntity> getUserPage(UserPageForm reqVO) {
         // 如果有角色编号，查询角色对应的用户编号
         Set<Long> userIds = null;
         if (reqVO.getRoleId() != null) {
@@ -283,36 +283,36 @@ public class AdminUserService {
         return userMapper.selectPage(reqVO, getDeptCondition(reqVO.getDeptId()), userIds);
     }
 
-    public AdminUserDO getUser(Long id) {
+    public AdminUserEntity getUser(Long id) {
         return userMapper.selectById(id);
     }
 
-    public List<AdminUserDO> getUserListByDeptIds(Collection<Long> deptIds) {
+    public List<AdminUserEntity> getUserListByDeptIds(Collection<Long> deptIds) {
         if (CollUtil.isEmpty(deptIds)) {
             return Collections.emptyList();
         }
         return userMapper.selectListByDeptIds(deptIds);
     }
 
-    public List<AdminUserDO> getUserListByPostIds(Collection<Long> postIds) {
+    public List<AdminUserEntity> getUserListByPostIds(Collection<Long> postIds) {
         if (CollUtil.isEmpty(postIds)) {
             return Collections.emptyList();
         }
-        Set<Long> userIds = convertSet(userPostMapper.selectListByPostIds(postIds), UserPostDO::getUserId);
+        Set<Long> userIds = convertSet(userPostMapper.selectListByPostIds(postIds), UserPostEntity::getUserId);
         if (CollUtil.isEmpty(userIds)) {
             return Collections.emptyList();
         }
         return userMapper.selectByIds(userIds);
     }
 
-    public Map<Long, AdminUserDO> getUserMap(Collection<Long> ids) {
+    public Map<Long, AdminUserEntity> getUserMap(Collection<Long> ids) {
         if (CollUtil.isEmpty(ids)) {
             return new HashMap<>();
         }
-        return convertMap(getUserList(ids), AdminUserDO::getId);
+        return convertMap(getUserList(ids), AdminUserEntity::getId);
     }
 
-    public List<AdminUserDO> getUserList(Collection<Long> ids) {
+    public List<AdminUserEntity> getUserList(Collection<Long> ids) {
         if (CollUtil.isEmpty(ids)) {
             return Collections.emptyList();
         }
@@ -324,11 +324,11 @@ public class AdminUserService {
             return;
         }
         // 获得岗位信息
-        List<AdminUserDO> users = userMapper.selectByIds(ids);
-        Map<Long, AdminUserDO> userMap = CollectionUtils.convertMap(users, AdminUserDO::getId);
+        List<AdminUserEntity> users = userMapper.selectByIds(ids);
+        Map<Long, AdminUserEntity> userMap = CollectionUtils.convertMap(users, AdminUserEntity::getId);
         // 校验
         ids.forEach(id -> {
-            AdminUserDO user = userMap.get(id);
+            AdminUserEntity user = userMap.get(id);
             if (user == null) {
                 throw exception(USER_NOT_EXISTS);
             }
@@ -338,7 +338,7 @@ public class AdminUserService {
         });
     }
 
-    public List<AdminUserDO> getUserListByNickname(String nickname) {
+    public List<AdminUserEntity> getUserListByNickname(String nickname) {
         return userMapper.selectListByNickname(nickname);
     }
 
@@ -352,17 +352,17 @@ public class AdminUserService {
         if (deptId == null) {
             return Collections.emptySet();
         }
-        Set<Long> deptIds = convertSet(deptService.getChildDeptList(deptId), DeptDO::getId);
+        Set<Long> deptIds = convertSet(deptService.getChildDeptList(deptId), DeptEntity::getId);
         deptIds.add(deptId); // 包括自身
         return deptIds;
     }
 
-    private AdminUserDO validateUserForCreateOrUpdate(Long id, String username, String mobile, String email,
-                                               Long deptId, Set<Long> postIds) {
+    private AdminUserEntity validateUserForCreateOrUpdate(Long id, String username, String mobile, String email,
+                                                          Long deptId, Set<Long> postIds) {
         // 关闭数据权限，避免因为没有数据权限，查询不到数据，进而导致唯一校验不正确
         return DataPermissionUtils.executeIgnore(() -> {
             // 校验用户存在
-            AdminUserDO user = validateUserExists(id);
+            AdminUserEntity user = validateUserExists(id);
             // 校验用户名唯一
             validateUsernameUnique(id, username);
             // 校验手机号唯一
@@ -378,11 +378,11 @@ public class AdminUserService {
     }
 
     @VisibleForTesting
-    AdminUserDO validateUserExists(Long id) {
+    AdminUserEntity validateUserExists(Long id) {
         if (id == null) {
             return null;
         }
-        AdminUserDO user = userMapper.selectById(id);
+        AdminUserEntity user = userMapper.selectById(id);
         if (user == null) {
             throw exception(USER_NOT_EXISTS);
         }
@@ -394,7 +394,7 @@ public class AdminUserService {
         if (StrUtil.isBlank(username)) {
             return;
         }
-        AdminUserDO user = userMapper.selectByUsername(username);
+        AdminUserEntity user = userMapper.selectByUsername(username);
         if (user == null) {
             return;
         }
@@ -412,7 +412,7 @@ public class AdminUserService {
         if (StrUtil.isBlank(email)) {
             return;
         }
-        AdminUserDO user = userMapper.selectByEmail(email);
+        AdminUserEntity user = userMapper.selectByEmail(email);
         if (user == null) {
             return;
         }
@@ -430,7 +430,7 @@ public class AdminUserService {
         if (StrUtil.isBlank(mobile)) {
             return;
         }
-        AdminUserDO user = userMapper.selectByMobile(mobile);
+        AdminUserEntity user = userMapper.selectByMobile(mobile);
         if (user == null) {
             return;
         }
@@ -450,7 +450,7 @@ public class AdminUserService {
      */
     @VisibleForTesting
     void validateOldPassword(Long id, String oldPassword) {
-        AdminUserDO user = userMapper.selectById(id);
+        AdminUserEntity user = userMapper.selectById(id);
         if (user == null) {
             throw exception(USER_NOT_EXISTS);
         }
@@ -495,9 +495,9 @@ public class AdminUserService {
             }
 
             // 2.2.1 判断如果不存在，在进行插入
-            AdminUserDO existUser = userMapper.selectByUsername(importUser.getUsername());
+            AdminUserEntity existUser = userMapper.selectByUsername(importUser.getUsername());
             if (existUser == null) {
-                userMapper.insert(BeanUtils.toBean(importUser, AdminUserDO.class)
+                userMapper.insert(BeanUtils.toBean(importUser, AdminUserEntity.class)
                         .setPassword(encodePassword(initPassword)).setPostIds(new HashSet<>())); // 设置默认密码及空岗位编号数组
                 respVO.getCreateUsernames().add(importUser.getUsername());
                 return;
@@ -507,7 +507,7 @@ public class AdminUserService {
                 respVO.getFailureUsernames().put(importUser.getUsername(), USER_USERNAME_EXISTS.getMsg());
                 return;
             }
-            AdminUserDO updateUser = BeanUtils.toBean(importUser, AdminUserDO.class);
+            AdminUserEntity updateUser = BeanUtils.toBean(importUser, AdminUserEntity.class);
             updateUser.setId(existUser.getId());
             userMapper.updateById(updateUser);
             respVO.getUpdateUsernames().add(importUser.getUsername());
@@ -515,7 +515,7 @@ public class AdminUserService {
         return respVO;
     }
 
-    public List<AdminUserDO> getUserListByStatus(Integer status) {
+    public List<AdminUserEntity> getUserListByStatus(Integer status) {
         return userMapper.selectListByStatus(status);
     }
 

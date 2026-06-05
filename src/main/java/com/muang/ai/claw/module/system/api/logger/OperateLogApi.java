@@ -1,11 +1,11 @@
 package com.muang.ai.claw.module.system.api.logger;
 
 import com.muang.ai.claw.common.core.PageResult;
+import com.muang.ai.claw.module.system.entity.logger.OperateLogEntity;
 import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.module.system.api.logger.dto.OperateLogCreateReqDTO;
 import com.muang.ai.claw.module.system.api.logger.dto.OperateLogPageReqDTO;
 import com.muang.ai.claw.module.system.api.logger.dto.OperateLogRespDTO;
-import com.muang.ai.claw.module.system.dal.dataobject.logger.OperateLogDO;
 import com.muang.ai.claw.module.system.service.logger.OperateLogService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
@@ -27,7 +27,7 @@ public class OperateLogApi {
     }
 
     public PageResult<OperateLogRespDTO> getOperateLogPage(OperateLogPageReqDTO pageReqDTO) {
-        PageResult<OperateLogDO> operateLogPage = operateLogService.getOperateLogPage(pageReqDTO);
+        PageResult<OperateLogEntity> operateLogPage = operateLogService.getOperateLogPage(pageReqDTO);
         return BeanUtils.toBean(operateLogPage, OperateLogRespDTO.class);
     }
 

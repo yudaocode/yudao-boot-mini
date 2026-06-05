@@ -9,8 +9,8 @@ import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.config.excel.util.ExcelUtils;
 import com.muang.ai.claw.module.system.controller.admin.user.vo.user.*;
 import com.muang.ai.claw.module.system.convert.user.UserConvert;
-import com.muang.ai.claw.module.system.dal.dataobject.dept.DeptDO;
-import com.muang.ai.claw.module.system.dal.dataobject.user.AdminUserDO;
+import com.muang.ai.claw.module.system.entity.dept.DeptEntity;
+import com.muang.ai.claw.module.system.entity.user.AdminUserEntity;
 import com.muang.ai.claw.module.system.constant.common.SexEnum;
 import com.muang.ai.claw.module.system.service.dept.DeptService;
 import com.muang.ai.claw.module.system.service.user.AdminUserService;
@@ -103,13 +103,13 @@ public class UserController {
     @PreAuthorize("@ss.hasPermission('system:user:query')")
     public CommonResult<PageResult<UserRespVO>> getUserPage(@Valid UserPageForm pageReqVO) {
         // 获得用户分页列表
-        PageResult<AdminUserDO> pageResult = userService.getUserPage(pageReqVO);
+        PageResult<AdminUserEntity> pageResult = userService.getUserPage(pageReqVO);
         if (CollUtil.isEmpty(pageResult.getList())) {
             return success(new PageResult<>(pageResult.getTotal()));
         }
         // 拼接数据
-        Map<Long, DeptDO> deptMap = deptService.getDeptMap(
-                convertList(pageResult.getList(), AdminUserDO::getDeptId));
+        Map<Long, DeptEntity> deptMap = deptService.getDeptMap(
+                convertList(pageResult.getList(), AdminUserEntity::getDeptId));
         return success(new PageResult<>(UserConvert.INSTANCE.convertList(pageResult.getList(), deptMap),
                 pageResult.getTotal()));
     }
@@ -119,22 +119,22 @@ public class UserController {
     @Parameter(name = "ids", description = "编号列表", required = true, example = "[1024]")
     @PreAuthorize("@ss.hasPermission('system:user:query')")
     public CommonResult<List<UserRespVO>> getUserList(@RequestParam("ids") List<Long> ids) {
-        List<AdminUserDO> list = userService.getUserList(ids);
+        List<AdminUserEntity> list = userService.getUserList(ids);
         if (CollUtil.isEmpty(list)) {
             return success(Collections.emptyList());
         }
         // 拼接数据
-        Map<Long, DeptDO> deptMap = deptService.getDeptMap(convertSet(list, AdminUserDO::getDeptId));
+        Map<Long, DeptEntity> deptMap = deptService.getDeptMap(convertSet(list, AdminUserEntity::getDeptId));
         return success(UserConvert.INSTANCE.convertList(list, deptMap));
     }
 
     @GetMapping({"/list-all-simple", "/simple-list"})
     @Operation(summary = "获取用户精简信息列表", description = "只包含被开启的用户，主要用于前端的下拉选项")
     public CommonResult<List<UserSimpleRespVO>> getSimpleUserList() {
-        List<AdminUserDO> list = userService.getUserListByStatus(CommonStatusEnum.ENABLE.getStatus());
+        List<AdminUserEntity> list = userService.getUserListByStatus(CommonStatusEnum.ENABLE.getStatus());
         // 拼接数据
-        Map<Long, DeptDO> deptMap = deptService.getDeptMap(
-                convertList(list, AdminUserDO::getDeptId));
+        Map<Long, DeptEntity> deptMap = deptService.getDeptMap(
+                convertList(list, AdminUserEntity::getDeptId));
         return success(UserConvert.INSTANCE.convertSimpleList(list, deptMap));
     }
 
@@ -143,12 +143,12 @@ public class UserController {
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
     @PreAuthorize("@ss.hasPermission('system:user:query')")
     public CommonResult<UserRespVO> getUser(@RequestParam("id") Long id) {
-        AdminUserDO user = userService.getUser(id);
+        AdminUserEntity user = userService.getUser(id);
         if (user == null) {
             return success(null);
         }
         // 拼接数据
-        DeptDO dept = deptService.getDept(user.getDeptId());
+        DeptEntity dept = deptService.getDept(user.getDeptId());
         return success(UserConvert.INSTANCE.convert(user, dept));
     }
 
@@ -159,10 +159,10 @@ public class UserController {
     public void exportUserList(@Validated UserPageForm exportReqVO,
                                HttpServletResponse response) throws IOException {
         exportReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
-        List<AdminUserDO> list = userService.getUserPage(exportReqVO).getList();
+        List<AdminUserEntity> list = userService.getUserPage(exportReqVO).getList();
         // 输出 Excel
-        Map<Long, DeptDO> deptMap = deptService.getDeptMap(
-                convertList(list, AdminUserDO::getDeptId));
+        Map<Long, DeptEntity> deptMap = deptService.getDeptMap(
+                convertList(list, AdminUserEntity::getDeptId));
         ExcelUtils.write(response, "用户数据.xls", "数据", UserRespVO.class,
                 UserConvert.INSTANCE.convertList(list, deptMap));
     }

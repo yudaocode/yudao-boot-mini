@@ -3,11 +3,6 @@ server:
 
 --- #################### 数据库相关配置 ####################
 spring:
-  autoconfigure:
-    # noinspection SpringBootApplicationYaml
-    exclude:
-      - org.springframework.ai.vectorstore.qdrant.autoconfigure.QdrantVectorStoreAutoConfiguration # 禁用 AI 模块的 Qdrant，手动创建
-      - org.springframework.ai.vectorstore.milvus.autoconfigure.MilvusVectorStoreAutoConfiguration # 禁用 AI 模块的 Milvus，手动创建
   # 数据源配置项
   datasource:
     druid: # Druid 【监控】相关的全局配置
@@ -111,21 +106,4 @@ logging:
     org.springframework.context.support.PostProcessorRegistrationDelegate: ERROR # TODO 芋艿：先禁用，Spring Boot 3.X 存在部分错误的 WARN 提示
 
 debug: false
-
-
---- #################### 芋道相关配置 ####################
-
-# 芋道配置项，设置当前项目所有自定义的配置
-yudao:
-  captcha:
-    enable: false # 本地环境，暂时关闭图片验证码，方便登录等接口的测试；
-  security:
-    mock-enable: true
-  pay:
-    order-notify-url: https://yutou.mynatapp.cc/admin-api/pay/notify/order # 支付渠道的【支付】回调地址
-    refund-notify-url: https://yutou.mynatapp.cc/admin-api/pay/notify/refund # 支付渠道的【退款】回调地址
-    transfer-notify-url: https://yutou.mynatapp.cc/admin-api/pay/notify/transfer # 支付渠道的【转账】回调地址
-  access-log: # 访问日志的配置项
-    enable: false
-  demo: false # 关闭演示模式
 

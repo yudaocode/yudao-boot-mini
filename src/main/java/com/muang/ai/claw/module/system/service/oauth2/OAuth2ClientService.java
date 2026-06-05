@@ -6,13 +6,13 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import com.muang.ai.claw.constant.CommonStatusEnum;
 import com.muang.ai.claw.common.core.PageResult;
+import com.muang.ai.claw.module.system.entity.oauth2.OAuth2ClientEntity;
 import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.util.string.StrUtils;
 import com.muang.ai.claw.module.system.controller.admin.oauth2.vo.client.OAuth2ClientPageForm;
 import com.muang.ai.claw.module.system.controller.admin.oauth2.vo.client.OAuth2ClientSaveForm;
-import com.muang.ai.claw.module.system.dal.dataobject.oauth2.OAuth2ClientDO;
-import com.muang.ai.claw.module.system.dal.mysql.oauth2.OAuth2ClientMapper;
-import com.muang.ai.claw.module.system.dal.redis.RedisKeyConstants;
+import com.muang.ai.claw.module.system.mapper.oauth2.OAuth2ClientMapper;
+import com.muang.ai.claw.module.system.constant.RedisKeyConstants;
 import com.google.common.annotations.VisibleForTesting;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -42,7 +42,7 @@ public class OAuth2ClientService {
     public Long createOAuth2Client(OAuth2ClientSaveForm createReqVO) {
         validateClientIdExists(null, createReqVO.getClientId());
         // 插入
-        OAuth2ClientDO client = BeanUtils.toBean(createReqVO, OAuth2ClientDO.class);
+        OAuth2ClientEntity client = BeanUtils.toBean(createReqVO, OAuth2ClientEntity.class);
         oauth2ClientMapper.insert(client);
         return client.getId();
     }
@@ -56,7 +56,7 @@ public class OAuth2ClientService {
         validateClientIdExists(updateReqVO.getId(), updateReqVO.getClientId());
 
         // 更新
-        OAuth2ClientDO updateObj = BeanUtils.toBean(updateReqVO, OAuth2ClientDO.class);
+        OAuth2ClientEntity updateObj = BeanUtils.toBean(updateReqVO, OAuth2ClientEntity.class);
         oauth2ClientMapper.updateById(updateObj);
     }
 
@@ -83,7 +83,7 @@ public class OAuth2ClientService {
 
     @VisibleForTesting
     void validateClientIdExists(Long id, String clientId) {
-        OAuth2ClientDO client = oauth2ClientMapper.selectByClientId(clientId);
+        OAuth2ClientEntity client = oauth2ClientMapper.selectByClientId(clientId);
         if (client == null) {
             return;
         }
@@ -96,28 +96,28 @@ public class OAuth2ClientService {
         }
     }
 
-    public OAuth2ClientDO getOAuth2Client(Long id) {
+    public OAuth2ClientEntity getOAuth2Client(Long id) {
         return oauth2ClientMapper.selectById(id);
     }
 
     @Cacheable(cacheNames = RedisKeyConstants.OAUTH_CLIENT, key = "#clientId",
             unless = "#result == null")
-    public OAuth2ClientDO getOAuth2ClientFromCache(String clientId) {
+    public OAuth2ClientEntity getOAuth2ClientFromCache(String clientId) {
         return oauth2ClientMapper.selectByClientId(clientId);
     }
 
-    public PageResult<OAuth2ClientDO> getOAuth2ClientPage(OAuth2ClientPageForm pageReqVO) {
+    public PageResult<OAuth2ClientEntity> getOAuth2ClientPage(OAuth2ClientPageForm pageReqVO) {
         return oauth2ClientMapper.selectPage(pageReqVO);
     }
 
-    public OAuth2ClientDO validOAuthClientFromCache(String clientId) {
+    public OAuth2ClientEntity validOAuthClientFromCache(String clientId) {
         return validOAuthClientFromCache(clientId, null, null, null, null);
     }
 
-    public OAuth2ClientDO validOAuthClientFromCache(String clientId, String clientSecret, String authorizedGrantType,
-                                                    Collection<String> scopes, String redirectUri) {
+    public OAuth2ClientEntity validOAuthClientFromCache(String clientId, String clientSecret, String authorizedGrantType,
+                                                        Collection<String> scopes, String redirectUri) {
         // 校验客户端存在、且开启
-        OAuth2ClientDO client = getSelf().getOAuth2ClientFromCache(clientId);
+        OAuth2ClientEntity client = getSelf().getOAuth2ClientFromCache(clientId);
         if (client == null) {
             throw exception(OAUTH2_CLIENT_NOT_EXISTS);
         }

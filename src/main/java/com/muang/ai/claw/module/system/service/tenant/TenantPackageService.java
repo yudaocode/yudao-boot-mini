@@ -4,12 +4,12 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.muang.ai.claw.constant.CommonStatusEnum;
 import com.muang.ai.claw.common.core.PageResult;
+import com.muang.ai.claw.module.system.entity.tenant.TenantEntity;
+import com.muang.ai.claw.module.system.entity.tenant.TenantPackageEntity;
 import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.module.system.controller.admin.tenant.vo.packages.TenantPackagePageForm;
 import com.muang.ai.claw.module.system.controller.admin.tenant.vo.packages.TenantPackageSaveForm;
-import com.muang.ai.claw.module.system.dal.dataobject.tenant.TenantDO;
-import com.muang.ai.claw.module.system.dal.dataobject.tenant.TenantPackageDO;
-import com.muang.ai.claw.module.system.dal.mysql.tenant.TenantPackageMapper;
+import com.muang.ai.claw.module.system.mapper.tenant.TenantPackageMapper;
 import com.baomidou.dynamic.datasource.annotation.DSTransactional;
 import com.google.common.annotations.VisibleForTesting;
 import jakarta.annotation.Resource;
@@ -41,7 +41,7 @@ public class TenantPackageService {
         // 校验套餐名是否重复
         validateTenantPackageNameUnique(null, createReqVO.getName());
         // 插入
-        TenantPackageDO tenantPackage = BeanUtils.toBean(createReqVO, TenantPackageDO.class);
+        TenantPackageEntity tenantPackage = BeanUtils.toBean(createReqVO, TenantPackageEntity.class);
         tenantPackageMapper.insert(tenantPackage);
         // 返回
         return tenantPackage.getId();
@@ -50,15 +50,15 @@ public class TenantPackageService {
     @DSTransactional // 多数据源，使用 @DSTransactional 保证本地事务，以及数据源的切换
     public void updateTenantPackage(TenantPackageSaveForm updateReqVO) {
         // 校验存在
-        TenantPackageDO tenantPackage = validateTenantPackageExists(updateReqVO.getId());
+        TenantPackageEntity tenantPackage = validateTenantPackageExists(updateReqVO.getId());
         // 校验套餐名是否重复
         validateTenantPackageNameUnique(updateReqVO.getId(), updateReqVO.getName());
         // 更新
-        TenantPackageDO updateObj = BeanUtils.toBean(updateReqVO, TenantPackageDO.class);
+        TenantPackageEntity updateObj = BeanUtils.toBean(updateReqVO, TenantPackageEntity.class);
         tenantPackageMapper.updateById(updateObj);
         // 如果菜单发生变化，则修改每个租户的菜单
         if (!CollUtil.isEqualList(tenantPackage.getMenuIds(), updateReqVO.getMenuIds())) {
-            List<TenantDO> tenants = tenantService.getTenantListByPackageId(tenantPackage.getId());
+            List<TenantEntity> tenants = tenantService.getTenantListByPackageId(tenantPackage.getId());
             tenants.forEach(tenant -> tenantService.updateTenantRoleMenu(tenant.getId(), updateReqVO.getMenuIds()));
         }
     }
@@ -84,8 +84,8 @@ public class TenantPackageService {
         tenantPackageMapper.deleteByIds(ids);
     }
 
-    private TenantPackageDO validateTenantPackageExists(Long id) {
-        TenantPackageDO tenantPackage = tenantPackageMapper.selectById(id);
+    private TenantPackageEntity validateTenantPackageExists(Long id) {
+        TenantPackageEntity tenantPackage = tenantPackageMapper.selectById(id);
         if (tenantPackage == null) {
             throw exception(TENANT_PACKAGE_NOT_EXISTS);
         }
@@ -98,16 +98,16 @@ public class TenantPackageService {
         }
     }
 
-    public TenantPackageDO getTenantPackage(Long id) {
+    public TenantPackageEntity getTenantPackage(Long id) {
         return tenantPackageMapper.selectById(id);
     }
 
-    public PageResult<TenantPackageDO> getTenantPackagePage(TenantPackagePageForm pageReqVO) {
+    public PageResult<TenantPackageEntity> getTenantPackagePage(TenantPackagePageForm pageReqVO) {
         return tenantPackageMapper.selectPage(pageReqVO);
     }
 
-    public TenantPackageDO validTenantPackage(Long id) {
-        TenantPackageDO tenantPackage = tenantPackageMapper.selectById(id);
+    public TenantPackageEntity validTenantPackage(Long id) {
+        TenantPackageEntity tenantPackage = tenantPackageMapper.selectById(id);
         if (tenantPackage == null) {
             throw exception(TENANT_PACKAGE_NOT_EXISTS);
         }
@@ -117,7 +117,7 @@ public class TenantPackageService {
         return tenantPackage;
     }
 
-    public List<TenantPackageDO> getTenantPackageListByStatus(Integer status) {
+    public List<TenantPackageEntity> getTenantPackageListByStatus(Integer status) {
         return tenantPackageMapper.selectListByStatus(status);
     }
 
@@ -127,7 +127,7 @@ public class TenantPackageService {
         if (StrUtil.isBlank(name)) {
             return;
         }
-        TenantPackageDO tenantPackage = tenantPackageMapper.selectByName(name);
+        TenantPackageEntity tenantPackage = tenantPackageMapper.selectByName(name);
         if (tenantPackage == null) {
             return;
         }

@@ -1,8 +1,8 @@
 package com.muang.ai.claw.module.system.api.dept;
 
+import com.muang.ai.claw.module.system.entity.dept.DeptEntity;
 import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.module.system.api.dept.dto.DeptRespDTO;
-import com.muang.ai.claw.module.system.dal.dataobject.dept.DeptDO;
 import com.muang.ai.claw.module.system.service.dept.DeptService;
 import org.springframework.stereotype.Service;
 import jakarta.annotation.Resource;
@@ -22,12 +22,12 @@ public class DeptApi {
     private DeptService deptService;
 
     public DeptRespDTO getDept(Long id) {
-        DeptDO dept = deptService.getDept(id);
+        DeptEntity dept = deptService.getDept(id);
         return BeanUtils.toBean(dept, DeptRespDTO.class);
     }
 
     public List<DeptRespDTO> getDeptList(Collection<Long> ids) {
-        List<DeptDO> depts = deptService.getDeptList(ids);
+        List<DeptEntity> depts = deptService.getDeptList(ids);
         return BeanUtils.toBean(depts, DeptRespDTO.class);
     }
 
@@ -36,7 +36,7 @@ public class DeptApi {
     }
 
     public List<DeptRespDTO> getChildDeptList(Long id) {
-        List<DeptDO> childDeptList = deptService.getChildDeptList(id);
+        List<DeptEntity> childDeptList = deptService.getChildDeptList(id);
         return BeanUtils.toBean(childDeptList, DeptRespDTO.class);
     }
 

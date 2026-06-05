@@ -5,10 +5,10 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.core.util.URLUtil;
 import com.muang.ai.claw.common.core.CommonResult;
 import com.muang.ai.claw.common.core.PageResult;
+import com.muang.ai.claw.module.infra.entity.file.FileEntity;
 import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.config.tenant.core.aop.TenantIgnore;
 import com.muang.ai.claw.module.infra.controller.admin.file.vo.file.*;
-import com.muang.ai.claw.module.infra.dal.dataobject.file.FileDO;
 import com.muang.ai.claw.module.infra.service.file.FileService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -130,7 +130,7 @@ public class FileController {
     @Operation(summary = "获得文件分页")
     @PreAuthorize("@ss.hasPermission('infra:file:query')")
     public CommonResult<PageResult<FileRespVO>> getFilePage(@Valid FilePageForm pageVO) {
-        PageResult<FileDO> pageResult = fileService.getFilePage(pageVO);
+        PageResult<FileEntity> pageResult = fileService.getFilePage(pageVO);
         return success(BeanUtils.toBean(pageResult, FileRespVO.class));
     }
 

@@ -2,7 +2,7 @@ package com.muang.ai.claw.module.system.api.permission;
 
 import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.module.system.api.permission.dto.RoleRespDTO;
-import com.muang.ai.claw.module.system.dal.dataobject.permission.RoleDO;
+import com.muang.ai.claw.module.system.entity.permission.RoleEntity;
 import com.muang.ai.claw.module.system.service.permission.RoleService;
 import org.springframework.stereotype.Service;
 import jakarta.annotation.Resource;
@@ -26,12 +26,12 @@ public class RoleApi {
     }
 
     public RoleRespDTO getRole(Long id) {
-        RoleDO role = roleService.getRole(id);
+        RoleEntity role = roleService.getRole(id);
         return BeanUtils.toBean(role, RoleRespDTO.class);
     }
 
     public List<RoleRespDTO> getRoleList(Collection<Long> ids) {
-        List<RoleDO> list = roleService.getRoleList(ids);
+        List<RoleEntity> list = roleService.getRoleList(ids);
         return BeanUtils.toBean(list, RoleRespDTO.class);
     }
 

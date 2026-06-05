@@ -8,7 +8,7 @@ import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.config.excel.util.ExcelUtils;
 import com.muang.ai.claw.module.system.controller.admin.logger.vo.loginlog.LoginLogPageForm;
 import com.muang.ai.claw.module.system.controller.admin.logger.vo.loginlog.LoginLogRespVO;
-import com.muang.ai.claw.module.system.dal.dataobject.logger.LoginLogDO;
+import com.muang.ai.claw.module.system.entity.logger.LoginLogEntity;
 import com.muang.ai.claw.module.system.service.logger.LoginLogService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -40,7 +40,7 @@ public class LoginLogController {
     @Operation(summary = "获得登录日志")
     @PreAuthorize("@ss.hasPermission('system:login-log:query')")
     public CommonResult<LoginLogRespVO> getLoginLog(Long id) {
-        LoginLogDO loginLog = loginLogService.getLoginLog(id);
+        LoginLogEntity loginLog = loginLogService.getLoginLog(id);
         return success(BeanUtils.toBean(loginLog, LoginLogRespVO.class));
     }
 
@@ -48,7 +48,7 @@ public class LoginLogController {
     @Operation(summary = "获得登录日志分页列表")
     @PreAuthorize("@ss.hasPermission('system:login-log:query')")
     public CommonResult<PageResult<LoginLogRespVO>> getLoginLogPage(@Valid LoginLogPageForm pageReqVO) {
-        PageResult<LoginLogDO> pageResult = loginLogService.getLoginLogPage(pageReqVO);
+        PageResult<LoginLogEntity> pageResult = loginLogService.getLoginLogPage(pageReqVO);
         return success(BeanUtils.toBean(pageResult, LoginLogRespVO.class));
     }
 
@@ -58,7 +58,7 @@ public class LoginLogController {
     @ApiAccessLog(operateType = EXPORT)
     public void exportLoginLog(HttpServletResponse response, @Valid LoginLogPageForm exportReqVO) throws IOException {
         exportReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
-        List<LoginLogDO> list = loginLogService.getLoginLogPage(exportReqVO).getList();
+        List<LoginLogEntity> list = loginLogService.getLoginLogPage(exportReqVO).getList();
         // 输出
         ExcelUtils.write(response, "登录日志.xls", "数据列表", LoginLogRespVO.class,
                 BeanUtils.toBean(list, LoginLogRespVO.class));

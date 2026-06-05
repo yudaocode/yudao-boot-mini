@@ -1,11 +1,11 @@
 package com.muang.ai.claw.module.system.service.logger;
 
 import com.muang.ai.claw.common.core.PageResult;
+import com.muang.ai.claw.module.system.entity.logger.LoginLogEntity;
 import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.module.system.api.logger.dto.LoginLogCreateReqDTO;
 import com.muang.ai.claw.module.system.controller.admin.logger.vo.loginlog.LoginLogPageForm;
-import com.muang.ai.claw.module.system.dal.dataobject.logger.LoginLogDO;
-import com.muang.ai.claw.module.system.dal.mysql.logger.LoginLogMapper;
+import com.muang.ai.claw.module.system.mapper.logger.LoginLogMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -21,16 +21,16 @@ public class LoginLogService {
     @Resource
     private LoginLogMapper loginLogMapper;
 
-    public LoginLogDO getLoginLog(Long id) {
+    public LoginLogEntity getLoginLog(Long id) {
         return loginLogMapper.selectById(id);
     }
 
-    public PageResult<LoginLogDO> getLoginLogPage(LoginLogPageForm pageReqVO) {
+    public PageResult<LoginLogEntity> getLoginLogPage(LoginLogPageForm pageReqVO) {
         return loginLogMapper.selectPage(pageReqVO);
     }
 
     public void createLoginLog(LoginLogCreateReqDTO reqDTO) {
-        LoginLogDO loginLog = BeanUtils.toBean(reqDTO, LoginLogDO.class);
+        LoginLogEntity loginLog = BeanUtils.toBean(reqDTO, LoginLogEntity.class);
         loginLogMapper.insert(loginLog);
     }
 

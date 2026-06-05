@@ -4,11 +4,11 @@ import com.muang.ai.claw.config.apilog.core.annotation.ApiAccessLog;
 import com.muang.ai.claw.common.core.CommonResult;
 import com.muang.ai.claw.common.core.PageParam;
 import com.muang.ai.claw.common.core.PageResult;
+import com.muang.ai.claw.module.infra.entity.logger.ApiErrorLogEntity;
 import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.config.excel.util.ExcelUtils;
 import com.muang.ai.claw.module.infra.controller.admin.logger.vo.apierrorlog.ApiErrorLogPageForm;
 import com.muang.ai.claw.module.infra.controller.admin.logger.vo.apierrorlog.ApiErrorLogRespVO;
-import com.muang.ai.claw.module.infra.dal.dataobject.logger.ApiErrorLogDO;
 import com.muang.ai.claw.module.infra.service.logger.ApiErrorLogService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -55,7 +55,7 @@ public class ApiErrorLogController {
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
     @PreAuthorize("@ss.hasPermission('infra:api-error-log:query')")
     public CommonResult<ApiErrorLogRespVO> getApiErrorLog(@RequestParam("id") Long id) {
-        ApiErrorLogDO apiErrorLog = apiErrorLogService.getApiErrorLog(id);
+        ApiErrorLogEntity apiErrorLog = apiErrorLogService.getApiErrorLog(id);
         return success(BeanUtils.toBean(apiErrorLog, ApiErrorLogRespVO.class));
     }
 
@@ -63,7 +63,7 @@ public class ApiErrorLogController {
     @Operation(summary = "获得 API 错误日志分页")
     @PreAuthorize("@ss.hasPermission('infra:api-error-log:query')")
     public CommonResult<PageResult<ApiErrorLogRespVO>> getApiErrorLogPage(@Valid ApiErrorLogPageForm pageReqVO) {
-        PageResult<ApiErrorLogDO> pageResult = apiErrorLogService.getApiErrorLogPage(pageReqVO);
+        PageResult<ApiErrorLogEntity> pageResult = apiErrorLogService.getApiErrorLogPage(pageReqVO);
         return success(BeanUtils.toBean(pageResult, ApiErrorLogRespVO.class));
     }
 
@@ -74,7 +74,7 @@ public class ApiErrorLogController {
     public void exportApiErrorLogExcel(@Valid ApiErrorLogPageForm exportReqVO,
                                        HttpServletResponse response) throws IOException {
         exportReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
-        List<ApiErrorLogDO> list = apiErrorLogService.getApiErrorLogPage(exportReqVO).getList();
+        List<ApiErrorLogEntity> list = apiErrorLogService.getApiErrorLogPage(exportReqVO).getList();
         // 导出 Excel
         ExcelUtils.write(response, "API 错误日志.xls", "数据", ApiErrorLogRespVO.class,
                 BeanUtils.toBean(list, ApiErrorLogRespVO.class));

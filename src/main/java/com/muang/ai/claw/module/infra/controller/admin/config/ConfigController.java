@@ -9,7 +9,7 @@ import com.muang.ai.claw.module.infra.controller.admin.config.vo.ConfigPageForm;
 import com.muang.ai.claw.module.infra.controller.admin.config.vo.ConfigRespVO;
 import com.muang.ai.claw.module.infra.controller.admin.config.vo.ConfigSaveForm;
 import com.muang.ai.claw.module.infra.convert.config.ConfigConvert;
-import com.muang.ai.claw.module.infra.dal.dataobject.config.ConfigDO;
+import com.muang.ai.claw.module.infra.entity.config.ConfigEntity;
 import com.muang.ai.claw.module.infra.constant.ErrorCodeConstants;
 import com.muang.ai.claw.module.infra.service.config.ConfigService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -83,7 +83,7 @@ public class ConfigController {
     @Operation(summary = "根据参数键名查询参数值", description = "不可见的配置，不允许返回给前端")
     @Parameter(name = "key", description = "参数键", required = true, example = "yunai.biz.username")
     public CommonResult<String> getConfigKey(@RequestParam("key") String key) {
-        ConfigDO config = configService.getConfigByKey(key);
+        ConfigEntity config = configService.getConfigByKey(key);
         if (config == null) {
             return success(null);
         }
@@ -97,7 +97,7 @@ public class ConfigController {
     @Operation(summary = "获取参数配置分页")
     @PreAuthorize("@ss.hasPermission('infra:config:query')")
     public CommonResult<PageResult<ConfigRespVO>> getConfigPage(@Valid ConfigPageForm pageReqVO) {
-        PageResult<ConfigDO> page = configService.getConfigPage(pageReqVO);
+        PageResult<ConfigEntity> page = configService.getConfigPage(pageReqVO);
         return success(ConfigConvert.INSTANCE.convertPage(page));
     }
 
@@ -108,7 +108,7 @@ public class ConfigController {
     public void exportConfig(ConfigPageForm exportReqVO,
                              HttpServletResponse response) throws IOException {
         exportReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
-        List<ConfigDO> list = configService.getConfigPage(exportReqVO).getList();
+        List<ConfigEntity> list = configService.getConfigPage(exportReqVO).getList();
         // 输出
         ExcelUtils.write(response, "参数配置.xls", "数据", ConfigRespVO.class,
                 ConfigConvert.INSTANCE.convertList(list));

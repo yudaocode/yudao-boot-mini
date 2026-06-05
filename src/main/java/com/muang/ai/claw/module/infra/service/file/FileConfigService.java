@@ -4,13 +4,13 @@ import cn.hutool.core.io.resource.ResourceUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import com.muang.ai.claw.common.core.PageResult;
+import com.muang.ai.claw.module.infra.entity.file.FileConfigEntity;
 import com.muang.ai.claw.util.json.JsonUtils;
 import com.muang.ai.claw.util.validation.ValidationUtils;
 import com.muang.ai.claw.module.infra.controller.admin.file.vo.config.FileConfigPageForm;
 import com.muang.ai.claw.module.infra.controller.admin.file.vo.config.FileConfigSaveForm;
 import com.muang.ai.claw.module.infra.convert.file.FileConfigConvert;
-import com.muang.ai.claw.module.infra.dal.dataobject.file.FileConfigDO;
-import com.muang.ai.claw.module.infra.dal.mysql.file.FileConfigMapper;
+import com.muang.ai.claw.module.infra.mapper.file.FileConfigMapper;
 import com.muang.ai.claw.config.file.core.client.FileClient;
 import com.muang.ai.claw.config.file.core.client.FileClientConfig;
 import com.muang.ai.claw.config.file.core.client.FileClientFactory;
@@ -54,7 +54,7 @@ public class FileConfigService {
             new CacheLoader<Long, FileClient>() {
 
                 public FileClient load(Long id) {
-                    FileConfigDO config = Objects.equals(CACHE_MASTER_ID, id) ?
+                    FileConfigEntity config = Objects.equals(CACHE_MASTER_ID, id) ?
                             fileConfigMapper.selectByMaster() : fileConfigMapper.selectById(id);
                     if (config != null) {
                         fileClientFactory.createOrUpdateFileClient(config.getId(), config.getStorage(), config.getConfig());
@@ -74,7 +74,7 @@ public class FileConfigService {
     private Validator validator;
 
     public Long createFileConfig(FileConfigSaveForm createReqVO) {
-        FileConfigDO fileConfig = FileConfigConvert.INSTANCE.convert(createReqVO)
+        FileConfigEntity fileConfig = FileConfigConvert.INSTANCE.convert(createReqVO)
                 .setConfig(parseClientConfig(createReqVO.getStorage(), createReqVO.getConfig()))
                 .setMaster(false); // 默认非 master
         fileConfigMapper.insert(fileConfig);
@@ -83,9 +83,9 @@ public class FileConfigService {
 
     public void updateFileConfig(FileConfigSaveForm updateReqVO) {
         // 校验存在
-        FileConfigDO config = validateFileConfigExists(updateReqVO.getId());
+        FileConfigEntity config = validateFileConfigExists(updateReqVO.getId());
         // 更新
-        FileConfigDO updateObj = FileConfigConvert.INSTANCE.convert(updateReqVO)
+        FileConfigEntity updateObj = FileConfigConvert.INSTANCE.convert(updateReqVO)
                 .setConfig(parseClientConfig(config.getStorage(), updateReqVO.getConfig()));
         fileConfigMapper.updateById(updateObj);
 
@@ -98,9 +98,9 @@ public class FileConfigService {
         // 校验存在
         validateFileConfigExists(id);
         // 更新其它为非 master
-        fileConfigMapper.updateBatch(new FileConfigDO().setMaster(false));
+        fileConfigMapper.updateBatch(new FileConfigEntity().setMaster(false));
         // 更新
-        fileConfigMapper.updateById(new FileConfigDO().setId(id).setMaster(true));
+        fileConfigMapper.updateById(new FileConfigEntity().setId(id).setMaster(true));
 
         // 清空缓存
         clearCache(null, true);
@@ -119,7 +119,7 @@ public class FileConfigService {
 
     public void deleteFileConfig(Long id) {
         // 校验存在
-        FileConfigDO config = validateFileConfigExists(id);
+        FileConfigEntity config = validateFileConfigExists(id);
         if (Boolean.TRUE.equals(config.getMaster())) {
             throw exception(FILE_CONFIG_DELETE_FAIL_MASTER);
         }
@@ -132,8 +132,8 @@ public class FileConfigService {
 
     public void deleteFileConfigList(List<Long> ids) {
         // 校验是否有主配置
-        List<FileConfigDO> configs = fileConfigMapper.selectByIds(ids);
-        for (FileConfigDO config : configs) {
+        List<FileConfigEntity> configs = fileConfigMapper.selectByIds(ids);
+        for (FileConfigEntity config : configs) {
             if (Boolean.TRUE.equals(config.getMaster())) {
                 throw exception(FILE_CONFIG_DELETE_FAIL_MASTER);
             }
@@ -161,19 +161,19 @@ public class FileConfigService {
         }
     }
 
-    private FileConfigDO validateFileConfigExists(Long id) {
-        FileConfigDO config = fileConfigMapper.selectById(id);
+    private FileConfigEntity validateFileConfigExists(Long id) {
+        FileConfigEntity config = fileConfigMapper.selectById(id);
         if (config == null) {
             throw exception(FILE_CONFIG_NOT_EXISTS);
         }
         return config;
     }
 
-    public FileConfigDO getFileConfig(Long id) {
+    public FileConfigEntity getFileConfig(Long id) {
         return fileConfigMapper.selectById(id);
     }
 
-    public PageResult<FileConfigDO> getFileConfigPage(FileConfigPageForm pageReqVO) {
+    public PageResult<FileConfigEntity> getFileConfigPage(FileConfigPageForm pageReqVO) {
         return fileConfigMapper.selectPage(pageReqVO);
     }
 

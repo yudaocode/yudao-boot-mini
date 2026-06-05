@@ -2,7 +2,7 @@ package com.muang.ai.claw.config.operatelog.core;
 
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.StrUtil;
-import com.muang.ai.claw.module.system.dal.dataobject.user.AdminUserDO;
+import com.muang.ai.claw.module.system.entity.user.AdminUserEntity;
 import com.muang.ai.claw.module.system.service.user.AdminUserService;
 import com.mzt.logapi.service.IParseFunction;
 import jakarta.annotation.Resource;
@@ -35,7 +35,7 @@ public class AdminUserParseFunction implements IParseFunction {
         }
 
         // 获取用户信息
-        AdminUserDO user = adminUserService.getUser(Convert.toLong(value));
+        AdminUserEntity user = adminUserService.getUser(Convert.toLong(value));
         if (user == null) {
             log.warn("[apply][获取用户{{}}为空", value);
             return "";

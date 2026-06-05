@@ -11,7 +11,7 @@ import com.muang.ai.claw.module.system.controller.admin.dept.vo.post.PostPageFor
 import com.muang.ai.claw.module.system.controller.admin.dept.vo.post.PostRespVO;
 import com.muang.ai.claw.module.system.controller.admin.dept.vo.post.PostSaveForm;
 import com.muang.ai.claw.module.system.controller.admin.dept.vo.post.PostSimpleRespVO;
-import com.muang.ai.claw.module.system.dal.dataobject.dept.PostDO;
+import com.muang.ai.claw.module.system.entity.dept.PostEntity;
 import com.muang.ai.claw.module.system.service.dept.PostService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -77,7 +77,7 @@ public class PostController {
     @Parameter(name = "id", description = "岗位编号", required = true, example = "1024")
     @PreAuthorize("@ss.hasPermission('system:post:query')")
     public CommonResult<PostRespVO> getPost(@RequestParam("id") Long id) {
-        PostDO post = postService.getPost(id);
+        PostEntity post = postService.getPost(id);
         return success(BeanUtils.toBean(post, PostRespVO.class));
     }
 
@@ -85,9 +85,9 @@ public class PostController {
     @Operation(summary = "获取岗位全列表", description = "只包含被开启的岗位，主要用于前端的下拉选项")
     public CommonResult<List<PostSimpleRespVO>> getSimplePostList() {
         // 获得岗位列表，只要开启状态的
-        List<PostDO> list = postService.getPostList(null, Collections.singleton(CommonStatusEnum.ENABLE.getStatus()));
+        List<PostEntity> list = postService.getPostList(null, Collections.singleton(CommonStatusEnum.ENABLE.getStatus()));
         // 排序后，返回给前端
-        list.sort(Comparator.comparing(PostDO::getSort));
+        list.sort(Comparator.comparing(PostEntity::getSort));
         return success(BeanUtils.toBean(list, PostSimpleRespVO.class));
     }
 
@@ -95,7 +95,7 @@ public class PostController {
     @Operation(summary = "获得岗位分页列表")
     @PreAuthorize("@ss.hasPermission('system:post:query')")
     public CommonResult<PageResult<PostRespVO>> getPostPage(@Validated PostPageForm pageReqVO) {
-        PageResult<PostDO> pageResult = postService.getPostPage(pageReqVO);
+        PageResult<PostEntity> pageResult = postService.getPostPage(pageReqVO);
         return success(BeanUtils.toBean(pageResult, PostRespVO.class));
     }
 
@@ -105,7 +105,7 @@ public class PostController {
     @ApiAccessLog(operateType = EXPORT)
     public void export(HttpServletResponse response, @Validated PostPageForm reqVO) throws IOException {
         reqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
-        List<PostDO> list = postService.getPostPage(reqVO).getList();
+        List<PostEntity> list = postService.getPostPage(reqVO).getList();
         // 输出
         ExcelUtils.write(response, "岗位数据.xls", "岗位列表", PostRespVO.class,
                 BeanUtils.toBean(list, PostRespVO.class));

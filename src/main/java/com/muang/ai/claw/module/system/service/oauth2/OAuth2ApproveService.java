@@ -2,10 +2,10 @@ package com.muang.ai.claw.module.system.service.oauth2;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Assert;
+import com.muang.ai.claw.module.system.entity.oauth2.OAuth2ApproveEntity;
+import com.muang.ai.claw.module.system.entity.oauth2.OAuth2ClientEntity;
 import com.muang.ai.claw.util.date.DateUtils;
-import com.muang.ai.claw.module.system.dal.dataobject.oauth2.OAuth2ApproveDO;
-import com.muang.ai.claw.module.system.dal.dataobject.oauth2.OAuth2ClientDO;
-import com.muang.ai.claw.module.system.dal.mysql.oauth2.OAuth2ApproveMapper;
+import com.muang.ai.claw.module.system.mapper.oauth2.OAuth2ApproveMapper;
 import com.google.common.annotations.VisibleForTesting;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,7 +39,7 @@ public class OAuth2ApproveService {
     @Transactional
     public boolean checkForPreApproval(Long userId, Integer userType, String clientId, Collection<String> requestedScopes) {
         // 第一步，基于 Client 的自动授权计算，如果 scopes 都在自动授权中，则返回 true 通过
-        OAuth2ClientDO clientDO = oauth2ClientService.validOAuthClientFromCache(clientId);
+        OAuth2ClientEntity clientDO = oauth2ClientService.validOAuthClientFromCache(clientId);
         Assert.notNull(clientDO, "客户端不能为空"); // 防御性编程
         if (CollUtil.containsAll(clientDO.getAutoApproveScopes(), requestedScopes)) {
             // gh-877 - if all scopes are auto approved, approvals still need to be added to the approval store.
@@ -51,9 +51,9 @@ public class OAuth2ApproveService {
         }
 
         // 第二步，算上用户已经批准的授权。如果 scopes 都包含，则返回 true
-        List<OAuth2ApproveDO> approveDOs = getApproveList(userId, userType, clientId);
-        Set<String> scopes = convertSet(approveDOs, OAuth2ApproveDO::getScope,
-                OAuth2ApproveDO::getApproved); // 只保留未过期的 + 同意的
+        List<OAuth2ApproveEntity> approveDOs = getApproveList(userId, userType, clientId);
+        Set<String> scopes = convertSet(approveDOs, OAuth2ApproveEntity::getScope,
+                OAuth2ApproveEntity::getApproved); // 只保留未过期的 + 同意的
         return CollUtil.containsAll(scopes, requestedScopes);
     }
 
@@ -76,8 +76,8 @@ public class OAuth2ApproveService {
         return success;
     }
 
-    public List<OAuth2ApproveDO> getApproveList(Long userId, Integer userType, String clientId) {
-        List<OAuth2ApproveDO> approveDOs = oauth2ApproveMapper.selectListByUserIdAndUserTypeAndClientId(
+    public List<OAuth2ApproveEntity> getApproveList(Long userId, Integer userType, String clientId) {
+        List<OAuth2ApproveEntity> approveDOs = oauth2ApproveMapper.selectListByUserIdAndUserTypeAndClientId(
                 userId, userType, clientId);
         approveDOs.removeIf(o -> DateUtils.isExpired(o.getExpiresTime()));
         return approveDOs;
@@ -87,7 +87,7 @@ public class OAuth2ApproveService {
     void saveApprove(Long userId, Integer userType, String clientId,
                      String scope, Boolean approved, LocalDateTime expireTime) {
         // 先更新
-        OAuth2ApproveDO approveDO = new OAuth2ApproveDO().setUserId(userId).setUserType(userType)
+        OAuth2ApproveEntity approveDO = new OAuth2ApproveEntity().setUserId(userId).setUserType(userType)
                 .setClientId(clientId).setScope(scope).setApproved(approved).setExpiresTime(expireTime);
         if (oauth2ApproveMapper.update(approveDO) == 1) {
             return;

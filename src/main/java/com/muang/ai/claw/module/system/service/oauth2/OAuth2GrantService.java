@@ -4,9 +4,9 @@ import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.muang.ai.claw.constant.UserTypeEnum;
-import com.muang.ai.claw.module.system.dal.dataobject.oauth2.OAuth2AccessTokenDO;
-import com.muang.ai.claw.module.system.dal.dataobject.oauth2.OAuth2CodeDO;
-import com.muang.ai.claw.module.system.dal.dataobject.user.AdminUserDO;
+import com.muang.ai.claw.module.system.entity.oauth2.OAuth2AccessTokenEntity;
+import com.muang.ai.claw.module.system.entity.oauth2.OAuth2CodeEntity;
+import com.muang.ai.claw.module.system.entity.user.AdminUserEntity;
 import com.muang.ai.claw.module.system.constant.ErrorCodeConstants;
 import com.muang.ai.claw.module.system.service.auth.AdminAuthService;
 import org.springframework.stereotype.Service;
@@ -30,8 +30,8 @@ public class OAuth2GrantService {
     @Resource
     private AdminAuthService adminAuthService;
 
-    public OAuth2AccessTokenDO grantImplicit(Long userId, Integer userType,
-                                             String clientId, List<String> scopes) {
+    public OAuth2AccessTokenEntity grantImplicit(Long userId, Integer userType,
+                                                 String clientId, List<String> scopes) {
         return oauth2TokenService.createAccessToken(userId, userType, clientId, scopes);
     }
 
@@ -42,9 +42,9 @@ public class OAuth2GrantService {
                 redirectUri, state).getCode();
     }
 
-    public OAuth2AccessTokenDO grantAuthorizationCodeForAccessToken(String clientId, String code,
-                                                                    String redirectUri, String state) {
-        OAuth2CodeDO codeDO = oauth2CodeService.consumeAuthorizationCode(code);
+    public OAuth2AccessTokenEntity grantAuthorizationCodeForAccessToken(String clientId, String code,
+                                                                        String redirectUri, String state) {
+        OAuth2CodeEntity codeDO = oauth2CodeService.consumeAuthorizationCode(code);
         Assert.notNull(codeDO, "授权码不能为空"); // 防御性编程
         // 校验 clientId 是否匹配
         if (!StrUtil.equals(clientId, codeDO.getClientId())) {
@@ -65,27 +65,27 @@ public class OAuth2GrantService {
                 codeDO.getClientId(), codeDO.getScopes());
     }
 
-    public OAuth2AccessTokenDO grantPassword(String username, String password, String clientId, List<String> scopes) {
+    public OAuth2AccessTokenEntity grantPassword(String username, String password, String clientId, List<String> scopes) {
         // 使用账号 + 密码进行登录
-        AdminUserDO user = adminAuthService.authenticate(username, password);
+        AdminUserEntity user = adminAuthService.authenticate(username, password);
         Assert.notNull(user, "用户不能为空！"); // 防御性编程
 
         // 创建访问令牌
         return oauth2TokenService.createAccessToken(user.getId(), UserTypeEnum.ADMIN.getValue(), clientId, scopes);
     }
 
-    public OAuth2AccessTokenDO grantRefreshToken(String refreshToken, String clientId) {
+    public OAuth2AccessTokenEntity grantRefreshToken(String refreshToken, String clientId) {
         return oauth2TokenService.refreshAccessToken(refreshToken, clientId);
     }
 
-    public OAuth2AccessTokenDO grantClientCredentials(String clientId, List<String> scopes) {
+    public OAuth2AccessTokenEntity grantClientCredentials(String clientId, List<String> scopes) {
         // 特殊：https://yuanbao.tencent.com/bot/app/share/chat/wFj642xSZHHx
         return oauth2TokenService.createAccessToken(0L, UserTypeEnum.ADMIN.getValue(), clientId, scopes);
     }
 
     public boolean revokeToken(String clientId, String accessToken) {
         // 先查询，保证 clientId 时匹配的
-        OAuth2AccessTokenDO accessTokenDO = oauth2TokenService.getAccessToken(accessToken);
+        OAuth2AccessTokenEntity accessTokenDO = oauth2TokenService.getAccessToken(accessToken);
         if (accessTokenDO == null || ObjectUtil.notEqual(clientId, accessTokenDO.getClientId())) {
             return false;
         }

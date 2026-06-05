@@ -2,7 +2,7 @@ package com.muang.ai.claw.config.operatelog.core;
 
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.StrUtil;
-import com.muang.ai.claw.module.system.dal.dataobject.dept.PostDO;
+import com.muang.ai.claw.module.system.entity.dept.PostEntity;
 import com.muang.ai.claw.module.system.service.dept.PostService;
 import com.mzt.logapi.service.IParseFunction;
 import jakarta.annotation.Resource;
@@ -35,7 +35,7 @@ public class PostParseFunction implements IParseFunction {
         }
 
         // 获取岗位信息
-        PostDO post = postService.getPost(Convert.toLong(value));
+        PostEntity post = postService.getPost(Convert.toLong(value));
         if (post == null) {
             log.warn("[apply][获取岗位{{}}为空", value);
             return "";

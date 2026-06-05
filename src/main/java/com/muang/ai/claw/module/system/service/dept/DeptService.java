@@ -3,13 +3,13 @@ package com.muang.ai.claw.module.system.service.dept;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.muang.ai.claw.constant.CommonStatusEnum;
+import com.muang.ai.claw.module.system.entity.dept.DeptEntity;
 import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.config.datapermission.core.annotation.DataPermission;
 import com.muang.ai.claw.module.system.controller.admin.dept.vo.dept.DeptListForm;
 import com.muang.ai.claw.module.system.controller.admin.dept.vo.dept.DeptSaveForm;
-import com.muang.ai.claw.module.system.dal.dataobject.dept.DeptDO;
-import com.muang.ai.claw.module.system.dal.mysql.dept.DeptMapper;
-import com.muang.ai.claw.module.system.dal.redis.RedisKeyConstants;
+import com.muang.ai.claw.module.system.mapper.dept.DeptMapper;
+import com.muang.ai.claw.module.system.constant.RedisKeyConstants;
 import com.google.common.annotations.VisibleForTesting;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
@@ -41,7 +41,7 @@ public class DeptService {
             allEntries = true) // allEntries 清空所有缓存，因为操作一个部门，涉及到多个缓存
     public Long createDept(DeptSaveForm createReqVO) {
         if (createReqVO.getParentId() == null) {
-            createReqVO.setParentId(DeptDO.PARENT_ID_ROOT);
+            createReqVO.setParentId(DeptEntity.PARENT_ID_ROOT);
         }
         // 校验父部门的有效性
         validateParentDept(null, createReqVO.getParentId());
@@ -49,7 +49,7 @@ public class DeptService {
         validateDeptNameUnique(null, createReqVO.getParentId(), createReqVO.getName());
 
         // 插入部门
-        DeptDO dept = BeanUtils.toBean(createReqVO, DeptDO.class);
+        DeptEntity dept = BeanUtils.toBean(createReqVO, DeptEntity.class);
         deptMapper.insert(dept);
         return dept.getId();
     }
@@ -58,7 +58,7 @@ public class DeptService {
             allEntries = true) // allEntries 清空所有缓存，因为操作一个部门，涉及到多个缓存
     public void updateDept(DeptSaveForm updateReqVO) {
         if (updateReqVO.getParentId() == null) {
-            updateReqVO.setParentId(DeptDO.PARENT_ID_ROOT);
+            updateReqVO.setParentId(DeptEntity.PARENT_ID_ROOT);
         }
         // 校验自己存在
         validateDeptExists(updateReqVO.getId());
@@ -68,7 +68,7 @@ public class DeptService {
         validateDeptNameUnique(updateReqVO.getId(), updateReqVO.getParentId(), updateReqVO.getName());
 
         // 更新部门
-        DeptDO updateObj = BeanUtils.toBean(updateReqVO, DeptDO.class);
+        DeptEntity updateObj = BeanUtils.toBean(updateReqVO, DeptEntity.class);
         deptMapper.updateById(updateObj);
     }
 
@@ -104,7 +104,7 @@ public class DeptService {
         if (id == null) {
             return;
         }
-        DeptDO dept = deptMapper.selectById(id);
+        DeptEntity dept = deptMapper.selectById(id);
         if (dept == null) {
             throw exception(DEPT_NOT_FOUND);
         }
@@ -112,7 +112,7 @@ public class DeptService {
 
     @VisibleForTesting
     void validateParentDept(Long id, Long parentId) {
-        if (parentId == null || DeptDO.PARENT_ID_ROOT.equals(parentId)) {
+        if (parentId == null || DeptEntity.PARENT_ID_ROOT.equals(parentId)) {
             return;
         }
         // 1. 不能设置自己为父部门
@@ -120,7 +120,7 @@ public class DeptService {
             throw exception(DEPT_PARENT_ERROR);
         }
         // 2. 父部门不存在
-        DeptDO parentDept = deptMapper.selectById(parentId);
+        DeptEntity parentDept = deptMapper.selectById(parentId);
         if (parentDept == null) {
             throw exception(DEPT_PARENT_NOT_EXITS);
         }
@@ -135,7 +135,7 @@ public class DeptService {
                 throw exception(DEPT_PARENT_IS_CHILD);
             }
             // 3.2 继续递归下一级父部门
-            if (parentId == null || DeptDO.PARENT_ID_ROOT.equals(parentId)) {
+            if (parentId == null || DeptEntity.PARENT_ID_ROOT.equals(parentId)) {
                 break;
             }
             parentDept = deptMapper.selectById(parentId);
@@ -147,7 +147,7 @@ public class DeptService {
 
     @VisibleForTesting
     void validateDeptNameUnique(Long id, Long parentId, String name) {
-        DeptDO dept = deptMapper.selectByParentIdAndName(parentId, name);
+        DeptEntity dept = deptMapper.selectByParentIdAndName(parentId, name);
         if (dept == null) {
             return;
         }
@@ -160,59 +160,59 @@ public class DeptService {
         }
     }
 
-    public DeptDO getDept(Long id) {
+    public DeptEntity getDept(Long id) {
         return deptMapper.selectById(id);
     }
 
-    public Map<Long, DeptDO> getDeptMap(Collection<Long> ids) {
-        List<DeptDO> list = getDeptList(ids);
-        return convertMap(list, DeptDO::getId);
+    public Map<Long, DeptEntity> getDeptMap(Collection<Long> ids) {
+        List<DeptEntity> list = getDeptList(ids);
+        return convertMap(list, DeptEntity::getId);
     }
 
-    public List<DeptDO> getDeptList(Collection<Long> ids) {
+    public List<DeptEntity> getDeptList(Collection<Long> ids) {
         if (CollUtil.isEmpty(ids)) {
             return Collections.emptyList();
         }
         return deptMapper.selectByIds(ids);
     }
 
-    public List<DeptDO> getDeptList(DeptListForm reqVO) {
-        List<DeptDO> list = deptMapper.selectList(reqVO);
-        list.sort(Comparator.comparing(DeptDO::getSort));
+    public List<DeptEntity> getDeptList(DeptListForm reqVO) {
+        List<DeptEntity> list = deptMapper.selectList(reqVO);
+        list.sort(Comparator.comparing(DeptEntity::getSort));
         return list;
     }
 
-    public List<DeptDO> getChildDeptList(Long id) {
+    public List<DeptEntity> getChildDeptList(Long id) {
         return getChildDeptList(Collections.singleton(id));
     }
 
-    public List<DeptDO> getChildDeptList(Collection<Long> ids) {
-        List<DeptDO> children = new LinkedList<>();
+    public List<DeptEntity> getChildDeptList(Collection<Long> ids) {
+        List<DeptEntity> children = new LinkedList<>();
         // 遍历每一层
         Collection<Long> parentIds = ids;
         for (int i = 0; i < Short.MAX_VALUE; i++) { // 使用 Short.MAX_VALUE 避免 bug 场景下，存在死循环
             // 查询当前层，所有的子部门
-            List<DeptDO> depts = deptMapper.selectListByParentId(parentIds);
+            List<DeptEntity> depts = deptMapper.selectListByParentId(parentIds);
             // 1. 如果没有子部门，则结束遍历
             if (CollUtil.isEmpty(depts)) {
                 break;
             }
             // 2. 如果有子部门，继续遍历
             children.addAll(depts);
-            parentIds = convertSet(depts, DeptDO::getId);
+            parentIds = convertSet(depts, DeptEntity::getId);
         }
         return children;
     }
 
-    public List<DeptDO> getDeptListByLeaderUserId(Long id) {
+    public List<DeptEntity> getDeptListByLeaderUserId(Long id) {
         return deptMapper.selectListByLeaderUserId(id);
     }
 
     @DataPermission(enable = false) // 禁用数据权限，避免建立不正确的缓存
     @Cacheable(cacheNames = RedisKeyConstants.DEPT_CHILDREN_ID_LIST, key = "#id")
     public Set<Long> getChildDeptIdListFromCache(Long id) {
-        List<DeptDO> children = getChildDeptList(id);
-        return convertSet(children, DeptDO::getId);
+        List<DeptEntity> children = getChildDeptList(id);
+        return convertSet(children, DeptEntity::getId);
     }
 
     public void validateDeptList(Collection<Long> ids) {
@@ -220,10 +220,10 @@ public class DeptService {
             return;
         }
         // 获得科室信息
-        Map<Long, DeptDO> deptMap = getDeptMap(ids);
+        Map<Long, DeptEntity> deptMap = getDeptMap(ids);
         // 校验
         ids.forEach(id -> {
-            DeptDO dept = deptMap.get(id);
+            DeptEntity dept = deptMap.get(id);
             if (dept == null) {
                 throw exception(DEPT_NOT_FOUND);
             }

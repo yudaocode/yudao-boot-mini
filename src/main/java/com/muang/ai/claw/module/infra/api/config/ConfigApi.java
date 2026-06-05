@@ -1,6 +1,6 @@
 package com.muang.ai.claw.module.infra.api.config;
 
-import com.muang.ai.claw.module.infra.dal.dataobject.config.ConfigDO;
+import com.muang.ai.claw.module.infra.entity.config.ConfigEntity;
 import com.muang.ai.claw.module.infra.service.config.ConfigService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,7 @@ public class ConfigApi {
     private ConfigService configService;
 
     public String getConfigValueByKey(String key) {
-        ConfigDO config = configService.getConfigByKey(key);
+        ConfigEntity config = configService.getConfigByKey(key);
         return config != null ? config.getValue() : null;
     }
 
