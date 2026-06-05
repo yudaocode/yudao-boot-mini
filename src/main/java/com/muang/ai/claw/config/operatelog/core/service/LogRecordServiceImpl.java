@@ -1,7 +1,7 @@
 package com.muang.ai.claw.config.operatelog.core.service;
 
-import com.muang.ai.claw.common.biz.system.logger.OperateLogCommonApi;
-import com.muang.ai.claw.common.biz.system.logger.dto.OperateLogCreateReqDTO;
+import com.muang.ai.claw.module.system.api.logger.OperateLogApi;
+import com.muang.ai.claw.module.system.api.logger.dto.OperateLogCreateReqDTO;
 import com.muang.ai.claw.util.monitor.TracerUtils;
 import com.muang.ai.claw.util.servlet.ServletUtils;
 import com.muang.ai.claw.config.security.core.LoginUser;
@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * 操作日志 ILogRecordService 实现类
  *
- * 基于 {@link OperateLogCommonApi} 实现，记录操作日志
+ * 基于 {@link OperateLogApi} 实现，记录操作日志
  *
  * @author HUIHUI
  */
@@ -25,7 +25,7 @@ import java.util.List;
 public class LogRecordServiceImpl implements ILogRecordService {
 
     @Resource
-    private OperateLogCommonApi operateLogApi;
+    private OperateLogApi operateLogApi;
 
     @Override
     public void record(LogRecord logRecord) {

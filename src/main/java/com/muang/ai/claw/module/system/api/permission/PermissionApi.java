@@ -1,19 +1,18 @@
 package com.muang.ai.claw.module.system.api.permission;
 
-import com.muang.ai.claw.common.biz.system.permission.dto.DeptDataPermissionRespDTO;
+import com.muang.ai.claw.module.system.api.permission.dto.DeptDataPermissionRespDTO;
 import com.muang.ai.claw.module.system.service.permission.PermissionService;
 import org.springframework.stereotype.Service;
 import jakarta.annotation.Resource;
 import java.util.Collection;
 import java.util.Set;
-import com.muang.ai.claw.common.biz.system.permission.PermissionCommonApi;
 
 /**
  * 权限 API 实现类
  *
  */
 @Service
-public class PermissionApi implements PermissionCommonApi {
+public class PermissionApi {
 
     @Resource
     private PermissionService permissionService;

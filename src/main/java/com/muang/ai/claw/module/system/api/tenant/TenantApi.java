@@ -1,6 +1,5 @@
 package com.muang.ai.claw.module.system.api.tenant;
 
-import com.muang.ai.claw.common.biz.system.tenant.TenantCommonApi;
 import com.muang.ai.claw.module.system.service.tenant.TenantService;
 import org.springframework.stereotype.Service;
 
@@ -12,17 +11,13 @@ import java.util.List;
  *
  */
 @Service
-public class TenantApiImpl implements TenantCommonApi {
+public class TenantApi {
 
     @Resource
     private TenantService tenantService;
-
-    @Override
     public List<Long> getTenantIdList() {
         return tenantService.getTenantIdList();
     }
-
-    @Override
     public void validateTenant(Long id) {
         tenantService.validTenant(id);
     }

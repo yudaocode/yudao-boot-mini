@@ -2,7 +2,7 @@ package com.muang.ai.claw.module.system.api.logger;
 
 import com.muang.ai.claw.common.pojo.PageResult;
 import com.muang.ai.claw.util.object.BeanUtils;
-import com.muang.ai.claw.common.biz.system.logger.dto.OperateLogCreateReqDTO;
+import com.muang.ai.claw.module.system.api.logger.dto.OperateLogCreateReqDTO;
 import com.muang.ai.claw.module.system.api.logger.dto.OperateLogPageReqDTO;
 import com.muang.ai.claw.module.system.api.logger.dto.OperateLogRespDTO;
 import com.muang.ai.claw.module.system.dal.dataobject.logger.OperateLogDO;
@@ -11,7 +11,6 @@ import com.fhs.core.trans.anno.TransMethodResult;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
-import com.muang.ai.claw.common.biz.system.logger.OperateLogCommonApi;
 
 /**
  * 操作日志 API 实现类
@@ -19,7 +18,7 @@ import com.muang.ai.claw.common.biz.system.logger.OperateLogCommonApi;
  */
 @Service
 @Validated
-public class OperateLogApi implements OperateLogCommonApi {
+public class OperateLogApi {
 
     @Resource
     private OperateLogService operateLogService;
@@ -32,6 +31,11 @@ public class OperateLogApi implements OperateLogCommonApi {
     public PageResult<OperateLogRespDTO> getOperateLogPage(OperateLogPageReqDTO pageReqDTO) {
         PageResult<OperateLogDO> operateLogPage = operateLogService.getOperateLogPage(pageReqDTO);
         return BeanUtils.toBean(operateLogPage, OperateLogRespDTO.class);
+    }
+
+    @org.springframework.scheduling.annotation.Async
+    public void createOperateLogAsync(OperateLogCreateReqDTO createReqDTO) {
+        createOperateLog(createReqDTO);
     }
 
 }

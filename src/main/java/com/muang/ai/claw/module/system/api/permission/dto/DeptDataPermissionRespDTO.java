@@ -1,4 +1,4 @@
-package com.muang.ai.claw.common.biz.system.permission.dto;
+package com.muang.ai.claw.module.system.api.permission.dto;
 
 import lombok.Data;
 

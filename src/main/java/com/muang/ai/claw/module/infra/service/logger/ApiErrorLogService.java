@@ -1,6 +1,6 @@
 package com.muang.ai.claw.module.infra.service.logger;
 
-import com.muang.ai.claw.common.biz.infra.logger.dto.ApiErrorLogCreateReqDTO;
+import com.muang.ai.claw.module.infra.api.logger.dto.ApiErrorLogCreateReqDTO;
 import com.muang.ai.claw.common.pojo.PageResult;
 import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.util.string.StrUtils;

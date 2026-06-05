@@ -1,6 +1,6 @@
 package com.muang.ai.claw.config.tenant.core.service;
 
-import com.muang.ai.claw.common.biz.system.tenant.TenantCommonApi;
+import com.muang.ai.claw.module.system.api.tenant.TenantApi;
 import com.muang.ai.claw.common.exception.ServiceException;
 import com.muang.ai.claw.util.cache.CacheUtils;
 import com.google.common.cache.CacheLoader;
@@ -20,7 +20,7 @@ public class TenantFrameworkService {
 
     private static final ServiceException SERVICE_EXCEPTION_NULL = new ServiceException();
 
-    private final TenantCommonApi tenantApi;
+    private final TenantApi tenantApi;
 
     /**
      * 针对 {@link #getTenantIds()} 的缓存

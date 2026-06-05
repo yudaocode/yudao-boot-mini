@@ -2,7 +2,7 @@ package com.muang.ai.claw.config.apilog.config;
 
 import com.muang.ai.claw.config.apilog.core.filter.ApiAccessLogFilter;
 import com.muang.ai.claw.interceptor.ApiAccessLogInterceptor;
-import com.muang.ai.claw.common.biz.infra.logger.ApiAccessLogCommonApi;
+import com.muang.ai.claw.module.infra.api.logger.ApiAccessLogApi;
 import com.muang.ai.claw.constant.WebFilterOrderEnum;
 import com.muang.ai.claw.config.web.config.WebProperties;
 import com.muang.ai.claw.config.web.config.WebAutoConfiguration;
@@ -25,7 +25,7 @@ public class ApiLogAutoConfiguration implements WebMvcConfigurer {
     @ConditionalOnProperty(prefix = "yudao.access-log", value = "enable", matchIfMissing = true) // 允许使用 yudao.access-log.enable=false 禁用访问日志
     public FilterRegistrationBean<ApiAccessLogFilter> apiAccessLogFilter(WebProperties webProperties,
                                                                          @Value("${spring.application.name}") String applicationName,
-                                                                         ApiAccessLogCommonApi apiAccessLogApi) {
+                                                                         ApiAccessLogApi apiAccessLogApi) {
         ApiAccessLogFilter filter = new ApiAccessLogFilter(webProperties, applicationName, apiAccessLogApi);
         return createFilterBean(filter, WebFilterOrderEnum.API_ACCESS_LOG_FILTER);
     }

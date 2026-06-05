@@ -1,4 +1,4 @@
-package com.muang.ai.claw.common.biz.system.dict.dto;
+package com.muang.ai.claw.module.system.api.dict.dto;
 
 import com.muang.ai.claw.constant.CommonStatusEnum;
 import lombok.Data;

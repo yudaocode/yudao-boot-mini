@@ -1,6 +1,6 @@
 package com.muang.ai.claw.config.tenant.config;
 
-import com.muang.ai.claw.common.biz.system.tenant.TenantCommonApi;
+import com.muang.ai.claw.module.system.api.tenant.TenantApi;
 import com.muang.ai.claw.constant.WebFilterOrderEnum;
 import com.muang.ai.claw.config.mybatis.core.util.MyBatisUtils;
 import com.muang.ai.claw.config.redis.config.RedisCacheProperties;
@@ -52,7 +52,7 @@ public class TenantAutoConfiguration {
     private ApplicationContext applicationContext;
 
     @Bean
-    public TenantFrameworkService tenantFrameworkService(TenantCommonApi tenantApi) {
+    public TenantFrameworkService tenantFrameworkService(TenantApi tenantApi) {
         return new TenantFrameworkService(tenantApi);
     }
 

@@ -4,7 +4,7 @@ import cn.hutool.core.date.LocalDateTimeUtil;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.thread.ThreadUtil;
 import com.muang.ai.claw.config.quartz.core.enums.JobDataKeyEnum;
-import com.muang.ai.claw.config.quartz.core.service.JobLogFrameworkService;
+import com.muang.ai.claw.module.infra.service.job.JobLogService;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.DisallowConcurrentExecution;
 import org.quartz.JobExecutionContext;
@@ -31,7 +31,7 @@ public class JobHandlerInvoker extends QuartzJobBean {
     private ApplicationContext applicationContext;
 
     @Resource
-    private JobLogFrameworkService jobLogFrameworkService;
+    private JobLogService jobLogFrameworkService;
 
     @Override
     protected void executeInternal(JobExecutionContext executionContext) throws JobExecutionException {

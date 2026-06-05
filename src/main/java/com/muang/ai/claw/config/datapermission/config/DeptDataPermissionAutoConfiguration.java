@@ -1,6 +1,6 @@
 package com.muang.ai.claw.config.datapermission.config;
 
-import com.muang.ai.claw.common.biz.system.permission.PermissionCommonApi;
+import com.muang.ai.claw.module.system.api.permission.PermissionApi;
 import com.muang.ai.claw.config.datapermission.core.rule.dept.DeptDataPermissionRule;
 import com.muang.ai.claw.config.datapermission.core.rule.dept.DeptDataPermissionRuleCustomizer;
 import com.muang.ai.claw.config.security.core.LoginUser;
@@ -21,7 +21,7 @@ import java.util.List;
 public class DeptDataPermissionAutoConfiguration {
 
     @Bean
-    public DeptDataPermissionRule deptDataPermissionRule(PermissionCommonApi permissionApi,
+    public DeptDataPermissionRule deptDataPermissionRule(PermissionApi permissionApi,
                                                          List<DeptDataPermissionRuleCustomizer> customizers) {
         // 创建 DeptDataPermissionRule 对象
         DeptDataPermissionRule rule = new DeptDataPermissionRule(permissionApi);

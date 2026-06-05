@@ -1,9 +1,9 @@
 package com.muang.ai.claw.config.dict.core;
 
 import cn.hutool.core.collection.CollUtil;
-import com.muang.ai.claw.common.biz.system.dict.DictDataCommonApi;
+import com.muang.ai.claw.module.system.api.dict.DictDataApi;
 import com.muang.ai.claw.util.cache.CacheUtils;
-import com.muang.ai.claw.common.biz.system.dict.dto.DictDataRespDTO;
+import com.muang.ai.claw.module.system.api.dict.dto.DictDataRespDTO;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import lombok.SneakyThrows;
@@ -22,7 +22,7 @@ import static com.muang.ai.claw.util.collection.CollectionUtils.convertList;
 @Slf4j
 public class DictFrameworkUtils {
 
-    private static DictDataCommonApi dictDataApi;
+    private static DictDataApi dictDataApi;
 
     /**
      * 针对 dictType 的字段数据缓存
@@ -38,7 +38,7 @@ public class DictFrameworkUtils {
 
             });
 
-    public static void init(DictDataCommonApi dictDataApi) {
+    public static void init(DictDataApi dictDataApi) {
         DictFrameworkUtils.dictDataApi = dictDataApi;
         log.info("[init][初始化 DictFrameworkUtils 成功]");
     }
