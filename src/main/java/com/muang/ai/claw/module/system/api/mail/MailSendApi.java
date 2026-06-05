@@ -1,33 +1,34 @@
 package com.muang.ai.claw.module.system.api.mail;
 
 import com.muang.ai.claw.module.system.api.mail.dto.MailSendSingleToUserReqDTO;
-
+import com.muang.ai.claw.module.system.service.mail.MailSendService;
+import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
+import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 
 /**
- * 邮箱发送 API 接口
+ * 邮件发送 API 实现类
  *
+ * @author wangjingyi
  */
-public interface MailSendApi {
+@Service
+@Validated
+public class MailSendApi {
 
-    /**
-     * 发送单条邮箱给 Admin 用户
-     *
-     * 在 mail 为空时，使用 userId 加载对应 Admin 的邮箱
-     *
-     * @param reqDTO 发送请求
-     * @return 发送日志编号
-     */
-    Long sendSingleMailToAdmin(@Valid MailSendSingleToUserReqDTO reqDTO);
+    @Resource
+    private MailSendService mailSendService;
 
-    /**
-     * 发送单条邮箱给 Member 用户
-     *
-     * 在 mail 为空时，使用 userId 加载对应 Member 的邮箱
-     *
-     * @param reqDTO 发送请求
-     * @return 发送日志编号
-     */
-    Long sendSingleMailToMember(@Valid MailSendSingleToUserReqDTO reqDTO);
+    public Long sendSingleMailToAdmin(MailSendSingleToUserReqDTO reqDTO) {
+        return mailSendService.sendSingleMailToAdmin(reqDTO.getUserId(),
+                reqDTO.getToMails(), reqDTO.getCcMails(), reqDTO.getBccMails(),
+                reqDTO.getTemplateCode(), reqDTO.getTemplateParams(), reqDTO.getAttachments());
+    }
+
+    public Long sendSingleMailToMember(MailSendSingleToUserReqDTO reqDTO) {
+        return mailSendService.sendSingleMailToMember(reqDTO.getUserId(),
+                reqDTO.getToMails(), reqDTO.getCcMails(), reqDTO.getBccMails(),
+                reqDTO.getTemplateCode(), reqDTO.getTemplateParams(), reqDTO.getAttachments());
+    }
 
 }

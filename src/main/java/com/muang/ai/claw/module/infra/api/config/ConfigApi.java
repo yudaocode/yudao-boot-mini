@@ -1,18 +1,25 @@
 package com.muang.ai.claw.module.infra.api.config;
 
+import com.muang.ai.claw.module.infra.dal.dataobject.config.ConfigDO;
+import com.muang.ai.claw.module.infra.service.config.ConfigService;
+import jakarta.annotation.Resource;
+import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
+
 /**
- * 参数配置 API 接口
+ * 参数配置 API 实现类
  *
  */
-public interface ConfigApi {
+@Service
+@Validated
+public class ConfigApi {
 
+    @Resource
+    private ConfigService configService;
 
-    /**
-     * 根据参数键查询参数值
-     *
-     * @param key 参数键
-     * @return 参数值
-     */
-    String getConfigValueByKey(String key);
+    public String getConfigValueByKey(String key) {
+        ConfigDO config = configService.getConfigByKey(key);
+        return config != null ? config.getValue() : null;
+    }
 
 }

@@ -1,53 +1,42 @@
 package com.muang.ai.claw.module.infra.api.websocket;
 
+import com.muang.ai.claw.third.websocket.core.sender.WebSocketMessageSender;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import com.muang.ai.claw.util.json.JsonUtils;
 
 /**
- * WebSocket 发送器的 API 接口
- *
- * 对 WebSocketMessageSender 进行封装，提供给其它模块使用
+ * WebSocket 发送器的 API 实现类
  *
  */
-public interface WebSocketSenderApi {
+@Component
+public class WebSocketSenderApi {
 
+    @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
+    @Autowired(required = false) // 由于 yudao.websocket.enable 配置项，可以关闭 WebSocket 的功能，所以这里只能不强制注入
+    private WebSocketMessageSender webSocketMessageSender;
 
-    /**
-     * 发送消息给指定用户
-     *
-     * @param userType 用户类型
-     * @param userId 用户编号
-     * @param messageType 消息类型
-     * @param messageContent 消息内容，JSON 格式
-     */
-    void send(Integer userType, Long userId, String messageType, String messageContent);
+    public void send(Integer userType, Long userId, String messageType, String messageContent) {
+        webSocketMessageSender.send(userType, userId, messageType, messageContent);
+    }
 
-    /**
-     * 发送消息给指定用户类型
-     *
-     * @param userType 用户类型
-     * @param messageType 消息类型
-     * @param messageContent 消息内容，JSON 格式
-     */
-    void send(Integer userType, String messageType, String messageContent);
+    public void send(Integer userType, String messageType, String messageContent) {
+        webSocketMessageSender.send(userType, messageType, messageContent);
+    }
 
-    /**
-     * 发送消息给指定 Session
-     *
-     * @param sessionId Session 编号
-     * @param messageType 消息类型
-     * @param messageContent 消息内容，JSON 格式
-     */
-    void send(String sessionId, String messageType, String messageContent);
+    public void send(String sessionId, String messageType, String messageContent) {
+        webSocketMessageSender.send(sessionId, messageType, messageContent);
+    }
 
-    default void sendObject(Integer userType, Long userId, String messageType, Object messageContent) {
+    public void sendObject(Integer userType, Long userId, String messageType, Object messageContent) {
         send(userType, userId, messageType, JsonUtils.toJsonString(messageContent));
     }
 
-    default void sendObject(Integer userType, String messageType, Object messageContent) {
+    public void sendObject(Integer userType, String messageType, Object messageContent) {
         send(userType, messageType, JsonUtils.toJsonString(messageContent));
     }
 
-    default void sendObject(String sessionId, String messageType, Object messageContent) {
+    public void sendObject(String sessionId, String messageType, Object messageContent) {
         send(sessionId, messageType, JsonUtils.toJsonString(messageContent));
     }
 

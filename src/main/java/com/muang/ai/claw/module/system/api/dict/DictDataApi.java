@@ -1,23 +1,32 @@
 package com.muang.ai.claw.module.system.api.dict;
 
+import com.muang.ai.claw.util.object.BeanUtils;
+import com.muang.ai.claw.common.biz.system.dict.dto.DictDataRespDTO;
+import com.muang.ai.claw.module.system.dal.dataobject.dict.DictDataDO;
+import com.muang.ai.claw.module.system.service.dict.DictDataService;
+import jakarta.annotation.Resource;
+import org.springframework.stereotype.Service;
+import java.util.Collection;
+import java.util.List;
 import com.muang.ai.claw.common.biz.system.dict.DictDataCommonApi;
 
-import java.util.Collection;
-
 /**
- * 字典数据 API 接口
+ * 字典数据 API 实现类
  *
  */
-public interface DictDataApi extends DictDataCommonApi {
+@Service
+public class DictDataApi {
 
-    /**
-     * 校验字典数据们是否有效。如下情况，视为无效：
-     * 1. 字典数据不存在
-     * 2. 字典数据被禁用
-     *
-     * @param dictType 字典类型
-     * @param values   字典数据值的数组
-     */
-    void validateDictDataList(String dictType, Collection<String> values);
+    @Resource
+    private DictDataService dictDataService;
+
+    public void validateDictDataList(String dictType, Collection<String> values) {
+        dictDataService.validateDictDataList(dictType, values);
+    }
+
+    public List<DictDataRespDTO> getDictDataList(String dictType) {
+        List<DictDataDO> list = dictDataService.getDictDataListByDictType(dictType);
+        return BeanUtils.toBean(list, DictDataRespDTO.class);
+    }
 
 }

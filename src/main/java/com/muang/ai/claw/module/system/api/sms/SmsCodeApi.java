@@ -1,39 +1,36 @@
 package com.muang.ai.claw.module.system.api.sms;
 
-import com.muang.ai.claw.common.exception.ServiceException;
 import com.muang.ai.claw.module.system.api.sms.dto.code.SmsCodeValidateReqDTO;
 import com.muang.ai.claw.module.system.api.sms.dto.code.SmsCodeSendReqDTO;
 import com.muang.ai.claw.module.system.api.sms.dto.code.SmsCodeUseReqDTO;
-
+import com.muang.ai.claw.module.system.service.sms.SmsCodeService;
+import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
+import jakarta.annotation.Resource;
+import com.muang.ai.claw.common.exception.ServiceException;
 import jakarta.validation.Valid;
 
 /**
- * 短信验证码 API 接口
+ * 短信验证码 API 实现类
  *
  */
-public interface SmsCodeApi {
+@Service
+@Validated
+public class SmsCodeApi {
 
-    /**
-     * 创建短信验证码，并进行发送
-     *
-     * @param reqDTO 发送请求
-     */
-    void sendSmsCode(@Valid SmsCodeSendReqDTO reqDTO);
+    @Resource
+    private SmsCodeService smsCodeService;
 
-    /**
-     * 验证短信验证码，并进行使用
-     * 如果正确，则将验证码标记成已使用
-     * 如果错误，则抛出 {@link ServiceException} 异常
-     *
-     * @param reqDTO 使用请求
-     */
-    void useSmsCode(@Valid SmsCodeUseReqDTO reqDTO);
+    public void sendSmsCode(SmsCodeSendReqDTO reqDTO) {
+        smsCodeService.sendSmsCode(reqDTO);
+    }
 
-    /**
-     * 检查验证码是否有效
-     *
-     * @param reqDTO 校验请求
-     */
-    void validateSmsCode(@Valid SmsCodeValidateReqDTO reqDTO);
+    public void useSmsCode(SmsCodeUseReqDTO reqDTO) {
+        smsCodeService.useSmsCode(reqDTO);
+    }
+
+    public void validateSmsCode(SmsCodeValidateReqDTO reqDTO) {
+        smsCodeService.validateSmsCode(reqDTO);
+    }
 
 }

@@ -1,88 +1,91 @@
 package com.muang.ai.claw.module.system.api.user;
 
-import com.muang.ai.claw.util.collection.CollectionUtils;
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.ObjUtil;
+import com.muang.ai.claw.util.object.BeanUtils;
+import com.muang.ai.claw.common.datapermission.core.annotation.DataPermission;
+import com.muang.ai.claw.common.datapermission.core.util.DataPermissionUtils;
 import com.muang.ai.claw.module.system.api.user.dto.AdminUserRespDTO;
-
+import com.muang.ai.claw.module.system.dal.dataobject.dept.DeptDO;
+import com.muang.ai.claw.module.system.dal.dataobject.user.AdminUserDO;
+import com.muang.ai.claw.module.system.service.dept.DeptService;
+import com.muang.ai.claw.module.system.service.user.AdminUserService;
+import jakarta.annotation.Resource;
+import org.springframework.stereotype.Service;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+import com.muang.ai.claw.util.collection.CollectionUtils;
 import java.util.Map;
 
+import static com.muang.ai.claw.util.collection.CollectionUtils.convertSet;
+
 /**
- * Admin 用户 API 接口
+ * Admin 用户 API 实现类
  *
  */
-public interface AdminUserApi {
+@Service
+public class AdminUserApi {
 
-    /**
-     * 通过用户 ID 查询用户
-     *
-     * @param id 用户ID
-     * @return 用户对象信息
-     */
-    AdminUserRespDTO getUser(Long id);
+    @Resource
+    private AdminUserService userService;
+    @Resource
+    private DeptService deptService;
 
-    /**
-     * 通过用户 ID 查询用户下属
-     *
-     * @param id 用户编号
-     * @return 用户下属用户列表
-     */
-    List<AdminUserRespDTO> getUserListBySubordinate(Long id);
+    @DataPermission(enable = false) // 忽略数据权限，避免因为过滤，导致无法查询用户。类似：https://github.com/YunaiV/ruoyi-vue-pro/issues/1051
+    public AdminUserRespDTO getUser(Long id) {
+        AdminUserDO user = userService.getUser(id);
+        return BeanUtils.toBean(user, AdminUserRespDTO.class);
+    }
 
-    /**
-     * 通过用户 ID 查询用户们
-     *
-     * @param ids 用户 ID 们
-     * @return 用户对象信息
-     */
-    List<AdminUserRespDTO> getUserList(Collection<Long> ids);
+    public List<AdminUserRespDTO> getUserListBySubordinate(Long id) {
+        // 1.1 获取用户负责的部门
+        List<DeptDO> depts = deptService.getDeptListByLeaderUserId(id);
+        if (CollUtil.isEmpty(depts)) {
+            return Collections.emptyList();
+        }
+        // 1.2 获取所有子部门
+        Set<Long> deptIds = convertSet(depts, DeptDO::getId);
+        List<DeptDO> childDeptList = deptService.getChildDeptList(deptIds);
+        if (CollUtil.isNotEmpty(childDeptList)) {
+            deptIds.addAll(convertSet(childDeptList, DeptDO::getId));
+        }
 
-    /**
-     * 获得指定部门的用户数组
-     *
-     * @param deptIds 部门数组
-     * @return 用户数组
-     */
-    List<AdminUserRespDTO> getUserListByDeptIds(Collection<Long> deptIds);
+        // 2. 获取部门对应的用户信息
+        List<AdminUserDO> users = userService.getUserListByDeptIds(deptIds);
+        users.removeIf(item -> ObjUtil.equal(item.getId(), id)); // 排除自己
+        return BeanUtils.toBean(users, AdminUserRespDTO.class);
+    }
 
-    /**
-     * 获得指定岗位的用户数组
-     *
-     * @param postIds 岗位数组
-     * @return 用户数组
-     */
-    List<AdminUserRespDTO> getUserListByPostIds(Collection<Long> postIds);
+    public List<AdminUserRespDTO> getUserList(Collection<Long> ids) {
+        return DataPermissionUtils.executeIgnore(() -> { // 禁用数据权限。原因是，一般基于指定 id 的 API 查询，都是数据拼接为主
+            List<AdminUserDO> users = userService.getUserList(ids);
+            return BeanUtils.toBean(users, AdminUserRespDTO.class);
+        });
+    }
 
-    /**
-     * 获得用户 Map
-     *
-     * @param ids 用户编号数组
-     * @return 用户 Map
-     */
-    default Map<Long, AdminUserRespDTO> getUserMap(Collection<Long> ids) {
+    public List<AdminUserRespDTO> getUserListByDeptIds(Collection<Long> deptIds) {
+        List<AdminUserDO> users = userService.getUserListByDeptIds(deptIds);
+        return BeanUtils.toBean(users, AdminUserRespDTO.class);
+    }
+
+    public List<AdminUserRespDTO> getUserListByPostIds(Collection<Long> postIds) {
+        List<AdminUserDO> users = userService.getUserListByPostIds(postIds);
+        return BeanUtils.toBean(users, AdminUserRespDTO.class);
+    }
+
+    public void validateUserList(Collection<Long> ids) {
+        userService.validateUserList(ids);
+    }
+
+    public Map<Long, AdminUserRespDTO> getUserMap(Collection<Long> ids) {
         List<AdminUserRespDTO> users = getUserList(ids);
         return CollectionUtils.convertMap(users, AdminUserRespDTO::getId);
     }
 
-    /**
-     * 校验用户是否有效。如下情况，视为无效：
-     * 1. 用户编号不存在
-     * 2. 用户被禁用
-     *
-     * @param id 用户编号
-     */
-    default void validateUser(Long id) {
+    public void validateUser(Long id) {
         validateUserList(Collections.singleton(id));
     }
-
-    /**
-     * 校验用户们是否有效。如下情况，视为无效：
-     * 1. 用户编号不存在
-     * 2. 用户被禁用
-     *
-     * @param ids 用户编号数组
-     */
-    void validateUserList(Collection<Long> ids);
 
 }

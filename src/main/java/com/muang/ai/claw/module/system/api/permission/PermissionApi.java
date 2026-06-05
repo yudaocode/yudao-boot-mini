@@ -1,22 +1,37 @@
 package com.muang.ai.claw.module.system.api.permission;
 
-import com.muang.ai.claw.common.biz.system.permission.PermissionCommonApi;
-
+import com.muang.ai.claw.common.biz.system.permission.dto.DeptDataPermissionRespDTO;
+import com.muang.ai.claw.module.system.service.permission.PermissionService;
+import org.springframework.stereotype.Service;
+import jakarta.annotation.Resource;
 import java.util.Collection;
 import java.util.Set;
+import com.muang.ai.claw.common.biz.system.permission.PermissionCommonApi;
 
 /**
- * 权限 API 接口
+ * 权限 API 实现类
  *
  */
-public interface PermissionApi extends PermissionCommonApi {
+@Service
+public class PermissionApi {
 
-    /**
-     * 获得拥有多个角色的用户编号集合
-     *
-     * @param roleIds 角色编号集合
-     * @return 用户编号集合
-     */
-    Set<Long> getUserRoleIdListByRoleIds(Collection<Long> roleIds);
+    @Resource
+    private PermissionService permissionService;
+
+    public Set<Long> getUserRoleIdListByRoleIds(Collection<Long> roleIds) {
+        return permissionService.getUserRoleIdListByRoleId(roleIds);
+    }
+
+    public boolean hasAnyPermissions(Long userId, String... permissions) {
+        return permissionService.hasAnyPermissions(userId, permissions);
+    }
+
+    public boolean hasAnyRoles(Long userId, String... roles) {
+        return permissionService.hasAnyRoles(userId, roles);
+    }
+
+    public DeptDataPermissionRespDTO getDeptDataPermission(Long userId) {
+        return permissionService.getDeptDataPermission(userId);
+    }
 
 }

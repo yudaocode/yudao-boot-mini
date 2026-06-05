@@ -1,20 +1,25 @@
 package com.muang.ai.claw.module.system.api.logger;
 
 import com.muang.ai.claw.module.system.api.logger.dto.LoginLogCreateReqDTO;
-
+import com.muang.ai.claw.module.system.service.logger.LoginLogService;
+import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
+import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 
 /**
- * 登录日志的 API 接口
+ * 登录日志的 API 实现类
  *
  */
-public interface LoginLogApi {
+@Service
+@Validated
+public class LoginLogApi {
 
-    /**
-     * 创建登录日志
-     *
-     * @param reqDTO 日志信息
-     */
-    void createLoginLog(@Valid LoginLogCreateReqDTO reqDTO);
+    @Resource
+    private LoginLogService loginLogService;
+
+    public void createLoginLog(LoginLogCreateReqDTO reqDTO) {
+        loginLogService.createLoginLog(reqDTO);
+    }
 
 }

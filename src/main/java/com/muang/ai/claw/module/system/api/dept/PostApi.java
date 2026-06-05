@@ -1,32 +1,38 @@
 package com.muang.ai.claw.module.system.api.dept;
 
+import com.muang.ai.claw.util.object.BeanUtils;
+import com.muang.ai.claw.module.system.api.dept.dto.PostRespDTO;
+import com.muang.ai.claw.module.system.dal.dataobject.dept.PostDO;
+import com.muang.ai.claw.module.system.service.dept.PostService;
+import org.springframework.stereotype.Service;
+import jakarta.annotation.Resource;
+import java.util.Collection;
+import java.util.List;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.map.MapUtil;
 import com.muang.ai.claw.util.collection.CollectionUtils;
-import com.muang.ai.claw.module.system.api.dept.dto.PostRespDTO;
-
-import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 
 /**
- * 岗位 API 接口
+ * 岗位 API 实现类
  *
  */
-public interface PostApi {
+@Service
+public class PostApi {
 
-    /**
-     * 校验岗位们是否有效。如下情况，视为无效：
-     * 1. 岗位编号不存在
-     * 2. 岗位被禁用
-     *
-     * @param ids 岗位编号数组
-     */
-    void validPostList(Collection<Long> ids);
+    @Resource
+    private PostService postService;
 
-    List<PostRespDTO> getPostList(Collection<Long> ids);
+    public void validPostList(Collection<Long> ids) {
+        postService.validatePostList(ids);
+    }
 
-    default Map<Long, PostRespDTO> getPostMap(Collection<Long> ids) {
+    public List<PostRespDTO> getPostList(Collection<Long> ids) {
+        List<PostDO> list = postService.getPostList(ids);
+        return BeanUtils.toBean(list, PostRespDTO.class);
+    }
+
+    public Map<Long, PostRespDTO> getPostMap(Collection<Long> ids) {
         if (CollUtil.isEmpty(ids)) {
             return MapUtil.empty();
         }

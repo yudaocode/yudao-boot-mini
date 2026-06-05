@@ -1,30 +1,30 @@
 package com.muang.ai.claw.module.system.api.notify;
 
 import com.muang.ai.claw.module.system.api.notify.dto.NotifySendSingleToUserReqDTO;
-
+import com.muang.ai.claw.module.system.service.notify.NotifySendService;
+import org.springframework.stereotype.Service;
+import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 
 /**
- * 站内信发送 API 接口
+ * 站内信发送 API 实现类
  *
  * @author xrcoder
  */
-public interface NotifyMessageSendApi {
+@Service
+public class NotifyMessageSendApi {
 
-    /**
-     * 发送单条站内信给 Admin 用户
-     *
-     * @param reqDTO 发送请求
-     * @return 发送消息 ID
-     */
-    Long sendSingleMessageToAdmin(@Valid NotifySendSingleToUserReqDTO reqDTO);
+    @Resource
+    private NotifySendService notifySendService;
 
-    /**
-     * 发送单条站内信给 Member 用户
-     *
-     * @param reqDTO 发送请求
-     * @return 发送消息 ID
-     */
-    Long sendSingleMessageToMember(@Valid NotifySendSingleToUserReqDTO reqDTO);
+    public Long sendSingleMessageToAdmin(NotifySendSingleToUserReqDTO reqDTO) {
+        return notifySendService.sendSingleNotifyToAdmin(reqDTO.getUserId(),
+                reqDTO.getTemplateCode(), reqDTO.getTemplateParams());
+    }
+
+    public Long sendSingleMessageToMember(NotifySendSingleToUserReqDTO reqDTO) {
+        return notifySendService.sendSingleNotifyToMember(reqDTO.getUserId(),
+                reqDTO.getTemplateCode(), reqDTO.getTemplateParams());
+    }
 
 }
