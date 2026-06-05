@@ -3,7 +3,7 @@ package com.muang.ai.claw.module.system.dal.mysql.mail;
 import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.config.mybatis.core.mapper.BaseMapperX;
 import com.muang.ai.claw.config.mybatis.core.query.LambdaQueryWrapperX;
-import com.muang.ai.claw.module.system.controller.admin.mail.vo.template.MailTemplatePageReqVO;
+import com.muang.ai.claw.module.system.controller.admin.mail.vo.template.MailTemplatePageForm;
 import com.muang.ai.claw.module.system.dal.dataobject.mail.MailTemplateDO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -12,7 +12,7 @@ import java.util.List;
 @Mapper
 public interface MailTemplateMapper extends BaseMapperX<MailTemplateDO> {
 
-    default PageResult<MailTemplateDO> selectPage(MailTemplatePageReqVO pageReqVO){
+    default PageResult<MailTemplateDO> selectPage(MailTemplatePageForm pageReqVO){
         return selectPage(pageReqVO , new LambdaQueryWrapperX<MailTemplateDO>()
                 .eqIfPresent(MailTemplateDO::getStatus, pageReqVO.getStatus())
                 .likeIfPresent(MailTemplateDO::getCode, pageReqVO.getCode())

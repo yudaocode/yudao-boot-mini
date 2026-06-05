@@ -5,8 +5,8 @@ import cn.hutool.core.util.ReUtil;
 import cn.hutool.core.util.StrUtil;
 import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.util.object.BeanUtils;
-import com.muang.ai.claw.module.system.controller.admin.mail.vo.template.MailTemplatePageReqVO;
-import com.muang.ai.claw.module.system.controller.admin.mail.vo.template.MailTemplateSaveReqVO;
+import com.muang.ai.claw.module.system.controller.admin.mail.vo.template.MailTemplatePageForm;
+import com.muang.ai.claw.module.system.controller.admin.mail.vo.template.MailTemplateSaveForm;
 import com.muang.ai.claw.module.system.dal.dataobject.mail.MailTemplateDO;
 import com.muang.ai.claw.module.system.dal.mysql.mail.MailTemplateMapper;
 import com.muang.ai.claw.module.system.dal.redis.RedisKeyConstants;
@@ -48,7 +48,7 @@ public class MailTemplateService {
     @Resource
     private MailTemplateMapper mailTemplateMapper;
 
-    public Long createMailTemplate(MailTemplateSaveReqVO createReqVO) {
+    public Long createMailTemplate(MailTemplateSaveForm createReqVO) {
         // 校验 code 是否唯一
         validateCodeUnique(null, createReqVO.getCode());
 
@@ -61,7 +61,7 @@ public class MailTemplateService {
 
     @CacheEvict(cacheNames = RedisKeyConstants.MAIL_TEMPLATE,
             allEntries = true) // allEntries 清空所有缓存，因为可能修改到 code 字段，不好清理
-    public void updateMailTemplate(@Valid MailTemplateSaveReqVO updateReqVO) {
+    public void updateMailTemplate(@Valid MailTemplateSaveForm updateReqVO) {
         // 校验是否存在
         validateMailTemplateExists(updateReqVO.getId());
         // 校验 code 是否唯一
@@ -117,7 +117,7 @@ public class MailTemplateService {
         return mailTemplateMapper.selectByCode(code);
     }
 
-    public PageResult<MailTemplateDO> getMailTemplatePage(MailTemplatePageReqVO pageReqVO) {
+    public PageResult<MailTemplateDO> getMailTemplatePage(MailTemplatePageForm pageReqVO) {
         return mailTemplateMapper.selectPage(pageReqVO);
     }
 

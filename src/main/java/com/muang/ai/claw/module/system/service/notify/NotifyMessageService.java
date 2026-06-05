@@ -1,8 +1,8 @@
 package com.muang.ai.claw.module.system.service.notify;
 
 import com.muang.ai.claw.common.core.PageResult;
-import com.muang.ai.claw.module.system.controller.admin.notify.vo.message.NotifyMessageMyPageReqVO;
-import com.muang.ai.claw.module.system.controller.admin.notify.vo.message.NotifyMessagePageReqVO;
+import com.muang.ai.claw.module.system.controller.admin.notify.vo.message.NotifyMessageMyPageForm;
+import com.muang.ai.claw.module.system.controller.admin.notify.vo.message.NotifyMessagePageForm;
 import com.muang.ai.claw.module.system.dal.dataobject.notify.NotifyMessageDO;
 import com.muang.ai.claw.module.system.dal.dataobject.notify.NotifyTemplateDO;
 import com.muang.ai.claw.module.system.dal.mysql.notify.NotifyMessageMapper;
@@ -36,11 +36,11 @@ public class NotifyMessageService {
         return message.getId();
     }
 
-    public PageResult<NotifyMessageDO> getNotifyMessagePage(NotifyMessagePageReqVO pageReqVO) {
+    public PageResult<NotifyMessageDO> getNotifyMessagePage(NotifyMessagePageForm pageReqVO) {
         return notifyMessageMapper.selectPage(pageReqVO);
     }
 
-    public PageResult<NotifyMessageDO> getMyMyNotifyMessagePage(NotifyMessageMyPageReqVO pageReqVO, Long userId, Integer userType) {
+    public PageResult<NotifyMessageDO> getMyMyNotifyMessagePage(NotifyMessageMyPageForm pageReqVO, Long userId, Integer userType) {
         return notifyMessageMapper.selectPage(pageReqVO, userId, userType);
     }
 

@@ -2,8 +2,8 @@ package com.muang.ai.claw.module.system.service.notice;
 
 import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.util.object.BeanUtils;
-import com.muang.ai.claw.module.system.controller.admin.notice.vo.NoticePageReqVO;
-import com.muang.ai.claw.module.system.controller.admin.notice.vo.NoticeSaveReqVO;
+import com.muang.ai.claw.module.system.controller.admin.notice.vo.NoticePageForm;
+import com.muang.ai.claw.module.system.controller.admin.notice.vo.NoticeSaveForm;
 import com.muang.ai.claw.module.system.dal.dataobject.notice.NoticeDO;
 import com.muang.ai.claw.module.system.dal.mysql.notice.NoticeMapper;
 import com.google.common.annotations.VisibleForTesting;
@@ -25,13 +25,13 @@ public class NoticeService {
     @Resource
     private NoticeMapper noticeMapper;
 
-    public Long createNotice(NoticeSaveReqVO createReqVO) {
+    public Long createNotice(NoticeSaveForm createReqVO) {
         NoticeDO notice = BeanUtils.toBean(createReqVO, NoticeDO.class);
         noticeMapper.insert(notice);
         return notice.getId();
     }
 
-    public void updateNotice(NoticeSaveReqVO updateReqVO) {
+    public void updateNotice(NoticeSaveForm updateReqVO) {
         // 校验是否存在
         validateNoticeExists(updateReqVO.getId());
         // 更新通知公告
@@ -50,7 +50,7 @@ public class NoticeService {
         noticeMapper.deleteByIds(ids);
     }
 
-    public PageResult<NoticeDO> getNoticePage(NoticePageReqVO reqVO) {
+    public PageResult<NoticeDO> getNoticePage(NoticePageForm reqVO) {
         return noticeMapper.selectPage(reqVO);
     }
 

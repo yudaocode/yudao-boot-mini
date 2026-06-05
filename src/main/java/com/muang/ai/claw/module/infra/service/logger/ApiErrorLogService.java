@@ -6,7 +6,7 @@ import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.util.string.StrUtils;
 import com.muang.ai.claw.config.tenant.core.context.TenantContextHolder;
 import com.muang.ai.claw.config.tenant.core.util.TenantUtils;
-import com.muang.ai.claw.module.infra.controller.admin.logger.vo.apierrorlog.ApiErrorLogPageReqVO;
+import com.muang.ai.claw.module.infra.controller.admin.logger.vo.apierrorlog.ApiErrorLogPageForm;
 import com.muang.ai.claw.module.infra.dal.dataobject.logger.ApiErrorLogDO;
 import com.muang.ai.claw.module.infra.dal.mysql.logger.ApiErrorLogMapper;
 import com.muang.ai.claw.module.infra.constant.logger.ApiErrorLogProcessStatusEnum;
@@ -51,7 +51,7 @@ public class ApiErrorLogService {
         }
     }
 
-    public PageResult<ApiErrorLogDO> getApiErrorLogPage(ApiErrorLogPageReqVO pageReqVO) {
+    public PageResult<ApiErrorLogDO> getApiErrorLogPage(ApiErrorLogPageForm pageReqVO) {
         return apiErrorLogMapper.selectPage(pageReqVO);
     }
 

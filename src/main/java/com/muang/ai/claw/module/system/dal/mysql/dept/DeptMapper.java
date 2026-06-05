@@ -2,7 +2,7 @@ package com.muang.ai.claw.module.system.dal.mysql.dept;
 
 import com.muang.ai.claw.config.mybatis.core.mapper.BaseMapperX;
 import com.muang.ai.claw.config.mybatis.core.query.LambdaQueryWrapperX;
-import com.muang.ai.claw.module.system.controller.admin.dept.vo.dept.DeptListReqVO;
+import com.muang.ai.claw.module.system.controller.admin.dept.vo.dept.DeptListForm;
 import com.muang.ai.claw.module.system.dal.dataobject.dept.DeptDO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -12,7 +12,7 @@ import java.util.List;
 @Mapper
 public interface DeptMapper extends BaseMapperX<DeptDO> {
 
-    default List<DeptDO> selectList(DeptListReqVO reqVO) {
+    default List<DeptDO> selectList(DeptListForm reqVO) {
         return selectList(new LambdaQueryWrapperX<DeptDO>()
                 .likeIfPresent(DeptDO::getName, reqVO.getName())
                 .eqIfPresent(DeptDO::getStatus, reqVO.getStatus()));

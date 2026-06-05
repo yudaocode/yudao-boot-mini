@@ -14,7 +14,7 @@ import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.config.security.core.LoginUser;
 import com.muang.ai.claw.config.tenant.core.context.TenantContextHolder;
 import com.muang.ai.claw.config.tenant.core.util.TenantUtils;
-import com.muang.ai.claw.module.system.controller.admin.oauth2.vo.token.OAuth2AccessTokenPageReqVO;
+import com.muang.ai.claw.module.system.controller.admin.oauth2.vo.token.OAuth2AccessTokenPageForm;
 import com.muang.ai.claw.module.system.dal.dataobject.oauth2.OAuth2AccessTokenDO;
 import com.muang.ai.claw.module.system.dal.dataobject.oauth2.OAuth2ClientDO;
 import com.muang.ai.claw.module.system.dal.dataobject.oauth2.OAuth2RefreshTokenDO;
@@ -164,7 +164,7 @@ public class OAuth2TokenService {
         });
     }
 
-    public PageResult<OAuth2AccessTokenDO> getAccessTokenPage(OAuth2AccessTokenPageReqVO reqVO) {
+    public PageResult<OAuth2AccessTokenDO> getAccessTokenPage(OAuth2AccessTokenPageForm reqVO) {
         return oauth2AccessTokenMapper.selectPage(reqVO);
     }
 

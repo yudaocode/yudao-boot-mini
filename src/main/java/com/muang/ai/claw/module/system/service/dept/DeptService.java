@@ -5,8 +5,8 @@ import cn.hutool.core.util.ObjectUtil;
 import com.muang.ai.claw.constant.CommonStatusEnum;
 import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.config.datapermission.core.annotation.DataPermission;
-import com.muang.ai.claw.module.system.controller.admin.dept.vo.dept.DeptListReqVO;
-import com.muang.ai.claw.module.system.controller.admin.dept.vo.dept.DeptSaveReqVO;
+import com.muang.ai.claw.module.system.controller.admin.dept.vo.dept.DeptListForm;
+import com.muang.ai.claw.module.system.controller.admin.dept.vo.dept.DeptSaveForm;
 import com.muang.ai.claw.module.system.dal.dataobject.dept.DeptDO;
 import com.muang.ai.claw.module.system.dal.mysql.dept.DeptMapper;
 import com.muang.ai.claw.module.system.dal.redis.RedisKeyConstants;
@@ -39,7 +39,7 @@ public class DeptService {
 
     @CacheEvict(cacheNames = RedisKeyConstants.DEPT_CHILDREN_ID_LIST,
             allEntries = true) // allEntries 清空所有缓存，因为操作一个部门，涉及到多个缓存
-    public Long createDept(DeptSaveReqVO createReqVO) {
+    public Long createDept(DeptSaveForm createReqVO) {
         if (createReqVO.getParentId() == null) {
             createReqVO.setParentId(DeptDO.PARENT_ID_ROOT);
         }
@@ -56,7 +56,7 @@ public class DeptService {
 
     @CacheEvict(cacheNames = RedisKeyConstants.DEPT_CHILDREN_ID_LIST,
             allEntries = true) // allEntries 清空所有缓存，因为操作一个部门，涉及到多个缓存
-    public void updateDept(DeptSaveReqVO updateReqVO) {
+    public void updateDept(DeptSaveForm updateReqVO) {
         if (updateReqVO.getParentId() == null) {
             updateReqVO.setParentId(DeptDO.PARENT_ID_ROOT);
         }
@@ -176,7 +176,7 @@ public class DeptService {
         return deptMapper.selectByIds(ids);
     }
 
-    public List<DeptDO> getDeptList(DeptListReqVO reqVO) {
+    public List<DeptDO> getDeptList(DeptListForm reqVO) {
         List<DeptDO> list = deptMapper.selectList(reqVO);
         list.sort(Comparator.comparing(DeptDO::getSort));
         return list;

@@ -2,7 +2,7 @@ package com.muang.ai.claw.module.infra.service.db;
 
 import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.config.mybatis.core.util.JdbcUtils;
-import com.muang.ai.claw.module.infra.controller.admin.db.vo.DataSourceConfigSaveReqVO;
+import com.muang.ai.claw.module.infra.controller.admin.db.vo.DataSourceConfigSaveForm;
 import com.muang.ai.claw.module.infra.dal.dataobject.db.DataSourceConfigDO;
 import com.muang.ai.claw.module.infra.dal.mysql.db.DataSourceConfigMapper;
 import com.baomidou.dynamic.datasource.creator.DataSourceProperty;
@@ -32,7 +32,7 @@ public class DataSourceConfigService {
     @Resource
     private DynamicDataSourceProperties dynamicDataSourceProperties;
 
-    public Long createDataSourceConfig(DataSourceConfigSaveReqVO createReqVO) {
+    public Long createDataSourceConfig(DataSourceConfigSaveForm createReqVO) {
         DataSourceConfigDO config = BeanUtils.toBean(createReqVO, DataSourceConfigDO.class);
         validateConnectionOK(config);
 
@@ -42,7 +42,7 @@ public class DataSourceConfigService {
         return config.getId();
     }
 
-    public void updateDataSourceConfig(DataSourceConfigSaveReqVO updateReqVO) {
+    public void updateDataSourceConfig(DataSourceConfigSaveForm updateReqVO) {
         // 校验存在
         validateDataSourceConfigExists(updateReqVO.getId());
         DataSourceConfigDO updateObj = BeanUtils.toBean(updateReqVO, DataSourceConfigDO.class);

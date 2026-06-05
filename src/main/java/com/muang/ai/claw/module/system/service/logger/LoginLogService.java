@@ -3,7 +3,7 @@ package com.muang.ai.claw.module.system.service.logger;
 import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.module.system.api.logger.dto.LoginLogCreateReqDTO;
-import com.muang.ai.claw.module.system.controller.admin.logger.vo.loginlog.LoginLogPageReqVO;
+import com.muang.ai.claw.module.system.controller.admin.logger.vo.loginlog.LoginLogPageForm;
 import com.muang.ai.claw.module.system.dal.dataobject.logger.LoginLogDO;
 import com.muang.ai.claw.module.system.dal.mysql.logger.LoginLogMapper;
 import org.springframework.stereotype.Service;
@@ -25,7 +25,7 @@ public class LoginLogService {
         return loginLogMapper.selectById(id);
     }
 
-    public PageResult<LoginLogDO> getLoginLogPage(LoginLogPageReqVO pageReqVO) {
+    public PageResult<LoginLogDO> getLoginLogPage(LoginLogPageForm pageReqVO) {
         return loginLogMapper.selectPage(pageReqVO);
     }
 

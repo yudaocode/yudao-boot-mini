@@ -5,9 +5,9 @@ import com.muang.ai.claw.common.core.CommonResult;
 import com.muang.ai.claw.common.core.PageParam;
 import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.config.excel.util.ExcelUtils;
-import com.muang.ai.claw.module.infra.controller.admin.config.vo.ConfigPageReqVO;
+import com.muang.ai.claw.module.infra.controller.admin.config.vo.ConfigPageForm;
 import com.muang.ai.claw.module.infra.controller.admin.config.vo.ConfigRespVO;
-import com.muang.ai.claw.module.infra.controller.admin.config.vo.ConfigSaveReqVO;
+import com.muang.ai.claw.module.infra.controller.admin.config.vo.ConfigSaveForm;
 import com.muang.ai.claw.module.infra.convert.config.ConfigConvert;
 import com.muang.ai.claw.module.infra.dal.dataobject.config.ConfigDO;
 import com.muang.ai.claw.module.infra.constant.ErrorCodeConstants;
@@ -41,14 +41,14 @@ public class ConfigController {
     @PostMapping("/create")
     @Operation(summary = "创建参数配置")
     @PreAuthorize("@ss.hasPermission('infra:config:create')")
-    public CommonResult<Long> createConfig(@Valid @RequestBody ConfigSaveReqVO createReqVO) {
+    public CommonResult<Long> createConfig(@Valid @RequestBody ConfigSaveForm createReqVO) {
         return success(configService.createConfig(createReqVO));
     }
 
     @PutMapping("/update")
     @Operation(summary = "修改参数配置")
     @PreAuthorize("@ss.hasPermission('infra:config:update')")
-    public CommonResult<Boolean> updateConfig(@Valid @RequestBody ConfigSaveReqVO updateReqVO) {
+    public CommonResult<Boolean> updateConfig(@Valid @RequestBody ConfigSaveForm updateReqVO) {
         configService.updateConfig(updateReqVO);
         return success(true);
     }
@@ -96,7 +96,7 @@ public class ConfigController {
     @GetMapping("/page")
     @Operation(summary = "获取参数配置分页")
     @PreAuthorize("@ss.hasPermission('infra:config:query')")
-    public CommonResult<PageResult<ConfigRespVO>> getConfigPage(@Valid ConfigPageReqVO pageReqVO) {
+    public CommonResult<PageResult<ConfigRespVO>> getConfigPage(@Valid ConfigPageForm pageReqVO) {
         PageResult<ConfigDO> page = configService.getConfigPage(pageReqVO);
         return success(ConfigConvert.INSTANCE.convertPage(page));
     }
@@ -105,7 +105,7 @@ public class ConfigController {
     @Operation(summary = "导出参数配置")
     @PreAuthorize("@ss.hasPermission('infra:config:export')")
     @ApiAccessLog(operateType = EXPORT)
-    public void exportConfig(ConfigPageReqVO exportReqVO,
+    public void exportConfig(ConfigPageForm exportReqVO,
                              HttpServletResponse response) throws IOException {
         exportReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
         List<ConfigDO> list = configService.getConfigPage(exportReqVO).getList();

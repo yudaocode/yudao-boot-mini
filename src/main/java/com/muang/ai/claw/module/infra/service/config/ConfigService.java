@@ -1,8 +1,8 @@
 package com.muang.ai.claw.module.infra.service.config;
 
 import com.muang.ai.claw.common.core.PageResult;
-import com.muang.ai.claw.module.infra.controller.admin.config.vo.ConfigPageReqVO;
-import com.muang.ai.claw.module.infra.controller.admin.config.vo.ConfigSaveReqVO;
+import com.muang.ai.claw.module.infra.controller.admin.config.vo.ConfigPageForm;
+import com.muang.ai.claw.module.infra.controller.admin.config.vo.ConfigSaveForm;
 import com.muang.ai.claw.module.infra.convert.config.ConfigConvert;
 import com.muang.ai.claw.module.infra.dal.dataobject.config.ConfigDO;
 import com.muang.ai.claw.module.infra.dal.mysql.config.ConfigMapper;
@@ -29,7 +29,7 @@ public class ConfigService {
     @Resource
     private ConfigMapper configMapper;
 
-    public Long createConfig(ConfigSaveReqVO createReqVO) {
+    public Long createConfig(ConfigSaveForm createReqVO) {
         // 校验参数配置 key 的唯一性
         validateConfigKeyUnique(null, createReqVO.getKey());
 
@@ -40,7 +40,7 @@ public class ConfigService {
         return config.getId();
     }
 
-    public void updateConfig(ConfigSaveReqVO updateReqVO) {
+    public void updateConfig(ConfigSaveForm updateReqVO) {
         // 校验自己存在
         validateConfigExists(updateReqVO.getId());
         // 校验参数配置 key 的唯一性
@@ -83,7 +83,7 @@ public class ConfigService {
         return configMapper.selectByKey(key);
     }
 
-    public PageResult<ConfigDO> getConfigPage(ConfigPageReqVO pageReqVO) {
+    public PageResult<ConfigDO> getConfigPage(ConfigPageForm pageReqVO) {
         return configMapper.selectPage(pageReqVO);
     }
 

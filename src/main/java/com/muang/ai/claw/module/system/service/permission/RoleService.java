@@ -9,8 +9,8 @@ import com.muang.ai.claw.constant.CommonStatusEnum;
 import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.util.collection.CollectionUtils;
 import com.muang.ai.claw.util.object.BeanUtils;
-import com.muang.ai.claw.module.system.controller.admin.permission.vo.role.RolePageReqVO;
-import com.muang.ai.claw.module.system.controller.admin.permission.vo.role.RoleSaveReqVO;
+import com.muang.ai.claw.module.system.controller.admin.permission.vo.role.RolePageForm;
+import com.muang.ai.claw.module.system.controller.admin.permission.vo.role.RoleSaveForm;
 import com.muang.ai.claw.module.system.dal.dataobject.permission.RoleDO;
 import com.muang.ai.claw.module.system.dal.mysql.permission.RoleMapper;
 import com.muang.ai.claw.module.system.dal.redis.RedisKeyConstants;
@@ -53,7 +53,7 @@ public class RoleService {
     @Transactional(rollbackFor = Exception.class)
     @LogRecord(type = SYSTEM_ROLE_TYPE, subType = SYSTEM_ROLE_CREATE_SUB_TYPE, bizNo = "{{#role.id}}",
             success = SYSTEM_ROLE_CREATE_SUCCESS)
-    public Long createRole(RoleSaveReqVO createReqVO, Integer type) {
+    public Long createRole(RoleSaveForm createReqVO, Integer type) {
         // 1. 校验角色
         validateRoleDuplicate(createReqVO.getName(), createReqVO.getCode(), null);
 
@@ -72,7 +72,7 @@ public class RoleService {
     @CacheEvict(value = RedisKeyConstants.ROLE, key = "#updateReqVO.id")
     @LogRecord(type = SYSTEM_ROLE_TYPE, subType = SYSTEM_ROLE_UPDATE_SUB_TYPE, bizNo = "{{#updateReqVO.id}}",
             success = SYSTEM_ROLE_UPDATE_SUCCESS)
-    public void updateRole(RoleSaveReqVO updateReqVO) {
+    public void updateRole(RoleSaveForm updateReqVO) {
         // 1.1 校验是否可以更新
         RoleDO role = validateRoleForUpdate(updateReqVO.getId());
         // 1.2 校验角色的唯一字段是否重复
@@ -83,7 +83,7 @@ public class RoleService {
         roleMapper.updateById(updateObj);
 
         // 3. 记录操作日志上下文
-        LogRecordContext.putVariable(DiffParseFunction.OLD_OBJECT, BeanUtils.toBean(role, RoleSaveReqVO.class));
+        LogRecordContext.putVariable(DiffParseFunction.OLD_OBJECT, BeanUtils.toBean(role, RoleSaveForm.class));
         LogRecordContext.putVariable("role", role);
     }
 
@@ -213,7 +213,7 @@ public class RoleService {
         return CollectionUtils.convertList(ids, self::getRoleFromCache);
     }
 
-    public PageResult<RoleDO> getRolePage(RolePageReqVO reqVO) {
+    public PageResult<RoleDO> getRolePage(RolePageForm reqVO) {
         return roleMapper.selectPage(reqVO);
     }
 

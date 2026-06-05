@@ -6,7 +6,7 @@ import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.util.string.StrUtils;
 import com.muang.ai.claw.config.tenant.core.context.TenantContextHolder;
 import com.muang.ai.claw.config.tenant.core.util.TenantUtils;
-import com.muang.ai.claw.module.infra.controller.admin.logger.vo.apiaccesslog.ApiAccessLogPageReqVO;
+import com.muang.ai.claw.module.infra.controller.admin.logger.vo.apiaccesslog.ApiAccessLogPageForm;
 import com.muang.ai.claw.module.infra.dal.dataobject.logger.ApiAccessLogDO;
 import com.muang.ai.claw.module.infra.dal.mysql.logger.ApiAccessLogMapper;
 import jakarta.annotation.Resource;
@@ -47,7 +47,7 @@ public class ApiAccessLogService {
         return apiAccessLogMapper.selectById(id);
     }
 
-    public PageResult<ApiAccessLogDO> getApiAccessLogPage(ApiAccessLogPageReqVO pageReqVO) {
+    public PageResult<ApiAccessLogDO> getApiAccessLogPage(ApiAccessLogPageForm pageReqVO) {
         return apiAccessLogMapper.selectPage(pageReqVO);
     }
 

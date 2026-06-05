@@ -4,7 +4,7 @@ import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.module.system.api.logger.dto.OperateLogCreateReqDTO;
 import com.muang.ai.claw.module.system.api.logger.dto.OperateLogPageReqDTO;
-import com.muang.ai.claw.module.system.controller.admin.logger.vo.operatelog.OperateLogPageReqVO;
+import com.muang.ai.claw.module.system.controller.admin.logger.vo.operatelog.OperateLogPageForm;
 import com.muang.ai.claw.module.system.dal.dataobject.logger.OperateLogDO;
 import com.muang.ai.claw.module.system.dal.mysql.logger.OperateLogMapper;
 import jakarta.annotation.Resource;
@@ -33,7 +33,7 @@ public class OperateLogService {
         return operateLogMapper.selectById(id);
     }
 
-    public PageResult<OperateLogDO> getOperateLogPage(OperateLogPageReqVO pageReqVO) {
+    public PageResult<OperateLogDO> getOperateLogPage(OperateLogPageForm pageReqVO) {
         return operateLogMapper.selectPage(pageReqVO);
     }
 

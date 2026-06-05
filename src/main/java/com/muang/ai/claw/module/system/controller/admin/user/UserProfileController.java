@@ -4,8 +4,8 @@ import cn.hutool.core.collection.CollUtil;
 import com.muang.ai.claw.common.core.CommonResult;
 import com.muang.ai.claw.config.datapermission.core.annotation.DataPermission;
 import com.muang.ai.claw.module.system.controller.admin.user.vo.profile.UserProfileRespVO;
-import com.muang.ai.claw.module.system.controller.admin.user.vo.profile.UserProfileUpdatePasswordReqVO;
-import com.muang.ai.claw.module.system.controller.admin.user.vo.profile.UserProfileUpdateReqVO;
+import com.muang.ai.claw.module.system.controller.admin.user.vo.profile.UserProfileUpdatePasswordForm;
+import com.muang.ai.claw.module.system.controller.admin.user.vo.profile.UserProfileUpdateForm;
 import com.muang.ai.claw.module.system.convert.user.UserConvert;
 import com.muang.ai.claw.module.system.dal.dataobject.dept.DeptDO;
 import com.muang.ai.claw.module.system.dal.dataobject.dept.PostDO;
@@ -64,14 +64,14 @@ public class UserProfileController {
 
     @PutMapping("/update")
     @Operation(summary = "修改用户个人信息")
-    public CommonResult<Boolean> updateUserProfile(@Valid @RequestBody UserProfileUpdateReqVO reqVO) {
+    public CommonResult<Boolean> updateUserProfile(@Valid @RequestBody UserProfileUpdateForm reqVO) {
         userService.updateUserProfile(getLoginUserId(), reqVO);
         return success(true);
     }
 
     @PutMapping("/update-password")
     @Operation(summary = "修改用户个人密码")
-    public CommonResult<Boolean> updateUserProfilePassword(@Valid @RequestBody UserProfileUpdatePasswordReqVO reqVO) {
+    public CommonResult<Boolean> updateUserProfilePassword(@Valid @RequestBody UserProfileUpdatePasswordForm reqVO) {
         userService.updateUserPassword(getLoginUserId(), reqVO);
         return success(true);
     }

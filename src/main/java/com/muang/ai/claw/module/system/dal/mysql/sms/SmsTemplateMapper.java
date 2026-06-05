@@ -3,7 +3,7 @@ package com.muang.ai.claw.module.system.dal.mysql.sms;
 import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.config.mybatis.core.mapper.BaseMapperX;
 import com.muang.ai.claw.config.mybatis.core.query.LambdaQueryWrapperX;
-import com.muang.ai.claw.module.system.controller.admin.sms.vo.template.SmsTemplatePageReqVO;
+import com.muang.ai.claw.module.system.controller.admin.sms.vo.template.SmsTemplatePageForm;
 import com.muang.ai.claw.module.system.dal.dataobject.sms.SmsTemplateDO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -16,7 +16,7 @@ public interface SmsTemplateMapper extends BaseMapperX<SmsTemplateDO> {
         return selectOne(SmsTemplateDO::getCode, code);
     }
 
-    default PageResult<SmsTemplateDO> selectPage(SmsTemplatePageReqVO reqVO) {
+    default PageResult<SmsTemplateDO> selectPage(SmsTemplatePageForm reqVO) {
         return selectPage(reqVO, new LambdaQueryWrapperX<SmsTemplateDO>()
                 .eqIfPresent(SmsTemplateDO::getType, reqVO.getType())
                 .eqIfPresent(SmsTemplateDO::getStatus, reqVO.getStatus())

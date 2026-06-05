@@ -5,14 +5,14 @@ import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.config.mybatis.core.mapper.BaseMapperX;
 import com.muang.ai.claw.config.mybatis.core.query.LambdaQueryWrapperX;
 import com.muang.ai.claw.config.mybatis.core.util.MyBatisUtils;
-import com.muang.ai.claw.module.system.controller.admin.mail.vo.log.MailLogPageReqVO;
+import com.muang.ai.claw.module.system.controller.admin.mail.vo.log.MailLogPageForm;
 import com.muang.ai.claw.module.system.dal.dataobject.mail.MailLogDO;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface MailLogMapper extends BaseMapperX<MailLogDO> {
 
-    default PageResult<MailLogDO> selectPage(MailLogPageReqVO reqVO) {
+    default PageResult<MailLogDO> selectPage(MailLogPageForm reqVO) {
         return selectPage(reqVO, new LambdaQueryWrapperX<MailLogDO>()
                 .eqIfPresent(MailLogDO::getUserId, reqVO.getUserId())
                 .eqIfPresent(MailLogDO::getUserType, reqVO.getUserType())

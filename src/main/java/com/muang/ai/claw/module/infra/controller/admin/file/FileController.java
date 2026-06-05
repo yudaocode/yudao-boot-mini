@@ -47,7 +47,7 @@ public class FileController {
     @Operation(summary = "上传文件", description = "模式一：后端上传文件")
     @Parameter(name = "file", description = "文件附件", required = true,
             schema = @Schema(type = "string", format = "binary"))
-    public CommonResult<String> uploadFile(@Valid FileUploadReqVO uploadReqVO) throws Exception {
+    public CommonResult<String> uploadFile(@Valid FileUploadForm uploadReqVO) throws Exception {
         MultipartFile file = uploadReqVO.getFile();
         byte[] content = IoUtil.readBytes(file.getInputStream());
         return success(fileService.createFile(content, file.getOriginalFilename(),
@@ -68,7 +68,7 @@ public class FileController {
 
     @PostMapping("/create")
     @Operation(summary = "创建文件", description = "模式二：前端上传文件：配合 presigned-url 接口，记录上传了上传的文件")
-    public CommonResult<Long> createFile(@Valid @RequestBody FileCreateReqVO createReqVO) {
+    public CommonResult<Long> createFile(@Valid @RequestBody FileCreateForm createReqVO) {
         return success(fileService.createFile(createReqVO));
     }
 
@@ -129,7 +129,7 @@ public class FileController {
     @GetMapping("/page")
     @Operation(summary = "获得文件分页")
     @PreAuthorize("@ss.hasPermission('infra:file:query')")
-    public CommonResult<PageResult<FileRespVO>> getFilePage(@Valid FilePageReqVO pageVO) {
+    public CommonResult<PageResult<FileRespVO>> getFilePage(@Valid FilePageForm pageVO) {
         PageResult<FileDO> pageResult = fileService.getFilePage(pageVO);
         return success(BeanUtils.toBean(pageResult, FileRespVO.class));
     }

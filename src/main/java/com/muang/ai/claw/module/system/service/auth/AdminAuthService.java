@@ -92,7 +92,7 @@ public class AdminAuthService {
     }
 
     @DataPermission(enable = false)
-    public AuthLoginRespVO login(AuthLoginReqVO reqVO) {
+    public AuthLoginRespVO login(AuthLoginForm reqVO) {
         // 校验验证码
         validateCaptcha(reqVO);
 
@@ -103,7 +103,7 @@ public class AdminAuthService {
         return createTokenAfterLoginSuccess(user.getId(), reqVO.getUsername(), LoginLogTypeEnum.LOGIN_USERNAME);
     }
 
-    public void sendSmsCode(AuthSmsSendReqVO reqVO) {
+    public void sendSmsCode(AuthSmsSendForm reqVO) {
         // 如果是重置密码场景，需要校验图形验证码是否正确
         if (Objects.equals(SmsSceneEnum.ADMIN_MEMBER_RESET_PASSWORD.getScene(), reqVO.getScene())) {
             ResponseModel response = doValidateCaptcha(reqVO);
@@ -120,7 +120,7 @@ public class AdminAuthService {
         smsCodeApi.sendSmsCode(AuthConvert.INSTANCE.convert(reqVO).setCreateIp(getClientIP()));
     }
 
-    public AuthLoginRespVO smsLogin(AuthSmsLoginReqVO reqVO) {
+    public AuthLoginRespVO smsLogin(AuthSmsLoginForm reqVO) {
         // 校验验证码
         smsCodeApi.useSmsCode(AuthConvert.INSTANCE.convert(reqVO, SmsSceneEnum.ADMIN_MEMBER_LOGIN.getScene(), getClientIP()));
 
@@ -154,7 +154,7 @@ public class AdminAuthService {
     }
 
     @VisibleForTesting
-    void validateCaptcha(AuthLoginReqVO reqVO) {
+    void validateCaptcha(AuthLoginForm reqVO) {
         ResponseModel response = doValidateCaptcha(reqVO);
         // 校验验证码
         if (!response.isSuccess()) {
@@ -164,12 +164,12 @@ public class AdminAuthService {
         }
     }
 
-    private ResponseModel doValidateCaptcha(CaptchaVerificationReqVO reqVO) {
+    private ResponseModel doValidateCaptcha(CaptchaVerificationForm reqVO) {
         // 如果验证码关闭，则不进行校验
         if (!captchaEnable) {
             return ResponseModel.success();
         }
-        ValidationUtils.validate(validator, reqVO, CaptchaVerificationReqVO.CodeEnableGroup.class);
+        ValidationUtils.validate(validator, reqVO, CaptchaVerificationForm.CodeEnableGroup.class);
         CaptchaVO captchaVO = new CaptchaVO();
         captchaVO.setCaptchaVerification(reqVO.getCaptchaVerification());
         return captchaService.verification(captchaVO);
@@ -229,7 +229,7 @@ public class AdminAuthService {
         return UserTypeEnum.ADMIN;
     }
 
-    public AuthLoginRespVO register(AuthRegisterReqVO registerReqVO) {
+    public AuthLoginRespVO register(AuthRegisterForm registerReqVO) {
         // 1. 校验验证码
         validateCaptcha(registerReqVO);
 
@@ -241,7 +241,7 @@ public class AdminAuthService {
     }
 
     @VisibleForTesting
-    void validateCaptcha(AuthRegisterReqVO reqVO) {
+    void validateCaptcha(AuthRegisterForm reqVO) {
         ResponseModel response = doValidateCaptcha(reqVO);
         // 验证不通过
         if (!response.isSuccess()) {
@@ -250,7 +250,7 @@ public class AdminAuthService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void resetPassword(AuthResetPasswordReqVO reqVO) {
+    public void resetPassword(AuthResetPasswordForm reqVO) {
         AdminUserDO userByMobile = userService.getUserByMobile(reqVO.getMobile());
         if (userByMobile == null) {
             throw exception(USER_MOBILE_NOT_EXISTS);

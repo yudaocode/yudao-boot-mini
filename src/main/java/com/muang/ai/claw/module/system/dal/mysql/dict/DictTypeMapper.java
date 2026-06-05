@@ -3,7 +3,7 @@ package com.muang.ai.claw.module.system.dal.mysql.dict;
 import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.config.mybatis.core.mapper.BaseMapperX;
 import com.muang.ai.claw.config.mybatis.core.query.LambdaQueryWrapperX;
-import com.muang.ai.claw.module.system.controller.admin.dict.vo.type.DictTypePageReqVO;
+import com.muang.ai.claw.module.system.controller.admin.dict.vo.type.DictTypePageForm;
 import com.muang.ai.claw.module.system.dal.dataobject.dict.DictTypeDO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Mapper
 public interface DictTypeMapper extends BaseMapperX<DictTypeDO> {
 
-    default PageResult<DictTypeDO> selectPage(DictTypePageReqVO reqVO) {
+    default PageResult<DictTypeDO> selectPage(DictTypePageForm reqVO) {
         return selectPage(reqVO, new LambdaQueryWrapperX<DictTypeDO>()
                 .likeIfPresent(DictTypeDO::getName, reqVO.getName())
                 .likeIfPresent(DictTypeDO::getType, reqVO.getType())

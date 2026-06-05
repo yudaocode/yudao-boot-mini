@@ -5,8 +5,8 @@ import cn.hutool.core.util.StrUtil;
 import com.muang.ai.claw.constant.CommonStatusEnum;
 import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.util.object.BeanUtils;
-import com.muang.ai.claw.module.system.controller.admin.tenant.vo.packages.TenantPackagePageReqVO;
-import com.muang.ai.claw.module.system.controller.admin.tenant.vo.packages.TenantPackageSaveReqVO;
+import com.muang.ai.claw.module.system.controller.admin.tenant.vo.packages.TenantPackagePageForm;
+import com.muang.ai.claw.module.system.controller.admin.tenant.vo.packages.TenantPackageSaveForm;
 import com.muang.ai.claw.module.system.dal.dataobject.tenant.TenantDO;
 import com.muang.ai.claw.module.system.dal.dataobject.tenant.TenantPackageDO;
 import com.muang.ai.claw.module.system.dal.mysql.tenant.TenantPackageMapper;
@@ -37,7 +37,7 @@ public class TenantPackageService {
     @Lazy // 避免循环依赖的报错
     private TenantService tenantService;
 
-    public Long createTenantPackage(TenantPackageSaveReqVO createReqVO) {
+    public Long createTenantPackage(TenantPackageSaveForm createReqVO) {
         // 校验套餐名是否重复
         validateTenantPackageNameUnique(null, createReqVO.getName());
         // 插入
@@ -48,7 +48,7 @@ public class TenantPackageService {
     }
 
     @DSTransactional // 多数据源，使用 @DSTransactional 保证本地事务，以及数据源的切换
-    public void updateTenantPackage(TenantPackageSaveReqVO updateReqVO) {
+    public void updateTenantPackage(TenantPackageSaveForm updateReqVO) {
         // 校验存在
         TenantPackageDO tenantPackage = validateTenantPackageExists(updateReqVO.getId());
         // 校验套餐名是否重复
@@ -102,7 +102,7 @@ public class TenantPackageService {
         return tenantPackageMapper.selectById(id);
     }
 
-    public PageResult<TenantPackageDO> getTenantPackagePage(TenantPackagePageReqVO pageReqVO) {
+    public PageResult<TenantPackageDO> getTenantPackagePage(TenantPackagePageForm pageReqVO) {
         return tenantPackageMapper.selectPage(pageReqVO);
     }
 

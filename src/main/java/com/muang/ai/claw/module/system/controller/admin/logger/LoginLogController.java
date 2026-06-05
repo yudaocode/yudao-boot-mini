@@ -6,7 +6,7 @@ import com.muang.ai.claw.common.core.PageParam;
 import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.config.excel.util.ExcelUtils;
-import com.muang.ai.claw.module.system.controller.admin.logger.vo.loginlog.LoginLogPageReqVO;
+import com.muang.ai.claw.module.system.controller.admin.logger.vo.loginlog.LoginLogPageForm;
 import com.muang.ai.claw.module.system.controller.admin.logger.vo.loginlog.LoginLogRespVO;
 import com.muang.ai.claw.module.system.dal.dataobject.logger.LoginLogDO;
 import com.muang.ai.claw.module.system.service.logger.LoginLogService;
@@ -47,7 +47,7 @@ public class LoginLogController {
     @GetMapping("/page")
     @Operation(summary = "获得登录日志分页列表")
     @PreAuthorize("@ss.hasPermission('system:login-log:query')")
-    public CommonResult<PageResult<LoginLogRespVO>> getLoginLogPage(@Valid LoginLogPageReqVO pageReqVO) {
+    public CommonResult<PageResult<LoginLogRespVO>> getLoginLogPage(@Valid LoginLogPageForm pageReqVO) {
         PageResult<LoginLogDO> pageResult = loginLogService.getLoginLogPage(pageReqVO);
         return success(BeanUtils.toBean(pageResult, LoginLogRespVO.class));
     }
@@ -56,7 +56,7 @@ public class LoginLogController {
     @Operation(summary = "导出登录日志 Excel")
     @PreAuthorize("@ss.hasPermission('system:login-log:export')")
     @ApiAccessLog(operateType = EXPORT)
-    public void exportLoginLog(HttpServletResponse response, @Valid LoginLogPageReqVO exportReqVO) throws IOException {
+    public void exportLoginLog(HttpServletResponse response, @Valid LoginLogPageForm exportReqVO) throws IOException {
         exportReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
         List<LoginLogDO> list = loginLogService.getLoginLogPage(exportReqVO).getList();
         // 输出

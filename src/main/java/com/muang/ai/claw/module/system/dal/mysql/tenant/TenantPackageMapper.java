@@ -3,7 +3,7 @@ package com.muang.ai.claw.module.system.dal.mysql.tenant;
 import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.config.mybatis.core.mapper.BaseMapperX;
 import com.muang.ai.claw.config.mybatis.core.query.LambdaQueryWrapperX;
-import com.muang.ai.claw.module.system.controller.admin.tenant.vo.packages.TenantPackagePageReqVO;
+import com.muang.ai.claw.module.system.controller.admin.tenant.vo.packages.TenantPackagePageForm;
 import com.muang.ai.claw.module.system.dal.dataobject.tenant.TenantPackageDO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -12,7 +12,7 @@ import java.util.List;
 @Mapper
 public interface TenantPackageMapper extends BaseMapperX<TenantPackageDO> {
 
-    default PageResult<TenantPackageDO> selectPage(TenantPackagePageReqVO reqVO) {
+    default PageResult<TenantPackageDO> selectPage(TenantPackagePageForm reqVO) {
         return selectPage(reqVO, new LambdaQueryWrapperX<TenantPackageDO>()
                 .likeIfPresent(TenantPackageDO::getName, reqVO.getName())
                 .eqIfPresent(TenantPackageDO::getStatus, reqVO.getStatus())

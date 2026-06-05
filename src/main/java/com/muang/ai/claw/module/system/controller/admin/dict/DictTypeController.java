@@ -6,9 +6,9 @@ import com.muang.ai.claw.common.core.PageParam;
 import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.config.excel.util.ExcelUtils;
-import com.muang.ai.claw.module.system.controller.admin.dict.vo.type.DictTypePageReqVO;
+import com.muang.ai.claw.module.system.controller.admin.dict.vo.type.DictTypePageForm;
 import com.muang.ai.claw.module.system.controller.admin.dict.vo.type.DictTypeRespVO;
-import com.muang.ai.claw.module.system.controller.admin.dict.vo.type.DictTypeSaveReqVO;
+import com.muang.ai.claw.module.system.controller.admin.dict.vo.type.DictTypeSaveForm;
 import com.muang.ai.claw.module.system.controller.admin.dict.vo.type.DictTypeSimpleRespVO;
 import com.muang.ai.claw.module.system.dal.dataobject.dict.DictTypeDO;
 import com.muang.ai.claw.module.system.service.dict.DictTypeService;
@@ -40,7 +40,7 @@ public class DictTypeController {
     @PostMapping("/create")
     @Operation(summary = "创建字典类型")
     @PreAuthorize("@ss.hasPermission('system:dict:create')")
-    public CommonResult<Long> createDictType(@Valid @RequestBody DictTypeSaveReqVO createReqVO) {
+    public CommonResult<Long> createDictType(@Valid @RequestBody DictTypeSaveForm createReqVO) {
         Long dictTypeId = dictTypeService.createDictType(createReqVO);
         return success(dictTypeId);
     }
@@ -48,7 +48,7 @@ public class DictTypeController {
     @PutMapping("/update")
     @Operation(summary = "修改字典类型")
     @PreAuthorize("@ss.hasPermission('system:dict:update')")
-    public CommonResult<Boolean> updateDictType(@Valid @RequestBody DictTypeSaveReqVO updateReqVO) {
+    public CommonResult<Boolean> updateDictType(@Valid @RequestBody DictTypeSaveForm updateReqVO) {
         dictTypeService.updateDictType(updateReqVO);
         return success(true);
     }
@@ -74,7 +74,7 @@ public class DictTypeController {
     @GetMapping("/page")
     @Operation(summary = "获得字典类型的分页列表")
     @PreAuthorize("@ss.hasPermission('system:dict:query')")
-    public CommonResult<PageResult<DictTypeRespVO>> pageDictTypes(@Valid DictTypePageReqVO pageReqVO) {
+    public CommonResult<PageResult<DictTypeRespVO>> pageDictTypes(@Valid DictTypePageForm pageReqVO) {
         PageResult<DictTypeDO> pageResult = dictTypeService.getDictTypePage(pageReqVO);
         return success(BeanUtils.toBean(pageResult, DictTypeRespVO.class));
     }
@@ -100,7 +100,7 @@ public class DictTypeController {
     @GetMapping("/export-excel")
     @PreAuthorize("@ss.hasPermission('system:dict:query')")
     @ApiAccessLog(operateType = EXPORT)
-    public void export(HttpServletResponse response, @Valid DictTypePageReqVO exportReqVO) throws IOException {
+    public void export(HttpServletResponse response, @Valid DictTypePageForm exportReqVO) throws IOException {
         exportReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
         List<DictTypeDO> list = dictTypeService.getDictTypePage(exportReqVO).getList();
         // 导出

@@ -4,8 +4,8 @@ import cn.hutool.core.collection.CollUtil;
 import com.muang.ai.claw.common.core.CommonResult;
 import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.module.system.controller.admin.oauth2.vo.user.OAuth2UserInfoRespVO;
-import com.muang.ai.claw.module.system.controller.admin.oauth2.vo.user.OAuth2UserUpdateReqVO;
-import com.muang.ai.claw.module.system.controller.admin.user.vo.profile.UserProfileUpdateReqVO;
+import com.muang.ai.claw.module.system.controller.admin.oauth2.vo.user.OAuth2UserUpdateForm;
+import com.muang.ai.claw.module.system.controller.admin.user.vo.profile.UserProfileUpdateForm;
 import com.muang.ai.claw.module.system.dal.dataobject.dept.DeptDO;
 import com.muang.ai.claw.module.system.dal.dataobject.dept.PostDO;
 import com.muang.ai.claw.module.system.dal.dataobject.user.AdminUserDO;
@@ -70,10 +70,10 @@ public class OAuth2UserController {
     @PutMapping("/update")
     @Operation(summary = "更新用户基本信息")
     @PreAuthorize("@ss.hasScope('user.write')")
-    public CommonResult<Boolean> updateUserInfo(@Valid @RequestBody OAuth2UserUpdateReqVO reqVO) {
-        // 这里将 UserProfileUpdateReqVO =》UserProfileUpdateReqVO 对象，实现接口的复用。
+    public CommonResult<Boolean> updateUserInfo(@Valid @RequestBody OAuth2UserUpdateForm reqVO) {
+        // 这里将 UserProfileUpdateForm =》UserProfileUpdateForm 对象，实现接口的复用。
         // 主要是，AdminUserService 没有自己的 BO 对象，所以复用只能这么做
-        userService.updateUserProfile(getLoginUserId(), BeanUtils.toBean(reqVO, UserProfileUpdateReqVO.class));
+        userService.updateUserProfile(getLoginUserId(), BeanUtils.toBean(reqVO, UserProfileUpdateForm.class));
         return success(true);
     }
 

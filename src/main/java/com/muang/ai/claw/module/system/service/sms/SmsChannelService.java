@@ -2,8 +2,8 @@ package com.muang.ai.claw.module.system.service.sms;
 
 import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.util.object.BeanUtils;
-import com.muang.ai.claw.module.system.controller.admin.sms.vo.channel.SmsChannelPageReqVO;
-import com.muang.ai.claw.module.system.controller.admin.sms.vo.channel.SmsChannelSaveReqVO;
+import com.muang.ai.claw.module.system.controller.admin.sms.vo.channel.SmsChannelPageForm;
+import com.muang.ai.claw.module.system.controller.admin.sms.vo.channel.SmsChannelSaveForm;
 import com.muang.ai.claw.module.system.dal.dataobject.sms.SmsChannelDO;
 import com.muang.ai.claw.module.system.dal.mysql.sms.SmsChannelMapper;
 import com.muang.ai.claw.module.system.framework.sms.core.client.SmsClient;
@@ -37,13 +37,13 @@ public class SmsChannelService {
     @Resource
     private SmsTemplateService smsTemplateService;
 
-    public Long createSmsChannel(SmsChannelSaveReqVO createReqVO) {
+    public Long createSmsChannel(SmsChannelSaveForm createReqVO) {
         SmsChannelDO channel = BeanUtils.toBean(createReqVO, SmsChannelDO.class);
         smsChannelMapper.insert(channel);
         return channel.getId();
     }
 
-    public void updateSmsChannel(SmsChannelSaveReqVO updateReqVO) {
+    public void updateSmsChannel(SmsChannelSaveForm updateReqVO) {
         // 校验存在
         validateSmsChannelExists(updateReqVO.getId());
         // 更新
@@ -90,7 +90,7 @@ public class SmsChannelService {
         return smsChannelMapper.selectList();
     }
 
-    public PageResult<SmsChannelDO> getSmsChannelPage(SmsChannelPageReqVO pageReqVO) {
+    public PageResult<SmsChannelDO> getSmsChannelPage(SmsChannelPageForm pageReqVO) {
         return smsChannelMapper.selectPage(pageReqVO);
     }
 

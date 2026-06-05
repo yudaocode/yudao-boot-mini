@@ -3,7 +3,7 @@ package com.muang.ai.claw.module.system.controller.admin.mail;
 import com.muang.ai.claw.common.core.CommonResult;
 import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.util.object.BeanUtils;
-import com.muang.ai.claw.module.system.controller.admin.mail.vo.log.MailLogPageReqVO;
+import com.muang.ai.claw.module.system.controller.admin.mail.vo.log.MailLogPageForm;
 import com.muang.ai.claw.module.system.controller.admin.mail.vo.log.MailLogRespVO;
 import com.muang.ai.claw.module.system.dal.dataobject.mail.MailLogDO;
 import com.muang.ai.claw.module.system.service.mail.MailLogService;
@@ -32,7 +32,7 @@ public class MailLogController {
     @GetMapping("/page")
     @Operation(summary = "获得邮箱日志分页")
     @PreAuthorize("@ss.hasPermission('system:mail-log:query')")
-    public CommonResult<PageResult<MailLogRespVO>> getMailLogPage(@Valid MailLogPageReqVO pageVO) {
+    public CommonResult<PageResult<MailLogRespVO>> getMailLogPage(@Valid MailLogPageForm pageVO) {
         PageResult<MailLogDO> pageResult = mailLogService.getMailLogPage(pageVO);
         return success(BeanUtils.toBean(pageResult, MailLogRespVO.class));
     }

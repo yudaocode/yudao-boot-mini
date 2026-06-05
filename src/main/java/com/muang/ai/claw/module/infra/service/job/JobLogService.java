@@ -2,7 +2,7 @@ package com.muang.ai.claw.module.infra.service.job;
 
 
 import com.muang.ai.claw.common.core.PageResult;
-import com.muang.ai.claw.module.infra.controller.admin.job.vo.log.JobLogPageReqVO;
+import com.muang.ai.claw.module.infra.controller.admin.job.vo.log.JobLogPageForm;
 import com.muang.ai.claw.module.infra.dal.dataobject.job.JobLogDO;
 import com.muang.ai.claw.module.infra.dal.mysql.job.JobLogMapper;
 import com.muang.ai.claw.module.infra.constant.job.JobLogStatusEnum;
@@ -68,7 +68,7 @@ public class JobLogService {
         return jobLogMapper.selectById(id);
     }
 
-    public PageResult<JobLogDO> getJobLogPage(JobLogPageReqVO pageReqVO) {
+    public PageResult<JobLogDO> getJobLogPage(JobLogPageForm pageReqVO) {
         return jobLogMapper.selectPage(pageReqVO);
     }
 

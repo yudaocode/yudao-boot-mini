@@ -3,7 +3,7 @@ package com.muang.ai.claw.module.system.dal.mysql.dept;
 import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.config.mybatis.core.mapper.BaseMapperX;
 import com.muang.ai.claw.config.mybatis.core.query.LambdaQueryWrapperX;
-import com.muang.ai.claw.module.system.controller.admin.dept.vo.post.PostPageReqVO;
+import com.muang.ai.claw.module.system.controller.admin.dept.vo.post.PostPageForm;
 import com.muang.ai.claw.module.system.dal.dataobject.dept.PostDO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -19,7 +19,7 @@ public interface PostMapper extends BaseMapperX<PostDO> {
                 .inIfPresent(PostDO::getStatus, statuses));
     }
 
-    default PageResult<PostDO> selectPage(PostPageReqVO reqVO) {
+    default PageResult<PostDO> selectPage(PostPageForm reqVO) {
         return selectPage(reqVO, new LambdaQueryWrapperX<PostDO>()
                 .likeIfPresent(PostDO::getCode, reqVO.getCode())
                 .likeIfPresent(PostDO::getName, reqVO.getName())

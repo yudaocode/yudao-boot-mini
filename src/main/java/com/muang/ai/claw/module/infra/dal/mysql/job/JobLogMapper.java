@@ -3,7 +3,7 @@ package com.muang.ai.claw.module.infra.dal.mysql.job;
 import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.config.mybatis.core.mapper.BaseMapperX;
 import com.muang.ai.claw.config.mybatis.core.query.LambdaQueryWrapperX;
-import com.muang.ai.claw.module.infra.controller.admin.job.vo.log.JobLogPageReqVO;
+import com.muang.ai.claw.module.infra.controller.admin.job.vo.log.JobLogPageForm;
 import com.muang.ai.claw.module.infra.dal.dataobject.job.JobLogDO;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @Mapper
 public interface JobLogMapper extends BaseMapperX<JobLogDO> {
 
-    default PageResult<JobLogDO> selectPage(JobLogPageReqVO reqVO) {
+    default PageResult<JobLogDO> selectPage(JobLogPageForm reqVO) {
         return selectPage(reqVO, new LambdaQueryWrapperX<JobLogDO>()
                 .eqIfPresent(JobLogDO::getJobId, reqVO.getJobId())
                 .likeIfPresent(JobLogDO::getHandlerName, reqVO.getHandlerName())

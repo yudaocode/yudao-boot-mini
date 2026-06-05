@@ -1,7 +1,7 @@
 package com.muang.ai.claw.module.system.service.sms;
 
 import com.muang.ai.claw.common.core.PageResult;
-import com.muang.ai.claw.module.system.controller.admin.sms.vo.log.SmsLogPageReqVO;
+import com.muang.ai.claw.module.system.controller.admin.sms.vo.log.SmsLogPageForm;
 import com.muang.ai.claw.module.system.dal.dataobject.sms.SmsLogDO;
 import com.muang.ai.claw.module.system.dal.dataobject.sms.SmsTemplateDO;
 import com.muang.ai.claw.module.system.dal.mysql.sms.SmsLogMapper;
@@ -80,7 +80,7 @@ public class SmsLogService {
         return smsLogMapper.selectById(id);
     }
 
-    public PageResult<SmsLogDO> getSmsLogPage(SmsLogPageReqVO pageReqVO) {
+    public PageResult<SmsLogDO> getSmsLogPage(SmsLogPageForm pageReqVO) {
         return smsLogMapper.selectPage(pageReqVO);
     }
 

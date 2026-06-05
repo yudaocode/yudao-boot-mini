@@ -6,9 +6,9 @@ import com.muang.ai.claw.common.core.CommonResult;
 import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.module.infra.api.websocket.WebSocketSenderApi;
-import com.muang.ai.claw.module.system.controller.admin.notice.vo.NoticePageReqVO;
+import com.muang.ai.claw.module.system.controller.admin.notice.vo.NoticePageForm;
 import com.muang.ai.claw.module.system.controller.admin.notice.vo.NoticeRespVO;
-import com.muang.ai.claw.module.system.controller.admin.notice.vo.NoticeSaveReqVO;
+import com.muang.ai.claw.module.system.controller.admin.notice.vo.NoticeSaveForm;
 import com.muang.ai.claw.module.system.dal.dataobject.notice.NoticeDO;
 import com.muang.ai.claw.module.system.service.notice.NoticeService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -39,7 +39,7 @@ public class NoticeController {
     @PostMapping("/create")
     @Operation(summary = "创建通知公告")
     @PreAuthorize("@ss.hasPermission('system:notice:create')")
-    public CommonResult<Long> createNotice(@Valid @RequestBody NoticeSaveReqVO createReqVO) {
+    public CommonResult<Long> createNotice(@Valid @RequestBody NoticeSaveForm createReqVO) {
         Long noticeId = noticeService.createNotice(createReqVO);
         return success(noticeId);
     }
@@ -47,7 +47,7 @@ public class NoticeController {
     @PutMapping("/update")
     @Operation(summary = "修改通知公告")
     @PreAuthorize("@ss.hasPermission('system:notice:update')")
-    public CommonResult<Boolean> updateNotice(@Valid @RequestBody NoticeSaveReqVO updateReqVO) {
+    public CommonResult<Boolean> updateNotice(@Valid @RequestBody NoticeSaveForm updateReqVO) {
         noticeService.updateNotice(updateReqVO);
         return success(true);
     }
@@ -73,7 +73,7 @@ public class NoticeController {
     @GetMapping("/page")
     @Operation(summary = "获取通知公告列表")
     @PreAuthorize("@ss.hasPermission('system:notice:query')")
-    public CommonResult<PageResult<NoticeRespVO>> getNoticePage(@Validated NoticePageReqVO pageReqVO) {
+    public CommonResult<PageResult<NoticeRespVO>> getNoticePage(@Validated NoticePageForm pageReqVO) {
         PageResult<NoticeDO> pageResult = noticeService.getNoticePage(pageReqVO);
         return success(BeanUtils.toBean(pageResult, NoticeRespVO.class));
     }

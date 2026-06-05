@@ -3,7 +3,7 @@ package com.muang.ai.claw.module.infra.dal.mysql.codegen;
 import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.config.mybatis.core.mapper.BaseMapperX;
 import com.muang.ai.claw.config.mybatis.core.query.LambdaQueryWrapperX;
-import com.muang.ai.claw.module.infra.controller.admin.codegen.vo.table.CodegenTablePageReqVO;
+import com.muang.ai.claw.module.infra.controller.admin.codegen.vo.table.CodegenTablePageForm;
 import com.muang.ai.claw.module.infra.dal.dataobject.codegen.CodegenTableDO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -17,7 +17,7 @@ public interface CodegenTableMapper extends BaseMapperX<CodegenTableDO> {
                 CodegenTableDO::getDataSourceConfigId, dataSourceConfigId);
     }
 
-    default PageResult<CodegenTableDO> selectPage(CodegenTablePageReqVO pageReqVO) {
+    default PageResult<CodegenTableDO> selectPage(CodegenTablePageForm pageReqVO) {
         return selectPage(pageReqVO, new LambdaQueryWrapperX<CodegenTableDO>()
                 .likeIfPresent(CodegenTableDO::getTableName, pageReqVO.getTableName())
                 .likeIfPresent(CodegenTableDO::getTableComment, pageReqVO.getTableComment())

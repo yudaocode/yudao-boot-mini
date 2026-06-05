@@ -34,14 +34,14 @@ public class MailTemplateController {
     @PostMapping("/create")
     @Operation(summary = "创建邮件模版")
     @PreAuthorize("@ss.hasPermission('system:mail-template:create')")
-    public CommonResult<Long> createMailTemplate(@Valid @RequestBody MailTemplateSaveReqVO createReqVO){
+    public CommonResult<Long> createMailTemplate(@Valid @RequestBody MailTemplateSaveForm createReqVO){
         return success(mailTempleService.createMailTemplate(createReqVO));
     }
 
     @PutMapping("/update")
     @Operation(summary = "修改邮件模版")
     @PreAuthorize("@ss.hasPermission('system:mail-template:update')")
-    public CommonResult<Boolean> updateMailTemplate(@Valid @RequestBody MailTemplateSaveReqVO updateReqVO){
+    public CommonResult<Boolean> updateMailTemplate(@Valid @RequestBody MailTemplateSaveForm updateReqVO){
         mailTempleService.updateMailTemplate(updateReqVO);
         return success(true);
     }
@@ -76,7 +76,7 @@ public class MailTemplateController {
     @GetMapping("/page")
     @Operation(summary = "获得邮件模版分页")
     @PreAuthorize("@ss.hasPermission('system:mail-template:query')")
-    public CommonResult<PageResult<MailTemplateRespVO>> getMailTemplatePage(@Valid MailTemplatePageReqVO pageReqVO) {
+    public CommonResult<PageResult<MailTemplateRespVO>> getMailTemplatePage(@Valid MailTemplatePageForm pageReqVO) {
         PageResult<MailTemplateDO> pageResult = mailTempleService.getMailTemplatePage(pageReqVO);
         return success(BeanUtils.toBean(pageResult, MailTemplateRespVO.class));
     }
@@ -92,7 +92,7 @@ public class MailTemplateController {
     @PostMapping("/send-mail")
     @Operation(summary = "发送短信")
     @PreAuthorize("@ss.hasPermission('system:mail-template:send-mail')")
-    public CommonResult<Long> sendMail(@Valid @RequestBody MailTemplateSendReqVO sendReqVO) {
+    public CommonResult<Long> sendMail(@Valid @RequestBody MailTemplateSendForm sendReqVO) {
         return success(mailSendService.sendSingleMailToAdmin(getLoginUserId(),
                 sendReqVO.getToMails(), sendReqVO.getCcMails(), sendReqVO.getBccMails(),
                 sendReqVO.getTemplateCode(), sendReqVO.getTemplateParams()));

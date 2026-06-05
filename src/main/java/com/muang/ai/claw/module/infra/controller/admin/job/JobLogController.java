@@ -6,7 +6,7 @@ import com.muang.ai.claw.common.core.PageParam;
 import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.config.excel.util.ExcelUtils;
-import com.muang.ai.claw.module.infra.controller.admin.job.vo.log.JobLogPageReqVO;
+import com.muang.ai.claw.module.infra.controller.admin.job.vo.log.JobLogPageForm;
 import com.muang.ai.claw.module.infra.controller.admin.job.vo.log.JobLogRespVO;
 import com.muang.ai.claw.module.infra.dal.dataobject.job.JobLogDO;
 import com.muang.ai.claw.module.infra.service.job.JobLogService;
@@ -50,7 +50,7 @@ public class JobLogController {
     @GetMapping("/page")
     @Operation(summary = "获得定时任务日志分页")
     @PreAuthorize("@ss.hasPermission('infra:job:query')")
-    public CommonResult<PageResult<JobLogRespVO>> getJobLogPage(@Valid JobLogPageReqVO pageVO) {
+    public CommonResult<PageResult<JobLogRespVO>> getJobLogPage(@Valid JobLogPageForm pageVO) {
         PageResult<JobLogDO> pageResult = jobLogService.getJobLogPage(pageVO);
         return success(BeanUtils.toBean(pageResult, JobLogRespVO.class));
     }
@@ -59,7 +59,7 @@ public class JobLogController {
     @Operation(summary = "导出定时任务日志 Excel")
     @PreAuthorize("@ss.hasPermission('infra:job:export')")
     @ApiAccessLog(operateType = EXPORT)
-    public void exportJobLogExcel(@Valid JobLogPageReqVO exportReqVO,
+    public void exportJobLogExcel(@Valid JobLogPageForm exportReqVO,
                                   HttpServletResponse response) throws IOException {
         exportReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
         List<JobLogDO> list = jobLogService.getJobLogPage(exportReqVO).getList();

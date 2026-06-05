@@ -3,9 +3,9 @@ package com.muang.ai.claw.module.system.controller.admin.sms;
 import com.muang.ai.claw.common.core.CommonResult;
 import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.util.object.BeanUtils;
-import com.muang.ai.claw.module.system.controller.admin.sms.vo.channel.SmsChannelPageReqVO;
+import com.muang.ai.claw.module.system.controller.admin.sms.vo.channel.SmsChannelPageForm;
 import com.muang.ai.claw.module.system.controller.admin.sms.vo.channel.SmsChannelRespVO;
-import com.muang.ai.claw.module.system.controller.admin.sms.vo.channel.SmsChannelSaveReqVO;
+import com.muang.ai.claw.module.system.controller.admin.sms.vo.channel.SmsChannelSaveForm;
 import com.muang.ai.claw.module.system.controller.admin.sms.vo.channel.SmsChannelSimpleRespVO;
 import com.muang.ai.claw.module.system.dal.dataobject.sms.SmsChannelDO;
 import com.muang.ai.claw.module.system.service.sms.SmsChannelService;
@@ -33,14 +33,14 @@ public class SmsChannelController {
     @PostMapping("/create")
     @Operation(summary = "创建短信渠道")
     @PreAuthorize("@ss.hasPermission('system:sms-channel:create')")
-    public CommonResult<Long> createSmsChannel(@Valid @RequestBody SmsChannelSaveReqVO createReqVO) {
+    public CommonResult<Long> createSmsChannel(@Valid @RequestBody SmsChannelSaveForm createReqVO) {
         return success(smsChannelService.createSmsChannel(createReqVO));
     }
 
     @PutMapping("/update")
     @Operation(summary = "更新短信渠道")
     @PreAuthorize("@ss.hasPermission('system:sms-channel:update')")
-    public CommonResult<Boolean> updateSmsChannel(@Valid @RequestBody SmsChannelSaveReqVO updateReqVO) {
+    public CommonResult<Boolean> updateSmsChannel(@Valid @RequestBody SmsChannelSaveForm updateReqVO) {
         smsChannelService.updateSmsChannel(updateReqVO);
         return success(true);
     }
@@ -75,7 +75,7 @@ public class SmsChannelController {
     @GetMapping("/page")
     @Operation(summary = "获得短信渠道分页")
     @PreAuthorize("@ss.hasPermission('system:sms-channel:query')")
-    public CommonResult<PageResult<SmsChannelRespVO>> getSmsChannelPage(@Valid SmsChannelPageReqVO pageVO) {
+    public CommonResult<PageResult<SmsChannelRespVO>> getSmsChannelPage(@Valid SmsChannelPageForm pageVO) {
         PageResult<SmsChannelDO> pageResult = smsChannelService.getSmsChannelPage(pageVO);
         return success(BeanUtils.toBean(pageResult, SmsChannelRespVO.class));
     }

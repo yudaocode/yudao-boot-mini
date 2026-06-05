@@ -4,8 +4,8 @@ import cn.hutool.core.collection.CollUtil;
 import com.muang.ai.claw.constant.CommonStatusEnum;
 import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.util.object.BeanUtils;
-import com.muang.ai.claw.module.system.controller.admin.dept.vo.post.PostPageReqVO;
-import com.muang.ai.claw.module.system.controller.admin.dept.vo.post.PostSaveReqVO;
+import com.muang.ai.claw.module.system.controller.admin.dept.vo.post.PostPageForm;
+import com.muang.ai.claw.module.system.controller.admin.dept.vo.post.PostSaveForm;
 import com.muang.ai.claw.module.system.dal.dataobject.dept.PostDO;
 import com.muang.ai.claw.module.system.dal.mysql.dept.PostMapper;
 import jakarta.annotation.Resource;
@@ -32,7 +32,7 @@ public class PostService {
     @Resource
     private PostMapper postMapper;
 
-    public Long createPost(PostSaveReqVO createReqVO) {
+    public Long createPost(PostSaveForm createReqVO) {
         // 校验正确性
         validatePostForCreateOrUpdate(null, createReqVO.getName(), createReqVO.getCode());
 
@@ -42,7 +42,7 @@ public class PostService {
         return post.getId();
     }
 
-    public void updatePost(PostSaveReqVO updateReqVO) {
+    public void updatePost(PostSaveForm updateReqVO) {
         // 校验正确性
         validatePostForCreateOrUpdate(updateReqVO.getId(), updateReqVO.getName(), updateReqVO.getCode());
 
@@ -119,7 +119,7 @@ public class PostService {
         return postMapper.selectList(ids, statuses);
     }
 
-    public PageResult<PostDO> getPostPage(PostPageReqVO reqVO) {
+    public PageResult<PostDO> getPostPage(PostPageForm reqVO) {
         return postMapper.selectPage(reqVO);
     }
 

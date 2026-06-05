@@ -4,9 +4,9 @@ package com.muang.ai.claw.module.system.controller.admin.mail;
 import com.muang.ai.claw.common.core.CommonResult;
 import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.util.object.BeanUtils;
-import com.muang.ai.claw.module.system.controller.admin.mail.vo.account.MailAccountPageReqVO;
+import com.muang.ai.claw.module.system.controller.admin.mail.vo.account.MailAccountPageForm;
 import com.muang.ai.claw.module.system.controller.admin.mail.vo.account.MailAccountRespVO;
-import com.muang.ai.claw.module.system.controller.admin.mail.vo.account.MailAccountSaveReqVO;
+import com.muang.ai.claw.module.system.controller.admin.mail.vo.account.MailAccountSaveForm;
 import com.muang.ai.claw.module.system.controller.admin.mail.vo.account.MailAccountSimpleRespVO;
 import com.muang.ai.claw.module.system.dal.dataobject.mail.MailAccountDO;
 import com.muang.ai.claw.module.system.service.mail.MailAccountService;
@@ -33,14 +33,14 @@ public class MailAccountController {
     @PostMapping("/create")
     @Operation(summary = "创建邮箱账号")
     @PreAuthorize("@ss.hasPermission('system:mail-account:create')")
-    public CommonResult<Long> createMailAccount(@Valid @RequestBody MailAccountSaveReqVO createReqVO) {
+    public CommonResult<Long> createMailAccount(@Valid @RequestBody MailAccountSaveForm createReqVO) {
         return success(mailAccountService.createMailAccount(createReqVO));
     }
 
     @PutMapping("/update")
     @Operation(summary = "修改邮箱账号")
     @PreAuthorize("@ss.hasPermission('system:mail-account:update')")
-    public CommonResult<Boolean> updateMailAccount(@Valid @RequestBody MailAccountSaveReqVO updateReqVO) {
+    public CommonResult<Boolean> updateMailAccount(@Valid @RequestBody MailAccountSaveForm updateReqVO) {
         mailAccountService.updateMailAccount(updateReqVO);
         return success(true);
     }
@@ -75,7 +75,7 @@ public class MailAccountController {
     @GetMapping("/page")
     @Operation(summary = "获得邮箱账号分页")
     @PreAuthorize("@ss.hasPermission('system:mail-account:query')")
-    public CommonResult<PageResult<MailAccountRespVO>> getMailAccountPage(@Valid MailAccountPageReqVO pageReqVO) {
+    public CommonResult<PageResult<MailAccountRespVO>> getMailAccountPage(@Valid MailAccountPageForm pageReqVO) {
         PageResult<MailAccountDO> pageResult = mailAccountService.getMailAccountPage(pageReqVO);
         return success(BeanUtils.toBean(pageResult, MailAccountRespVO.class));
     }

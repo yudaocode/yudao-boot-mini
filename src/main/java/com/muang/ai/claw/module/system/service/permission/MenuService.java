@@ -5,7 +5,7 @@ import cn.hutool.core.util.ObjUtil;
 import cn.hutool.core.util.StrUtil;
 import com.muang.ai.claw.constant.CommonStatusEnum;
 import com.muang.ai.claw.util.object.BeanUtils;
-import com.muang.ai.claw.module.system.controller.admin.permission.vo.menu.MenuListReqVO;
+import com.muang.ai.claw.module.system.controller.admin.permission.vo.menu.MenuListForm;
 import com.muang.ai.claw.module.system.controller.admin.permission.vo.menu.MenuSaveVO;
 import com.muang.ai.claw.module.system.dal.dataobject.permission.MenuDO;
 import com.muang.ai.claw.module.system.dal.mysql.permission.MenuMapper;
@@ -121,7 +121,7 @@ public class MenuService {
         return menuMapper.selectList();
     }
 
-    public List<MenuDO> getMenuListByTenant(MenuListReqVO reqVO) {
+    public List<MenuDO> getMenuListByTenant(MenuListForm reqVO) {
         // 查询所有菜单，并过滤掉关闭的节点
         List<MenuDO> menus = getMenuList(reqVO);
         // 开启多租户的情况下，需要过滤掉未开通的菜单
@@ -174,7 +174,7 @@ public class MenuService {
         return false;
     }
 
-    public List<MenuDO> getMenuList(MenuListReqVO reqVO) {
+    public List<MenuDO> getMenuList(MenuListForm reqVO) {
         return menuMapper.selectList(reqVO);
     }
 

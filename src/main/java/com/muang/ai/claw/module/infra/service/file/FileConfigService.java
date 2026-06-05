@@ -6,8 +6,8 @@ import cn.hutool.core.util.StrUtil;
 import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.util.json.JsonUtils;
 import com.muang.ai.claw.util.validation.ValidationUtils;
-import com.muang.ai.claw.module.infra.controller.admin.file.vo.config.FileConfigPageReqVO;
-import com.muang.ai.claw.module.infra.controller.admin.file.vo.config.FileConfigSaveReqVO;
+import com.muang.ai.claw.module.infra.controller.admin.file.vo.config.FileConfigPageForm;
+import com.muang.ai.claw.module.infra.controller.admin.file.vo.config.FileConfigSaveForm;
 import com.muang.ai.claw.module.infra.convert.file.FileConfigConvert;
 import com.muang.ai.claw.module.infra.dal.dataobject.file.FileConfigDO;
 import com.muang.ai.claw.module.infra.dal.mysql.file.FileConfigMapper;
@@ -73,7 +73,7 @@ public class FileConfigService {
     @Resource
     private Validator validator;
 
-    public Long createFileConfig(FileConfigSaveReqVO createReqVO) {
+    public Long createFileConfig(FileConfigSaveForm createReqVO) {
         FileConfigDO fileConfig = FileConfigConvert.INSTANCE.convert(createReqVO)
                 .setConfig(parseClientConfig(createReqVO.getStorage(), createReqVO.getConfig()))
                 .setMaster(false); // 默认非 master
@@ -81,7 +81,7 @@ public class FileConfigService {
         return fileConfig.getId();
     }
 
-    public void updateFileConfig(FileConfigSaveReqVO updateReqVO) {
+    public void updateFileConfig(FileConfigSaveForm updateReqVO) {
         // 校验存在
         FileConfigDO config = validateFileConfigExists(updateReqVO.getId());
         // 更新
@@ -173,7 +173,7 @@ public class FileConfigService {
         return fileConfigMapper.selectById(id);
     }
 
-    public PageResult<FileConfigDO> getFileConfigPage(FileConfigPageReqVO pageReqVO) {
+    public PageResult<FileConfigDO> getFileConfigPage(FileConfigPageForm pageReqVO) {
         return fileConfigMapper.selectPage(pageReqVO);
     }
 

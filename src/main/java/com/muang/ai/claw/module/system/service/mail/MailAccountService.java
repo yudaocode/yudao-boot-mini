@@ -2,8 +2,8 @@ package com.muang.ai.claw.module.system.service.mail;
 
 import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.util.object.BeanUtils;
-import com.muang.ai.claw.module.system.controller.admin.mail.vo.account.MailAccountPageReqVO;
-import com.muang.ai.claw.module.system.controller.admin.mail.vo.account.MailAccountSaveReqVO;
+import com.muang.ai.claw.module.system.controller.admin.mail.vo.account.MailAccountPageForm;
+import com.muang.ai.claw.module.system.controller.admin.mail.vo.account.MailAccountSaveForm;
 import com.muang.ai.claw.module.system.dal.dataobject.mail.MailAccountDO;
 import com.muang.ai.claw.module.system.dal.mysql.mail.MailAccountMapper;
 import com.muang.ai.claw.module.system.dal.redis.RedisKeyConstants;
@@ -37,14 +37,14 @@ public class MailAccountService {
     @Resource
     private MailTemplateService mailTemplateService;
 
-    public Long createMailAccount(MailAccountSaveReqVO createReqVO) {
+    public Long createMailAccount(MailAccountSaveForm createReqVO) {
         MailAccountDO account = BeanUtils.toBean(createReqVO, MailAccountDO.class);
         mailAccountMapper.insert(account);
         return account.getId();
     }
 
     @CacheEvict(value = RedisKeyConstants.MAIL_ACCOUNT, key = "#updateReqVO.id")
-    public void updateMailAccount(MailAccountSaveReqVO updateReqVO) {
+    public void updateMailAccount(MailAccountSaveForm updateReqVO) {
         // 校验是否存在
         validateMailAccountExists(updateReqVO.getId());
 
@@ -95,7 +95,7 @@ public class MailAccountService {
         return getMailAccount(id);
     }
 
-    public PageResult<MailAccountDO> getMailAccountPage(MailAccountPageReqVO pageReqVO) {
+    public PageResult<MailAccountDO> getMailAccountPage(MailAccountPageForm pageReqVO) {
         return mailAccountMapper.selectPage(pageReqVO);
     }
 

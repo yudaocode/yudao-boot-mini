@@ -9,8 +9,8 @@ import cn.hutool.crypto.digest.DigestUtil;
 import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.util.http.HttpUtils;
 import com.muang.ai.claw.util.object.BeanUtils;
-import com.muang.ai.claw.module.infra.controller.admin.file.vo.file.FileCreateReqVO;
-import com.muang.ai.claw.module.infra.controller.admin.file.vo.file.FilePageReqVO;
+import com.muang.ai.claw.module.infra.controller.admin.file.vo.file.FileCreateForm;
+import com.muang.ai.claw.module.infra.controller.admin.file.vo.file.FilePageForm;
 import com.muang.ai.claw.module.infra.controller.admin.file.vo.file.FilePresignedUrlRespVO;
 import com.muang.ai.claw.module.infra.dal.dataobject.file.FileDO;
 import com.muang.ai.claw.module.infra.dal.mysql.file.FileMapper;
@@ -62,7 +62,7 @@ public class FileService {
     @Resource
     private FileMapper fileMapper;
 
-    public PageResult<FileDO> getFilePage(FilePageReqVO pageReqVO) {
+    public PageResult<FileDO> getFilePage(FilePageForm pageReqVO) {
         return fileMapper.selectPage(pageReqVO);
     }
 
@@ -160,7 +160,7 @@ public class FileService {
         return fileClient.presignGetUrl(url, expirationSeconds);
     }
 
-    public Long createFile(FileCreateReqVO createReqVO) {
+    public Long createFile(FileCreateForm createReqVO) {
         // 1.1 校验参数的合法性
         FilePathUtils.validatePath(createReqVO.getPath());
         createReqVO.setName(FilePathUtils.validateFileName(createReqVO.getName()));
