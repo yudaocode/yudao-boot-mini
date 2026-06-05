@@ -7,7 +7,7 @@ import com.muang.ai.claw.common.biz.system.oauth2.dto.OAuth2AccessTokenCheckResp
 import com.muang.ai.claw.common.exception.ServiceException;
 import com.muang.ai.claw.common.pojo.CommonResult;
 import com.muang.ai.claw.util.servlet.ServletUtils;
-import com.muang.ai.claw.common.security.config.SecurityProperties;
+import com.muang.ai.claw.config.SecurityProperties;
 import com.muang.ai.claw.common.security.core.LoginUser;
 import com.muang.ai.claw.common.security.core.util.SecurityFrameworkUtils;
 import com.muang.ai.claw.handler.GlobalExceptionHandler;
