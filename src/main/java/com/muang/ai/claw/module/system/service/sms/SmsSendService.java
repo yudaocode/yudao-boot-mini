@@ -7,7 +7,7 @@ import cn.hutool.core.util.StrUtil;
 import com.muang.ai.claw.common.core.KeyValue;
 import com.muang.ai.claw.constant.CommonStatusEnum;
 import com.muang.ai.claw.constant.UserTypeEnum;
-import com.muang.ai.claw.common.datapermission.core.annotation.DataPermission;
+import com.muang.ai.claw.config.datapermission.core.annotation.DataPermission;
 import com.muang.ai.claw.module.system.framework.sms.core.client.SmsClient;
 import com.muang.ai.claw.module.system.framework.sms.core.client.dto.SmsReceiveRespDTO;
 import com.muang.ai.claw.module.system.framework.sms.core.client.dto.SmsSendRespDTO;

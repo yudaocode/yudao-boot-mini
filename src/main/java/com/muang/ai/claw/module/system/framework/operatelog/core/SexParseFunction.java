@@ -1,7 +1,7 @@
 package com.muang.ai.claw.module.system.framework.operatelog.core;
 
 import cn.hutool.core.util.StrUtil;
-import com.muang.ai.claw.common.dict.core.DictFrameworkUtils;
+import com.muang.ai.claw.config.dict.core.DictFrameworkUtils;
 import com.muang.ai.claw.module.system.enums.DictTypeConstants;
 import com.mzt.logapi.service.IParseFunction;
 import lombok.extern.slf4j.Slf4j;

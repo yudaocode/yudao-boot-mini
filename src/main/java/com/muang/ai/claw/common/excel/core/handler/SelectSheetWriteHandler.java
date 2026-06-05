@@ -7,7 +7,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import cn.hutool.poi.excel.ExcelUtil;
 import com.muang.ai.claw.common.core.KeyValue;
-import com.muang.ai.claw.common.dict.core.DictFrameworkUtils;
+import com.muang.ai.claw.config.dict.core.DictFrameworkUtils;
 import com.muang.ai.claw.common.excel.core.annotations.ExcelColumnSelect;
 import com.muang.ai.claw.common.excel.core.function.ExcelColumnSelectFunction;
 import cn.idev.excel.annotation.ExcelIgnore;

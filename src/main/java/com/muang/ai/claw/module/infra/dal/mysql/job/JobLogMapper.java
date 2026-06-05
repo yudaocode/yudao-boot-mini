@@ -1,8 +1,8 @@
 package com.muang.ai.claw.module.infra.dal.mysql.job;
 
 import com.muang.ai.claw.common.pojo.PageResult;
-import com.muang.ai.claw.common.mybatis.core.mapper.BaseMapperX;
-import com.muang.ai.claw.common.mybatis.core.query.LambdaQueryWrapperX;
+import com.muang.ai.claw.config.mybatis.core.mapper.BaseMapperX;
+import com.muang.ai.claw.config.mybatis.core.query.LambdaQueryWrapperX;
 import com.muang.ai.claw.module.infra.controller.admin.job.vo.log.JobLogPageReqVO;
 import com.muang.ai.claw.module.infra.dal.dataobject.job.JobLogDO;
 import org.apache.ibatis.annotations.Delete;

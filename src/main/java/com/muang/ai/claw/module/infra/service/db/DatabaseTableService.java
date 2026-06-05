@@ -3,7 +3,7 @@ package com.muang.ai.claw.module.infra.service.db;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.StrUtil;
-import com.muang.ai.claw.common.mybatis.core.util.JdbcUtils;
+import com.muang.ai.claw.config.mybatis.core.util.JdbcUtils;
 import com.muang.ai.claw.module.infra.dal.dataobject.db.DataSourceConfigDO;
 import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
 import com.baomidou.mybatisplus.generator.config.GlobalConfig;

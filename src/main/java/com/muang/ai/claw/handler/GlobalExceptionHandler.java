@@ -14,7 +14,7 @@ import com.muang.ai.claw.util.collection.SetUtils;
 import com.muang.ai.claw.util.json.JsonUtils;
 import com.muang.ai.claw.util.monitor.TracerUtils;
 import com.muang.ai.claw.util.servlet.ServletUtils;
-import com.muang.ai.claw.common.web.core.util.WebFrameworkUtils;
+import com.muang.ai.claw.config.web.core.util.WebFrameworkUtils;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.google.common.util.concurrent.UncheckedExecutionException;
 import jakarta.servlet.http.HttpServletRequest;

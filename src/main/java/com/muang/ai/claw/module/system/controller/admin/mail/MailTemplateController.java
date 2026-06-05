@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 import static com.muang.ai.claw.common.pojo.CommonResult.success;
-import static com.muang.ai.claw.common.security.core.util.SecurityFrameworkUtils.getLoginUserId;
+import static com.muang.ai.claw.config.security.core.util.SecurityFrameworkUtils.getLoginUserId;
 
 @Tag(name = "管理后台 - 邮件模版")
 @RestController

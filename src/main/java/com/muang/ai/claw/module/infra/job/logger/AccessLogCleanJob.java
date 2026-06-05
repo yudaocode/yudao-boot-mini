@@ -1,7 +1,7 @@
 package com.muang.ai.claw.module.infra.job.logger;
 
-import com.muang.ai.claw.common.quartz.core.handler.JobHandler;
-import com.muang.ai.claw.common.tenant.core.aop.TenantIgnore;
+import com.muang.ai.claw.config.quartz.core.handler.JobHandler;
+import com.muang.ai.claw.config.tenant.core.aop.TenantIgnore;
 import com.muang.ai.claw.module.infra.service.logger.ApiAccessLogService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

@@ -1,7 +1,7 @@
 package com.muang.ai.claw.module.infra.dal.mysql.codegen;
 
-import com.muang.ai.claw.common.mybatis.core.mapper.BaseMapperX;
-import com.muang.ai.claw.common.mybatis.core.query.LambdaQueryWrapperX;
+import com.muang.ai.claw.config.mybatis.core.mapper.BaseMapperX;
+import com.muang.ai.claw.config.mybatis.core.query.LambdaQueryWrapperX;
 import com.muang.ai.claw.module.infra.dal.dataobject.codegen.CodegenColumnDO;
 import org.apache.ibatis.annotations.Mapper;
 

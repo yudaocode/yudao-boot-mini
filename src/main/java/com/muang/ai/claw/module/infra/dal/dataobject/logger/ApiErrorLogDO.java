@@ -1,7 +1,7 @@
 package com.muang.ai.claw.module.infra.dal.dataobject.logger;
 
 import com.muang.ai.claw.constant.UserTypeEnum;
-import com.muang.ai.claw.common.mybatis.core.dataobject.BaseDO;
+import com.muang.ai.claw.config.mybatis.core.dataobject.BaseDO;
 import com.muang.ai.claw.module.infra.enums.logger.ApiErrorLogProcessStatusEnum;
 import com.baomidou.mybatisplus.annotation.KeySequence;
 import com.baomidou.mybatisplus.annotation.TableId;

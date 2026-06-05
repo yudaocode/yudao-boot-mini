@@ -4,7 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.muang.ai.claw.common.pojo.PageResult;
 import com.muang.ai.claw.util.object.BeanUtils;
-import com.muang.ai.claw.common.mybatis.core.util.JdbcUtils;
+import com.muang.ai.claw.config.mybatis.core.util.JdbcUtils;
 import com.muang.ai.claw.module.infra.controller.admin.codegen.vo.CodegenCreateListReqVO;
 import com.muang.ai.claw.module.infra.controller.admin.codegen.vo.CodegenUpdateReqVO;
 import com.muang.ai.claw.module.infra.controller.admin.codegen.vo.table.CodegenTablePageReqVO;

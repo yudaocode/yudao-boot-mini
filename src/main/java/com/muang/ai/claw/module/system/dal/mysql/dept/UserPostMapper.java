@@ -1,7 +1,7 @@
 package com.muang.ai.claw.module.system.dal.mysql.dept;
 
-import com.muang.ai.claw.common.mybatis.core.mapper.BaseMapperX;
-import com.muang.ai.claw.common.mybatis.core.query.LambdaQueryWrapperX;
+import com.muang.ai.claw.config.mybatis.core.mapper.BaseMapperX;
+import com.muang.ai.claw.config.mybatis.core.query.LambdaQueryWrapperX;
 import com.muang.ai.claw.module.system.dal.dataobject.dept.UserPostDO;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.apache.ibatis.annotations.Mapper;

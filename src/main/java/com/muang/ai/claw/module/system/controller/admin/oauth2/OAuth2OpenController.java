@@ -40,7 +40,7 @@ import static com.muang.ai.claw.common.exception.enums.GlobalErrorCodeConstants.
 import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception0;
 import static com.muang.ai.claw.common.pojo.CommonResult.success;
 import static com.muang.ai.claw.util.collection.CollectionUtils.convertList;
-import static com.muang.ai.claw.common.security.core.util.SecurityFrameworkUtils.getLoginUserId;
+import static com.muang.ai.claw.config.security.core.util.SecurityFrameworkUtils.getLoginUserId;
 
 /**
  * 提供给外部应用调用为主

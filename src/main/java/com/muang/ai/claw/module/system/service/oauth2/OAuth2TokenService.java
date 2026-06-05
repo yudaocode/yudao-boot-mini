@@ -11,9 +11,9 @@ import com.muang.ai.claw.common.exception.enums.GlobalErrorCodeConstants;
 import com.muang.ai.claw.common.pojo.PageResult;
 import com.muang.ai.claw.util.date.DateUtils;
 import com.muang.ai.claw.util.object.BeanUtils;
-import com.muang.ai.claw.common.security.core.LoginUser;
-import com.muang.ai.claw.common.tenant.core.context.TenantContextHolder;
-import com.muang.ai.claw.common.tenant.core.util.TenantUtils;
+import com.muang.ai.claw.config.security.core.LoginUser;
+import com.muang.ai.claw.config.tenant.core.context.TenantContextHolder;
+import com.muang.ai.claw.config.tenant.core.util.TenantUtils;
 import com.muang.ai.claw.module.system.controller.admin.oauth2.vo.token.OAuth2AccessTokenPageReqVO;
 import com.muang.ai.claw.module.system.dal.dataobject.oauth2.OAuth2AccessTokenDO;
 import com.muang.ai.claw.module.system.dal.dataobject.oauth2.OAuth2ClientDO;
@@ -206,7 +206,7 @@ public class OAuth2TokenService {
     }
 
     /**
-     * 加载用户信息，方便 {@link com.muang.ai.claw.common.security.core.LoginUser} 获取到昵称、部门等信息
+     * 加载用户信息，方便 {@link com.muang.ai.claw.config.security.core.LoginUser} 获取到昵称、部门等信息
      *
      * @param userId 用户编号
      * @param userType 用户类型

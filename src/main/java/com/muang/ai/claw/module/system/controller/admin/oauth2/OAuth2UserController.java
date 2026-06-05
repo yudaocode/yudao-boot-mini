@@ -24,7 +24,7 @@ import jakarta.validation.Valid;
 import java.util.List;
 
 import static com.muang.ai.claw.common.pojo.CommonResult.success;
-import static com.muang.ai.claw.common.security.core.util.SecurityFrameworkUtils.getLoginUserId;
+import static com.muang.ai.claw.config.security.core.util.SecurityFrameworkUtils.getLoginUserId;
 
 /**
  * 提供给外部应用调用为主

@@ -5,7 +5,7 @@ import com.muang.ai.claw.common.core.KeyValue;
 import com.muang.ai.claw.constant.UserTypeEnum;
 import com.muang.ai.claw.util.collection.CollectionUtils;
 import com.muang.ai.claw.util.object.BeanUtils;
-import com.muang.ai.claw.common.security.core.util.SecurityFrameworkUtils;
+import com.muang.ai.claw.config.security.core.util.SecurityFrameworkUtils;
 import com.muang.ai.claw.module.system.controller.admin.oauth2.vo.open.OAuth2OpenAccessTokenRespVO;
 import com.muang.ai.claw.module.system.controller.admin.oauth2.vo.open.OAuth2OpenAuthorizeInfoRespVO;
 import com.muang.ai.claw.module.system.controller.admin.oauth2.vo.open.OAuth2OpenCheckTokenRespVO;

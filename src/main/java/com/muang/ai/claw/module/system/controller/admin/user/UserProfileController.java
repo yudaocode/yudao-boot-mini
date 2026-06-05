@@ -2,7 +2,7 @@ package com.muang.ai.claw.module.system.controller.admin.user;
 
 import cn.hutool.core.collection.CollUtil;
 import com.muang.ai.claw.common.pojo.CommonResult;
-import com.muang.ai.claw.common.datapermission.core.annotation.DataPermission;
+import com.muang.ai.claw.config.datapermission.core.annotation.DataPermission;
 import com.muang.ai.claw.module.system.controller.admin.user.vo.profile.UserProfileRespVO;
 import com.muang.ai.claw.module.system.controller.admin.user.vo.profile.UserProfileUpdatePasswordReqVO;
 import com.muang.ai.claw.module.system.controller.admin.user.vo.profile.UserProfileUpdateReqVO;
@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 import static com.muang.ai.claw.common.pojo.CommonResult.success;
-import static com.muang.ai.claw.common.security.core.util.SecurityFrameworkUtils.getLoginUserId;
+import static com.muang.ai.claw.config.security.core.util.SecurityFrameworkUtils.getLoginUserId;
 
 @Tag(name = "管理后台 - 用户个人中心")
 @RestController

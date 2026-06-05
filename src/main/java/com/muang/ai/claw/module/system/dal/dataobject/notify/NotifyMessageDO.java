@@ -1,8 +1,7 @@
 package com.muang.ai.claw.module.system.dal.dataobject.notify;
 
 import com.muang.ai.claw.constant.UserTypeEnum;
-import com.muang.ai.claw.common.mybatis.core.dataobject.BaseDO;
-import com.muang.ai.claw.module.system.dal.dataobject.mail.MailTemplateDO;
+import com.muang.ai.claw.config.mybatis.core.dataobject.BaseDO;
 import com.baomidou.mybatisplus.annotation.KeySequence;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -11,7 +10,6 @@ import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.Map;
 
 /**

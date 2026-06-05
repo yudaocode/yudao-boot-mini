@@ -6,7 +6,7 @@ import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import com.muang.ai.claw.constant.CommonStatusEnum;
 import com.muang.ai.claw.util.collection.CollectionUtils;
-import com.muang.ai.claw.common.datapermission.core.annotation.DataPermission;
+import com.muang.ai.claw.config.datapermission.core.annotation.DataPermission;
 import com.muang.ai.claw.common.biz.system.permission.dto.DeptDataPermissionRespDTO;
 import com.muang.ai.claw.module.system.dal.dataobject.permission.MenuDO;
 import com.muang.ai.claw.module.system.dal.dataobject.permission.RoleDO;

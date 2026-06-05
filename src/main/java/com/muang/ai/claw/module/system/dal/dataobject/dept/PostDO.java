@@ -1,7 +1,7 @@
 package com.muang.ai.claw.module.system.dal.dataobject.dept;
 
 import com.muang.ai.claw.constant.CommonStatusEnum;
-import com.muang.ai.claw.common.mybatis.core.dataobject.BaseDO;
+import com.muang.ai.claw.config.mybatis.core.dataobject.BaseDO;
 import com.baomidou.mybatisplus.annotation.KeySequence;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;

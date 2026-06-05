@@ -1,13 +1,13 @@
 package com.muang.ai.claw.module.system.controller.admin.tenant;
 
-import com.muang.ai.claw.common.apilog.core.annotation.ApiAccessLog;
+import com.muang.ai.claw.config.apilog.core.annotation.ApiAccessLog;
 import com.muang.ai.claw.constant.CommonStatusEnum;
 import com.muang.ai.claw.common.pojo.CommonResult;
 import com.muang.ai.claw.common.pojo.PageParam;
 import com.muang.ai.claw.common.pojo.PageResult;
 import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.common.excel.core.util.ExcelUtils;
-import com.muang.ai.claw.common.tenant.core.aop.TenantIgnore;
+import com.muang.ai.claw.config.tenant.core.aop.TenantIgnore;
 import com.muang.ai.claw.module.system.controller.admin.tenant.vo.tenant.TenantPageReqVO;
 import com.muang.ai.claw.module.system.controller.admin.tenant.vo.tenant.TenantRespVO;
 import com.muang.ai.claw.module.system.controller.admin.tenant.vo.tenant.TenantSaveReqVO;
@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.util.List;
 
-import static com.muang.ai.claw.common.apilog.core.enums.OperateTypeEnum.EXPORT;
+import static com.muang.ai.claw.config.apilog.core.enums.OperateTypeEnum.EXPORT;
 import static com.muang.ai.claw.common.pojo.CommonResult.success;
 import static com.muang.ai.claw.util.collection.CollectionUtils.convertList;
 

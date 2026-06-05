@@ -1,6 +1,6 @@
 package com.muang.ai.claw.module.system.controller.admin.sms;
 
-import com.muang.ai.claw.common.apilog.core.annotation.ApiAccessLog;
+import com.muang.ai.claw.config.apilog.core.annotation.ApiAccessLog;
 import com.muang.ai.claw.common.pojo.CommonResult;
 import com.muang.ai.claw.common.pojo.PageParam;
 import com.muang.ai.claw.common.pojo.PageResult;
@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 import java.util.List;
 
-import static com.muang.ai.claw.common.apilog.core.enums.OperateTypeEnum.EXPORT;
+import static com.muang.ai.claw.config.apilog.core.enums.OperateTypeEnum.EXPORT;
 import static com.muang.ai.claw.common.pojo.CommonResult.success;
 
 @Tag(name = "管理后台 - 短信日志")

@@ -1,9 +1,9 @@
 package com.muang.ai.claw.module.infra.websocket;
 
 import com.muang.ai.claw.constant.UserTypeEnum;
-import com.muang.ai.claw.third.websocket.core.listener.WebSocketMessageListener;
-import com.muang.ai.claw.third.websocket.core.sender.WebSocketMessageSender;
-import com.muang.ai.claw.third.websocket.core.util.WebSocketFrameworkUtils;
+import com.muang.ai.claw.config.websocket.core.listener.WebSocketMessageListener;
+import com.muang.ai.claw.config.websocket.core.sender.WebSocketMessageSender;
+import com.muang.ai.claw.config.websocket.core.util.WebSocketFrameworkUtils;
 import com.muang.ai.claw.module.infra.websocket.message.DemoReceiveMessage;
 import com.muang.ai.claw.module.infra.websocket.message.DemoSendMessage;
 import org.springframework.beans.factory.annotation.Autowired;

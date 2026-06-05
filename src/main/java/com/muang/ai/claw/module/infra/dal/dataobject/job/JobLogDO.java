@@ -1,8 +1,8 @@
 package com.muang.ai.claw.module.infra.dal.dataobject.job;
 
-import com.muang.ai.claw.common.mybatis.core.dataobject.BaseDO;
-import com.muang.ai.claw.common.quartz.core.handler.JobHandler;
-import com.muang.ai.claw.common.tenant.core.aop.TenantIgnore;
+import com.muang.ai.claw.config.mybatis.core.dataobject.BaseDO;
+import com.muang.ai.claw.config.quartz.core.handler.JobHandler;
+import com.muang.ai.claw.config.tenant.core.aop.TenantIgnore;
 import com.muang.ai.claw.module.infra.enums.job.JobLogStatusEnum;
 import com.baomidou.mybatisplus.annotation.KeySequence;
 import com.baomidou.mybatisplus.annotation.TableName;

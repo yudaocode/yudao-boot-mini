@@ -6,7 +6,7 @@ import cn.hutool.core.util.URLUtil;
 import com.muang.ai.claw.common.pojo.CommonResult;
 import com.muang.ai.claw.common.pojo.PageResult;
 import com.muang.ai.claw.util.object.BeanUtils;
-import com.muang.ai.claw.common.tenant.core.aop.TenantIgnore;
+import com.muang.ai.claw.config.tenant.core.aop.TenantIgnore;
 import com.muang.ai.claw.module.infra.controller.admin.file.vo.file.*;
 import com.muang.ai.claw.module.infra.dal.dataobject.file.FileDO;
 import com.muang.ai.claw.module.infra.service.file.FileService;

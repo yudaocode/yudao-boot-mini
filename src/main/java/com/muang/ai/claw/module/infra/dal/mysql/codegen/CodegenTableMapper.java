@@ -1,8 +1,8 @@
 package com.muang.ai.claw.module.infra.dal.mysql.codegen;
 
 import com.muang.ai.claw.common.pojo.PageResult;
-import com.muang.ai.claw.common.mybatis.core.mapper.BaseMapperX;
-import com.muang.ai.claw.common.mybatis.core.query.LambdaQueryWrapperX;
+import com.muang.ai.claw.config.mybatis.core.mapper.BaseMapperX;
+import com.muang.ai.claw.config.mybatis.core.query.LambdaQueryWrapperX;
 import com.muang.ai.claw.module.infra.controller.admin.codegen.vo.table.CodegenTablePageReqVO;
 import com.muang.ai.claw.module.infra.dal.dataobject.codegen.CodegenTableDO;
 import org.apache.ibatis.annotations.Mapper;

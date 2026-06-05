@@ -1,8 +1,8 @@
 package com.muang.ai.claw.module.system.dal.mysql.mail;
 
 import com.muang.ai.claw.common.pojo.PageResult;
-import com.muang.ai.claw.common.mybatis.core.mapper.BaseMapperX;
-import com.muang.ai.claw.common.mybatis.core.query.LambdaQueryWrapperX;
+import com.muang.ai.claw.config.mybatis.core.mapper.BaseMapperX;
+import com.muang.ai.claw.config.mybatis.core.query.LambdaQueryWrapperX;
 import com.muang.ai.claw.module.system.controller.admin.mail.vo.account.MailAccountPageReqVO;
 import com.muang.ai.claw.module.system.dal.dataobject.mail.MailAccountDO;
 import org.apache.ibatis.annotations.Mapper;

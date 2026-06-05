@@ -1,8 +1,8 @@
 package com.muang.ai.claw.module.system.job;
 
-import com.muang.ai.claw.common.quartz.core.handler.JobHandler;
-import com.muang.ai.claw.common.tenant.core.context.TenantContextHolder;
-import com.muang.ai.claw.common.tenant.core.job.TenantJob;
+import com.muang.ai.claw.config.quartz.core.handler.JobHandler;
+import com.muang.ai.claw.config.tenant.core.context.TenantContextHolder;
+import com.muang.ai.claw.config.tenant.core.job.TenantJob;
 import com.muang.ai.claw.module.system.dal.dataobject.user.AdminUserDO;
 import com.muang.ai.claw.module.system.dal.mysql.user.AdminUserMapper;
 import org.springframework.stereotype.Component;

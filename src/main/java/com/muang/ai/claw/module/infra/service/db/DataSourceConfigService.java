@@ -1,7 +1,7 @@
 package com.muang.ai.claw.module.infra.service.db;
 
 import com.muang.ai.claw.util.object.BeanUtils;
-import com.muang.ai.claw.common.mybatis.core.util.JdbcUtils;
+import com.muang.ai.claw.config.mybatis.core.util.JdbcUtils;
 import com.muang.ai.claw.module.infra.controller.admin.db.vo.DataSourceConfigSaveReqVO;
 import com.muang.ai.claw.module.infra.dal.dataobject.db.DataSourceConfigDO;
 import com.muang.ai.claw.module.infra.dal.mysql.db.DataSourceConfigMapper;

@@ -4,7 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.muang.ai.claw.constant.CommonStatusEnum;
 import com.muang.ai.claw.util.object.BeanUtils;
-import com.muang.ai.claw.common.datapermission.core.annotation.DataPermission;
+import com.muang.ai.claw.config.datapermission.core.annotation.DataPermission;
 import com.muang.ai.claw.module.system.controller.admin.dept.vo.dept.DeptListReqVO;
 import com.muang.ai.claw.module.system.controller.admin.dept.vo.dept.DeptSaveReqVO;
 import com.muang.ai.claw.module.system.dal.dataobject.dept.DeptDO;

@@ -1,7 +1,7 @@
 package com.muang.ai.claw.module.system.dal.dataobject.permission;
 
 import com.muang.ai.claw.constant.CommonStatusEnum;
-import com.muang.ai.claw.common.tenant.core.db.TenantBaseDO;
+import com.muang.ai.claw.config.tenant.core.db.TenantBaseDO;
 import com.muang.ai.claw.module.system.enums.permission.DataScopeEnum;
 import com.muang.ai.claw.module.system.enums.permission.RoleTypeEnum;
 import com.baomidou.mybatisplus.annotation.KeySequence;

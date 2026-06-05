@@ -11,7 +11,7 @@ import com.muang.ai.claw.common.pojo.PageResult;
 import com.muang.ai.claw.util.collection.CollectionUtils;
 import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.util.validation.ValidationUtils;
-import com.muang.ai.claw.common.datapermission.core.util.DataPermissionUtils;
+import com.muang.ai.claw.config.datapermission.core.util.DataPermissionUtils;
 import com.muang.ai.claw.module.infra.api.config.ConfigApi;
 import com.muang.ai.claw.module.system.controller.admin.auth.vo.AuthRegisterReqVO;
 import com.muang.ai.claw.module.system.controller.admin.user.vo.profile.UserProfileUpdatePasswordReqVO;

@@ -1,7 +1,7 @@
 package com.muang.ai.claw.module.system.dal.dataobject.oauth2;
 
 import com.muang.ai.claw.constant.UserTypeEnum;
-import com.muang.ai.claw.common.mybatis.core.dataobject.BaseDO;
+import com.muang.ai.claw.config.mybatis.core.dataobject.BaseDO;
 import com.baomidou.mybatisplus.annotation.KeySequence;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;

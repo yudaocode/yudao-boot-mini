@@ -1,7 +1,7 @@
 package com.muang.ai.claw.module.system.job.token;
 
-import com.muang.ai.claw.common.quartz.core.handler.JobHandler;
-import com.muang.ai.claw.common.tenant.core.aop.TenantIgnore;
+import com.muang.ai.claw.config.quartz.core.handler.JobHandler;
+import com.muang.ai.claw.config.tenant.core.aop.TenantIgnore;
 import com.muang.ai.claw.module.system.service.oauth2.OAuth2TokenService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;

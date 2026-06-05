@@ -7,7 +7,7 @@ import com.muang.ai.claw.util.monitor.TracerUtils;
 import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.util.servlet.ServletUtils;
 import com.muang.ai.claw.util.validation.ValidationUtils;
-import com.muang.ai.claw.common.datapermission.core.annotation.DataPermission;
+import com.muang.ai.claw.config.datapermission.core.annotation.DataPermission;
 import com.muang.ai.claw.module.system.api.logger.dto.LoginLogCreateReqDTO;
 import com.muang.ai.claw.module.system.api.sms.SmsCodeApi;
 import com.muang.ai.claw.module.system.api.sms.dto.code.SmsCodeUseReqDTO;

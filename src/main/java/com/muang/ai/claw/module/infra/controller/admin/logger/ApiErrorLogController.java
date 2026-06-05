@@ -1,6 +1,6 @@
 package com.muang.ai.claw.module.infra.controller.admin.logger;
 
-import com.muang.ai.claw.common.apilog.core.annotation.ApiAccessLog;
+import com.muang.ai.claw.config.apilog.core.annotation.ApiAccessLog;
 import com.muang.ai.claw.common.pojo.CommonResult;
 import com.muang.ai.claw.common.pojo.PageParam;
 import com.muang.ai.claw.common.pojo.PageResult;
@@ -24,9 +24,9 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.util.List;
 
-import static com.muang.ai.claw.common.apilog.core.enums.OperateTypeEnum.EXPORT;
+import static com.muang.ai.claw.config.apilog.core.enums.OperateTypeEnum.EXPORT;
 import static com.muang.ai.claw.common.pojo.CommonResult.success;
-import static com.muang.ai.claw.common.security.core.util.SecurityFrameworkUtils.getLoginUserId;
+import static com.muang.ai.claw.config.security.core.util.SecurityFrameworkUtils.getLoginUserId;
 
 @Tag(name = "管理后台 - API 错误日志")
 @RestController

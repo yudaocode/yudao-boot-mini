@@ -1,7 +1,7 @@
 package com.muang.ai.claw.module.system.controller.admin.user;
 
 import cn.hutool.core.collection.CollUtil;
-import com.muang.ai.claw.common.apilog.core.annotation.ApiAccessLog;
+import com.muang.ai.claw.config.apilog.core.annotation.ApiAccessLog;
 import com.muang.ai.claw.constant.CommonStatusEnum;
 import com.muang.ai.claw.common.pojo.CommonResult;
 import com.muang.ai.claw.common.pojo.PageParam;
@@ -32,7 +32,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import static com.muang.ai.claw.common.apilog.core.enums.OperateTypeEnum.EXPORT;
+import static com.muang.ai.claw.config.apilog.core.enums.OperateTypeEnum.EXPORT;
 import static com.muang.ai.claw.common.pojo.CommonResult.success;
 import static com.muang.ai.claw.util.collection.CollectionUtils.convertList;
 import static com.muang.ai.claw.util.collection.CollectionUtils.convertSet;

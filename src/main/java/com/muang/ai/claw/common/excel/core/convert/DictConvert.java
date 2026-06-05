@@ -1,7 +1,7 @@
 package com.muang.ai.claw.common.excel.core.convert;
 
 import cn.hutool.core.convert.Convert;
-import com.muang.ai.claw.common.dict.core.DictFrameworkUtils;
+import com.muang.ai.claw.config.dict.core.DictFrameworkUtils;
 import com.muang.ai.claw.common.excel.core.annotations.DictFormat;
 import cn.idev.excel.converters.Converter;
 import cn.idev.excel.enums.CellDataTypeEnum;

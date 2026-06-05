@@ -1,6 +1,6 @@
 package com.muang.ai.claw.module.system.dal.mysql.oauth2;
 
-import com.muang.ai.claw.common.mybatis.core.mapper.BaseMapperX;
+import com.muang.ai.claw.config.mybatis.core.mapper.BaseMapperX;
 import com.muang.ai.claw.module.system.dal.dataobject.oauth2.OAuth2CodeDO;
 import org.apache.ibatis.annotations.Mapper;
 
