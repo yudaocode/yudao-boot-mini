@@ -12,7 +12,6 @@ import com.muang.ai.claw.common.exception.util.ServiceExceptionUtil;
 import com.muang.ai.claw.common.core.CommonResult;
 import com.muang.ai.claw.util.collection.SetUtils;
 import com.muang.ai.claw.util.json.JsonUtils;
-import com.muang.ai.claw.util.monitor.TracerUtils;
 import com.muang.ai.claw.util.servlet.ServletUtils;
 import com.muang.ai.claw.config.web.core.util.WebFrameworkUtils;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
@@ -368,7 +367,7 @@ public class GlobalExceptionHandler {
         errorLog.setExceptionMethodName(stackTraceElement.getMethodName());
         errorLog.setExceptionLineNumber(stackTraceElement.getLineNumber());
         // 设置其它字段
-        errorLog.setTraceId(TracerUtils.getTraceId());
+        errorLog.setTraceId("");
         errorLog.setApplicationName(applicationName);
         errorLog.setRequestUrl(request.getRequestURI());
         Map<String, Object> requestParams = MapUtil.<String, Object>builder()

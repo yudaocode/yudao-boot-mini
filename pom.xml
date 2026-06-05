@@ -40,10 +40,6 @@
         <taos.version>3.8.3</taos.version>
 <!-- 服务保障相关 -->
         <lock4j.version>2.2.7</lock4j.version>
-        <!-- 监控相关 -->
-        <skywalking.version>9.6.0</skywalking.version>
-        <spring-boot-admin.version>3.5.8</spring-boot-admin.version>
-        <opentracing.version>0.33.0</opentracing.version>
         <!-- 工具类相关 -->
         <anji-plus-captcha.version>1.4.0</anji-plus-captcha.version>
         <jsoup.version>1.22.2</jsoup.version>
@@ -270,54 +266,6 @@
             </exclusions>
         </dependency>
 
-        <!-- ==================== 监控 ==================== -->
-        <dependency>
-            <groupId>org.apache.skywalking</groupId>
-            <artifactId>apm-toolkit-trace</artifactId>
-            <version>${skywalking.version}</version>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.skywalking</groupId>
-            <artifactId>apm-toolkit-logback-1.x</artifactId>
-            <version>${skywalking.version}</version>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.skywalking</groupId>
-            <artifactId>apm-toolkit-opentracing</artifactId>
-            <version>${skywalking.version}</version>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>io.opentracing</groupId>
-            <artifactId>opentracing-util</artifactId>
-            <version>${opentracing.version}</version>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>io.micrometer</groupId>
-            <artifactId>micrometer-registry-prometheus</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>de.codecentric</groupId>
-            <artifactId>spring-boot-admin-starter-server</artifactId>
-            <version>${spring-boot-admin.version}</version>
-            <optional>true</optional>
-            <exclusions>
-                <exclusion>
-                    <groupId>de.codecentric</groupId>
-                    <artifactId>spring-boot-admin-server-cloud</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>de.codecentric</groupId>
-            <artifactId>spring-boot-admin-starter-client</artifactId>
-            <version>${spring-boot-admin.version}</version>
-            <optional>true</optional>
-        </dependency>
 
         <!-- ==================== 工具类 ==================== -->
         <dependency>

@@ -4,8 +4,6 @@ com.muang.ai.claw.config.tenant.config.TenantAutoConfiguration
 com.muang.ai.claw.config.dict.config.DictAutoConfiguration
 com.muang.ai.claw.config.quartz.config.QuartzAutoConfiguration
 com.muang.ai.claw.config.quartz.config.AsyncAutoConfiguration
-com.muang.ai.claw.config.tracer.config.TracerAutoConfiguration
-com.muang.ai.claw.config.tracer.config.MetricsAutoConfiguration
 com.muang.ai.claw.config.datasource.config.DataSourceAutoConfiguration
 com.muang.ai.claw.config.mybatis.config.MybatisAutoConfiguration
 com.muang.ai.claw.config.translate.config.TranslateAutoConfiguration

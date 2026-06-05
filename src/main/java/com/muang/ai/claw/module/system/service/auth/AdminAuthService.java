@@ -3,7 +3,6 @@ package com.muang.ai.claw.module.system.service.auth;
 import cn.hutool.core.util.ObjectUtil;
 import com.muang.ai.claw.constant.CommonStatusEnum;
 import com.muang.ai.claw.constant.UserTypeEnum;
-import com.muang.ai.claw.util.monitor.TracerUtils;
 import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.util.servlet.ServletUtils;
 import com.muang.ai.claw.util.validation.ValidationUtils;
@@ -139,7 +138,7 @@ public class AdminAuthService {
         // 插入登录日志
         LoginLogCreateReqDTO reqDTO = new LoginLogCreateReqDTO();
         reqDTO.setLogType(logTypeEnum.getType());
-        reqDTO.setTraceId(TracerUtils.getTraceId());
+        reqDTO.setTraceId("");
         reqDTO.setUserId(userId);
         reqDTO.setUserType(getUserType().getValue());
         reqDTO.setUsername(username);
@@ -203,7 +202,7 @@ public class AdminAuthService {
     private void createLogoutLog(Long userId, Integer userType, Integer logType) {
         LoginLogCreateReqDTO reqDTO = new LoginLogCreateReqDTO();
         reqDTO.setLogType(logType);
-        reqDTO.setTraceId(TracerUtils.getTraceId());
+        reqDTO.setTraceId("");
         reqDTO.setUserId(userId);
         reqDTO.setUserType(userType);
         if (ObjectUtil.equal(getUserType().getValue(), userType)) {

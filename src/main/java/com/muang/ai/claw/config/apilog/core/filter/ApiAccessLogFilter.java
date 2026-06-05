@@ -14,7 +14,6 @@ import com.muang.ai.claw.module.infra.api.logger.dto.ApiAccessLogCreateReqDTO;
 import com.muang.ai.claw.common.exception.enums.GlobalErrorCodeConstants;
 import com.muang.ai.claw.common.core.CommonResult;
 import com.muang.ai.claw.util.json.JsonUtils;
-import com.muang.ai.claw.util.monitor.TracerUtils;
 import com.muang.ai.claw.util.servlet.ServletUtils;
 import com.muang.ai.claw.config.web.config.WebProperties;
 import com.muang.ai.claw.config.web.core.filter.ApiRequestFilter;
@@ -122,7 +121,7 @@ public class ApiAccessLogFilter extends ApiRequestFilter {
             accessLog.setResultCode(GlobalErrorCodeConstants.SUCCESS.getCode()).setResultMsg("");
         }
         // 设置请求字段
-        accessLog.setTraceId(TracerUtils.getTraceId()).setApplicationName(applicationName)
+        accessLog.setTraceId("").setApplicationName(applicationName)
                 .setRequestUrl(request.getRequestURI()).setRequestMethod(request.getMethod())
                 .setUserAgent(ServletUtils.getUserAgent(request)).setUserIp(ServletUtils.getClientIP(request));
         String[] sanitizeKeys = accessLogAnnotation != null ? accessLogAnnotation.sanitizeKeys() : null;

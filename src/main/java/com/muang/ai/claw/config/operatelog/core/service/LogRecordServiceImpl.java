@@ -2,7 +2,6 @@ package com.muang.ai.claw.config.operatelog.core.service;
 
 import com.muang.ai.claw.module.system.api.logger.OperateLogApi;
 import com.muang.ai.claw.module.system.api.logger.dto.OperateLogCreateReqDTO;
-import com.muang.ai.claw.util.monitor.TracerUtils;
 import com.muang.ai.claw.util.servlet.ServletUtils;
 import com.muang.ai.claw.config.security.core.LoginUser;
 import com.muang.ai.claw.config.security.core.util.SecurityFrameworkUtils;
@@ -31,7 +30,7 @@ public class LogRecordServiceImpl implements ILogRecordService {
     public void record(LogRecord logRecord) {
         OperateLogCreateReqDTO reqDTO = new OperateLogCreateReqDTO();
         try {
-            reqDTO.setTraceId(TracerUtils.getTraceId());
+            reqDTO.setTraceId("");
             // 补充用户信息
             fillUserFields(reqDTO);
             // 补全模块信息
