@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit;
  *
  */
 @Configuration // 目的：先于 MyBatis Plus 自动配置，避免 @MapperScan 可能扫描不到 Mapper 打印 warn 日志
-@MapperScan(value = "${yudao.info.base-package}", annotationClass = Mapper.class,
+@MapperScan(value = "com.muang.ai.claw", annotationClass = Mapper.class,
         lazyInitialization = "${mybatis.lazy-initialization:false}") // Mapper 懒加载，目前仅用于单元测试
 public class MybatisAutoConfiguration {
 
