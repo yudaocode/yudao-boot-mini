@@ -7,9 +7,9 @@ import com.muang.ai.claw.common.core.PageParam;
 import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.config.excel.util.ExcelUtils;
-import com.muang.ai.claw.module.system.controller.admin.permission.vo.role.RolePageReqVO;
+import com.muang.ai.claw.module.system.controller.admin.permission.vo.role.RolePageForm;
 import com.muang.ai.claw.module.system.controller.admin.permission.vo.role.RoleRespVO;
-import com.muang.ai.claw.module.system.controller.admin.permission.vo.role.RoleSaveReqVO;
+import com.muang.ai.claw.module.system.controller.admin.permission.vo.role.RoleSaveForm;
 import com.muang.ai.claw.module.system.dal.dataobject.permission.RoleDO;
 import com.muang.ai.claw.module.system.service.permission.RoleService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -42,14 +42,14 @@ public class RoleController {
     @PostMapping("/create")
     @Operation(summary = "创建角色")
     @PreAuthorize("@ss.hasPermission('system:role:create')")
-    public CommonResult<Long> createRole(@Valid @RequestBody RoleSaveReqVO createReqVO) {
+    public CommonResult<Long> createRole(@Valid @RequestBody RoleSaveForm createReqVO) {
         return success(roleService.createRole(createReqVO, null));
     }
 
     @PutMapping("/update")
     @Operation(summary = "修改角色")
     @PreAuthorize("@ss.hasPermission('system:role:update')")
-    public CommonResult<Boolean> updateRole(@Valid @RequestBody RoleSaveReqVO updateReqVO) {
+    public CommonResult<Boolean> updateRole(@Valid @RequestBody RoleSaveForm updateReqVO) {
         roleService.updateRole(updateReqVO);
         return success(true);
     }
@@ -83,7 +83,7 @@ public class RoleController {
     @GetMapping("/page")
     @Operation(summary = "获得角色分页")
     @PreAuthorize("@ss.hasPermission('system:role:query')")
-    public CommonResult<PageResult<RoleRespVO>> getRolePage(RolePageReqVO pageReqVO) {
+    public CommonResult<PageResult<RoleRespVO>> getRolePage(RolePageForm pageReqVO) {
         PageResult<RoleDO> pageResult = roleService.getRolePage(pageReqVO);
         return success(BeanUtils.toBean(pageResult, RoleRespVO.class));
     }
@@ -100,7 +100,7 @@ public class RoleController {
     @Operation(summary = "导出角色 Excel")
     @ApiAccessLog(operateType = EXPORT)
     @PreAuthorize("@ss.hasPermission('system:role:export')")
-    public void export(HttpServletResponse response, @Validated RolePageReqVO exportReqVO) throws IOException {
+    public void export(HttpServletResponse response, @Validated RolePageForm exportReqVO) throws IOException {
         exportReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
         List<RoleDO> list = roleService.getRolePage(exportReqVO).getList();
         // 输出

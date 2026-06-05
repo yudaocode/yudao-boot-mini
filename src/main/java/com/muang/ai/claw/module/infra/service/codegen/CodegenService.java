@@ -5,9 +5,9 @@ import cn.hutool.core.util.StrUtil;
 import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.config.mybatis.core.util.JdbcUtils;
-import com.muang.ai.claw.module.infra.controller.admin.codegen.vo.CodegenCreateListReqVO;
-import com.muang.ai.claw.module.infra.controller.admin.codegen.vo.CodegenUpdateReqVO;
-import com.muang.ai.claw.module.infra.controller.admin.codegen.vo.table.CodegenTablePageReqVO;
+import com.muang.ai.claw.module.infra.controller.admin.codegen.vo.CodegenCreateListForm;
+import com.muang.ai.claw.module.infra.controller.admin.codegen.vo.CodegenUpdateForm;
+import com.muang.ai.claw.module.infra.controller.admin.codegen.vo.table.CodegenTablePageForm;
 import com.muang.ai.claw.module.infra.controller.admin.codegen.vo.table.DatabaseTableRespVO;
 import com.muang.ai.claw.module.infra.dal.dataobject.codegen.CodegenColumnDO;
 import com.muang.ai.claw.module.infra.dal.dataobject.codegen.CodegenTableDO;
@@ -65,7 +65,7 @@ public class CodegenService {
     private CodegenProperties codegenProperties;
 
     @Transactional(rollbackFor = Exception.class)
-    public List<Long> createCodegenList(String author, CodegenCreateListReqVO reqVO) {
+    public List<Long> createCodegenList(String author, CodegenCreateListForm reqVO) {
         List<Long> ids = new ArrayList<>(reqVO.getTableNames().size());
         // 遍历添加。虽然效率会低一点，但是没必要做成完全批量，因为不会这么大量
         reqVO.getTableNames().forEach(tableName -> ids.add(createCodegen(author, reqVO.getDataSourceConfigId(), tableName)));
@@ -125,7 +125,7 @@ public class CodegenService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void updateCodegen(CodegenUpdateReqVO updateReqVO) {
+    public void updateCodegen(CodegenUpdateForm updateReqVO) {
         // 校验是否已经存在
         if (codegenTableMapper.selectById(updateReqVO.getTable().getId()) == null) {
             throw exception(CODEGEN_TABLE_NOT_EXISTS);
@@ -235,7 +235,7 @@ public class CodegenService {
         return codegenTableMapper.selectListByDataSourceConfigId(dataSourceConfigId);
     }
 
-    public PageResult<CodegenTableDO> getCodegenTablePage(CodegenTablePageReqVO pageReqVO) {
+    public PageResult<CodegenTableDO> getCodegenTablePage(CodegenTablePageForm pageReqVO) {
         return codegenTableMapper.selectPage(pageReqVO);
     }
 

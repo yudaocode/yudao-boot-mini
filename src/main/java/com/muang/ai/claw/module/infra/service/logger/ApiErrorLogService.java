@@ -1,15 +1,15 @@
 package com.muang.ai.claw.module.infra.service.logger;
 
 import com.muang.ai.claw.common.core.PageResult;
-import com.muang.ai.claw.module.infra.api.logger.dto.ApiErrorLogCreateReqDTO;
-import com.muang.ai.claw.util.object.BeanUtils;
-import com.muang.ai.claw.util.string.StrUtils;
 import com.muang.ai.claw.config.tenant.core.context.TenantContextHolder;
 import com.muang.ai.claw.config.tenant.core.util.TenantUtils;
-import com.muang.ai.claw.module.infra.controller.admin.logger.vo.apierrorlog.ApiErrorLogPageReqVO;
+import com.muang.ai.claw.module.infra.api.logger.dto.ApiErrorLogCreateReqDTO;
+import com.muang.ai.claw.module.infra.constant.logger.ApiErrorLogProcessStatusEnum;
+import com.muang.ai.claw.module.infra.controller.admin.logger.vo.apierrorlog.ApiErrorLogPageForm;
 import com.muang.ai.claw.module.infra.dal.dataobject.logger.ApiErrorLogDO;
 import com.muang.ai.claw.module.infra.dal.mysql.logger.ApiErrorLogMapper;
-import com.muang.ai.claw.module.infra.constant.logger.ApiErrorLogProcessStatusEnum;
+import com.muang.ai.claw.util.object.BeanUtils;
+import com.muang.ai.claw.util.string.StrUtils;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -18,9 +18,9 @@ import org.springframework.validation.annotation.Validated;
 import java.time.LocalDateTime;
 
 import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
-import static com.muang.ai.claw.module.infra.dal.dataobject.logger.ApiErrorLogDO.REQUEST_PARAMS_MAX_LENGTH;
 import static com.muang.ai.claw.module.infra.constant.ErrorCodeConstants.API_ERROR_LOG_NOT_FOUND;
 import static com.muang.ai.claw.module.infra.constant.ErrorCodeConstants.API_ERROR_LOG_PROCESSED;
+import static com.muang.ai.claw.module.infra.dal.dataobject.logger.ApiErrorLogDO.REQUEST_PARAMS_MAX_LENGTH;
 
 /**
  * API 错误日志 Service 实现类
@@ -51,7 +51,7 @@ public class ApiErrorLogService {
         }
     }
 
-    public PageResult<ApiErrorLogDO> getApiErrorLogPage(ApiErrorLogPageReqVO pageReqVO) {
+    public PageResult<ApiErrorLogDO> getApiErrorLogPage(ApiErrorLogPageForm pageReqVO) {
         return apiErrorLogMapper.selectPage(pageReqVO);
     }
 

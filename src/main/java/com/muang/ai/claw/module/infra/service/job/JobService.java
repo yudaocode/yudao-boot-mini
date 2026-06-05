@@ -6,8 +6,8 @@ import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.config.quartz.core.handler.JobHandler;
 import com.muang.ai.claw.config.quartz.core.scheduler.SchedulerManager;
 import com.muang.ai.claw.config.quartz.core.util.CronUtils;
-import com.muang.ai.claw.module.infra.controller.admin.job.vo.job.JobPageReqVO;
-import com.muang.ai.claw.module.infra.controller.admin.job.vo.job.JobSaveReqVO;
+import com.muang.ai.claw.module.infra.controller.admin.job.vo.job.JobPageForm;
+import com.muang.ai.claw.module.infra.controller.admin.job.vo.job.JobSaveForm;
 import com.muang.ai.claw.module.infra.dal.dataobject.job.JobDO;
 import com.muang.ai.claw.module.infra.dal.mysql.job.JobMapper;
 import com.muang.ai.claw.module.infra.constant.job.JobStatusEnum;
@@ -42,7 +42,7 @@ public class JobService {
     private SchedulerManager schedulerManager;
 
     @Transactional(rollbackFor = Exception.class)
-    public Long createJob(JobSaveReqVO createReqVO) throws SchedulerException {
+    public Long createJob(JobSaveForm createReqVO) throws SchedulerException {
         validateCronExpression(createReqVO.getCronExpression());
         // 1.1 校验唯一性
         if (jobMapper.selectByHandlerName(createReqVO.getHandlerName()) != null) {
@@ -67,7 +67,7 @@ public class JobService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void updateJob(JobSaveReqVO updateReqVO) throws SchedulerException {
+    public void updateJob(JobSaveForm updateReqVO) throws SchedulerException {
         validateCronExpression(updateReqVO.getCronExpression());
         // 1.1 校验存在
         JobDO job = validateJobExists(updateReqVO.getId());
@@ -192,7 +192,7 @@ public class JobService {
         return jobMapper.selectById(id);
     }
 
-    public PageResult<JobDO> getJobPage(JobPageReqVO pageReqVO) {
+    public PageResult<JobDO> getJobPage(JobPageForm pageReqVO) {
         return jobMapper.selectPage(pageReqVO);
     }
 

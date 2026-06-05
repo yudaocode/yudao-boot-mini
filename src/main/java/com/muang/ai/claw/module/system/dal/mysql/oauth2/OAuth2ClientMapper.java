@@ -3,7 +3,7 @@ package com.muang.ai.claw.module.system.dal.mysql.oauth2;
 import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.config.mybatis.core.mapper.BaseMapperX;
 import com.muang.ai.claw.config.mybatis.core.query.LambdaQueryWrapperX;
-import com.muang.ai.claw.module.system.controller.admin.oauth2.vo.client.OAuth2ClientPageReqVO;
+import com.muang.ai.claw.module.system.controller.admin.oauth2.vo.client.OAuth2ClientPageForm;
 import com.muang.ai.claw.module.system.dal.dataobject.oauth2.OAuth2ClientDO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -15,7 +15,7 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface OAuth2ClientMapper extends BaseMapperX<OAuth2ClientDO> {
 
-    default PageResult<OAuth2ClientDO> selectPage(OAuth2ClientPageReqVO reqVO) {
+    default PageResult<OAuth2ClientDO> selectPage(OAuth2ClientPageForm reqVO) {
         return selectPage(reqVO, new LambdaQueryWrapperX<OAuth2ClientDO>()
                 .likeIfPresent(OAuth2ClientDO::getName, reqVO.getName())
                 .eqIfPresent(OAuth2ClientDO::getStatus, reqVO.getStatus())

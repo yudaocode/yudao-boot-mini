@@ -7,9 +7,9 @@ import com.muang.ai.claw.common.core.PageParam;
 import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.config.excel.util.ExcelUtils;
-import com.muang.ai.claw.module.system.controller.admin.dept.vo.post.PostPageReqVO;
+import com.muang.ai.claw.module.system.controller.admin.dept.vo.post.PostPageForm;
 import com.muang.ai.claw.module.system.controller.admin.dept.vo.post.PostRespVO;
-import com.muang.ai.claw.module.system.controller.admin.dept.vo.post.PostSaveReqVO;
+import com.muang.ai.claw.module.system.controller.admin.dept.vo.post.PostSaveForm;
 import com.muang.ai.claw.module.system.controller.admin.dept.vo.post.PostSimpleRespVO;
 import com.muang.ai.claw.module.system.dal.dataobject.dept.PostDO;
 import com.muang.ai.claw.module.system.service.dept.PostService;
@@ -43,7 +43,7 @@ public class PostController {
     @PostMapping("/create")
     @Operation(summary = "创建岗位")
     @PreAuthorize("@ss.hasPermission('system:post:create')")
-    public CommonResult<Long> createPost(@Valid @RequestBody PostSaveReqVO createReqVO) {
+    public CommonResult<Long> createPost(@Valid @RequestBody PostSaveForm createReqVO) {
         Long postId = postService.createPost(createReqVO);
         return success(postId);
     }
@@ -51,7 +51,7 @@ public class PostController {
     @PutMapping("/update")
     @Operation(summary = "修改岗位")
     @PreAuthorize("@ss.hasPermission('system:post:update')")
-    public CommonResult<Boolean> updatePost(@Valid @RequestBody PostSaveReqVO updateReqVO) {
+    public CommonResult<Boolean> updatePost(@Valid @RequestBody PostSaveForm updateReqVO) {
         postService.updatePost(updateReqVO);
         return success(true);
     }
@@ -94,7 +94,7 @@ public class PostController {
     @GetMapping("/page")
     @Operation(summary = "获得岗位分页列表")
     @PreAuthorize("@ss.hasPermission('system:post:query')")
-    public CommonResult<PageResult<PostRespVO>> getPostPage(@Validated PostPageReqVO pageReqVO) {
+    public CommonResult<PageResult<PostRespVO>> getPostPage(@Validated PostPageForm pageReqVO) {
         PageResult<PostDO> pageResult = postService.getPostPage(pageReqVO);
         return success(BeanUtils.toBean(pageResult, PostRespVO.class));
     }
@@ -103,7 +103,7 @@ public class PostController {
     @Operation(summary = "岗位管理")
     @PreAuthorize("@ss.hasPermission('system:post:export')")
     @ApiAccessLog(operateType = EXPORT)
-    public void export(HttpServletResponse response, @Validated PostPageReqVO reqVO) throws IOException {
+    public void export(HttpServletResponse response, @Validated PostPageForm reqVO) throws IOException {
         reqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
         List<PostDO> list = postService.getPostPage(reqVO).getList();
         // 输出

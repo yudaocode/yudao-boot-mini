@@ -4,9 +4,9 @@ import com.muang.ai.claw.constant.CommonStatusEnum;
 import com.muang.ai.claw.common.core.CommonResult;
 import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.util.object.BeanUtils;
-import com.muang.ai.claw.module.system.controller.admin.tenant.vo.packages.TenantPackagePageReqVO;
+import com.muang.ai.claw.module.system.controller.admin.tenant.vo.packages.TenantPackagePageForm;
 import com.muang.ai.claw.module.system.controller.admin.tenant.vo.packages.TenantPackageRespVO;
-import com.muang.ai.claw.module.system.controller.admin.tenant.vo.packages.TenantPackageSaveReqVO;
+import com.muang.ai.claw.module.system.controller.admin.tenant.vo.packages.TenantPackageSaveForm;
 import com.muang.ai.claw.module.system.controller.admin.tenant.vo.packages.TenantPackageSimpleRespVO;
 import com.muang.ai.claw.module.system.dal.dataobject.tenant.TenantPackageDO;
 import com.muang.ai.claw.module.system.service.tenant.TenantPackageService;
@@ -35,14 +35,14 @@ public class TenantPackageController {
     @PostMapping("/create")
     @Operation(summary = "创建租户套餐")
     @PreAuthorize("@ss.hasPermission('system:tenant-package:create')")
-    public CommonResult<Long> createTenantPackage(@Valid @RequestBody TenantPackageSaveReqVO createReqVO) {
+    public CommonResult<Long> createTenantPackage(@Valid @RequestBody TenantPackageSaveForm createReqVO) {
         return success(tenantPackageService.createTenantPackage(createReqVO));
     }
 
     @PutMapping("/update")
     @Operation(summary = "更新租户套餐")
     @PreAuthorize("@ss.hasPermission('system:tenant-package:update')")
-    public CommonResult<Boolean> updateTenantPackage(@Valid @RequestBody TenantPackageSaveReqVO updateReqVO) {
+    public CommonResult<Boolean> updateTenantPackage(@Valid @RequestBody TenantPackageSaveForm updateReqVO) {
         tenantPackageService.updateTenantPackage(updateReqVO);
         return success(true);
     }
@@ -77,7 +77,7 @@ public class TenantPackageController {
     @GetMapping("/page")
     @Operation(summary = "获得租户套餐分页")
     @PreAuthorize("@ss.hasPermission('system:tenant-package:query')")
-    public CommonResult<PageResult<TenantPackageRespVO>> getTenantPackagePage(@Valid TenantPackagePageReqVO pageVO) {
+    public CommonResult<PageResult<TenantPackageRespVO>> getTenantPackagePage(@Valid TenantPackagePageForm pageVO) {
         PageResult<TenantPackageDO> pageResult = tenantPackageService.getTenantPackagePage(pageVO);
         return success(BeanUtils.toBean(pageResult, TenantPackageRespVO.class));
     }

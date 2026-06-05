@@ -3,7 +3,7 @@ package com.muang.ai.claw.module.system.controller.admin.permission;
 import com.muang.ai.claw.constant.CommonStatusEnum;
 import com.muang.ai.claw.common.core.CommonResult;
 import com.muang.ai.claw.util.object.BeanUtils;
-import com.muang.ai.claw.module.system.controller.admin.permission.vo.menu.MenuListReqVO;
+import com.muang.ai.claw.module.system.controller.admin.permission.vo.menu.MenuListForm;
 import com.muang.ai.claw.module.system.controller.admin.permission.vo.menu.MenuRespVO;
 import com.muang.ai.claw.module.system.controller.admin.permission.vo.menu.MenuSaveVO;
 import com.muang.ai.claw.module.system.controller.admin.permission.vo.menu.MenuSimpleRespVO;
@@ -69,7 +69,7 @@ public class MenuController {
     @GetMapping("/list")
     @Operation(summary = "获取菜单列表", description = "用于【菜单管理】界面")
     @PreAuthorize("@ss.hasPermission('system:menu:query')")
-    public CommonResult<List<MenuRespVO>> getMenuList(MenuListReqVO reqVO) {
+    public CommonResult<List<MenuRespVO>> getMenuList(MenuListForm reqVO) {
         List<MenuDO> list = menuService.getMenuList(reqVO);
         list.sort(Comparator.comparing(MenuDO::getSort));
         return success(BeanUtils.toBean(list, MenuRespVO.class));
@@ -80,7 +80,7 @@ public class MenuController {
             description = "只包含被开启的菜单，用于【角色分配菜单】功能的选项。在多租户的场景下，会只返回租户所在套餐有的菜单")
     public CommonResult<List<MenuSimpleRespVO>> getSimpleMenuList() {
         List<MenuDO> list = menuService.getMenuListByTenant(
-                new MenuListReqVO().setStatus(CommonStatusEnum.ENABLE.getStatus()));
+                new MenuListForm().setStatus(CommonStatusEnum.ENABLE.getStatus()));
         list = menuService.filterDisableMenus(list);
         list.sort(Comparator.comparing(MenuDO::getSort));
         return success(BeanUtils.toBean(list, MenuSimpleRespVO.class));

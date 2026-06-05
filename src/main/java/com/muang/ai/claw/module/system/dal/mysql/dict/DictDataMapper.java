@@ -3,7 +3,7 @@ package com.muang.ai.claw.module.system.dal.mysql.dict;
 import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.config.mybatis.core.mapper.BaseMapperX;
 import com.muang.ai.claw.config.mybatis.core.query.LambdaQueryWrapperX;
-import com.muang.ai.claw.module.system.controller.admin.dict.vo.data.DictDataPageReqVO;
+import com.muang.ai.claw.module.system.controller.admin.dict.vo.data.DictDataPageForm;
 import com.muang.ai.claw.module.system.dal.dataobject.dict.DictDataDO;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.apache.ibatis.annotations.Mapper;
@@ -32,7 +32,7 @@ public interface DictDataMapper extends BaseMapperX<DictDataDO> {
         return selectCount(DictDataDO::getDictType, dictType);
     }
 
-    default PageResult<DictDataDO> selectPage(DictDataPageReqVO reqVO) {
+    default PageResult<DictDataDO> selectPage(DictDataPageForm reqVO) {
         return selectPage(reqVO, new LambdaQueryWrapperX<DictDataDO>()
                 .likeIfPresent(DictDataDO::getLabel, reqVO.getLabel())
                 .eqIfPresent(DictDataDO::getDictType, reqVO.getDictType())

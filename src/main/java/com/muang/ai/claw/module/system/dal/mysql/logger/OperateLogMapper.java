@@ -4,14 +4,14 @@ import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.config.mybatis.core.mapper.BaseMapperX;
 import com.muang.ai.claw.config.mybatis.core.query.LambdaQueryWrapperX;
 import com.muang.ai.claw.module.system.api.logger.dto.OperateLogPageReqDTO;
-import com.muang.ai.claw.module.system.controller.admin.logger.vo.operatelog.OperateLogPageReqVO;
+import com.muang.ai.claw.module.system.controller.admin.logger.vo.operatelog.OperateLogPageForm;
 import com.muang.ai.claw.module.system.dal.dataobject.logger.OperateLogDO;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface OperateLogMapper extends BaseMapperX<OperateLogDO> {
 
-    default PageResult<OperateLogDO> selectPage(OperateLogPageReqVO pageReqDTO) {
+    default PageResult<OperateLogDO> selectPage(OperateLogPageForm pageReqDTO) {
         return selectPage(pageReqDTO, new LambdaQueryWrapperX<OperateLogDO>()
                 .eqIfPresent(OperateLogDO::getUserId, pageReqDTO.getUserId())
                 .eqIfPresent(OperateLogDO::getBizId, pageReqDTO.getBizId())

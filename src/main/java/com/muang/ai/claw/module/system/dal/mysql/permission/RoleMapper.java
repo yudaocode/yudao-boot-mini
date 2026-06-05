@@ -4,7 +4,7 @@ import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.config.mybatis.core.dataobject.BaseDO;
 import com.muang.ai.claw.config.mybatis.core.mapper.BaseMapperX;
 import com.muang.ai.claw.config.mybatis.core.query.LambdaQueryWrapperX;
-import com.muang.ai.claw.module.system.controller.admin.permission.vo.role.RolePageReqVO;
+import com.muang.ai.claw.module.system.controller.admin.permission.vo.role.RolePageForm;
 import com.muang.ai.claw.module.system.dal.dataobject.permission.RoleDO;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.lang.Nullable;
@@ -15,7 +15,7 @@ import java.util.List;
 @Mapper
 public interface RoleMapper extends BaseMapperX<RoleDO> {
 
-    default PageResult<RoleDO> selectPage(RolePageReqVO reqVO) {
+    default PageResult<RoleDO> selectPage(RolePageForm reqVO) {
         return selectPage(reqVO, new LambdaQueryWrapperX<RoleDO>()
                 .likeIfPresent(RoleDO::getName, reqVO.getName())
                 .likeIfPresent(RoleDO::getCode, reqVO.getCode())

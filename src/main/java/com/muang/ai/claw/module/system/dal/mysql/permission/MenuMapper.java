@@ -2,7 +2,7 @@ package com.muang.ai.claw.module.system.dal.mysql.permission;
 
 import com.muang.ai.claw.config.mybatis.core.mapper.BaseMapperX;
 import com.muang.ai.claw.config.mybatis.core.query.LambdaQueryWrapperX;
-import com.muang.ai.claw.module.system.controller.admin.permission.vo.menu.MenuListReqVO;
+import com.muang.ai.claw.module.system.controller.admin.permission.vo.menu.MenuListForm;
 import com.muang.ai.claw.module.system.dal.dataobject.permission.MenuDO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -19,7 +19,7 @@ public interface MenuMapper extends BaseMapperX<MenuDO> {
         return selectCount(MenuDO::getParentId, parentId);
     }
 
-    default List<MenuDO> selectList(MenuListReqVO reqVO) {
+    default List<MenuDO> selectList(MenuListForm reqVO) {
         return selectList(new LambdaQueryWrapperX<MenuDO>()
                 .likeIfPresent(MenuDO::getName, reqVO.getName())
                 .eqIfPresent(MenuDO::getStatus, reqVO.getStatus()));

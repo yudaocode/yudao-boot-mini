@@ -4,7 +4,7 @@ import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.config.mybatis.core.mapper.BaseMapperX;
 import com.muang.ai.claw.config.mybatis.core.query.LambdaQueryWrapperX;
 import com.muang.ai.claw.config.mybatis.core.util.MyBatisUtils;
-import com.muang.ai.claw.module.system.controller.admin.tenant.vo.tenant.TenantPageReqVO;
+import com.muang.ai.claw.module.system.controller.admin.tenant.vo.tenant.TenantPageForm;
 import com.muang.ai.claw.module.system.dal.dataobject.tenant.TenantDO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -13,7 +13,7 @@ import java.util.List;
 @Mapper
 public interface TenantMapper extends BaseMapperX<TenantDO> {
 
-    default PageResult<TenantDO> selectPage(TenantPageReqVO reqVO) {
+    default PageResult<TenantDO> selectPage(TenantPageForm reqVO) {
         return selectPage(reqVO, new LambdaQueryWrapperX<TenantDO>()
                 .likeIfPresent(TenantDO::getName, reqVO.getName())
                 .likeIfPresent(TenantDO::getContactName, reqVO.getContactName())

@@ -3,9 +3,9 @@ package com.muang.ai.claw.module.system.controller.admin.oauth2;
 import com.muang.ai.claw.common.core.CommonResult;
 import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.util.object.BeanUtils;
-import com.muang.ai.claw.module.system.controller.admin.oauth2.vo.client.OAuth2ClientPageReqVO;
+import com.muang.ai.claw.module.system.controller.admin.oauth2.vo.client.OAuth2ClientPageForm;
 import com.muang.ai.claw.module.system.controller.admin.oauth2.vo.client.OAuth2ClientRespVO;
-import com.muang.ai.claw.module.system.controller.admin.oauth2.vo.client.OAuth2ClientSaveReqVO;
+import com.muang.ai.claw.module.system.controller.admin.oauth2.vo.client.OAuth2ClientSaveForm;
 import com.muang.ai.claw.module.system.dal.dataobject.oauth2.OAuth2ClientDO;
 import com.muang.ai.claw.module.system.service.oauth2.OAuth2ClientService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -33,14 +33,14 @@ public class OAuth2ClientController {
     @PostMapping("/create")
     @Operation(summary = "创建 OAuth2 客户端")
     @PreAuthorize("@ss.hasPermission('system:oauth2-client:create')")
-    public CommonResult<Long> createOAuth2Client(@Valid @RequestBody OAuth2ClientSaveReqVO createReqVO) {
+    public CommonResult<Long> createOAuth2Client(@Valid @RequestBody OAuth2ClientSaveForm createReqVO) {
         return success(oAuth2ClientService.createOAuth2Client(createReqVO));
     }
 
     @PutMapping("/update")
     @Operation(summary = "更新 OAuth2 客户端")
     @PreAuthorize("@ss.hasPermission('system:oauth2-client:update')")
-    public CommonResult<Boolean> updateOAuth2Client(@Valid @RequestBody OAuth2ClientSaveReqVO updateReqVO) {
+    public CommonResult<Boolean> updateOAuth2Client(@Valid @RequestBody OAuth2ClientSaveForm updateReqVO) {
         oAuth2ClientService.updateOAuth2Client(updateReqVO);
         return success(true);
     }
@@ -75,7 +75,7 @@ public class OAuth2ClientController {
     @GetMapping("/page")
     @Operation(summary = "获得 OAuth2 客户端分页")
     @PreAuthorize("@ss.hasPermission('system:oauth2-client:query')")
-    public CommonResult<PageResult<OAuth2ClientRespVO>> getOAuth2ClientPage(@Valid OAuth2ClientPageReqVO pageVO) {
+    public CommonResult<PageResult<OAuth2ClientRespVO>> getOAuth2ClientPage(@Valid OAuth2ClientPageForm pageVO) {
         PageResult<OAuth2ClientDO> pageResult = oAuth2ClientService.getOAuth2ClientPage(pageVO);
         return success(BeanUtils.toBean(pageResult, OAuth2ClientRespVO.class));
     }

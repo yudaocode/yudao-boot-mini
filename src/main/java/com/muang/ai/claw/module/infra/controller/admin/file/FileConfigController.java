@@ -3,9 +3,9 @@ package com.muang.ai.claw.module.infra.controller.admin.file;
 import com.muang.ai.claw.common.core.CommonResult;
 import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.util.object.BeanUtils;
-import com.muang.ai.claw.module.infra.controller.admin.file.vo.config.FileConfigPageReqVO;
+import com.muang.ai.claw.module.infra.controller.admin.file.vo.config.FileConfigPageForm;
 import com.muang.ai.claw.module.infra.controller.admin.file.vo.config.FileConfigRespVO;
-import com.muang.ai.claw.module.infra.controller.admin.file.vo.config.FileConfigSaveReqVO;
+import com.muang.ai.claw.module.infra.controller.admin.file.vo.config.FileConfigSaveForm;
 import com.muang.ai.claw.module.infra.dal.dataobject.file.FileConfigDO;
 import com.muang.ai.claw.module.infra.service.file.FileConfigService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -33,14 +33,14 @@ public class FileConfigController {
     @PostMapping("/create")
     @Operation(summary = "创建文件配置")
     @PreAuthorize("@ss.hasPermission('infra:file-config:create')")
-    public CommonResult<Long> createFileConfig(@Valid @RequestBody FileConfigSaveReqVO createReqVO) {
+    public CommonResult<Long> createFileConfig(@Valid @RequestBody FileConfigSaveForm createReqVO) {
         return success(fileConfigService.createFileConfig(createReqVO));
     }
 
     @PutMapping("/update")
     @Operation(summary = "更新文件配置")
     @PreAuthorize("@ss.hasPermission('infra:file-config:update')")
-    public CommonResult<Boolean> updateFileConfig(@Valid @RequestBody FileConfigSaveReqVO updateReqVO) {
+    public CommonResult<Boolean> updateFileConfig(@Valid @RequestBody FileConfigSaveForm updateReqVO) {
         fileConfigService.updateFileConfig(updateReqVO);
         return success(true);
     }
@@ -83,7 +83,7 @@ public class FileConfigController {
     @GetMapping("/page")
     @Operation(summary = "获得文件配置分页")
     @PreAuthorize("@ss.hasPermission('infra:file-config:query')")
-    public CommonResult<PageResult<FileConfigRespVO>> getFileConfigPage(@Valid FileConfigPageReqVO pageVO) {
+    public CommonResult<PageResult<FileConfigRespVO>> getFileConfigPage(@Valid FileConfigPageForm pageVO) {
         PageResult<FileConfigDO> pageResult = fileConfigService.getFileConfigPage(pageVO);
         return success(BeanUtils.toBean(pageResult, FileConfigRespVO.class));
     }

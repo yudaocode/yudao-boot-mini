@@ -3,7 +3,7 @@ package com.muang.ai.claw.module.system.dal.mysql.user;
 import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.config.mybatis.core.mapper.BaseMapperX;
 import com.muang.ai.claw.config.mybatis.core.query.LambdaQueryWrapperX;
-import com.muang.ai.claw.module.system.controller.admin.user.vo.user.UserPageReqVO;
+import com.muang.ai.claw.module.system.controller.admin.user.vo.user.UserPageForm;
 import com.muang.ai.claw.module.system.dal.dataobject.user.AdminUserDO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -25,7 +25,7 @@ public interface AdminUserMapper extends BaseMapperX<AdminUserDO> {
         return selectOne(AdminUserDO::getMobile, mobile);
     }
 
-    default PageResult<AdminUserDO> selectPage(UserPageReqVO reqVO, Collection<Long> deptIds, Collection<Long> userIds) {
+    default PageResult<AdminUserDO> selectPage(UserPageForm reqVO, Collection<Long> deptIds, Collection<Long> userIds) {
         return selectPage(reqVO, new LambdaQueryWrapperX<AdminUserDO>()
                 .likeIfPresent(AdminUserDO::getUsername, reqVO.getUsername())
                 .likeIfPresent(AdminUserDO::getMobile, reqVO.getMobile())

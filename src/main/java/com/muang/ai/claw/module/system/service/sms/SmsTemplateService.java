@@ -7,8 +7,8 @@ import cn.hutool.core.util.StrUtil;
 import com.muang.ai.claw.constant.CommonStatusEnum;
 import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.util.object.BeanUtils;
-import com.muang.ai.claw.module.system.controller.admin.sms.vo.template.SmsTemplatePageReqVO;
-import com.muang.ai.claw.module.system.controller.admin.sms.vo.template.SmsTemplateSaveReqVO;
+import com.muang.ai.claw.module.system.controller.admin.sms.vo.template.SmsTemplatePageForm;
+import com.muang.ai.claw.module.system.controller.admin.sms.vo.template.SmsTemplateSaveForm;
 import com.muang.ai.claw.module.system.dal.dataobject.sms.SmsChannelDO;
 import com.muang.ai.claw.module.system.dal.dataobject.sms.SmsTemplateDO;
 import com.muang.ai.claw.module.system.dal.mysql.sms.SmsTemplateMapper;
@@ -52,7 +52,7 @@ public class SmsTemplateService {
     @Resource
     private SmsChannelService smsChannelService;
 
-    public Long createSmsTemplate(SmsTemplateSaveReqVO createReqVO) {
+    public Long createSmsTemplate(SmsTemplateSaveForm createReqVO) {
         // 校验短信渠道
         SmsChannelDO channelDO = validateSmsChannel(createReqVO.getChannelId());
         // 校验短信编码是否重复
@@ -71,7 +71,7 @@ public class SmsTemplateService {
 
     @CacheEvict(cacheNames = RedisKeyConstants.SMS_TEMPLATE,
             allEntries = true) // allEntries 清空所有缓存，因为可能修改到 code 字段，不好清理
-    public void updateSmsTemplate(SmsTemplateSaveReqVO updateReqVO) {
+    public void updateSmsTemplate(SmsTemplateSaveForm updateReqVO) {
         // 校验存在
         validateSmsTemplateExists(updateReqVO.getId());
         // 校验短信渠道
@@ -119,7 +119,7 @@ public class SmsTemplateService {
         return smsTemplateMapper.selectByCode(code);
     }
 
-    public PageResult<SmsTemplateDO> getSmsTemplatePage(SmsTemplatePageReqVO pageReqVO) {
+    public PageResult<SmsTemplateDO> getSmsTemplatePage(SmsTemplatePageForm pageReqVO) {
         return smsTemplateMapper.selectPage(pageReqVO);
     }
 

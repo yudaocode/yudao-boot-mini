@@ -6,8 +6,8 @@ import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.module.system.api.sms.dto.code.SmsCodeSendReqDTO;
 import com.muang.ai.claw.module.system.api.sms.dto.code.SmsCodeUseReqDTO;
 import com.muang.ai.claw.module.system.controller.admin.auth.vo.AuthPermissionInfoRespVO;
-import com.muang.ai.claw.module.system.controller.admin.auth.vo.AuthSmsLoginReqVO;
-import com.muang.ai.claw.module.system.controller.admin.auth.vo.AuthSmsSendReqVO;
+import com.muang.ai.claw.module.system.controller.admin.auth.vo.AuthSmsLoginForm;
+import com.muang.ai.claw.module.system.controller.admin.auth.vo.AuthSmsSendForm;
 import com.muang.ai.claw.module.system.dal.dataobject.permission.MenuDO;
 import com.muang.ai.claw.module.system.dal.dataobject.permission.RoleDO;
 import com.muang.ai.claw.module.system.dal.dataobject.user.AdminUserDO;
@@ -77,8 +77,8 @@ public interface AuthConvert {
         return filterList(treeNodeMap.values(), node -> ID_ROOT.equals(node.getParentId()));
     }
 
-    SmsCodeSendReqDTO convert(AuthSmsSendReqVO reqVO);
+    SmsCodeSendReqDTO convert(AuthSmsSendForm reqVO);
 
-    SmsCodeUseReqDTO convert(AuthSmsLoginReqVO reqVO, Integer scene, String usedIp);
+    SmsCodeUseReqDTO convert(AuthSmsLoginForm reqVO, Integer scene, String usedIp);
 
 }

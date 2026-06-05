@@ -6,7 +6,7 @@ import com.muang.ai.claw.common.core.PageParam;
 import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.config.excel.util.ExcelUtils;
-import com.muang.ai.claw.module.system.controller.admin.sms.vo.log.SmsLogPageReqVO;
+import com.muang.ai.claw.module.system.controller.admin.sms.vo.log.SmsLogPageForm;
 import com.muang.ai.claw.module.system.controller.admin.sms.vo.log.SmsLogRespVO;
 import com.muang.ai.claw.module.system.dal.dataobject.sms.SmsLogDO;
 import com.muang.ai.claw.module.system.service.sms.SmsLogService;
@@ -41,7 +41,7 @@ public class SmsLogController {
     @GetMapping("/page")
     @Operation(summary = "获得短信日志分页")
     @PreAuthorize("@ss.hasPermission('system:sms-log:query')")
-    public CommonResult<PageResult<SmsLogRespVO>> getSmsLogPage(@Valid SmsLogPageReqVO pageReqVO) {
+    public CommonResult<PageResult<SmsLogRespVO>> getSmsLogPage(@Valid SmsLogPageForm pageReqVO) {
         PageResult<SmsLogDO> pageResult = smsLogService.getSmsLogPage(pageReqVO);
         return success(BeanUtils.toBean(pageResult, SmsLogRespVO.class));
     }
@@ -59,7 +59,7 @@ public class SmsLogController {
     @Operation(summary = "导出短信日志 Excel")
     @PreAuthorize("@ss.hasPermission('system:sms-log:export')")
     @ApiAccessLog(operateType = EXPORT)
-    public void exportSmsLogExcel(@Valid SmsLogPageReqVO exportReqVO,
+    public void exportSmsLogExcel(@Valid SmsLogPageForm exportReqVO,
                                   HttpServletResponse response) throws IOException {
         exportReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
         List<SmsLogDO> list = smsLogService.getSmsLogPage(exportReqVO).getList();

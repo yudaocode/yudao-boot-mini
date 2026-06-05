@@ -5,10 +5,10 @@ import com.muang.ai.claw.constant.UserTypeEnum;
 import com.muang.ai.claw.common.core.CommonResult;
 import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.util.object.BeanUtils;
-import com.muang.ai.claw.module.system.controller.admin.notify.vo.template.NotifyTemplatePageReqVO;
+import com.muang.ai.claw.module.system.controller.admin.notify.vo.template.NotifyTemplatePageForm;
 import com.muang.ai.claw.module.system.controller.admin.notify.vo.template.NotifyTemplateRespVO;
-import com.muang.ai.claw.module.system.controller.admin.notify.vo.template.NotifyTemplateSaveReqVO;
-import com.muang.ai.claw.module.system.controller.admin.notify.vo.template.NotifyTemplateSendReqVO;
+import com.muang.ai.claw.module.system.controller.admin.notify.vo.template.NotifyTemplateSaveForm;
+import com.muang.ai.claw.module.system.controller.admin.notify.vo.template.NotifyTemplateSendForm;
 import com.muang.ai.claw.module.system.controller.admin.notify.vo.template.NotifyTemplateSimpleRespVO;
 import com.muang.ai.claw.module.system.dal.dataobject.notify.NotifyTemplateDO;
 import com.muang.ai.claw.module.system.service.notify.NotifySendService;
@@ -41,14 +41,14 @@ public class NotifyTemplateController {
     @PostMapping("/create")
     @Operation(summary = "创建站内信模版")
     @PreAuthorize("@ss.hasPermission('system:notify-template:create')")
-    public CommonResult<Long> createNotifyTemplate(@Valid @RequestBody NotifyTemplateSaveReqVO createReqVO) {
+    public CommonResult<Long> createNotifyTemplate(@Valid @RequestBody NotifyTemplateSaveForm createReqVO) {
         return success(notifyTemplateService.createNotifyTemplate(createReqVO));
     }
 
     @PutMapping("/update")
     @Operation(summary = "更新站内信模版")
     @PreAuthorize("@ss.hasPermission('system:notify-template:update')")
-    public CommonResult<Boolean> updateNotifyTemplate(@Valid @RequestBody NotifyTemplateSaveReqVO updateReqVO) {
+    public CommonResult<Boolean> updateNotifyTemplate(@Valid @RequestBody NotifyTemplateSaveForm updateReqVO) {
         notifyTemplateService.updateNotifyTemplate(updateReqVO);
         return success(true);
     }
@@ -83,7 +83,7 @@ public class NotifyTemplateController {
     @GetMapping("/page")
     @Operation(summary = "获得站内信模版分页")
     @PreAuthorize("@ss.hasPermission('system:notify-template:query')")
-    public CommonResult<PageResult<NotifyTemplateRespVO>> getNotifyTemplatePage(@Valid NotifyTemplatePageReqVO pageVO) {
+    public CommonResult<PageResult<NotifyTemplateRespVO>> getNotifyTemplatePage(@Valid NotifyTemplatePageForm pageVO) {
         PageResult<NotifyTemplateDO> pageResult = notifyTemplateService.getNotifyTemplatePage(pageVO);
         return success(BeanUtils.toBean(pageResult, NotifyTemplateRespVO.class));
     }
@@ -99,7 +99,7 @@ public class NotifyTemplateController {
     @PostMapping("/send-notify")
     @Operation(summary = "发送站内信")
     @PreAuthorize("@ss.hasPermission('system:notify-template:send-notify')")
-    public CommonResult<Long> sendNotify(@Valid @RequestBody NotifyTemplateSendReqVO sendReqVO) {
+    public CommonResult<Long> sendNotify(@Valid @RequestBody NotifyTemplateSendForm sendReqVO) {
         if (UserTypeEnum.MEMBER.getValue().equals(sendReqVO.getUserType())) {
             return success(notifySendService.sendSingleNotifyToMember(sendReqVO.getUserId(),
                     sendReqVO.getTemplateCode(), sendReqVO.getTemplateParams()));

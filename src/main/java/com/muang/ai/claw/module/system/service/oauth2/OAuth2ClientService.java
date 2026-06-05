@@ -8,8 +8,8 @@ import com.muang.ai.claw.constant.CommonStatusEnum;
 import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.util.string.StrUtils;
-import com.muang.ai.claw.module.system.controller.admin.oauth2.vo.client.OAuth2ClientPageReqVO;
-import com.muang.ai.claw.module.system.controller.admin.oauth2.vo.client.OAuth2ClientSaveReqVO;
+import com.muang.ai.claw.module.system.controller.admin.oauth2.vo.client.OAuth2ClientPageForm;
+import com.muang.ai.claw.module.system.controller.admin.oauth2.vo.client.OAuth2ClientSaveForm;
 import com.muang.ai.claw.module.system.dal.dataobject.oauth2.OAuth2ClientDO;
 import com.muang.ai.claw.module.system.dal.mysql.oauth2.OAuth2ClientMapper;
 import com.muang.ai.claw.module.system.dal.redis.RedisKeyConstants;
@@ -39,7 +39,7 @@ public class OAuth2ClientService {
     @Resource
     private OAuth2ClientMapper oauth2ClientMapper;
 
-    public Long createOAuth2Client(OAuth2ClientSaveReqVO createReqVO) {
+    public Long createOAuth2Client(OAuth2ClientSaveForm createReqVO) {
         validateClientIdExists(null, createReqVO.getClientId());
         // 插入
         OAuth2ClientDO client = BeanUtils.toBean(createReqVO, OAuth2ClientDO.class);
@@ -49,7 +49,7 @@ public class OAuth2ClientService {
 
     @CacheEvict(cacheNames = RedisKeyConstants.OAUTH_CLIENT,
             allEntries = true) // allEntries 清空所有缓存，因为可能修改到 clientId 字段，不好清理
-    public void updateOAuth2Client(OAuth2ClientSaveReqVO updateReqVO) {
+    public void updateOAuth2Client(OAuth2ClientSaveForm updateReqVO) {
         // 校验存在
         validateOAuth2ClientExists(updateReqVO.getId());
         // 校验 Client 未被占用
@@ -106,7 +106,7 @@ public class OAuth2ClientService {
         return oauth2ClientMapper.selectByClientId(clientId);
     }
 
-    public PageResult<OAuth2ClientDO> getOAuth2ClientPage(OAuth2ClientPageReqVO pageReqVO) {
+    public PageResult<OAuth2ClientDO> getOAuth2ClientPage(OAuth2ClientPageForm pageReqVO) {
         return oauth2ClientMapper.selectPage(pageReqVO);
     }
 

@@ -13,13 +13,13 @@ import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.util.validation.ValidationUtils;
 import com.muang.ai.claw.config.datapermission.core.util.DataPermissionUtils;
 import com.muang.ai.claw.module.infra.api.config.ConfigApi;
-import com.muang.ai.claw.module.system.controller.admin.auth.vo.AuthRegisterReqVO;
-import com.muang.ai.claw.module.system.controller.admin.user.vo.profile.UserProfileUpdatePasswordReqVO;
-import com.muang.ai.claw.module.system.controller.admin.user.vo.profile.UserProfileUpdateReqVO;
+import com.muang.ai.claw.module.system.controller.admin.auth.vo.AuthRegisterForm;
+import com.muang.ai.claw.module.system.controller.admin.user.vo.profile.UserProfileUpdatePasswordForm;
+import com.muang.ai.claw.module.system.controller.admin.user.vo.profile.UserProfileUpdateForm;
 import com.muang.ai.claw.module.system.controller.admin.user.vo.user.UserImportExcelVO;
 import com.muang.ai.claw.module.system.controller.admin.user.vo.user.UserImportRespVO;
-import com.muang.ai.claw.module.system.controller.admin.user.vo.user.UserPageReqVO;
-import com.muang.ai.claw.module.system.controller.admin.user.vo.user.UserSaveReqVO;
+import com.muang.ai.claw.module.system.controller.admin.user.vo.user.UserPageForm;
+import com.muang.ai.claw.module.system.controller.admin.user.vo.user.UserSaveForm;
 import com.muang.ai.claw.module.system.dal.dataobject.dept.DeptDO;
 import com.muang.ai.claw.module.system.dal.dataobject.dept.UserPostDO;
 import com.muang.ai.claw.module.system.dal.dataobject.user.AdminUserDO;
@@ -90,7 +90,7 @@ public class AdminUserService {
     @Transactional(rollbackFor = Exception.class)
     @LogRecord(type = SYSTEM_USER_TYPE, subType = SYSTEM_USER_CREATE_SUB_TYPE, bizNo = "{{#user.id}}",
             success = SYSTEM_USER_CREATE_SUCCESS)
-    public Long createUser(UserSaveReqVO createReqVO) {
+    public Long createUser(UserSaveForm createReqVO) {
         // 1.1 校验账户配合
         tenantService.handleTenantInfo(tenant -> {
             long count = userMapper.selectCount();
@@ -117,7 +117,7 @@ public class AdminUserService {
         return user.getId();
     }
 
-    public Long registerUser(AuthRegisterReqVO registerReqVO) {
+    public Long registerUser(AuthRegisterForm registerReqVO) {
         // 1.1 校验是否开启注册
         if (ObjUtil.notEqual(configApi.getConfigValueByKey(USER_REGISTER_ENABLED_KEY), "true")) {
             throw exception(USER_REGISTER_DISABLED);
@@ -143,7 +143,7 @@ public class AdminUserService {
     @Transactional(rollbackFor = Exception.class)
     @LogRecord(type = SYSTEM_USER_TYPE, subType = SYSTEM_USER_UPDATE_SUB_TYPE, bizNo = "{{#updateReqVO.id}}",
             success = SYSTEM_USER_UPDATE_SUCCESS)
-    public void updateUser(UserSaveReqVO updateReqVO) {
+    public void updateUser(UserSaveForm updateReqVO) {
         updateReqVO.setPassword(null); // 特殊：此处不更新密码
         // 1. 校验正确性
         AdminUserDO oldUser = validateUserForCreateOrUpdate(updateReqVO.getId(), updateReqVO.getUsername(),
@@ -156,11 +156,11 @@ public class AdminUserService {
         updateUserPost(updateReqVO, updateObj);
 
         // 3. 记录操作日志上下文
-        LogRecordContext.putVariable(DiffParseFunction.OLD_OBJECT, BeanUtils.toBean(oldUser, UserSaveReqVO.class));
+        LogRecordContext.putVariable(DiffParseFunction.OLD_OBJECT, BeanUtils.toBean(oldUser, UserSaveForm.class));
         LogRecordContext.putVariable("user", oldUser);
     }
 
-    private void updateUserPost(UserSaveReqVO reqVO, AdminUserDO updateObj) {
+    private void updateUserPost(UserSaveForm reqVO, AdminUserDO updateObj) {
         Long userId = reqVO.getId();
         Set<Long> dbPostIds = convertSet(userPostMapper.selectListByUserId(userId), UserPostDO::getPostId);
         // 计算新增和删除的岗位编号
@@ -181,7 +181,7 @@ public class AdminUserService {
         userMapper.updateById(new AdminUserDO().setId(id).setLoginIp(loginIp).setLoginDate(LocalDateTime.now()));
     }
 
-    public void updateUserProfile(Long id, UserProfileUpdateReqVO reqVO) {
+    public void updateUserProfile(Long id, UserProfileUpdateForm reqVO) {
         // 校验正确性
         validateUserExists(id);
         validateEmailUnique(id, reqVO.getEmail());
@@ -190,7 +190,7 @@ public class AdminUserService {
         userMapper.updateById(BeanUtils.toBean(reqVO, AdminUserDO.class).setId(id));
     }
 
-    public void updateUserPassword(Long id, UserProfileUpdatePasswordReqVO reqVO) {
+    public void updateUserPassword(Long id, UserProfileUpdatePasswordForm reqVO) {
         // 校验旧密码密码
         validateOldPassword(id, reqVO.getOldPassword());
         // 执行更新
@@ -269,7 +269,7 @@ public class AdminUserService {
         return userMapper.selectByMobile(mobile);
     }
 
-    public PageResult<AdminUserDO> getUserPage(UserPageReqVO reqVO) {
+    public PageResult<AdminUserDO> getUserPage(UserPageForm reqVO) {
         // 如果有角色编号，查询角色对应的用户编号
         Set<Long> userIds = null;
         if (reqVO.getRoleId() != null) {
@@ -479,7 +479,7 @@ public class AdminUserService {
             int currentIndex = index.getAndIncrement();
             // 2.1.1 校验字段是否符合要求
             try {
-                ValidationUtils.validate(BeanUtils.toBean(importUser, UserSaveReqVO.class).setPassword(initPassword));
+                ValidationUtils.validate(BeanUtils.toBean(importUser, UserSaveForm.class).setPassword(initPassword));
             } catch (ConstraintViolationException ex) {
                 String key = StrUtil.blankToDefault(importUser.getUsername(), "第 " + currentIndex + " 行");
                 respVO.getFailureUsernames().put(key, ex.getMessage());

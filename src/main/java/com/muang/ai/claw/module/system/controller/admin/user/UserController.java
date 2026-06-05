@@ -51,7 +51,7 @@ public class UserController {
     @PostMapping("/create")
     @Operation(summary = "新增用户")
     @PreAuthorize("@ss.hasPermission('system:user:create')")
-    public CommonResult<Long> createUser(@Valid @RequestBody UserSaveReqVO reqVO) {
+    public CommonResult<Long> createUser(@Valid @RequestBody UserSaveForm reqVO) {
         Long id = userService.createUser(reqVO);
         return success(id);
     }
@@ -59,7 +59,7 @@ public class UserController {
     @PutMapping("update")
     @Operation(summary = "修改用户")
     @PreAuthorize("@ss.hasPermission('system:user:update')")
-    public CommonResult<Boolean> updateUser(@Valid @RequestBody UserSaveReqVO reqVO) {
+    public CommonResult<Boolean> updateUser(@Valid @RequestBody UserSaveForm reqVO) {
         userService.updateUser(reqVO);
         return success(true);
     }
@@ -85,7 +85,7 @@ public class UserController {
     @PutMapping("/update-password")
     @Operation(summary = "重置用户密码")
     @PreAuthorize("@ss.hasPermission('system:user:update-password')")
-    public CommonResult<Boolean> updateUserPassword(@Valid @RequestBody UserUpdatePasswordReqVO reqVO) {
+    public CommonResult<Boolean> updateUserPassword(@Valid @RequestBody UserUpdatePasswordForm reqVO) {
         userService.updateUserPassword(reqVO.getId(), reqVO.getPassword());
         return success(true);
     }
@@ -93,7 +93,7 @@ public class UserController {
     @PutMapping("/update-status")
     @Operation(summary = "修改用户状态")
     @PreAuthorize("@ss.hasPermission('system:user:update')")
-    public CommonResult<Boolean> updateUserStatus(@Valid @RequestBody UserUpdateStatusReqVO reqVO) {
+    public CommonResult<Boolean> updateUserStatus(@Valid @RequestBody UserUpdateStatusForm reqVO) {
         userService.updateUserStatus(reqVO.getId(), reqVO.getStatus());
         return success(true);
     }
@@ -101,7 +101,7 @@ public class UserController {
     @GetMapping("/page")
     @Operation(summary = "获得用户分页列表")
     @PreAuthorize("@ss.hasPermission('system:user:query')")
-    public CommonResult<PageResult<UserRespVO>> getUserPage(@Valid UserPageReqVO pageReqVO) {
+    public CommonResult<PageResult<UserRespVO>> getUserPage(@Valid UserPageForm pageReqVO) {
         // 获得用户分页列表
         PageResult<AdminUserDO> pageResult = userService.getUserPage(pageReqVO);
         if (CollUtil.isEmpty(pageResult.getList())) {
@@ -156,7 +156,7 @@ public class UserController {
     @Operation(summary = "导出用户")
     @PreAuthorize("@ss.hasPermission('system:user:export')")
     @ApiAccessLog(operateType = EXPORT)
-    public void exportUserList(@Validated UserPageReqVO exportReqVO,
+    public void exportUserList(@Validated UserPageForm exportReqVO,
                                HttpServletResponse response) throws IOException {
         exportReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
         List<AdminUserDO> list = userService.getUserPage(exportReqVO).getList();

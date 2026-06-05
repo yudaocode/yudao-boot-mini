@@ -4,8 +4,8 @@ import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.config.mybatis.core.mapper.BaseMapperX;
 import com.muang.ai.claw.config.mybatis.core.query.LambdaQueryWrapperX;
 import com.muang.ai.claw.config.mybatis.core.query.QueryWrapperX;
-import com.muang.ai.claw.module.system.controller.admin.notify.vo.message.NotifyMessageMyPageReqVO;
-import com.muang.ai.claw.module.system.controller.admin.notify.vo.message.NotifyMessagePageReqVO;
+import com.muang.ai.claw.module.system.controller.admin.notify.vo.message.NotifyMessageMyPageForm;
+import com.muang.ai.claw.module.system.controller.admin.notify.vo.message.NotifyMessagePageForm;
 import com.muang.ai.claw.module.system.dal.dataobject.notify.NotifyMessageDO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -16,7 +16,7 @@ import java.util.List;
 @Mapper
 public interface NotifyMessageMapper extends BaseMapperX<NotifyMessageDO> {
 
-    default PageResult<NotifyMessageDO> selectPage(NotifyMessagePageReqVO reqVO) {
+    default PageResult<NotifyMessageDO> selectPage(NotifyMessagePageForm reqVO) {
         return selectPage(reqVO, new LambdaQueryWrapperX<NotifyMessageDO>()
                 .eqIfPresent(NotifyMessageDO::getUserId, reqVO.getUserId())
                 .eqIfPresent(NotifyMessageDO::getUserType, reqVO.getUserType())
@@ -26,7 +26,7 @@ public interface NotifyMessageMapper extends BaseMapperX<NotifyMessageDO> {
                 .orderByDesc(NotifyMessageDO::getId));
     }
 
-    default PageResult<NotifyMessageDO> selectPage(NotifyMessageMyPageReqVO reqVO, Long userId, Integer userType) {
+    default PageResult<NotifyMessageDO> selectPage(NotifyMessageMyPageForm reqVO, Long userId, Integer userType) {
         return selectPage(reqVO, new LambdaQueryWrapperX<NotifyMessageDO>()
                 .eqIfPresent(NotifyMessageDO::getReadStatus, reqVO.getReadStatus())
                 .betweenIfPresent(NotifyMessageDO::getCreateTime, reqVO.getCreateTime())

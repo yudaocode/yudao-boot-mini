@@ -3,14 +3,14 @@ package com.muang.ai.claw.module.system.dal.mysql.sms;
 import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.config.mybatis.core.mapper.BaseMapperX;
 import com.muang.ai.claw.config.mybatis.core.query.LambdaQueryWrapperX;
-import com.muang.ai.claw.module.system.controller.admin.sms.vo.log.SmsLogPageReqVO;
+import com.muang.ai.claw.module.system.controller.admin.sms.vo.log.SmsLogPageForm;
 import com.muang.ai.claw.module.system.dal.dataobject.sms.SmsLogDO;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface SmsLogMapper extends BaseMapperX<SmsLogDO> {
 
-    default PageResult<SmsLogDO> selectPage(SmsLogPageReqVO reqVO) {
+    default PageResult<SmsLogDO> selectPage(SmsLogPageForm reqVO) {
         return selectPage(reqVO, new LambdaQueryWrapperX<SmsLogDO>()
                 .eqIfPresent(SmsLogDO::getChannelId, reqVO.getChannelId())
                 .eqIfPresent(SmsLogDO::getTemplateId, reqVO.getTemplateId())

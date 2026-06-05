@@ -6,7 +6,7 @@ import com.muang.ai.claw.common.core.PageParam;
 import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.config.excel.util.ExcelUtils;
-import com.muang.ai.claw.module.infra.controller.admin.logger.vo.apierrorlog.ApiErrorLogPageReqVO;
+import com.muang.ai.claw.module.infra.controller.admin.logger.vo.apierrorlog.ApiErrorLogPageForm;
 import com.muang.ai.claw.module.infra.controller.admin.logger.vo.apierrorlog.ApiErrorLogRespVO;
 import com.muang.ai.claw.module.infra.dal.dataobject.logger.ApiErrorLogDO;
 import com.muang.ai.claw.module.infra.service.logger.ApiErrorLogService;
@@ -62,7 +62,7 @@ public class ApiErrorLogController {
     @GetMapping("/page")
     @Operation(summary = "获得 API 错误日志分页")
     @PreAuthorize("@ss.hasPermission('infra:api-error-log:query')")
-    public CommonResult<PageResult<ApiErrorLogRespVO>> getApiErrorLogPage(@Valid ApiErrorLogPageReqVO pageReqVO) {
+    public CommonResult<PageResult<ApiErrorLogRespVO>> getApiErrorLogPage(@Valid ApiErrorLogPageForm pageReqVO) {
         PageResult<ApiErrorLogDO> pageResult = apiErrorLogService.getApiErrorLogPage(pageReqVO);
         return success(BeanUtils.toBean(pageResult, ApiErrorLogRespVO.class));
     }
@@ -71,7 +71,7 @@ public class ApiErrorLogController {
     @Operation(summary = "导出 API 错误日志 Excel")
     @PreAuthorize("@ss.hasPermission('infra:api-error-log:export')")
     @ApiAccessLog(operateType = EXPORT)
-    public void exportApiErrorLogExcel(@Valid ApiErrorLogPageReqVO exportReqVO,
+    public void exportApiErrorLogExcel(@Valid ApiErrorLogPageForm exportReqVO,
                                        HttpServletResponse response) throws IOException {
         exportReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
         List<ApiErrorLogDO> list = apiErrorLogService.getApiErrorLogPage(exportReqVO).getList();

@@ -3,7 +3,7 @@ package com.muang.ai.claw.module.infra.dal.mysql.job;
 import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.config.mybatis.core.mapper.BaseMapperX;
 import com.muang.ai.claw.config.mybatis.core.query.LambdaQueryWrapperX;
-import com.muang.ai.claw.module.infra.controller.admin.job.vo.job.JobPageReqVO;
+import com.muang.ai.claw.module.infra.controller.admin.job.vo.job.JobPageForm;
 import com.muang.ai.claw.module.infra.dal.dataobject.job.JobDO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -18,7 +18,7 @@ public interface JobMapper extends BaseMapperX<JobDO> {
         return selectOne(JobDO::getHandlerName, handlerName);
     }
 
-    default PageResult<JobDO> selectPage(JobPageReqVO reqVO) {
+    default PageResult<JobDO> selectPage(JobPageForm reqVO) {
         return selectPage(reqVO, new LambdaQueryWrapperX<JobDO>()
                 .likeIfPresent(JobDO::getName, reqVO.getName())
                 .eqIfPresent(JobDO::getStatus, reqVO.getStatus())

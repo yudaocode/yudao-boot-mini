@@ -5,11 +5,11 @@ import cn.hutool.core.util.ZipUtil;
 import com.muang.ai.claw.common.core.CommonResult;
 import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.util.object.BeanUtils;
-import com.muang.ai.claw.module.infra.controller.admin.codegen.vo.CodegenCreateListReqVO;
+import com.muang.ai.claw.module.infra.controller.admin.codegen.vo.CodegenCreateListForm;
 import com.muang.ai.claw.module.infra.controller.admin.codegen.vo.CodegenDetailRespVO;
 import com.muang.ai.claw.module.infra.controller.admin.codegen.vo.CodegenPreviewRespVO;
-import com.muang.ai.claw.module.infra.controller.admin.codegen.vo.CodegenUpdateReqVO;
-import com.muang.ai.claw.module.infra.controller.admin.codegen.vo.table.CodegenTablePageReqVO;
+import com.muang.ai.claw.module.infra.controller.admin.codegen.vo.CodegenUpdateForm;
+import com.muang.ai.claw.module.infra.controller.admin.codegen.vo.table.CodegenTablePageForm;
 import com.muang.ai.claw.module.infra.controller.admin.codegen.vo.table.CodegenTableRespVO;
 import com.muang.ai.claw.module.infra.controller.admin.codegen.vo.table.DatabaseTableRespVO;
 import com.muang.ai.claw.module.infra.convert.codegen.CodegenConvert;
@@ -73,7 +73,7 @@ public class CodegenController {
     @GetMapping("/table/page")
     @Operation(summary = "获得表定义分页")
     @PreAuthorize("@ss.hasPermission('infra:codegen:query')")
-    public CommonResult<PageResult<CodegenTableRespVO>> getCodegenTablePage(@Valid CodegenTablePageReqVO pageReqVO) {
+    public CommonResult<PageResult<CodegenTableRespVO>> getCodegenTablePage(@Valid CodegenTablePageForm pageReqVO) {
         PageResult<CodegenTableDO> pageResult = codegenService.getCodegenTablePage(pageReqVO);
         return success(BeanUtils.toBean(pageResult, CodegenTableRespVO.class));
     }
@@ -92,14 +92,14 @@ public class CodegenController {
     @Operation(summary = "基于数据库的表结构，创建代码生成器的表和字段定义")
     @PostMapping("/create-list")
     @PreAuthorize("@ss.hasPermission('infra:codegen:create')")
-    public CommonResult<List<Long>> createCodegenList(@Valid @RequestBody CodegenCreateListReqVO reqVO) {
+    public CommonResult<List<Long>> createCodegenList(@Valid @RequestBody CodegenCreateListForm reqVO) {
         return success(codegenService.createCodegenList(getLoginUserNickname(), reqVO));
     }
 
     @Operation(summary = "更新数据库的表和字段定义")
     @PutMapping("/update")
     @PreAuthorize("@ss.hasPermission('infra:codegen:update')")
-    public CommonResult<Boolean> updateCodegen(@Valid @RequestBody CodegenUpdateReqVO updateReqVO) {
+    public CommonResult<Boolean> updateCodegen(@Valid @RequestBody CodegenUpdateForm updateReqVO) {
         codegenService.updateCodegen(updateReqVO);
         return success(true);
     }

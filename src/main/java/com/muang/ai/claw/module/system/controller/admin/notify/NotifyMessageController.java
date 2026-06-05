@@ -5,8 +5,8 @@ import com.muang.ai.claw.constant.UserTypeEnum;
 import com.muang.ai.claw.common.core.CommonResult;
 import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.util.object.BeanUtils;
-import com.muang.ai.claw.module.system.controller.admin.notify.vo.message.NotifyMessageMyPageReqVO;
-import com.muang.ai.claw.module.system.controller.admin.notify.vo.message.NotifyMessagePageReqVO;
+import com.muang.ai.claw.module.system.controller.admin.notify.vo.message.NotifyMessageMyPageForm;
+import com.muang.ai.claw.module.system.controller.admin.notify.vo.message.NotifyMessagePageForm;
 import com.muang.ai.claw.module.system.controller.admin.notify.vo.message.NotifyMessageRespVO;
 import com.muang.ai.claw.module.system.dal.dataobject.notify.NotifyMessageDO;
 import com.muang.ai.claw.module.system.service.notify.NotifyMessageService;
@@ -47,7 +47,7 @@ public class NotifyMessageController {
     @GetMapping("/page")
     @Operation(summary = "获得站内信分页")
     @PreAuthorize("@ss.hasPermission('system:notify-message:query')")
-    public CommonResult<PageResult<NotifyMessageRespVO>> getNotifyMessagePage(@Valid NotifyMessagePageReqVO pageVO) {
+    public CommonResult<PageResult<NotifyMessageRespVO>> getNotifyMessagePage(@Valid NotifyMessagePageForm pageVO) {
         PageResult<NotifyMessageDO> pageResult = notifyMessageService.getNotifyMessagePage(pageVO);
         return success(BeanUtils.toBean(pageResult, NotifyMessageRespVO.class));
     }
@@ -56,7 +56,7 @@ public class NotifyMessageController {
 
     @GetMapping("/my-page")
     @Operation(summary = "获得我的站内信分页")
-    public CommonResult<PageResult<NotifyMessageRespVO>> getMyMyNotifyMessagePage(@Valid NotifyMessageMyPageReqVO pageVO) {
+    public CommonResult<PageResult<NotifyMessageRespVO>> getMyMyNotifyMessagePage(@Valid NotifyMessageMyPageForm pageVO) {
         PageResult<NotifyMessageDO> pageResult = notifyMessageService.getMyMyNotifyMessagePage(pageVO,
                 getLoginUserId(), UserTypeEnum.ADMIN.getValue());
         return success(BeanUtils.toBean(pageResult, NotifyMessageRespVO.class));

@@ -12,9 +12,9 @@ import com.muang.ai.claw.config.datapermission.core.annotation.DataPermission;
 import com.muang.ai.claw.config.tenant.config.TenantProperties;
 import com.muang.ai.claw.config.tenant.core.context.TenantContextHolder;
 import com.muang.ai.claw.config.tenant.core.util.TenantUtils;
-import com.muang.ai.claw.module.system.controller.admin.permission.vo.role.RoleSaveReqVO;
-import com.muang.ai.claw.module.system.controller.admin.tenant.vo.tenant.TenantPageReqVO;
-import com.muang.ai.claw.module.system.controller.admin.tenant.vo.tenant.TenantSaveReqVO;
+import com.muang.ai.claw.module.system.controller.admin.permission.vo.role.RoleSaveForm;
+import com.muang.ai.claw.module.system.controller.admin.tenant.vo.tenant.TenantPageForm;
+import com.muang.ai.claw.module.system.controller.admin.tenant.vo.tenant.TenantSaveForm;
 import com.muang.ai.claw.module.system.convert.tenant.TenantConvert;
 import com.muang.ai.claw.module.system.dal.dataobject.permission.MenuDO;
 import com.muang.ai.claw.module.system.dal.dataobject.permission.RoleDO;
@@ -93,7 +93,7 @@ public class TenantService {
 
     @DSTransactional // 多数据源，使用 @DSTransactional 保证本地事务，以及数据源的切换
     @DataPermission(enable = false) // 参见 https://gitee.com/zhijiantianya/ruoyi-vue-pro/pulls/1154 说明
-    public Long createTenant(TenantSaveReqVO createReqVO) {
+    public Long createTenant(TenantSaveForm createReqVO) {
         // 校验租户名称是否重复
         validTenantNameDuplicate(createReqVO.getName(), null);
         // 校验租户域名是否重复
@@ -116,7 +116,7 @@ public class TenantService {
         return tenant.getId();
     }
 
-    private Long createUser(Long roleId, TenantSaveReqVO createReqVO) {
+    private Long createUser(Long roleId, TenantSaveForm createReqVO) {
         // 创建用户
         Long userId = userService.createUser(TenantConvert.INSTANCE.convert02(createReqVO));
         // 分配角色
@@ -126,7 +126,7 @@ public class TenantService {
 
     private Long createRole(TenantPackageDO tenantPackage) {
         // 创建角色
-        RoleSaveReqVO reqVO = new RoleSaveReqVO();
+        RoleSaveForm reqVO = new RoleSaveForm();
         reqVO.setName(RoleCodeEnum.TENANT_ADMIN.getName()).setCode(RoleCodeEnum.TENANT_ADMIN.getCode())
                 .setSort(0).setRemark("系统自动生成");
         Long roleId = roleService.createRole(reqVO, RoleTypeEnum.SYSTEM.getType());
@@ -136,7 +136,7 @@ public class TenantService {
     }
 
     @DSTransactional // 多数据源，使用 @DSTransactional 保证本地事务，以及数据源的切换
-    public void updateTenant(TenantSaveReqVO updateReqVO) {
+    public void updateTenant(TenantSaveForm updateReqVO) {
         // 校验存在
         TenantDO tenant = validateUpdateTenant(updateReqVO.getId());
         // 校验租户名称是否重复
@@ -239,7 +239,7 @@ public class TenantService {
         return tenantMapper.selectById(id);
     }
 
-    public PageResult<TenantDO> getTenantPage(TenantPageReqVO pageReqVO) {
+    public PageResult<TenantDO> getTenantPage(TenantPageForm pageReqVO) {
         return tenantMapper.selectPage(pageReqVO);
     }
 

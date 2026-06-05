@@ -3,7 +3,7 @@ package com.muang.ai.claw.module.infra.dal.mysql.logger;
 import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.config.mybatis.core.mapper.BaseMapperX;
 import com.muang.ai.claw.config.mybatis.core.query.LambdaQueryWrapperX;
-import com.muang.ai.claw.module.infra.controller.admin.logger.vo.apiaccesslog.ApiAccessLogPageReqVO;
+import com.muang.ai.claw.module.infra.controller.admin.logger.vo.apiaccesslog.ApiAccessLogPageForm;
 import com.muang.ai.claw.module.infra.dal.dataobject.logger.ApiAccessLogDO;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @Mapper
 public interface ApiAccessLogMapper extends BaseMapperX<ApiAccessLogDO> {
 
-    default PageResult<ApiAccessLogDO> selectPage(ApiAccessLogPageReqVO reqVO) {
+    default PageResult<ApiAccessLogDO> selectPage(ApiAccessLogPageForm reqVO) {
         return selectPage(reqVO, new LambdaQueryWrapperX<ApiAccessLogDO>()
                 .eqIfPresent(ApiAccessLogDO::getUserId, reqVO.getUserId())
                 .eqIfPresent(ApiAccessLogDO::getUserType, reqVO.getUserType())

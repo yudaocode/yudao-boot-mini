@@ -3,9 +3,9 @@ package com.muang.ai.claw.module.system.controller.admin.dept;
 import com.muang.ai.claw.constant.CommonStatusEnum;
 import com.muang.ai.claw.common.core.CommonResult;
 import com.muang.ai.claw.util.object.BeanUtils;
-import com.muang.ai.claw.module.system.controller.admin.dept.vo.dept.DeptListReqVO;
+import com.muang.ai.claw.module.system.controller.admin.dept.vo.dept.DeptListForm;
 import com.muang.ai.claw.module.system.controller.admin.dept.vo.dept.DeptRespVO;
-import com.muang.ai.claw.module.system.controller.admin.dept.vo.dept.DeptSaveReqVO;
+import com.muang.ai.claw.module.system.controller.admin.dept.vo.dept.DeptSaveForm;
 import com.muang.ai.claw.module.system.controller.admin.dept.vo.dept.DeptSimpleRespVO;
 import com.muang.ai.claw.module.system.dal.dataobject.dept.DeptDO;
 import com.muang.ai.claw.module.system.service.dept.DeptService;
@@ -34,7 +34,7 @@ public class DeptController {
     @PostMapping("create")
     @Operation(summary = "创建部门")
     @PreAuthorize("@ss.hasPermission('system:dept:create')")
-    public CommonResult<Long> createDept(@Valid @RequestBody DeptSaveReqVO createReqVO) {
+    public CommonResult<Long> createDept(@Valid @RequestBody DeptSaveForm createReqVO) {
         Long deptId = deptService.createDept(createReqVO);
         return success(deptId);
     }
@@ -42,7 +42,7 @@ public class DeptController {
     @PutMapping("update")
     @Operation(summary = "更新部门")
     @PreAuthorize("@ss.hasPermission('system:dept:update')")
-    public CommonResult<Boolean> updateDept(@Valid @RequestBody DeptSaveReqVO updateReqVO) {
+    public CommonResult<Boolean> updateDept(@Valid @RequestBody DeptSaveForm updateReqVO) {
         deptService.updateDept(updateReqVO);
         return success(true);
     }
@@ -68,7 +68,7 @@ public class DeptController {
     @GetMapping("/list")
     @Operation(summary = "获取部门列表")
     @PreAuthorize("@ss.hasPermission('system:dept:query')")
-    public CommonResult<List<DeptRespVO>> getDeptList(DeptListReqVO reqVO) {
+    public CommonResult<List<DeptRespVO>> getDeptList(DeptListForm reqVO) {
         List<DeptDO> list = deptService.getDeptList(reqVO);
         return success(BeanUtils.toBean(list, DeptRespVO.class));
     }
@@ -77,7 +77,7 @@ public class DeptController {
     @Operation(summary = "获取部门精简信息列表", description = "只包含被开启的部门，主要用于前端的下拉选项")
     public CommonResult<List<DeptSimpleRespVO>> getSimpleDeptList() {
         List<DeptDO> list = deptService.getDeptList(
-                new DeptListReqVO().setStatus(CommonStatusEnum.ENABLE.getStatus()));
+                new DeptListForm().setStatus(CommonStatusEnum.ENABLE.getStatus()));
         return success(BeanUtils.toBean(list, DeptSimpleRespVO.class));
     }
 

@@ -3,7 +3,7 @@ package com.muang.ai.claw.module.infra.controller.admin.db;
 import com.muang.ai.claw.common.core.CommonResult;
 import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.module.infra.controller.admin.db.vo.DataSourceConfigRespVO;
-import com.muang.ai.claw.module.infra.controller.admin.db.vo.DataSourceConfigSaveReqVO;
+import com.muang.ai.claw.module.infra.controller.admin.db.vo.DataSourceConfigSaveForm;
 import com.muang.ai.claw.module.infra.dal.dataobject.db.DataSourceConfigDO;
 import com.muang.ai.claw.module.infra.service.db.DataSourceConfigService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -31,14 +31,14 @@ public class DataSourceConfigController {
     @PostMapping("/create")
     @Operation(summary = "创建数据源配置")
     @PreAuthorize("@ss.hasPermission('infra:data-source-config:create')")
-    public CommonResult<Long> createDataSourceConfig(@Valid @RequestBody DataSourceConfigSaveReqVO createReqVO) {
+    public CommonResult<Long> createDataSourceConfig(@Valid @RequestBody DataSourceConfigSaveForm createReqVO) {
         return success(dataSourceConfigService.createDataSourceConfig(createReqVO));
     }
 
     @PutMapping("/update")
     @Operation(summary = "更新数据源配置")
     @PreAuthorize("@ss.hasPermission('infra:data-source-config:update')")
-    public CommonResult<Boolean> updateDataSourceConfig(@Valid @RequestBody DataSourceConfigSaveReqVO updateReqVO) {
+    public CommonResult<Boolean> updateDataSourceConfig(@Valid @RequestBody DataSourceConfigSaveForm updateReqVO) {
         dataSourceConfigService.updateDataSourceConfig(updateReqVO);
         return success(true);
     }

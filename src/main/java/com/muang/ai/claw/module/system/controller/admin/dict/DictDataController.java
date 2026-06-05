@@ -7,9 +7,9 @@ import com.muang.ai.claw.common.core.PageParam;
 import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.config.excel.util.ExcelUtils;
-import com.muang.ai.claw.module.system.controller.admin.dict.vo.data.DictDataPageReqVO;
+import com.muang.ai.claw.module.system.controller.admin.dict.vo.data.DictDataPageForm;
 import com.muang.ai.claw.module.system.controller.admin.dict.vo.data.DictDataRespVO;
-import com.muang.ai.claw.module.system.controller.admin.dict.vo.data.DictDataSaveReqVO;
+import com.muang.ai.claw.module.system.controller.admin.dict.vo.data.DictDataSaveForm;
 import com.muang.ai.claw.module.system.controller.admin.dict.vo.data.DictDataSimpleRespVO;
 import com.muang.ai.claw.module.system.dal.dataobject.dict.DictDataDO;
 import com.muang.ai.claw.module.system.service.dict.DictDataService;
@@ -41,7 +41,7 @@ public class DictDataController {
     @PostMapping("/create")
     @Operation(summary = "新增字典数据")
     @PreAuthorize("@ss.hasPermission('system:dict:create')")
-    public CommonResult<Long> createDictData(@Valid @RequestBody DictDataSaveReqVO createReqVO) {
+    public CommonResult<Long> createDictData(@Valid @RequestBody DictDataSaveForm createReqVO) {
         Long dictDataId = dictDataService.createDictData(createReqVO);
         return success(dictDataId);
     }
@@ -49,7 +49,7 @@ public class DictDataController {
     @PutMapping("/update")
     @Operation(summary = "修改字典数据")
     @PreAuthorize("@ss.hasPermission('system:dict:update')")
-    public CommonResult<Boolean> updateDictData(@Valid @RequestBody DictDataSaveReqVO updateReqVO) {
+    public CommonResult<Boolean> updateDictData(@Valid @RequestBody DictDataSaveForm updateReqVO) {
         dictDataService.updateDictData(updateReqVO);
         return success(true);
     }
@@ -84,7 +84,7 @@ public class DictDataController {
     @GetMapping("/page")
     @Operation(summary = "获得字典类型的分页")
     @PreAuthorize("@ss.hasPermission('system:dict:query')")
-    public CommonResult<PageResult<DictDataRespVO>> getDictTypePage(@Valid DictDataPageReqVO pageReqVO) {
+    public CommonResult<PageResult<DictDataRespVO>> getDictTypePage(@Valid DictDataPageForm pageReqVO) {
         PageResult<DictDataDO> pageResult = dictDataService.getDictDataPage(pageReqVO);
         return success(BeanUtils.toBean(pageResult, DictDataRespVO.class));
     }
@@ -102,7 +102,7 @@ public class DictDataController {
     @Operation(summary = "导出字典数据")
     @PreAuthorize("@ss.hasPermission('system:dict:export')")
     @ApiAccessLog(operateType = EXPORT)
-    public void export(HttpServletResponse response, @Valid DictDataPageReqVO exportReqVO) throws IOException {
+    public void export(HttpServletResponse response, @Valid DictDataPageForm exportReqVO) throws IOException {
         exportReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
         List<DictDataDO> list = dictDataService.getDictDataPage(exportReqVO).getList();
         // 输出

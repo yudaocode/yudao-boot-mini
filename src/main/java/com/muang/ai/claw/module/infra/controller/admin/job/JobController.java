@@ -7,9 +7,9 @@ import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.config.excel.util.ExcelUtils;
 import com.muang.ai.claw.config.quartz.core.util.CronUtils;
-import com.muang.ai.claw.module.infra.controller.admin.job.vo.job.JobPageReqVO;
+import com.muang.ai.claw.module.infra.controller.admin.job.vo.job.JobPageForm;
 import com.muang.ai.claw.module.infra.controller.admin.job.vo.job.JobRespVO;
-import com.muang.ai.claw.module.infra.controller.admin.job.vo.job.JobSaveReqVO;
+import com.muang.ai.claw.module.infra.controller.admin.job.vo.job.JobSaveForm;
 import com.muang.ai.claw.module.infra.dal.dataobject.job.JobDO;
 import com.muang.ai.claw.module.infra.service.job.JobService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -44,7 +44,7 @@ public class JobController {
     @PostMapping("/create")
     @Operation(summary = "创建定时任务")
     @PreAuthorize("@ss.hasPermission('infra:job:create')")
-    public CommonResult<Long> createJob(@Valid @RequestBody JobSaveReqVO createReqVO)
+    public CommonResult<Long> createJob(@Valid @RequestBody JobSaveForm createReqVO)
             throws SchedulerException {
         return success(jobService.createJob(createReqVO));
     }
@@ -52,7 +52,7 @@ public class JobController {
     @PutMapping("/update")
     @Operation(summary = "更新定时任务")
     @PreAuthorize("@ss.hasPermission('infra:job:update')")
-    public CommonResult<Boolean> updateJob(@Valid @RequestBody JobSaveReqVO updateReqVO)
+    public CommonResult<Boolean> updateJob(@Valid @RequestBody JobSaveForm updateReqVO)
             throws SchedulerException {
         jobService.updateJob(updateReqVO);
         return success(true);
@@ -120,7 +120,7 @@ public class JobController {
     @GetMapping("/page")
     @Operation(summary = "获得定时任务分页")
     @PreAuthorize("@ss.hasPermission('infra:job:query')")
-    public CommonResult<PageResult<JobRespVO>> getJobPage(@Valid JobPageReqVO pageVO) {
+    public CommonResult<PageResult<JobRespVO>> getJobPage(@Valid JobPageForm pageVO) {
         PageResult<JobDO> pageResult = jobService.getJobPage(pageVO);
         return success(BeanUtils.toBean(pageResult, JobRespVO.class));
     }
@@ -129,7 +129,7 @@ public class JobController {
     @Operation(summary = "导出定时任务 Excel")
     @PreAuthorize("@ss.hasPermission('infra:job:export')")
     @ApiAccessLog(operateType = EXPORT)
-    public void exportJobExcel(@Valid JobPageReqVO exportReqVO,
+    public void exportJobExcel(@Valid JobPageForm exportReqVO,
                                HttpServletResponse response) throws IOException {
         exportReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
         List<JobDO> list = jobService.getJobPage(exportReqVO).getList();

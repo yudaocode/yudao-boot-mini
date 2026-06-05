@@ -5,8 +5,8 @@ import com.muang.ai.claw.constant.CommonStatusEnum;
 import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.util.collection.CollectionUtils;
 import com.muang.ai.claw.util.object.BeanUtils;
-import com.muang.ai.claw.module.system.controller.admin.dict.vo.data.DictDataPageReqVO;
-import com.muang.ai.claw.module.system.controller.admin.dict.vo.data.DictDataSaveReqVO;
+import com.muang.ai.claw.module.system.controller.admin.dict.vo.data.DictDataPageForm;
+import com.muang.ai.claw.module.system.controller.admin.dict.vo.data.DictDataSaveForm;
 import com.muang.ai.claw.module.system.dal.dataobject.dict.DictDataDO;
 import com.muang.ai.claw.module.system.dal.dataobject.dict.DictTypeDO;
 import com.muang.ai.claw.module.system.dal.mysql.dict.DictDataMapper;
@@ -51,7 +51,7 @@ public class DictDataService {
         return list;
     }
 
-    public PageResult<DictDataDO> getDictDataPage(DictDataPageReqVO pageReqVO) {
+    public PageResult<DictDataDO> getDictDataPage(DictDataPageForm pageReqVO) {
         return dictDataMapper.selectPage(pageReqVO);
     }
 
@@ -59,7 +59,7 @@ public class DictDataService {
         return dictDataMapper.selectById(id);
     }
 
-    public Long createDictData(DictDataSaveReqVO createReqVO) {
+    public Long createDictData(DictDataSaveForm createReqVO) {
         // 校验字典类型有效
         validateDictTypeExists(createReqVO.getDictType());
         // 校验字典数据的值的唯一性
@@ -71,7 +71,7 @@ public class DictDataService {
         return dictData.getId();
     }
 
-    public void updateDictData(DictDataSaveReqVO updateReqVO) {
+    public void updateDictData(DictDataSaveForm updateReqVO) {
         // 校验自己存在
         validateDictDataExists(updateReqVO.getId());
         // 校验字典类型有效

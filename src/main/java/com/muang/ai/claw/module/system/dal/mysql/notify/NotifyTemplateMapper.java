@@ -3,7 +3,7 @@ package com.muang.ai.claw.module.system.dal.mysql.notify;
 import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.config.mybatis.core.mapper.BaseMapperX;
 import com.muang.ai.claw.config.mybatis.core.query.LambdaQueryWrapperX;
-import com.muang.ai.claw.module.system.controller.admin.notify.vo.template.NotifyTemplatePageReqVO;
+import com.muang.ai.claw.module.system.controller.admin.notify.vo.template.NotifyTemplatePageForm;
 import com.muang.ai.claw.module.system.dal.dataobject.notify.NotifyTemplateDO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -16,7 +16,7 @@ public interface NotifyTemplateMapper extends BaseMapperX<NotifyTemplateDO> {
         return selectOne(NotifyTemplateDO::getCode, code);
     }
 
-    default PageResult<NotifyTemplateDO> selectPage(NotifyTemplatePageReqVO reqVO) {
+    default PageResult<NotifyTemplateDO> selectPage(NotifyTemplatePageForm reqVO) {
         return selectPage(reqVO, new LambdaQueryWrapperX<NotifyTemplateDO>()
                 .likeIfPresent(NotifyTemplateDO::getCode, reqVO.getCode())
                 .likeIfPresent(NotifyTemplateDO::getName, reqVO.getName())

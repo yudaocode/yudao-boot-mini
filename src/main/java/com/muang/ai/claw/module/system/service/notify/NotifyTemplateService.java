@@ -4,8 +4,8 @@ import cn.hutool.core.util.ReUtil;
 import cn.hutool.core.util.StrUtil;
 import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.util.object.BeanUtils;
-import com.muang.ai.claw.module.system.controller.admin.notify.vo.template.NotifyTemplatePageReqVO;
-import com.muang.ai.claw.module.system.controller.admin.notify.vo.template.NotifyTemplateSaveReqVO;
+import com.muang.ai.claw.module.system.controller.admin.notify.vo.template.NotifyTemplatePageForm;
+import com.muang.ai.claw.module.system.controller.admin.notify.vo.template.NotifyTemplateSaveForm;
 import com.muang.ai.claw.module.system.dal.dataobject.notify.NotifyTemplateDO;
 import com.muang.ai.claw.module.system.dal.mysql.notify.NotifyTemplateMapper;
 import com.muang.ai.claw.module.system.dal.redis.RedisKeyConstants;
@@ -43,7 +43,7 @@ public class NotifyTemplateService {
     @Resource
     private NotifyTemplateMapper notifyTemplateMapper;
 
-    public Long createNotifyTemplate(NotifyTemplateSaveReqVO createReqVO) {
+    public Long createNotifyTemplate(NotifyTemplateSaveForm createReqVO) {
         // 校验站内信编码是否重复
         validateNotifyTemplateCodeDuplicate(null, createReqVO.getCode());
 
@@ -56,7 +56,7 @@ public class NotifyTemplateService {
 
     @CacheEvict(cacheNames = RedisKeyConstants.NOTIFY_TEMPLATE,
             allEntries = true) // allEntries 清空所有缓存，因为可能修改到 code 字段，不好清理
-    public void updateNotifyTemplate(NotifyTemplateSaveReqVO updateReqVO) {
+    public void updateNotifyTemplate(NotifyTemplateSaveForm updateReqVO) {
         // 校验存在
         validateNotifyTemplateExists(updateReqVO.getId());
         // 校验站内信编码是否重复
@@ -104,7 +104,7 @@ public class NotifyTemplateService {
         return notifyTemplateMapper.selectByCode(code);
     }
 
-    public PageResult<NotifyTemplateDO> getNotifyTemplatePage(NotifyTemplatePageReqVO pageReqVO) {
+    public PageResult<NotifyTemplateDO> getNotifyTemplatePage(NotifyTemplatePageForm pageReqVO) {
         return notifyTemplateMapper.selectPage(pageReqVO);
     }
 

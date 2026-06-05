@@ -2,9 +2,9 @@ package com.muang.ai.claw.module.system.controller.admin.permission;
 
 import cn.hutool.core.collection.CollUtil;
 import com.muang.ai.claw.common.core.CommonResult;
-import com.muang.ai.claw.module.system.controller.admin.permission.vo.permission.PermissionAssignRoleDataScopeReqVO;
-import com.muang.ai.claw.module.system.controller.admin.permission.vo.permission.PermissionAssignRoleMenuReqVO;
-import com.muang.ai.claw.module.system.controller.admin.permission.vo.permission.PermissionAssignUserRoleReqVO;
+import com.muang.ai.claw.module.system.controller.admin.permission.vo.permission.PermissionAssignRoleDataScopeForm;
+import com.muang.ai.claw.module.system.controller.admin.permission.vo.permission.PermissionAssignRoleMenuForm;
+import com.muang.ai.claw.module.system.controller.admin.permission.vo.permission.PermissionAssignUserRoleForm;
 import com.muang.ai.claw.module.system.service.permission.PermissionService;
 import com.muang.ai.claw.module.system.service.tenant.TenantService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -45,7 +45,7 @@ public class PermissionController {
     @PostMapping("/assign-role-menu")
     @Operation(summary = "赋予角色菜单")
     @PreAuthorize("@ss.hasPermission('system:permission:assign-role-menu')")
-    public CommonResult<Boolean> assignRoleMenu(@Validated @RequestBody PermissionAssignRoleMenuReqVO reqVO) {
+    public CommonResult<Boolean> assignRoleMenu(@Validated @RequestBody PermissionAssignRoleMenuForm reqVO) {
         // 开启多租户的情况下，需要过滤掉未开通的菜单
         tenantService.handleTenantMenu(menuIds -> reqVO.getMenuIds().removeIf(menuId -> !CollUtil.contains(menuIds, menuId)));
 
@@ -57,7 +57,7 @@ public class PermissionController {
     @PostMapping("/assign-role-data-scope")
     @Operation(summary = "赋予角色数据权限")
     @PreAuthorize("@ss.hasPermission('system:permission:assign-role-data-scope')")
-    public CommonResult<Boolean> assignRoleDataScope(@Valid @RequestBody PermissionAssignRoleDataScopeReqVO reqVO) {
+    public CommonResult<Boolean> assignRoleDataScope(@Valid @RequestBody PermissionAssignRoleDataScopeForm reqVO) {
         permissionService.assignRoleDataScope(reqVO.getRoleId(), reqVO.getDataScope(), reqVO.getDataScopeDeptIds());
         return success(true);
     }
@@ -73,7 +73,7 @@ public class PermissionController {
     @Operation(summary = "赋予用户角色")
     @PostMapping("/assign-user-role")
     @PreAuthorize("@ss.hasPermission('system:permission:assign-user-role')")
-    public CommonResult<Boolean> assignUserRole(@Validated @RequestBody PermissionAssignUserRoleReqVO reqVO) {
+    public CommonResult<Boolean> assignUserRole(@Validated @RequestBody PermissionAssignUserRoleForm reqVO) {
         permissionService.assignUserRole(reqVO.getUserId(), reqVO.getRoleIds());
         return success(true);
     }

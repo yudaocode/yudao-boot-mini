@@ -4,8 +4,8 @@ import cn.hutool.core.util.StrUtil;
 import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.util.date.LocalDateTimeUtils;
 import com.muang.ai.claw.util.object.BeanUtils;
-import com.muang.ai.claw.module.system.controller.admin.dict.vo.type.DictTypePageReqVO;
-import com.muang.ai.claw.module.system.controller.admin.dict.vo.type.DictTypeSaveReqVO;
+import com.muang.ai.claw.module.system.controller.admin.dict.vo.type.DictTypePageForm;
+import com.muang.ai.claw.module.system.controller.admin.dict.vo.type.DictTypeSaveForm;
 import com.muang.ai.claw.module.system.dal.dataobject.dict.DictTypeDO;
 import com.muang.ai.claw.module.system.dal.mysql.dict.DictTypeMapper;
 import com.google.common.annotations.VisibleForTesting;
@@ -31,7 +31,7 @@ public class DictTypeService {
     @Resource
     private DictTypeMapper dictTypeMapper;
 
-    public PageResult<DictTypeDO> getDictTypePage(DictTypePageReqVO pageReqVO) {
+    public PageResult<DictTypeDO> getDictTypePage(DictTypePageForm pageReqVO) {
         return dictTypeMapper.selectPage(pageReqVO);
     }
 
@@ -43,7 +43,7 @@ public class DictTypeService {
         return dictTypeMapper.selectByType(type);
     }
 
-    public Long createDictType(DictTypeSaveReqVO createReqVO) {
+    public Long createDictType(DictTypeSaveForm createReqVO) {
         // 校验字典类型的名字的唯一性
         validateDictTypeNameUnique(null, createReqVO.getName());
         // 校验字典类型的类型的唯一性
@@ -56,7 +56,7 @@ public class DictTypeService {
         return dictType.getId();
     }
 
-    public void updateDictType(DictTypeSaveReqVO updateReqVO) {
+    public void updateDictType(DictTypeSaveForm updateReqVO) {
         // 校验自己存在
         validateDictTypeExists(updateReqVO.getId());
         // 校验字典类型的名字的唯一性

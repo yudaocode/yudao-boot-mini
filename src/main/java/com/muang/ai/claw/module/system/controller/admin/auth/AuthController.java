@@ -61,7 +61,7 @@ public class AuthController {
     @PostMapping("/login")
     @PermitAll
     @Operation(summary = "使用账号密码登录")
-    public CommonResult<AuthLoginRespVO> login(@RequestBody @Valid AuthLoginReqVO reqVO) {
+    public CommonResult<AuthLoginRespVO> login(@RequestBody @Valid AuthLoginForm reqVO) {
         return success(authService.login(reqVO));
     }
 
@@ -115,7 +115,7 @@ public class AuthController {
     @PostMapping("/register")
     @PermitAll
     @Operation(summary = "注册用户")
-    public CommonResult<AuthLoginRespVO> register(@RequestBody @Valid AuthRegisterReqVO registerReqVO) {
+    public CommonResult<AuthLoginRespVO> register(@RequestBody @Valid AuthRegisterForm registerReqVO) {
         return success(authService.register(registerReqVO));
     }
 
@@ -126,14 +126,14 @@ public class AuthController {
     @Operation(summary = "使用短信验证码登录")
     // 可按需开启限流：https://github.com/YunaiV/ruoyi-vue-pro/issues/851
     // @RateLimiter(time = 60, count = 6, keyResolver = ExpressionRateLimiterKeyResolver.class, keyArg = "#reqVO.mobile")
-    public CommonResult<AuthLoginRespVO> smsLogin(@RequestBody @Valid AuthSmsLoginReqVO reqVO) {
+    public CommonResult<AuthLoginRespVO> smsLogin(@RequestBody @Valid AuthSmsLoginForm reqVO) {
         return success(authService.smsLogin(reqVO));
     }
 
     @PostMapping("/send-sms-code")
     @PermitAll
     @Operation(summary = "发送手机验证码")
-    public CommonResult<Boolean> sendLoginSmsCode(@RequestBody @Valid AuthSmsSendReqVO reqVO) {
+    public CommonResult<Boolean> sendLoginSmsCode(@RequestBody @Valid AuthSmsSendForm reqVO) {
         authService.sendSmsCode(reqVO);
         return success(true);
     }
@@ -141,7 +141,7 @@ public class AuthController {
     @PostMapping("/reset-password")
     @PermitAll
     @Operation(summary = "重置密码")
-    public CommonResult<Boolean> resetPassword(@RequestBody @Valid AuthResetPasswordReqVO reqVO) {
+    public CommonResult<Boolean> resetPassword(@RequestBody @Valid AuthResetPasswordForm reqVO) {
         authService.resetPassword(reqVO);
         return success(true);
     }
