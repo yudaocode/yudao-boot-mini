@@ -1,12 +1,7 @@
 package com.muang.ai.claw.module.infra.service.logger;
 
-<<<<<<< HEAD
-import com.muang.ai.claw.common.biz.infra.logger.dto.ApiErrorLogCreateReqDTO;
 import com.muang.ai.claw.common.core.PageResult;
-=======
 import com.muang.ai.claw.module.infra.api.logger.dto.ApiErrorLogCreateReqDTO;
-import com.muang.ai.claw.common.pojo.PageResult;
->>>>>>> 8bb99fac675d4686e2ba796e33021f47267a1e36
 import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.util.string.StrUtils;
 import com.muang.ai.claw.config.tenant.core.context.TenantContextHolder;
