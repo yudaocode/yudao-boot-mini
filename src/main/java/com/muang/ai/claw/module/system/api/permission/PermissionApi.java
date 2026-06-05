@@ -13,7 +13,7 @@ import com.muang.ai.claw.common.biz.system.permission.PermissionCommonApi;
  *
  */
 @Service
-public class PermissionApi {
+public class PermissionApi implements PermissionCommonApi {
 
     @Resource
     private PermissionService permissionService;

@@ -19,7 +19,7 @@ import com.muang.ai.claw.common.biz.system.logger.OperateLogCommonApi;
  */
 @Service
 @Validated
-public class OperateLogApi {
+public class OperateLogApi implements OperateLogCommonApi {
 
     @Resource
     private OperateLogService operateLogService;

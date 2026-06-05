@@ -1,5 +1,7 @@
 package com.muang.ai.claw.module.infra.service.job;
 
+import com.muang.ai.claw.common.quartz.core.service.JobLogFrameworkService;
+
 import com.muang.ai.claw.common.pojo.PageResult;
 import com.muang.ai.claw.module.infra.controller.admin.job.vo.log.JobLogPageReqVO;
 import com.muang.ai.claw.module.infra.dal.dataobject.job.JobLogDO;
@@ -20,7 +22,7 @@ import java.time.LocalDateTime;
 @Service
 @Validated
 @Slf4j
-public class JobLogService {
+public class JobLogService implements JobLogFrameworkService {
 
     @Resource
     private JobLogMapper jobLogMapper;

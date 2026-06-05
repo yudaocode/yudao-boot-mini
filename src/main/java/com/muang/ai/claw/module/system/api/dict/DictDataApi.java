@@ -15,7 +15,7 @@ import com.muang.ai.claw.common.biz.system.dict.DictDataCommonApi;
  *
  */
 @Service
-public class DictDataApi {
+public class DictDataApi implements DictDataCommonApi {
 
     @Resource
     private DictDataService dictDataService;
