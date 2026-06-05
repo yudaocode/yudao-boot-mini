@@ -1,6 +1,6 @@
 package com.muang.ai.claw.module.system.service.mail;
 
-import com.muang.ai.claw.framework.common.pojo.PageResult;
+import com.muang.ai.claw.common.pojo.PageResult;
 import com.muang.ai.claw.module.system.controller.admin.mail.vo.template.MailTemplatePageReqVO;
 import com.muang.ai.claw.module.system.controller.admin.mail.vo.template.MailTemplateSaveReqVO;
 import com.muang.ai.claw.module.system.dal.dataobject.mail.MailTemplateDO;

@@ -1,7 +1,7 @@
 package com.muang.ai.claw.module.system.dal.dataobject.user;
 
-import com.muang.ai.claw.framework.common.enums.CommonStatusEnum;
-import com.muang.ai.claw.framework.tenant.core.db.TenantBaseDO;
+import com.muang.ai.claw.constant.CommonStatusEnum;
+import com.muang.ai.claw.common.tenant.core.db.TenantBaseDO;
 import com.muang.ai.claw.module.system.enums.common.SexEnum;
 import com.baomidou.mybatisplus.annotation.KeySequence;
 import com.baomidou.mybatisplus.annotation.TableField;

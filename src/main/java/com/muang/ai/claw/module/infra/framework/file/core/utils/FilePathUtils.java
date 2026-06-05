@@ -6,7 +6,7 @@ import cn.hutool.core.util.StrUtil;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Paths;
 
-import static com.muang.ai.claw.framework.common.exception.util.ServiceExceptionUtil.exception;
+import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
 import static com.muang.ai.claw.module.infra.enums.ErrorCodeConstants.FILE_PATH_INVALID;
 
 /**

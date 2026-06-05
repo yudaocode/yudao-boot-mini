@@ -1,12 +1,12 @@
 package com.muang.ai.claw.module.infra.controller.admin.job;
 
-import com.muang.ai.claw.framework.apilog.core.annotation.ApiAccessLog;
-import com.muang.ai.claw.framework.common.pojo.CommonResult;
-import com.muang.ai.claw.framework.common.pojo.PageParam;
-import com.muang.ai.claw.framework.common.pojo.PageResult;
-import com.muang.ai.claw.framework.common.util.object.BeanUtils;
-import com.muang.ai.claw.framework.excel.core.util.ExcelUtils;
-import com.muang.ai.claw.framework.quartz.core.util.CronUtils;
+import com.muang.ai.claw.common.apilog.core.annotation.ApiAccessLog;
+import com.muang.ai.claw.common.pojo.CommonResult;
+import com.muang.ai.claw.common.pojo.PageParam;
+import com.muang.ai.claw.common.pojo.PageResult;
+import com.muang.ai.claw.util.object.BeanUtils;
+import com.muang.ai.claw.common.excel.core.util.ExcelUtils;
+import com.muang.ai.claw.common.quartz.core.util.CronUtils;
 import com.muang.ai.claw.module.infra.controller.admin.job.vo.job.JobPageReqVO;
 import com.muang.ai.claw.module.infra.controller.admin.job.vo.job.JobRespVO;
 import com.muang.ai.claw.module.infra.controller.admin.job.vo.job.JobSaveReqVO;
@@ -29,8 +29,8 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 
-import static com.muang.ai.claw.framework.apilog.core.enums.OperateTypeEnum.EXPORT;
-import static com.muang.ai.claw.framework.common.pojo.CommonResult.success;
+import static com.muang.ai.claw.common.apilog.core.enums.OperateTypeEnum.EXPORT;
+import static com.muang.ai.claw.common.pojo.CommonResult.success;
 
 @Tag(name = "管理后台 - 定时任务")
 @RestController

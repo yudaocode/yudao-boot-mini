@@ -1,9 +1,9 @@
 package com.muang.ai.claw.module.system.dal.dataobject.tenant;
 
-import com.muang.ai.claw.framework.common.enums.CommonStatusEnum;
-import com.muang.ai.claw.framework.mybatis.core.dataobject.BaseDO;
-import com.muang.ai.claw.framework.mybatis.core.type.StringListTypeHandler;
-import com.muang.ai.claw.framework.tenant.core.aop.TenantIgnore;
+import com.muang.ai.claw.constant.CommonStatusEnum;
+import com.muang.ai.claw.common.mybatis.core.dataobject.BaseDO;
+import com.muang.ai.claw.common.mybatis.core.type.StringListTypeHandler;
+import com.muang.ai.claw.common.tenant.core.aop.TenantIgnore;
 import com.muang.ai.claw.module.system.dal.dataobject.user.AdminUserDO;
 import com.baomidou.mybatisplus.annotation.KeySequence;
 import com.baomidou.mybatisplus.annotation.TableField;

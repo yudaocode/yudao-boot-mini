@@ -1,11 +1,11 @@
 package com.muang.ai.claw.module.infra.service.logger;
 
-import com.muang.ai.claw.framework.common.biz.infra.logger.dto.ApiAccessLogCreateReqDTO;
-import com.muang.ai.claw.framework.common.pojo.PageResult;
-import com.muang.ai.claw.framework.common.util.object.BeanUtils;
-import com.muang.ai.claw.framework.common.util.string.StrUtils;
-import com.muang.ai.claw.framework.tenant.core.context.TenantContextHolder;
-import com.muang.ai.claw.framework.tenant.core.util.TenantUtils;
+import com.muang.ai.claw.common.biz.infra.logger.dto.ApiAccessLogCreateReqDTO;
+import com.muang.ai.claw.common.pojo.PageResult;
+import com.muang.ai.claw.util.object.BeanUtils;
+import com.muang.ai.claw.util.string.StrUtils;
+import com.muang.ai.claw.common.tenant.core.context.TenantContextHolder;
+import com.muang.ai.claw.common.tenant.core.util.TenantUtils;
 import com.muang.ai.claw.module.infra.controller.admin.logger.vo.apiaccesslog.ApiAccessLogPageReqVO;
 import com.muang.ai.claw.module.infra.dal.dataobject.logger.ApiAccessLogDO;
 import com.muang.ai.claw.module.infra.dal.mysql.logger.ApiAccessLogMapper;

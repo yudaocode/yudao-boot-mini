@@ -5,10 +5,10 @@ import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.ObjUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.extra.spring.SpringUtil;
-import com.muang.ai.claw.framework.common.enums.CommonStatusEnum;
-import com.muang.ai.claw.framework.common.pojo.PageResult;
-import com.muang.ai.claw.framework.common.util.collection.CollectionUtils;
-import com.muang.ai.claw.framework.common.util.object.BeanUtils;
+import com.muang.ai.claw.constant.CommonStatusEnum;
+import com.muang.ai.claw.common.pojo.PageResult;
+import com.muang.ai.claw.util.collection.CollectionUtils;
+import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.module.system.controller.admin.permission.vo.role.RolePageReqVO;
 import com.muang.ai.claw.module.system.controller.admin.permission.vo.role.RoleSaveReqVO;
 import com.muang.ai.claw.module.system.dal.dataobject.permission.RoleDO;
@@ -31,8 +31,8 @@ import org.springframework.util.StringUtils;
 
 import java.util.*;
 
-import static com.muang.ai.claw.framework.common.exception.util.ServiceExceptionUtil.exception;
-import static com.muang.ai.claw.framework.common.util.collection.CollectionUtils.convertMap;
+import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
+import static com.muang.ai.claw.util.collection.CollectionUtils.convertMap;
 import static com.muang.ai.claw.module.system.enums.ErrorCodeConstants.*;
 import static com.muang.ai.claw.module.system.enums.LogRecordConstants.*;
 

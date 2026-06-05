@@ -1,6 +1,6 @@
 package com.muang.ai.claw.module.system.api.tenant;
 
-import com.muang.ai.claw.framework.common.biz.system.tenant.TenantCommonApi;
+import com.muang.ai.claw.common.biz.system.tenant.TenantCommonApi;
 import com.muang.ai.claw.module.system.service.tenant.TenantService;
 import org.springframework.stereotype.Service;
 

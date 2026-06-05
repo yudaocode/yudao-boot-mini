@@ -1,6 +1,6 @@
 package com.muang.ai.claw.module.system.enums.permission;
 
-import com.muang.ai.claw.framework.common.core.ArrayValuable;
+import com.muang.ai.claw.common.core.ArrayValuable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

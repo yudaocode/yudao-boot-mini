@@ -1,8 +1,8 @@
 package com.muang.ai.claw.module.system.dal.mysql.oauth2;
 
-import com.muang.ai.claw.framework.mybatis.core.mapper.BaseMapperX;
-import com.muang.ai.claw.framework.mybatis.core.query.LambdaQueryWrapperX;
-import com.muang.ai.claw.framework.tenant.core.aop.TenantIgnore;
+import com.muang.ai.claw.common.mybatis.core.mapper.BaseMapperX;
+import com.muang.ai.claw.common.mybatis.core.query.LambdaQueryWrapperX;
+import com.muang.ai.claw.common.tenant.core.aop.TenantIgnore;
 import com.muang.ai.claw.module.system.dal.dataobject.oauth2.OAuth2RefreshTokenDO;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;

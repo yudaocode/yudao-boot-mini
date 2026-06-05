@@ -1,9 +1,9 @@
 package com.muang.ai.claw.module.system.controller.admin.mail;
 
 
-import com.muang.ai.claw.framework.common.pojo.CommonResult;
-import com.muang.ai.claw.framework.common.pojo.PageResult;
-import com.muang.ai.claw.framework.common.util.object.BeanUtils;
+import com.muang.ai.claw.common.pojo.CommonResult;
+import com.muang.ai.claw.common.pojo.PageResult;
+import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.module.system.controller.admin.mail.vo.account.MailAccountPageReqVO;
 import com.muang.ai.claw.module.system.controller.admin.mail.vo.account.MailAccountRespVO;
 import com.muang.ai.claw.module.system.controller.admin.mail.vo.account.MailAccountSaveReqVO;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.muang.ai.claw.framework.common.pojo.CommonResult.success;
+import static com.muang.ai.claw.common.pojo.CommonResult.success;
 
 @Tag(name = "管理后台 - 邮箱账号")
 @RestController

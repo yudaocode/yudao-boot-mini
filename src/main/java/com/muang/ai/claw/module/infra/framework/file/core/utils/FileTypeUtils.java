@@ -2,7 +2,7 @@ package com.muang.ai.claw.module.infra.framework.file.core.utils;
 
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.StrUtil;
-import com.muang.ai.claw.framework.common.util.http.HttpUtils;
+import com.muang.ai.claw.util.http.HttpUtils;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;

@@ -1,13 +1,13 @@
 package com.muang.ai.claw.module.system.service.auth;
 
 import cn.hutool.core.util.ObjectUtil;
-import com.muang.ai.claw.framework.common.enums.CommonStatusEnum;
-import com.muang.ai.claw.framework.common.enums.UserTypeEnum;
-import com.muang.ai.claw.framework.common.util.monitor.TracerUtils;
-import com.muang.ai.claw.framework.common.util.object.BeanUtils;
-import com.muang.ai.claw.framework.common.util.servlet.ServletUtils;
-import com.muang.ai.claw.framework.common.util.validation.ValidationUtils;
-import com.muang.ai.claw.framework.datapermission.core.annotation.DataPermission;
+import com.muang.ai.claw.constant.CommonStatusEnum;
+import com.muang.ai.claw.constant.UserTypeEnum;
+import com.muang.ai.claw.util.monitor.TracerUtils;
+import com.muang.ai.claw.util.object.BeanUtils;
+import com.muang.ai.claw.util.servlet.ServletUtils;
+import com.muang.ai.claw.util.validation.ValidationUtils;
+import com.muang.ai.claw.common.datapermission.core.annotation.DataPermission;
 import com.muang.ai.claw.module.system.api.logger.dto.LoginLogCreateReqDTO;
 import com.muang.ai.claw.module.system.api.sms.SmsCodeApi;
 import com.muang.ai.claw.module.system.api.sms.dto.code.SmsCodeUseReqDTO;
@@ -37,8 +37,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
 
-import static com.muang.ai.claw.framework.common.exception.util.ServiceExceptionUtil.exception;
-import static com.muang.ai.claw.framework.common.util.servlet.ServletUtils.getClientIP;
+import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
+import static com.muang.ai.claw.util.servlet.ServletUtils.getClientIP;
 import static com.muang.ai.claw.module.system.enums.ErrorCodeConstants.*;
 
 /**

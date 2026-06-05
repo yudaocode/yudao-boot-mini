@@ -1,8 +1,8 @@
 package com.muang.ai.claw.module.system.dal.mysql.sms;
 
-import com.muang.ai.claw.framework.common.pojo.PageResult;
-import com.muang.ai.claw.framework.mybatis.core.mapper.BaseMapperX;
-import com.muang.ai.claw.framework.mybatis.core.query.LambdaQueryWrapperX;
+import com.muang.ai.claw.common.pojo.PageResult;
+import com.muang.ai.claw.common.mybatis.core.mapper.BaseMapperX;
+import com.muang.ai.claw.common.mybatis.core.query.LambdaQueryWrapperX;
 import com.muang.ai.claw.module.system.controller.admin.sms.vo.template.SmsTemplatePageReqVO;
 import com.muang.ai.claw.module.system.dal.dataobject.sms.SmsTemplateDO;
 import org.apache.ibatis.annotations.Mapper;

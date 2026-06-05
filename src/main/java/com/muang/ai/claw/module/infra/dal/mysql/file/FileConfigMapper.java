@@ -1,8 +1,8 @@
 package com.muang.ai.claw.module.infra.dal.mysql.file;
 
-import com.muang.ai.claw.framework.common.pojo.PageResult;
-import com.muang.ai.claw.framework.mybatis.core.mapper.BaseMapperX;
-import com.muang.ai.claw.framework.mybatis.core.query.LambdaQueryWrapperX;
+import com.muang.ai.claw.common.pojo.PageResult;
+import com.muang.ai.claw.common.mybatis.core.mapper.BaseMapperX;
+import com.muang.ai.claw.common.mybatis.core.query.LambdaQueryWrapperX;
 import com.muang.ai.claw.module.infra.controller.admin.file.vo.config.FileConfigPageReqVO;
 import com.muang.ai.claw.module.infra.dal.dataobject.file.FileConfigDO;
 import org.apache.ibatis.annotations.Mapper;

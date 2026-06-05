@@ -2,8 +2,8 @@ package com.muang.ai.claw.module.system.service.notify;
 
 import cn.hutool.core.util.ReUtil;
 import cn.hutool.core.util.StrUtil;
-import com.muang.ai.claw.framework.common.pojo.PageResult;
-import com.muang.ai.claw.framework.common.util.object.BeanUtils;
+import com.muang.ai.claw.common.pojo.PageResult;
+import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.module.system.controller.admin.notify.vo.template.NotifyTemplatePageReqVO;
 import com.muang.ai.claw.module.system.controller.admin.notify.vo.template.NotifyTemplateSaveReqVO;
 import com.muang.ai.claw.module.system.dal.dataobject.notify.NotifyTemplateDO;
@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import static com.muang.ai.claw.framework.common.exception.util.ServiceExceptionUtil.exception;
+import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
 import static com.muang.ai.claw.module.system.enums.ErrorCodeConstants.NOTIFY_TEMPLATE_CODE_DUPLICATE;
 import static com.muang.ai.claw.module.system.enums.ErrorCodeConstants.NOTIFY_TEMPLATE_NOT_EXISTS;
 

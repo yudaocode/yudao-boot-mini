@@ -1,6 +1,6 @@
 package com.muang.ai.claw.module.infra.enums;
 
-import com.muang.ai.claw.framework.common.exception.ErrorCode;
+import com.muang.ai.claw.common.exception.ErrorCode;
 
 /**
  * Infra 错误码枚举类

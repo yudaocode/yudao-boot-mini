@@ -1,10 +1,10 @@
 package com.muang.ai.claw.module.system.api.oauth2;
 
-import com.muang.ai.claw.framework.common.biz.system.oauth2.OAuth2TokenCommonApi;
-import com.muang.ai.claw.framework.common.util.object.BeanUtils;
-import com.muang.ai.claw.framework.common.biz.system.oauth2.dto.OAuth2AccessTokenCheckRespDTO;
-import com.muang.ai.claw.framework.common.biz.system.oauth2.dto.OAuth2AccessTokenCreateReqDTO;
-import com.muang.ai.claw.framework.common.biz.system.oauth2.dto.OAuth2AccessTokenRespDTO;
+import com.muang.ai.claw.common.biz.system.oauth2.OAuth2TokenCommonApi;
+import com.muang.ai.claw.util.object.BeanUtils;
+import com.muang.ai.claw.common.biz.system.oauth2.dto.OAuth2AccessTokenCheckRespDTO;
+import com.muang.ai.claw.common.biz.system.oauth2.dto.OAuth2AccessTokenCreateReqDTO;
+import com.muang.ai.claw.common.biz.system.oauth2.dto.OAuth2AccessTokenRespDTO;
 import com.muang.ai.claw.module.system.dal.dataobject.oauth2.OAuth2AccessTokenDO;
 import com.muang.ai.claw.module.system.service.oauth2.OAuth2TokenService;
 import org.springframework.stereotype.Service;

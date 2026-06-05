@@ -1,7 +1,7 @@
 package com.muang.ai.claw.module.system.service.oauth2;
 
 import cn.hutool.core.util.IdUtil;
-import com.muang.ai.claw.framework.common.util.date.DateUtils;
+import com.muang.ai.claw.util.date.DateUtils;
 import com.muang.ai.claw.module.system.dal.dataobject.oauth2.OAuth2CodeDO;
 import com.muang.ai.claw.module.system.dal.mysql.oauth2.OAuth2CodeMapper;
 import org.springframework.stereotype.Service;
@@ -11,7 +11,7 @@ import jakarta.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static com.muang.ai.claw.framework.common.exception.util.ServiceExceptionUtil.exception;
+import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
 import static com.muang.ai.claw.module.system.enums.ErrorCodeConstants.OAUTH2_CODE_EXPIRE;
 import static com.muang.ai.claw.module.system.enums.ErrorCodeConstants.OAUTH2_CODE_NOT_EXISTS;
 

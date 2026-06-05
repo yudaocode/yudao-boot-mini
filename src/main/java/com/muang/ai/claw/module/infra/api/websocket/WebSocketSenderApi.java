@@ -1,6 +1,6 @@
 package com.muang.ai.claw.module.infra.api.websocket;
 
-import com.muang.ai.claw.framework.common.util.json.JsonUtils;
+import com.muang.ai.claw.util.json.JsonUtils;
 
 /**
  * WebSocket 发送器的 API 接口

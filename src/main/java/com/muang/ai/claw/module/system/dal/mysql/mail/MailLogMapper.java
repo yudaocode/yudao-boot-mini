@@ -1,10 +1,10 @@
 package com.muang.ai.claw.module.system.dal.mysql.mail;
 
 import cn.hutool.core.util.StrUtil;
-import com.muang.ai.claw.framework.common.pojo.PageResult;
-import com.muang.ai.claw.framework.mybatis.core.mapper.BaseMapperX;
-import com.muang.ai.claw.framework.mybatis.core.query.LambdaQueryWrapperX;
-import com.muang.ai.claw.framework.mybatis.core.util.MyBatisUtils;
+import com.muang.ai.claw.common.pojo.PageResult;
+import com.muang.ai.claw.common.mybatis.core.mapper.BaseMapperX;
+import com.muang.ai.claw.common.mybatis.core.query.LambdaQueryWrapperX;
+import com.muang.ai.claw.common.mybatis.core.util.MyBatisUtils;
 import com.muang.ai.claw.module.system.controller.admin.mail.vo.log.MailLogPageReqVO;
 import com.muang.ai.claw.module.system.dal.dataobject.mail.MailLogDO;
 import org.apache.ibatis.annotations.Mapper;

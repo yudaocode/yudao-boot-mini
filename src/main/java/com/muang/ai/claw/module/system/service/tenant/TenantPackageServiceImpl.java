@@ -2,9 +2,9 @@ package com.muang.ai.claw.module.system.service.tenant;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
-import com.muang.ai.claw.framework.common.enums.CommonStatusEnum;
-import com.muang.ai.claw.framework.common.pojo.PageResult;
-import com.muang.ai.claw.framework.common.util.object.BeanUtils;
+import com.muang.ai.claw.constant.CommonStatusEnum;
+import com.muang.ai.claw.common.pojo.PageResult;
+import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.module.system.controller.admin.tenant.vo.packages.TenantPackagePageReqVO;
 import com.muang.ai.claw.module.system.controller.admin.tenant.vo.packages.TenantPackageSaveReqVO;
 import com.muang.ai.claw.module.system.dal.dataobject.tenant.TenantDO;
@@ -19,7 +19,7 @@ import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 
-import static com.muang.ai.claw.framework.common.exception.util.ServiceExceptionUtil.exception;
+import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
 import static com.muang.ai.claw.module.system.enums.ErrorCodeConstants.*;
 
 /**

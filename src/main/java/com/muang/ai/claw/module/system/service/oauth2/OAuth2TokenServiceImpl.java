@@ -5,15 +5,15 @@ import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
-import com.muang.ai.claw.framework.common.enums.UserTypeEnum;
-import com.muang.ai.claw.framework.common.exception.ServiceException;
-import com.muang.ai.claw.framework.common.exception.enums.GlobalErrorCodeConstants;
-import com.muang.ai.claw.framework.common.pojo.PageResult;
-import com.muang.ai.claw.framework.common.util.date.DateUtils;
-import com.muang.ai.claw.framework.common.util.object.BeanUtils;
-import com.muang.ai.claw.framework.security.core.LoginUser;
-import com.muang.ai.claw.framework.tenant.core.context.TenantContextHolder;
-import com.muang.ai.claw.framework.tenant.core.util.TenantUtils;
+import com.muang.ai.claw.constant.UserTypeEnum;
+import com.muang.ai.claw.common.exception.ServiceException;
+import com.muang.ai.claw.common.exception.enums.GlobalErrorCodeConstants;
+import com.muang.ai.claw.common.pojo.PageResult;
+import com.muang.ai.claw.util.date.DateUtils;
+import com.muang.ai.claw.util.object.BeanUtils;
+import com.muang.ai.claw.common.security.core.LoginUser;
+import com.muang.ai.claw.common.tenant.core.context.TenantContextHolder;
+import com.muang.ai.claw.common.tenant.core.util.TenantUtils;
 import com.muang.ai.claw.module.system.controller.admin.oauth2.vo.token.OAuth2AccessTokenPageReqVO;
 import com.muang.ai.claw.module.system.dal.dataobject.oauth2.OAuth2AccessTokenDO;
 import com.muang.ai.claw.module.system.dal.dataobject.oauth2.OAuth2ClientDO;
@@ -33,8 +33,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import static com.muang.ai.claw.framework.common.exception.util.ServiceExceptionUtil.exception0;
-import static com.muang.ai.claw.framework.common.util.collection.CollectionUtils.convertSet;
+import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception0;
+import static com.muang.ai.claw.util.collection.CollectionUtils.convertSet;
 
 /**
  * OAuth2.0 Token Service 实现类
@@ -213,7 +213,7 @@ public class OAuth2TokenServiceImpl implements OAuth2TokenService {
     }
 
     /**
-     * 加载用户信息，方便 {@link com.muang.ai.claw.framework.security.core.LoginUser} 获取到昵称、部门等信息
+     * 加载用户信息，方便 {@link com.muang.ai.claw.common.security.core.LoginUser} 获取到昵称、部门等信息
      *
      * @param userId 用户编号
      * @param userType 用户类型

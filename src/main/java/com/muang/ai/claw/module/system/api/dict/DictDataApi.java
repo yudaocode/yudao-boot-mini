@@ -1,6 +1,6 @@
 package com.muang.ai.claw.module.system.api.dict;
 
-import com.muang.ai.claw.framework.common.biz.system.dict.DictDataCommonApi;
+import com.muang.ai.claw.common.biz.system.dict.DictDataCommonApi;
 
 import java.util.Collection;
 

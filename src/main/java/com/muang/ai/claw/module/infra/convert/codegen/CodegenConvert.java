@@ -1,7 +1,7 @@
 package com.muang.ai.claw.module.infra.convert.codegen;
 
-import com.muang.ai.claw.framework.common.util.collection.CollectionUtils;
-import com.muang.ai.claw.framework.common.util.object.BeanUtils;
+import com.muang.ai.claw.util.collection.CollectionUtils;
+import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.module.infra.controller.admin.codegen.vo.CodegenDetailRespVO;
 import com.muang.ai.claw.module.infra.controller.admin.codegen.vo.CodegenPreviewRespVO;
 import com.muang.ai.claw.module.infra.controller.admin.codegen.vo.column.CodegenColumnRespVO;

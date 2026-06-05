@@ -3,8 +3,8 @@ package com.muang.ai.claw.module.system.service.mail;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Validator;
 import cn.hutool.core.util.StrUtil;
-import com.muang.ai.claw.framework.common.enums.CommonStatusEnum;
-import com.muang.ai.claw.framework.common.enums.UserTypeEnum;
+import com.muang.ai.claw.constant.CommonStatusEnum;
+import com.muang.ai.claw.constant.UserTypeEnum;
 import com.muang.ai.claw.module.system.dal.dataobject.mail.MailAccountDO;
 import com.muang.ai.claw.module.system.dal.dataobject.mail.MailTemplateDO;
 import com.muang.ai.claw.module.system.dal.dataobject.user.AdminUserDO;
@@ -25,7 +25,7 @@ import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.Map;
 
-import static com.muang.ai.claw.framework.common.exception.util.ServiceExceptionUtil.exception;
+import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
 import static com.muang.ai.claw.module.system.enums.ErrorCodeConstants.*;
 
 /**

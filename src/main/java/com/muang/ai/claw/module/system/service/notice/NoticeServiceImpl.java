@@ -1,7 +1,7 @@
 package com.muang.ai.claw.module.system.service.notice;
 
-import com.muang.ai.claw.framework.common.pojo.PageResult;
-import com.muang.ai.claw.framework.common.util.object.BeanUtils;
+import com.muang.ai.claw.common.pojo.PageResult;
+import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.module.system.controller.admin.notice.vo.NoticePageReqVO;
 import com.muang.ai.claw.module.system.controller.admin.notice.vo.NoticeSaveReqVO;
 import com.muang.ai.claw.module.system.dal.dataobject.notice.NoticeDO;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.muang.ai.claw.framework.common.exception.util.ServiceExceptionUtil.exception;
+import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
 import static com.muang.ai.claw.module.system.enums.ErrorCodeConstants.NOTICE_NOT_FOUND;
 
 /**

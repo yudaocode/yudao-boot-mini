@@ -1,8 +1,8 @@
 package com.muang.ai.claw.module.system.controller.admin.oauth2;
 
 import cn.hutool.core.collection.CollUtil;
-import com.muang.ai.claw.framework.common.pojo.CommonResult;
-import com.muang.ai.claw.framework.common.util.object.BeanUtils;
+import com.muang.ai.claw.common.pojo.CommonResult;
+import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.module.system.controller.admin.oauth2.vo.user.OAuth2UserInfoRespVO;
 import com.muang.ai.claw.module.system.controller.admin.oauth2.vo.user.OAuth2UserUpdateReqVO;
 import com.muang.ai.claw.module.system.controller.admin.user.vo.profile.UserProfileUpdateReqVO;
@@ -23,8 +23,8 @@ import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import java.util.List;
 
-import static com.muang.ai.claw.framework.common.pojo.CommonResult.success;
-import static com.muang.ai.claw.framework.security.core.util.SecurityFrameworkUtils.getLoginUserId;
+import static com.muang.ai.claw.common.pojo.CommonResult.success;
+import static com.muang.ai.claw.common.security.core.util.SecurityFrameworkUtils.getLoginUserId;
 
 /**
  * 提供给外部应用调用为主

@@ -1,6 +1,6 @@
 package com.muang.ai.claw.module.system.mq.producer.sms;
 
-import com.muang.ai.claw.framework.common.core.KeyValue;
+import com.muang.ai.claw.common.core.KeyValue;
 import com.muang.ai.claw.module.system.mq.message.sms.SmsSendMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;

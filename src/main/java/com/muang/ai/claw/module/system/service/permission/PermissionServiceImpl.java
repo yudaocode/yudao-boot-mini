@@ -4,10 +4,10 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.extra.spring.SpringUtil;
-import com.muang.ai.claw.framework.common.enums.CommonStatusEnum;
-import com.muang.ai.claw.framework.common.util.collection.CollectionUtils;
-import com.muang.ai.claw.framework.datapermission.core.annotation.DataPermission;
-import com.muang.ai.claw.framework.common.biz.system.permission.dto.DeptDataPermissionRespDTO;
+import com.muang.ai.claw.constant.CommonStatusEnum;
+import com.muang.ai.claw.util.collection.CollectionUtils;
+import com.muang.ai.claw.common.datapermission.core.annotation.DataPermission;
+import com.muang.ai.claw.common.biz.system.permission.dto.DeptDataPermissionRespDTO;
 import com.muang.ai.claw.module.system.dal.dataobject.permission.MenuDO;
 import com.muang.ai.claw.module.system.dal.dataobject.permission.RoleDO;
 import com.muang.ai.claw.module.system.dal.dataobject.permission.RoleMenuDO;
@@ -33,8 +33,8 @@ import jakarta.annotation.Resource;
 import java.util.*;
 import java.util.function.Supplier;
 
-import static com.muang.ai.claw.framework.common.util.collection.CollectionUtils.convertSet;
-import static com.muang.ai.claw.framework.common.util.json.JsonUtils.toJsonString;
+import static com.muang.ai.claw.util.collection.CollectionUtils.convertSet;
+import static com.muang.ai.claw.util.json.JsonUtils.toJsonString;
 
 /**
  * 权限 Service 实现类

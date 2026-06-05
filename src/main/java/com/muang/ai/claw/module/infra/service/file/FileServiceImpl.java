@@ -6,9 +6,9 @@ import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.digest.DigestUtil;
-import com.muang.ai.claw.framework.common.pojo.PageResult;
-import com.muang.ai.claw.framework.common.util.http.HttpUtils;
-import com.muang.ai.claw.framework.common.util.object.BeanUtils;
+import com.muang.ai.claw.common.pojo.PageResult;
+import com.muang.ai.claw.util.http.HttpUtils;
+import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.module.infra.controller.admin.file.vo.file.FileCreateReqVO;
 import com.muang.ai.claw.module.infra.controller.admin.file.vo.file.FilePageReqVO;
 import com.muang.ai.claw.module.infra.controller.admin.file.vo.file.FilePresignedUrlRespVO;
@@ -25,7 +25,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 import static cn.hutool.core.date.DatePattern.PURE_DATE_PATTERN;
-import static com.muang.ai.claw.framework.common.exception.util.ServiceExceptionUtil.exception;
+import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
 import static com.muang.ai.claw.module.infra.enums.ErrorCodeConstants.FILE_NOT_EXISTS;
 
 /**

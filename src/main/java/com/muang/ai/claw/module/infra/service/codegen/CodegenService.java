@@ -1,6 +1,6 @@
 package com.muang.ai.claw.module.infra.service.codegen;
 
-import com.muang.ai.claw.framework.common.pojo.PageResult;
+import com.muang.ai.claw.common.pojo.PageResult;
 import com.muang.ai.claw.module.infra.controller.admin.codegen.vo.CodegenCreateListReqVO;
 import com.muang.ai.claw.module.infra.controller.admin.codegen.vo.CodegenUpdateReqVO;
 import com.muang.ai.claw.module.infra.controller.admin.codegen.vo.table.CodegenTablePageReqVO;

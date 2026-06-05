@@ -1,10 +1,10 @@
 package com.muang.ai.claw.module.system.controller.app.ip;
 
 import cn.hutool.core.lang.Assert;
-import com.muang.ai.claw.framework.common.pojo.CommonResult;
-import com.muang.ai.claw.framework.common.util.object.BeanUtils;
-import com.muang.ai.claw.framework.ip.core.Area;
-import com.muang.ai.claw.framework.ip.core.utils.AreaUtils;
+import com.muang.ai.claw.common.pojo.CommonResult;
+import com.muang.ai.claw.util.object.BeanUtils;
+import com.muang.ai.claw.common.ip.core.Area;
+import com.muang.ai.claw.common.ip.core.utils.AreaUtils;
 import com.muang.ai.claw.module.system.controller.app.ip.vo.AppAreaNodeRespVO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import static com.muang.ai.claw.framework.common.pojo.CommonResult.success;
+import static com.muang.ai.claw.common.pojo.CommonResult.success;
 
 @Tag(name = "用户 App - 地区")
 @RestController

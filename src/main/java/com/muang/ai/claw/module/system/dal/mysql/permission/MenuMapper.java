@@ -1,7 +1,7 @@
 package com.muang.ai.claw.module.system.dal.mysql.permission;
 
-import com.muang.ai.claw.framework.mybatis.core.mapper.BaseMapperX;
-import com.muang.ai.claw.framework.mybatis.core.query.LambdaQueryWrapperX;
+import com.muang.ai.claw.common.mybatis.core.mapper.BaseMapperX;
+import com.muang.ai.claw.common.mybatis.core.query.LambdaQueryWrapperX;
 import com.muang.ai.claw.module.system.controller.admin.permission.vo.menu.MenuListReqVO;
 import com.muang.ai.claw.module.system.dal.dataobject.permission.MenuDO;
 import org.apache.ibatis.annotations.Mapper;

@@ -1,8 +1,8 @@
 package com.muang.ai.claw.module.system.controller.admin.mail;
 
-import com.muang.ai.claw.framework.common.pojo.CommonResult;
-import com.muang.ai.claw.framework.common.pojo.PageResult;
-import com.muang.ai.claw.framework.common.util.object.BeanUtils;
+import com.muang.ai.claw.common.pojo.CommonResult;
+import com.muang.ai.claw.common.pojo.PageResult;
+import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.module.system.controller.admin.mail.vo.log.MailLogPageReqVO;
 import com.muang.ai.claw.module.system.controller.admin.mail.vo.log.MailLogRespVO;
 import com.muang.ai.claw.module.system.dal.dataobject.mail.MailLogDO;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 
-import static com.muang.ai.claw.framework.common.pojo.CommonResult.success;
+import static com.muang.ai.claw.common.pojo.CommonResult.success;
 
 @Tag(name = "管理后台 - 邮件日志")
 @RestController

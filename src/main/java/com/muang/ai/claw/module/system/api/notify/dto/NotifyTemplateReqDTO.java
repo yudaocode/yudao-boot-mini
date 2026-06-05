@@ -1,7 +1,7 @@
 package com.muang.ai.claw.module.system.api.notify.dto;
 
-import com.muang.ai.claw.framework.common.enums.CommonStatusEnum;
-import com.muang.ai.claw.framework.common.validation.InEnum;
+import com.muang.ai.claw.constant.CommonStatusEnum;
+import com.muang.ai.claw.common.validation.InEnum;
 import lombok.Data;
 
 import jakarta.validation.constraints.NotEmpty;

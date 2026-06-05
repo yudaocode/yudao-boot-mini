@@ -6,7 +6,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.ftp.FtpConfig;
 import cn.hutool.extra.ssh.JschRuntimeException;
 import cn.hutool.extra.ssh.Sftp;
-import com.muang.ai.claw.framework.common.util.io.FileUtils;
+import com.muang.ai.claw.util.io.FileUtils;
 import com.muang.ai.claw.module.infra.framework.file.core.client.AbstractFileClient;
 import com.jcraft.jsch.JSch;
 

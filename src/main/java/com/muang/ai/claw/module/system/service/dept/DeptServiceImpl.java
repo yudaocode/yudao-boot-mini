@@ -2,9 +2,9 @@ package com.muang.ai.claw.module.system.service.dept;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
-import com.muang.ai.claw.framework.common.enums.CommonStatusEnum;
-import com.muang.ai.claw.framework.common.util.object.BeanUtils;
-import com.muang.ai.claw.framework.datapermission.core.annotation.DataPermission;
+import com.muang.ai.claw.constant.CommonStatusEnum;
+import com.muang.ai.claw.util.object.BeanUtils;
+import com.muang.ai.claw.common.datapermission.core.annotation.DataPermission;
 import com.muang.ai.claw.module.system.controller.admin.dept.vo.dept.DeptListReqVO;
 import com.muang.ai.claw.module.system.controller.admin.dept.vo.dept.DeptSaveReqVO;
 import com.muang.ai.claw.module.system.dal.dataobject.dept.DeptDO;
@@ -20,8 +20,8 @@ import org.springframework.validation.annotation.Validated;
 import jakarta.annotation.Resource;
 import java.util.*;
 
-import static com.muang.ai.claw.framework.common.exception.util.ServiceExceptionUtil.exception;
-import static com.muang.ai.claw.framework.common.util.collection.CollectionUtils.convertSet;
+import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
+import static com.muang.ai.claw.util.collection.CollectionUtils.convertSet;
 import static com.muang.ai.claw.module.system.enums.ErrorCodeConstants.*;
 
 /**

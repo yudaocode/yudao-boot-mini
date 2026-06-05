@@ -1,9 +1,9 @@
 package com.muang.ai.claw.module.system.dal.mysql.notify;
 
-import com.muang.ai.claw.framework.common.pojo.PageResult;
-import com.muang.ai.claw.framework.mybatis.core.mapper.BaseMapperX;
-import com.muang.ai.claw.framework.mybatis.core.query.LambdaQueryWrapperX;
-import com.muang.ai.claw.framework.mybatis.core.query.QueryWrapperX;
+import com.muang.ai.claw.common.pojo.PageResult;
+import com.muang.ai.claw.common.mybatis.core.mapper.BaseMapperX;
+import com.muang.ai.claw.common.mybatis.core.query.LambdaQueryWrapperX;
+import com.muang.ai.claw.common.mybatis.core.query.QueryWrapperX;
 import com.muang.ai.claw.module.system.controller.admin.notify.vo.message.NotifyMessageMyPageReqVO;
 import com.muang.ai.claw.module.system.controller.admin.notify.vo.message.NotifyMessagePageReqVO;
 import com.muang.ai.claw.module.system.dal.dataobject.notify.NotifyMessageDO;

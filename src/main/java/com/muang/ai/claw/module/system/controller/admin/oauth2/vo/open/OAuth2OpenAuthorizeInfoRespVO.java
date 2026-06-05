@@ -1,6 +1,6 @@
 package com.muang.ai.claw.module.system.controller.admin.oauth2.vo.open;
 
-import com.muang.ai.claw.framework.common.core.KeyValue;
+import com.muang.ai.claw.common.core.KeyValue;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,7 +1,7 @@
 package com.muang.ai.claw.module.system.api.logger;
 
-import com.muang.ai.claw.framework.common.biz.system.logger.OperateLogCommonApi;
-import com.muang.ai.claw.framework.common.pojo.PageResult;
+import com.muang.ai.claw.common.biz.system.logger.OperateLogCommonApi;
+import com.muang.ai.claw.common.pojo.PageResult;
 import com.muang.ai.claw.module.system.api.logger.dto.OperateLogPageReqDTO;
 import com.muang.ai.claw.module.system.api.logger.dto.OperateLogRespDTO;
 

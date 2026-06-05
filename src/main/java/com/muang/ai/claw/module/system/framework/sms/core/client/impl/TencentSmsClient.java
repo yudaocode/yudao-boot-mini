@@ -9,9 +9,9 @@ import cn.hutool.crypto.digest.HmacAlgorithm;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import com.muang.ai.claw.framework.common.core.KeyValue;
-import com.muang.ai.claw.framework.common.util.collection.ArrayUtils;
-import com.muang.ai.claw.framework.common.util.http.HttpUtils;
+import com.muang.ai.claw.common.core.KeyValue;
+import com.muang.ai.claw.util.collection.ArrayUtils;
+import com.muang.ai.claw.util.http.HttpUtils;
 import com.muang.ai.claw.module.system.framework.sms.core.client.dto.SmsReceiveRespDTO;
 import com.muang.ai.claw.module.system.framework.sms.core.client.dto.SmsSendRespDTO;
 import com.muang.ai.claw.module.system.framework.sms.core.client.dto.SmsTemplateRespDTO;
@@ -23,7 +23,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 import static cn.hutool.crypto.digest.DigestUtil.sha256Hex;
-import static com.muang.ai.claw.framework.common.util.collection.CollectionUtils.convertList;
+import static com.muang.ai.claw.util.collection.CollectionUtils.convertList;
 
 /**
  * 腾讯云短信功能实现

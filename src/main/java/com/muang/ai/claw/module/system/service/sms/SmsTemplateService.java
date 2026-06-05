@@ -1,6 +1,6 @@
 package com.muang.ai.claw.module.system.service.sms;
 
-import com.muang.ai.claw.framework.common.pojo.PageResult;
+import com.muang.ai.claw.common.pojo.PageResult;
 import com.muang.ai.claw.module.system.controller.admin.sms.vo.template.SmsTemplatePageReqVO;
 import com.muang.ai.claw.module.system.controller.admin.sms.vo.template.SmsTemplateSaveReqVO;
 import com.muang.ai.claw.module.system.dal.dataobject.sms.SmsTemplateDO;

@@ -4,10 +4,10 @@ import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
-import com.muang.ai.claw.framework.common.enums.UserTypeEnum;
-import com.muang.ai.claw.framework.common.pojo.CommonResult;
-import com.muang.ai.claw.framework.common.util.http.HttpUtils;
-import com.muang.ai.claw.framework.common.util.json.JsonUtils;
+import com.muang.ai.claw.constant.UserTypeEnum;
+import com.muang.ai.claw.common.pojo.CommonResult;
+import com.muang.ai.claw.util.http.HttpUtils;
+import com.muang.ai.claw.util.json.JsonUtils;
 import com.muang.ai.claw.module.system.controller.admin.oauth2.vo.open.OAuth2OpenAccessTokenRespVO;
 import com.muang.ai.claw.module.system.controller.admin.oauth2.vo.open.OAuth2OpenAuthorizeInfoRespVO;
 import com.muang.ai.claw.module.system.controller.admin.oauth2.vo.open.OAuth2OpenCheckTokenRespVO;
@@ -36,11 +36,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import static com.muang.ai.claw.framework.common.exception.enums.GlobalErrorCodeConstants.BAD_REQUEST;
-import static com.muang.ai.claw.framework.common.exception.util.ServiceExceptionUtil.exception0;
-import static com.muang.ai.claw.framework.common.pojo.CommonResult.success;
-import static com.muang.ai.claw.framework.common.util.collection.CollectionUtils.convertList;
-import static com.muang.ai.claw.framework.security.core.util.SecurityFrameworkUtils.getLoginUserId;
+import static com.muang.ai.claw.common.exception.enums.GlobalErrorCodeConstants.BAD_REQUEST;
+import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception0;
+import static com.muang.ai.claw.common.pojo.CommonResult.success;
+import static com.muang.ai.claw.util.collection.CollectionUtils.convertList;
+import static com.muang.ai.claw.common.security.core.util.SecurityFrameworkUtils.getLoginUserId;
 
 /**
  * 提供给外部应用调用为主

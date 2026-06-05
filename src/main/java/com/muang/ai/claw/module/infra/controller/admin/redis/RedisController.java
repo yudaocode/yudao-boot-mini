@@ -1,6 +1,6 @@
 package com.muang.ai.claw.module.infra.controller.admin.redis;
 
-import com.muang.ai.claw.framework.common.pojo.CommonResult;
+import com.muang.ai.claw.common.pojo.CommonResult;
 import com.muang.ai.claw.module.infra.controller.admin.redis.vo.RedisMonitorRespVO;
 import com.muang.ai.claw.module.infra.convert.redis.RedisConvert;
 import io.swagger.v3.oas.annotations.Operation;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Properties;
 
-import static com.muang.ai.claw.framework.common.pojo.CommonResult.success;
+import static com.muang.ai.claw.common.pojo.CommonResult.success;
 
 @Tag(name = "管理后台 - Redis 监控")
 @RestController

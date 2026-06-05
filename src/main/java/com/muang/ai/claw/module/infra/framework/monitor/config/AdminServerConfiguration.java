@@ -22,7 +22,7 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
  * Spring Boot Admin Server 配置
  *
  * 包含 Admin Server 的启用配置和安全配置
- * 安全配置独立于 {@link com.muang.ai.claw.framework.security.config.YudaoWebSecurityConfigurerAdapter}，
+ * 安全配置独立于 {@link com.muang.ai.claw.common.security.config.YudaoWebSecurityConfigurerAdapter}，
  * 使用 HTTP Basic 认证保护 Admin Server 端点，不影响现有的 Token 认证机制
  *
  */

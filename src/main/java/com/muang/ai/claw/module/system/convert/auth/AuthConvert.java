@@ -2,7 +2,7 @@ package com.muang.ai.claw.module.system.convert.auth;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjUtil;
-import com.muang.ai.claw.framework.common.util.object.BeanUtils;
+import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.module.system.api.sms.dto.code.SmsCodeSendReqDTO;
 import com.muang.ai.claw.module.system.api.sms.dto.code.SmsCodeUseReqDTO;
 import com.muang.ai.claw.module.system.controller.admin.auth.vo.AuthPermissionInfoRespVO;
@@ -18,8 +18,8 @@ import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
-import static com.muang.ai.claw.framework.common.util.collection.CollectionUtils.convertSet;
-import static com.muang.ai.claw.framework.common.util.collection.CollectionUtils.filterList;
+import static com.muang.ai.claw.util.collection.CollectionUtils.convertSet;
+import static com.muang.ai.claw.util.collection.CollectionUtils.filterList;
 import static com.muang.ai.claw.module.system.dal.dataobject.permission.MenuDO.ID_ROOT;
 
 @Mapper

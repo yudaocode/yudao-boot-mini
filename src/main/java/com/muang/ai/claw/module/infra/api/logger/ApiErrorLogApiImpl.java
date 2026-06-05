@@ -1,7 +1,7 @@
 package com.muang.ai.claw.module.infra.api.logger;
 
-import com.muang.ai.claw.framework.common.biz.infra.logger.ApiErrorLogCommonApi;
-import com.muang.ai.claw.framework.common.biz.infra.logger.dto.ApiErrorLogCreateReqDTO;
+import com.muang.ai.claw.common.biz.infra.logger.ApiErrorLogCommonApi;
+import com.muang.ai.claw.common.biz.infra.logger.dto.ApiErrorLogCreateReqDTO;
 import com.muang.ai.claw.module.infra.service.logger.ApiErrorLogService;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;

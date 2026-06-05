@@ -1,6 +1,6 @@
 package com.muang.ai.claw.module.system.api.dept;
 
-import com.muang.ai.claw.framework.common.util.collection.CollectionUtils;
+import com.muang.ai.claw.util.collection.CollectionUtils;
 import com.muang.ai.claw.module.system.api.dept.dto.DeptRespDTO;
 
 import java.util.Collection;

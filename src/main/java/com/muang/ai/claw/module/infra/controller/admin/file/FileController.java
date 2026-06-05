@@ -3,10 +3,10 @@ package com.muang.ai.claw.module.infra.controller.admin.file;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.core.util.URLUtil;
-import com.muang.ai.claw.framework.common.pojo.CommonResult;
-import com.muang.ai.claw.framework.common.pojo.PageResult;
-import com.muang.ai.claw.framework.common.util.object.BeanUtils;
-import com.muang.ai.claw.framework.tenant.core.aop.TenantIgnore;
+import com.muang.ai.claw.common.pojo.CommonResult;
+import com.muang.ai.claw.common.pojo.PageResult;
+import com.muang.ai.claw.util.object.BeanUtils;
+import com.muang.ai.claw.common.tenant.core.aop.TenantIgnore;
 import com.muang.ai.claw.module.infra.controller.admin.file.vo.file.*;
 import com.muang.ai.claw.module.infra.dal.dataobject.file.FileDO;
 import com.muang.ai.claw.module.infra.service.file.FileService;
@@ -30,7 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-import static com.muang.ai.claw.framework.common.pojo.CommonResult.success;
+import static com.muang.ai.claw.common.pojo.CommonResult.success;
 import static com.muang.ai.claw.module.infra.framework.file.core.utils.FileTypeUtils.writeAttachment;
 
 @Tag(name = "管理后台 - 文件存储")

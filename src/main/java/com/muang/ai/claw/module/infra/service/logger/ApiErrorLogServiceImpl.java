@@ -1,11 +1,11 @@
 package com.muang.ai.claw.module.infra.service.logger;
 
-import com.muang.ai.claw.framework.common.biz.infra.logger.dto.ApiErrorLogCreateReqDTO;
-import com.muang.ai.claw.framework.common.pojo.PageResult;
-import com.muang.ai.claw.framework.common.util.object.BeanUtils;
-import com.muang.ai.claw.framework.common.util.string.StrUtils;
-import com.muang.ai.claw.framework.tenant.core.context.TenantContextHolder;
-import com.muang.ai.claw.framework.tenant.core.util.TenantUtils;
+import com.muang.ai.claw.common.biz.infra.logger.dto.ApiErrorLogCreateReqDTO;
+import com.muang.ai.claw.common.pojo.PageResult;
+import com.muang.ai.claw.util.object.BeanUtils;
+import com.muang.ai.claw.util.string.StrUtils;
+import com.muang.ai.claw.common.tenant.core.context.TenantContextHolder;
+import com.muang.ai.claw.common.tenant.core.util.TenantUtils;
 import com.muang.ai.claw.module.infra.controller.admin.logger.vo.apierrorlog.ApiErrorLogPageReqVO;
 import com.muang.ai.claw.module.infra.dal.dataobject.logger.ApiErrorLogDO;
 import com.muang.ai.claw.module.infra.dal.mysql.logger.ApiErrorLogMapper;
@@ -17,7 +17,7 @@ import org.springframework.validation.annotation.Validated;
 
 import java.time.LocalDateTime;
 
-import static com.muang.ai.claw.framework.common.exception.util.ServiceExceptionUtil.exception;
+import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
 import static com.muang.ai.claw.module.infra.dal.dataobject.logger.ApiErrorLogDO.REQUEST_PARAMS_MAX_LENGTH;
 import static com.muang.ai.claw.module.infra.enums.ErrorCodeConstants.API_ERROR_LOG_NOT_FOUND;
 import static com.muang.ai.claw.module.infra.enums.ErrorCodeConstants.API_ERROR_LOG_PROCESSED;

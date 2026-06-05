@@ -1,6 +1,6 @@
 package com.muang.ai.claw.module.system.api.sms.dto.send;
 
-import com.muang.ai.claw.framework.common.validation.Mobile;
+import com.muang.ai.claw.common.validation.Mobile;
 import lombok.Data;
 
 import jakarta.validation.constraints.NotEmpty;

@@ -1,8 +1,8 @@
 package com.muang.ai.claw.module.infra.controller.admin.file;
 
-import com.muang.ai.claw.framework.common.pojo.CommonResult;
-import com.muang.ai.claw.framework.common.pojo.PageResult;
-import com.muang.ai.claw.framework.common.util.object.BeanUtils;
+import com.muang.ai.claw.common.pojo.CommonResult;
+import com.muang.ai.claw.common.pojo.PageResult;
+import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.module.infra.controller.admin.file.vo.config.FileConfigPageReqVO;
 import com.muang.ai.claw.module.infra.controller.admin.file.vo.config.FileConfigRespVO;
 import com.muang.ai.claw.module.infra.controller.admin.file.vo.config.FileConfigSaveReqVO;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.muang.ai.claw.framework.common.pojo.CommonResult.success;
+import static com.muang.ai.claw.common.pojo.CommonResult.success;
 
 @Tag(name = "管理后台 - 文件配置")
 @RestController

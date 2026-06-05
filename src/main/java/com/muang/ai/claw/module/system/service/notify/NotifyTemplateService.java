@@ -1,6 +1,6 @@
 package com.muang.ai.claw.module.system.service.notify;
 
-import com.muang.ai.claw.framework.common.pojo.PageResult;
+import com.muang.ai.claw.common.pojo.PageResult;
 import com.muang.ai.claw.module.system.controller.admin.notify.vo.template.NotifyTemplatePageReqVO;
 import com.muang.ai.claw.module.system.controller.admin.notify.vo.template.NotifyTemplateSaveReqVO;
 import com.muang.ai.claw.module.system.dal.dataobject.notify.NotifyTemplateDO;

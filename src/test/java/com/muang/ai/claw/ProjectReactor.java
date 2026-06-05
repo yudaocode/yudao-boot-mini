@@ -3,7 +3,7 @@ package com.muang.ai.claw;
 import cn.hutool.core.io.FileTypeUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
-import com.muang.ai.claw.framework.common.util.collection.SetUtils;
+import com.muang.ai.claw.util.collection.SetUtils;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;

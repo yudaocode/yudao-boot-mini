@@ -1,6 +1,6 @@
 package com.muang.ai.claw.module.system.service.sms;
 
-import com.muang.ai.claw.framework.common.exception.ServiceException;
+import com.muang.ai.claw.common.exception.ServiceException;
 import com.muang.ai.claw.module.system.api.sms.dto.code.SmsCodeValidateReqDTO;
 import com.muang.ai.claw.module.system.api.sms.dto.code.SmsCodeSendReqDTO;
 import com.muang.ai.claw.module.system.api.sms.dto.code.SmsCodeUseReqDTO;

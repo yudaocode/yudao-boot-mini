@@ -1,8 +1,8 @@
 package com.muang.ai.claw.module.system.service.user;
 
 import cn.hutool.core.collection.CollUtil;
-import com.muang.ai.claw.framework.common.pojo.PageResult;
-import com.muang.ai.claw.framework.common.util.collection.CollectionUtils;
+import com.muang.ai.claw.common.pojo.PageResult;
+import com.muang.ai.claw.util.collection.CollectionUtils;
 import com.muang.ai.claw.module.system.controller.admin.auth.vo.AuthRegisterReqVO;
 import com.muang.ai.claw.module.system.controller.admin.user.vo.profile.UserProfileUpdatePasswordReqVO;
 import com.muang.ai.claw.module.system.controller.admin.user.vo.profile.UserProfileUpdateReqVO;

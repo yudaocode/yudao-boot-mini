@@ -1,6 +1,6 @@
 package com.muang.ai.claw.module.system.controller.admin.permission.vo.permission;
 
-import com.muang.ai.claw.framework.common.validation.InEnum;
+import com.muang.ai.claw.common.validation.InEnum;
 import com.muang.ai.claw.module.system.enums.permission.DataScopeEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;

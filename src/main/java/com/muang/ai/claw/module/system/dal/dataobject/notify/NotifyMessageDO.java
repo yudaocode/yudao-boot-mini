@@ -1,7 +1,7 @@
 package com.muang.ai.claw.module.system.dal.dataobject.notify;
 
-import com.muang.ai.claw.framework.common.enums.UserTypeEnum;
-import com.muang.ai.claw.framework.mybatis.core.dataobject.BaseDO;
+import com.muang.ai.claw.constant.UserTypeEnum;
+import com.muang.ai.claw.common.mybatis.core.dataobject.BaseDO;
 import com.muang.ai.claw.module.system.dal.dataobject.mail.MailTemplateDO;
 import com.baomidou.mybatisplus.annotation.KeySequence;
 import com.baomidou.mybatisplus.annotation.TableField;

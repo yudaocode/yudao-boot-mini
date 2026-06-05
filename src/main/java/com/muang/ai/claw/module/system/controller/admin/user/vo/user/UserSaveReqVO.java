@@ -1,7 +1,7 @@
 package com.muang.ai.claw.module.system.controller.admin.user.vo.user;
 
 import cn.hutool.core.util.ObjectUtil;
-import com.muang.ai.claw.framework.common.validation.Mobile;
+import com.muang.ai.claw.common.validation.Mobile;
 import com.muang.ai.claw.module.system.framework.operatelog.core.DeptParseFunction;
 import com.muang.ai.claw.module.system.framework.operatelog.core.PostParseFunction;
 import com.muang.ai.claw.module.system.framework.operatelog.core.SexParseFunction;

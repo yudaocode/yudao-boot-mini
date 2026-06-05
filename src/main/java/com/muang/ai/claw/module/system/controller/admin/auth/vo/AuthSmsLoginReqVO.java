@@ -1,6 +1,6 @@
 package com.muang.ai.claw.module.system.controller.admin.auth.vo;
 
-import com.muang.ai.claw.framework.common.validation.Mobile;
+import com.muang.ai.claw.common.validation.Mobile;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

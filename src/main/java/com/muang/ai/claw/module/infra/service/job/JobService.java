@@ -1,6 +1,6 @@
 package com.muang.ai.claw.module.infra.service.job;
 
-import com.muang.ai.claw.framework.common.pojo.PageResult;
+import com.muang.ai.claw.common.pojo.PageResult;
 import com.muang.ai.claw.module.infra.controller.admin.job.vo.job.JobPageReqVO;
 import com.muang.ai.claw.module.infra.controller.admin.job.vo.job.JobSaveReqVO;
 import com.muang.ai.claw.module.infra.dal.dataobject.job.JobDO;

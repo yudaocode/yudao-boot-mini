@@ -1,7 +1,7 @@
 package com.muang.ai.claw.module.system.service.sms;
 
-import com.muang.ai.claw.framework.common.pojo.PageResult;
-import com.muang.ai.claw.framework.common.util.object.BeanUtils;
+import com.muang.ai.claw.common.pojo.PageResult;
+import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.module.system.controller.admin.sms.vo.channel.SmsChannelPageReqVO;
 import com.muang.ai.claw.module.system.controller.admin.sms.vo.channel.SmsChannelSaveReqVO;
 import com.muang.ai.claw.module.system.dal.dataobject.sms.SmsChannelDO;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.muang.ai.claw.framework.common.exception.util.ServiceExceptionUtil.exception;
+import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
 import static com.muang.ai.claw.module.system.enums.ErrorCodeConstants.SMS_CHANNEL_HAS_CHILDREN;
 import static com.muang.ai.claw.module.system.enums.ErrorCodeConstants.SMS_CHANNEL_NOT_EXISTS;
 

@@ -1,7 +1,7 @@
 package com.muang.ai.claw.module.infra.dal.dataobject.file;
 
-import com.muang.ai.claw.framework.mybatis.core.dataobject.BaseDO;
-import com.muang.ai.claw.framework.tenant.core.aop.TenantIgnore;
+import com.muang.ai.claw.common.mybatis.core.dataobject.BaseDO;
+import com.muang.ai.claw.common.tenant.core.aop.TenantIgnore;
 import com.muang.ai.claw.module.infra.framework.file.core.client.db.DBFileClient;
 import com.baomidou.mybatisplus.annotation.KeySequence;
 import com.baomidou.mybatisplus.annotation.TableId;

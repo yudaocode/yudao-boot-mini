@@ -3,8 +3,8 @@ package com.muang.ai.claw.module.system.service.mail;
 import cn.hutool.core.util.ObjUtil;
 import cn.hutool.core.util.ReUtil;
 import cn.hutool.core.util.StrUtil;
-import com.muang.ai.claw.framework.common.pojo.PageResult;
-import com.muang.ai.claw.framework.common.util.object.BeanUtils;
+import com.muang.ai.claw.common.pojo.PageResult;
+import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.module.system.controller.admin.mail.vo.template.MailTemplatePageReqVO;
 import com.muang.ai.claw.module.system.controller.admin.mail.vo.template.MailTemplateSaveReqVO;
 import com.muang.ai.claw.module.system.dal.dataobject.mail.MailTemplateDO;
@@ -25,7 +25,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static com.muang.ai.claw.framework.common.exception.util.ServiceExceptionUtil.exception;
+import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
 import static com.muang.ai.claw.module.system.enums.ErrorCodeConstants.MAIL_TEMPLATE_CODE_EXISTS;
 import static com.muang.ai.claw.module.system.enums.ErrorCodeConstants.MAIL_TEMPLATE_NOT_EXISTS;
 

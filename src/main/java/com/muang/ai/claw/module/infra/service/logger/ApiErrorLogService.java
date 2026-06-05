@@ -1,7 +1,7 @@
 package com.muang.ai.claw.module.infra.service.logger;
 
-import com.muang.ai.claw.framework.common.biz.infra.logger.dto.ApiErrorLogCreateReqDTO;
-import com.muang.ai.claw.framework.common.pojo.PageResult;
+import com.muang.ai.claw.common.biz.infra.logger.dto.ApiErrorLogCreateReqDTO;
+import com.muang.ai.claw.common.pojo.PageResult;
 import com.muang.ai.claw.module.infra.controller.admin.logger.vo.apierrorlog.ApiErrorLogPageReqVO;
 import com.muang.ai.claw.module.infra.dal.dataobject.logger.ApiErrorLogDO;
 

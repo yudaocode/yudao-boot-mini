@@ -1,6 +1,6 @@
 package com.muang.ai.claw.module.system.api.permission;
 
-import com.muang.ai.claw.framework.common.util.object.BeanUtils;
+import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.module.system.api.permission.dto.RoleRespDTO;
 import com.muang.ai.claw.module.system.dal.dataobject.permission.RoleDO;
 import com.muang.ai.claw.module.system.service.permission.RoleService;

@@ -1,8 +1,8 @@
 package com.muang.ai.claw.module.system.controller.admin.captcha;
 
 import cn.hutool.core.util.StrUtil;
-import com.muang.ai.claw.framework.common.util.servlet.ServletUtils;
-import com.muang.ai.claw.framework.tenant.core.aop.TenantIgnore;
+import com.muang.ai.claw.util.servlet.ServletUtils;
+import com.muang.ai.claw.common.tenant.core.aop.TenantIgnore;
 import com.anji.captcha.model.common.ResponseModel;
 import com.anji.captcha.model.vo.CaptchaVO;
 import com.anji.captcha.service.CaptchaService;

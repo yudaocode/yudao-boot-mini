@@ -1,6 +1,6 @@
 package com.muang.ai.claw.module.system.service.sms;
 
-import com.muang.ai.claw.framework.common.pojo.PageResult;
+import com.muang.ai.claw.common.pojo.PageResult;
 import com.muang.ai.claw.module.system.controller.admin.sms.vo.channel.SmsChannelPageReqVO;
 import com.muang.ai.claw.module.system.controller.admin.sms.vo.channel.SmsChannelSaveReqVO;
 import com.muang.ai.claw.module.system.dal.dataobject.sms.SmsChannelDO;

@@ -1,6 +1,6 @@
 package com.muang.ai.claw.module.system.framework.sms.core.client;
 
-import com.muang.ai.claw.framework.common.core.KeyValue;
+import com.muang.ai.claw.common.core.KeyValue;
 import com.muang.ai.claw.module.system.framework.sms.core.client.dto.SmsReceiveRespDTO;
 import com.muang.ai.claw.module.system.framework.sms.core.client.dto.SmsSendRespDTO;
 import com.muang.ai.claw.module.system.framework.sms.core.client.dto.SmsTemplateRespDTO;

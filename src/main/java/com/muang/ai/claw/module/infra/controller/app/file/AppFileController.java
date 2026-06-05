@@ -1,7 +1,7 @@
 package com.muang.ai.claw.module.infra.controller.app.file;
 
 import cn.hutool.core.io.IoUtil;
-import com.muang.ai.claw.framework.common.pojo.CommonResult;
+import com.muang.ai.claw.common.pojo.CommonResult;
 import com.muang.ai.claw.module.infra.controller.admin.file.vo.file.FileCreateReqVO;
 import com.muang.ai.claw.module.infra.controller.admin.file.vo.file.FilePresignedUrlRespVO;
 import com.muang.ai.claw.module.infra.controller.app.file.vo.AppFileUploadReqVO;
@@ -19,7 +19,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import static com.muang.ai.claw.framework.common.pojo.CommonResult.success;
+import static com.muang.ai.claw.common.pojo.CommonResult.success;
 
 @Tag(name = "用户 App - 文件存储")
 @RestController

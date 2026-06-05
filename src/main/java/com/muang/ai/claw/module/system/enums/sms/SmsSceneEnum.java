@@ -1,7 +1,7 @@
 package com.muang.ai.claw.module.system.enums.sms;
 
 import cn.hutool.core.util.ArrayUtil;
-import com.muang.ai.claw.framework.common.core.ArrayValuable;
+import com.muang.ai.claw.common.core.ArrayValuable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

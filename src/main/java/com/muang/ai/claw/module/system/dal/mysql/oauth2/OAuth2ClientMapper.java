@@ -1,8 +1,8 @@
 package com.muang.ai.claw.module.system.dal.mysql.oauth2;
 
-import com.muang.ai.claw.framework.common.pojo.PageResult;
-import com.muang.ai.claw.framework.mybatis.core.mapper.BaseMapperX;
-import com.muang.ai.claw.framework.mybatis.core.query.LambdaQueryWrapperX;
+import com.muang.ai.claw.common.pojo.PageResult;
+import com.muang.ai.claw.common.mybatis.core.mapper.BaseMapperX;
+import com.muang.ai.claw.common.mybatis.core.query.LambdaQueryWrapperX;
 import com.muang.ai.claw.module.system.controller.admin.oauth2.vo.client.OAuth2ClientPageReqVO;
 import com.muang.ai.claw.module.system.dal.dataobject.oauth2.OAuth2ClientDO;
 import org.apache.ibatis.annotations.Mapper;

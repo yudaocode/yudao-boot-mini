@@ -1,6 +1,6 @@
 package com.muang.ai.claw.module.system.service.dept;
 
-import com.muang.ai.claw.framework.common.util.collection.CollectionUtils;
+import com.muang.ai.claw.util.collection.CollectionUtils;
 import com.muang.ai.claw.module.system.controller.admin.dept.vo.dept.DeptListReqVO;
 import com.muang.ai.claw.module.system.controller.admin.dept.vo.dept.DeptSaveReqVO;
 import com.muang.ai.claw.module.system.dal.dataobject.dept.DeptDO;

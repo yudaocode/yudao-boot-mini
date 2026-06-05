@@ -1,10 +1,10 @@
 package com.muang.ai.claw.module.system.service.dict;
 
 import cn.hutool.core.collection.CollUtil;
-import com.muang.ai.claw.framework.common.enums.CommonStatusEnum;
-import com.muang.ai.claw.framework.common.pojo.PageResult;
-import com.muang.ai.claw.framework.common.util.collection.CollectionUtils;
-import com.muang.ai.claw.framework.common.util.object.BeanUtils;
+import com.muang.ai.claw.constant.CommonStatusEnum;
+import com.muang.ai.claw.common.pojo.PageResult;
+import com.muang.ai.claw.util.collection.CollectionUtils;
+import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.module.system.controller.admin.dict.vo.data.DictDataPageReqVO;
 import com.muang.ai.claw.module.system.controller.admin.dict.vo.data.DictDataSaveReqVO;
 import com.muang.ai.claw.module.system.dal.dataobject.dict.DictDataDO;
@@ -20,7 +20,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
-import static com.muang.ai.claw.framework.common.exception.util.ServiceExceptionUtil.exception;
+import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
 import static com.muang.ai.claw.module.system.enums.ErrorCodeConstants.*;
 
 /**

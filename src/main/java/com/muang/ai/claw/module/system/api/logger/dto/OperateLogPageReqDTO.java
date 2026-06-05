@@ -1,6 +1,6 @@
 package com.muang.ai.claw.module.system.api.logger.dto;
 
-import com.muang.ai.claw.framework.common.pojo.PageParam;
+import com.muang.ai.claw.common.pojo.PageParam;
 import lombok.Data;
 
 /**

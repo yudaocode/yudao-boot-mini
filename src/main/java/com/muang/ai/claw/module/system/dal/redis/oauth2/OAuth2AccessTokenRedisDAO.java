@@ -1,8 +1,8 @@
 package com.muang.ai.claw.module.system.dal.redis.oauth2;
 
 import cn.hutool.core.date.LocalDateTimeUtil;
-import com.muang.ai.claw.framework.common.util.collection.CollectionUtils;
-import com.muang.ai.claw.framework.common.util.json.JsonUtils;
+import com.muang.ai.claw.util.collection.CollectionUtils;
+import com.muang.ai.claw.util.json.JsonUtils;
 import com.muang.ai.claw.module.system.dal.dataobject.oauth2.OAuth2AccessTokenDO;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Repository;

@@ -1,6 +1,6 @@
 package com.muang.ai.claw.module.infra.service.config;
 
-import com.muang.ai.claw.framework.common.pojo.PageResult;
+import com.muang.ai.claw.common.pojo.PageResult;
 import com.muang.ai.claw.module.infra.controller.admin.config.vo.ConfigPageReqVO;
 import com.muang.ai.claw.module.infra.controller.admin.config.vo.ConfigSaveReqVO;
 import com.muang.ai.claw.module.infra.dal.dataobject.config.ConfigDO;

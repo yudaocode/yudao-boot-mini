@@ -1,6 +1,6 @@
 package com.muang.ai.claw.module.system.service.mail;
 
-import com.muang.ai.claw.framework.common.enums.UserTypeEnum;
+import com.muang.ai.claw.constant.UserTypeEnum;
 import com.muang.ai.claw.module.system.mq.message.mail.MailSendMessage;
 
 import java.io.File;

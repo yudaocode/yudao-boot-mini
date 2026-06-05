@@ -1,12 +1,12 @@
 package com.muang.ai.claw.module.system.controller.admin.dept;
 
-import com.muang.ai.claw.framework.apilog.core.annotation.ApiAccessLog;
-import com.muang.ai.claw.framework.common.enums.CommonStatusEnum;
-import com.muang.ai.claw.framework.common.pojo.CommonResult;
-import com.muang.ai.claw.framework.common.pojo.PageParam;
-import com.muang.ai.claw.framework.common.pojo.PageResult;
-import com.muang.ai.claw.framework.common.util.object.BeanUtils;
-import com.muang.ai.claw.framework.excel.core.util.ExcelUtils;
+import com.muang.ai.claw.common.apilog.core.annotation.ApiAccessLog;
+import com.muang.ai.claw.constant.CommonStatusEnum;
+import com.muang.ai.claw.common.pojo.CommonResult;
+import com.muang.ai.claw.common.pojo.PageParam;
+import com.muang.ai.claw.common.pojo.PageResult;
+import com.muang.ai.claw.util.object.BeanUtils;
+import com.muang.ai.claw.common.excel.core.util.ExcelUtils;
 import com.muang.ai.claw.module.system.controller.admin.dept.vo.post.PostPageReqVO;
 import com.muang.ai.claw.module.system.controller.admin.dept.vo.post.PostRespVO;
 import com.muang.ai.claw.module.system.controller.admin.dept.vo.post.PostSaveReqVO;
@@ -28,8 +28,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import static com.muang.ai.claw.framework.apilog.core.enums.OperateTypeEnum.EXPORT;
-import static com.muang.ai.claw.framework.common.pojo.CommonResult.success;
+import static com.muang.ai.claw.common.apilog.core.enums.OperateTypeEnum.EXPORT;
+import static com.muang.ai.claw.common.pojo.CommonResult.success;
 
 @Tag(name = "管理后台 - 岗位")
 @RestController

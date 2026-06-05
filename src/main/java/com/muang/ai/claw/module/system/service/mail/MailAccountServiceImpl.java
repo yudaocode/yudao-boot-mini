@@ -1,7 +1,7 @@
 package com.muang.ai.claw.module.system.service.mail;
 
-import com.muang.ai.claw.framework.common.pojo.PageResult;
-import com.muang.ai.claw.framework.common.util.object.BeanUtils;
+import com.muang.ai.claw.common.pojo.PageResult;
+import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.module.system.controller.admin.mail.vo.account.MailAccountPageReqVO;
 import com.muang.ai.claw.module.system.controller.admin.mail.vo.account.MailAccountSaveReqVO;
 import com.muang.ai.claw.module.system.dal.dataobject.mail.MailAccountDO;
@@ -16,7 +16,7 @@ import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 
-import static com.muang.ai.claw.framework.common.exception.util.ServiceExceptionUtil.exception;
+import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
 import static com.muang.ai.claw.module.system.enums.ErrorCodeConstants.MAIL_ACCOUNT_NOT_EXISTS;
 import static com.muang.ai.claw.module.system.enums.ErrorCodeConstants.MAIL_ACCOUNT_RELATE_TEMPLATE_EXISTS;
 

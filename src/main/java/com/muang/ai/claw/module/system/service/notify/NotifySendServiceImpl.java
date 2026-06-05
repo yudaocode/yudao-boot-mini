@@ -1,7 +1,7 @@
 package com.muang.ai.claw.module.system.service.notify;
 
-import com.muang.ai.claw.framework.common.enums.CommonStatusEnum;
-import com.muang.ai.claw.framework.common.enums.UserTypeEnum;
+import com.muang.ai.claw.constant.CommonStatusEnum;
+import com.muang.ai.claw.constant.UserTypeEnum;
 import com.muang.ai.claw.module.system.dal.dataobject.notify.NotifyTemplateDO;
 import com.google.common.annotations.VisibleForTesting;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +12,7 @@ import jakarta.annotation.Resource;
 import java.util.Map;
 import java.util.Objects;
 
-import static com.muang.ai.claw.framework.common.exception.util.ServiceExceptionUtil.exception;
+import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
 import static com.muang.ai.claw.module.system.enums.ErrorCodeConstants.*;
 
 /**

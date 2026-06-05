@@ -1,10 +1,10 @@
 package com.muang.ai.claw.module.system.controller.admin.notify;
 
-import com.muang.ai.claw.framework.common.enums.CommonStatusEnum;
-import com.muang.ai.claw.framework.common.enums.UserTypeEnum;
-import com.muang.ai.claw.framework.common.pojo.CommonResult;
-import com.muang.ai.claw.framework.common.pojo.PageResult;
-import com.muang.ai.claw.framework.common.util.object.BeanUtils;
+import com.muang.ai.claw.constant.CommonStatusEnum;
+import com.muang.ai.claw.constant.UserTypeEnum;
+import com.muang.ai.claw.common.pojo.CommonResult;
+import com.muang.ai.claw.common.pojo.PageResult;
+import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.module.system.controller.admin.notify.vo.template.NotifyTemplatePageReqVO;
 import com.muang.ai.claw.module.system.controller.admin.notify.vo.template.NotifyTemplateRespVO;
 import com.muang.ai.claw.module.system.controller.admin.notify.vo.template.NotifyTemplateSaveReqVO;
@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.muang.ai.claw.framework.common.pojo.CommonResult.success;
+import static com.muang.ai.claw.common.pojo.CommonResult.success;
 
 @Tag(name = "管理后台 - 站内信模版")
 @RestController

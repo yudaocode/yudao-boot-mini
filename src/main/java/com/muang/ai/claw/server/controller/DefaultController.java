@@ -1,14 +1,14 @@
 package com.muang.ai.claw.server.controller;
 
-import com.muang.ai.claw.framework.common.pojo.CommonResult;
-import com.muang.ai.claw.framework.common.util.servlet.ServletUtils;
+import com.muang.ai.claw.common.pojo.CommonResult;
+import com.muang.ai.claw.util.servlet.ServletUtils;
 import jakarta.annotation.security.PermitAll;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import static com.muang.ai.claw.framework.common.exception.enums.GlobalErrorCodeConstants.NOT_IMPLEMENTED;
+import static com.muang.ai.claw.common.exception.enums.GlobalErrorCodeConstants.NOT_IMPLEMENTED;
 
 /**
  * 默认 Controller，解决部分 module 未开启时的 404 提示。

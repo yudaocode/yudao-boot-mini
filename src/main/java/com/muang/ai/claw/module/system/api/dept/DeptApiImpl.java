@@ -1,6 +1,6 @@
 package com.muang.ai.claw.module.system.api.dept;
 
-import com.muang.ai.claw.framework.common.util.object.BeanUtils;
+import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.module.system.api.dept.dto.DeptRespDTO;
 import com.muang.ai.claw.module.system.dal.dataobject.dept.DeptDO;
 import com.muang.ai.claw.module.system.service.dept.DeptService;

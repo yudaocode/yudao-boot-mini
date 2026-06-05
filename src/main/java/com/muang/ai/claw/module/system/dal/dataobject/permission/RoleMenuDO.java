@@ -1,6 +1,6 @@
 package com.muang.ai.claw.module.system.dal.dataobject.permission;
 
-import com.muang.ai.claw.framework.tenant.core.db.TenantBaseDO;
+import com.muang.ai.claw.common.tenant.core.db.TenantBaseDO;
 import com.baomidou.mybatisplus.annotation.KeySequence;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;

@@ -8,9 +8,9 @@ import cn.hutool.crypto.SecureUtil;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import com.muang.ai.claw.framework.common.core.KeyValue;
-import com.muang.ai.claw.framework.common.util.http.HttpUtils;
-import com.muang.ai.claw.framework.common.util.json.JsonUtils;
+import com.muang.ai.claw.common.core.KeyValue;
+import com.muang.ai.claw.util.http.HttpUtils;
+import com.muang.ai.claw.util.json.JsonUtils;
 import com.muang.ai.claw.module.system.framework.sms.core.client.dto.SmsReceiveRespDTO;
 import com.muang.ai.claw.module.system.framework.sms.core.client.dto.SmsSendRespDTO;
 import com.muang.ai.claw.module.system.framework.sms.core.client.dto.SmsTemplateRespDTO;
@@ -25,7 +25,7 @@ import java.time.ZoneId;
 import java.util.*;
 
 import static cn.hutool.crypto.digest.DigestUtil.sha256Hex;
-import static com.muang.ai.claw.framework.common.util.collection.CollectionUtils.convertList;
+import static com.muang.ai.claw.util.collection.CollectionUtils.convertList;
 
 /**
  * 华为短信客户端的实现类

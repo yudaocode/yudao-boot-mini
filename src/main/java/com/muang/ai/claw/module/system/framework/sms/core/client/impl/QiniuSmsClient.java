@@ -9,8 +9,8 @@ import cn.hutool.crypto.SecureUtil;
 import cn.hutool.crypto.digest.HmacAlgorithm;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import com.muang.ai.claw.framework.common.core.KeyValue;
-import com.muang.ai.claw.framework.common.util.http.HttpUtils;
+import com.muang.ai.claw.common.core.KeyValue;
+import com.muang.ai.claw.util.http.HttpUtils;
 import com.muang.ai.claw.module.system.framework.sms.core.client.dto.SmsReceiveRespDTO;
 import com.muang.ai.claw.module.system.framework.sms.core.client.dto.SmsSendRespDTO;
 import com.muang.ai.claw.module.system.framework.sms.core.client.dto.SmsTemplateRespDTO;
@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.*;
 import java.util.function.Function;
 
-import static com.muang.ai.claw.framework.common.util.collection.CollectionUtils.convertList;
+import static com.muang.ai.claw.util.collection.CollectionUtils.convertList;
 
 /**
  * 七牛云短信客户端的实现类

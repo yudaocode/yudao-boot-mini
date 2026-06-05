@@ -1,9 +1,9 @@
 package com.muang.ai.claw.module.system.service.dict;
 
 import cn.hutool.core.util.StrUtil;
-import com.muang.ai.claw.framework.common.pojo.PageResult;
-import com.muang.ai.claw.framework.common.util.date.LocalDateTimeUtils;
-import com.muang.ai.claw.framework.common.util.object.BeanUtils;
+import com.muang.ai.claw.common.pojo.PageResult;
+import com.muang.ai.claw.util.date.LocalDateTimeUtils;
+import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.module.system.controller.admin.dict.vo.type.DictTypePageReqVO;
 import com.muang.ai.claw.module.system.controller.admin.dict.vo.type.DictTypeSaveReqVO;
 import com.muang.ai.claw.module.system.dal.dataobject.dict.DictTypeDO;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static com.muang.ai.claw.framework.common.exception.util.ServiceExceptionUtil.exception;
+import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
 import static com.muang.ai.claw.module.system.enums.ErrorCodeConstants.*;
 
 /**

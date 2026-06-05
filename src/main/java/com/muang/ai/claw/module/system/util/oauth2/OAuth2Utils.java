@@ -3,8 +3,8 @@ package com.muang.ai.claw.module.system.util.oauth2;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.LocalDateTimeUtil;
 import cn.hutool.core.util.StrUtil;
-import com.muang.ai.claw.framework.common.util.http.HttpUtils;
-import com.muang.ai.claw.framework.security.core.util.SecurityFrameworkUtils;
+import com.muang.ai.claw.util.http.HttpUtils;
+import com.muang.ai.claw.common.security.core.util.SecurityFrameworkUtils;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;

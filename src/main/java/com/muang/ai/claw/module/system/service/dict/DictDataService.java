@@ -1,6 +1,6 @@
 package com.muang.ai.claw.module.system.service.dict;
 
-import com.muang.ai.claw.framework.common.pojo.PageResult;
+import com.muang.ai.claw.common.pojo.PageResult;
 import com.muang.ai.claw.module.system.controller.admin.dict.vo.data.DictDataPageReqVO;
 import com.muang.ai.claw.module.system.controller.admin.dict.vo.data.DictDataSaveReqVO;
 import com.muang.ai.claw.module.system.dal.dataobject.dict.DictDataDO;

@@ -1,7 +1,7 @@
 package com.muang.ai.claw.module.system.api.dict;
 
-import com.muang.ai.claw.framework.common.util.object.BeanUtils;
-import com.muang.ai.claw.framework.common.biz.system.dict.dto.DictDataRespDTO;
+import com.muang.ai.claw.util.object.BeanUtils;
+import com.muang.ai.claw.common.biz.system.dict.dto.DictDataRespDTO;
 import com.muang.ai.claw.module.system.dal.dataobject.dict.DictDataDO;
 import com.muang.ai.claw.module.system.service.dict.DictDataService;
 import jakarta.annotation.Resource;

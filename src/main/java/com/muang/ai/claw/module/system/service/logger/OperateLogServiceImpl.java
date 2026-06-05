@@ -1,8 +1,8 @@
 package com.muang.ai.claw.module.system.service.logger;
 
-import com.muang.ai.claw.framework.common.pojo.PageResult;
-import com.muang.ai.claw.framework.common.util.object.BeanUtils;
-import com.muang.ai.claw.framework.common.biz.system.logger.dto.OperateLogCreateReqDTO;
+import com.muang.ai.claw.common.pojo.PageResult;
+import com.muang.ai.claw.util.object.BeanUtils;
+import com.muang.ai.claw.common.biz.system.logger.dto.OperateLogCreateReqDTO;
 import com.muang.ai.claw.module.system.api.logger.dto.OperateLogPageReqDTO;
 import com.muang.ai.claw.module.system.controller.admin.logger.vo.operatelog.OperateLogPageReqVO;
 import com.muang.ai.claw.module.system.dal.dataobject.logger.OperateLogDO;

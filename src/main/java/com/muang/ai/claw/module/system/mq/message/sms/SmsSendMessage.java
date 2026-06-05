@@ -1,6 +1,6 @@
 package com.muang.ai.claw.module.system.mq.message.sms;
 
-import com.muang.ai.claw.framework.common.core.KeyValue;
+import com.muang.ai.claw.common.core.KeyValue;
 import lombok.Data;
 
 import jakarta.validation.constraints.NotNull;

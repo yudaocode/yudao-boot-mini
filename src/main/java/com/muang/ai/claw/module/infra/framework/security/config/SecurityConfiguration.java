@@ -1,6 +1,6 @@
 package com.muang.ai.claw.module.infra.framework.security.config;
 
-import com.muang.ai.claw.framework.security.config.AuthorizeRequestsCustomizer;
+import com.muang.ai.claw.common.security.config.AuthorizeRequestsCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

@@ -1,9 +1,9 @@
 package com.muang.ai.claw.module.infra.dal.dataobject.file;
 
 import cn.hutool.core.util.StrUtil;
-import com.muang.ai.claw.framework.common.util.json.JsonUtils;
-import com.muang.ai.claw.framework.mybatis.core.dataobject.BaseDO;
-import com.muang.ai.claw.framework.tenant.core.aop.TenantIgnore;
+import com.muang.ai.claw.util.json.JsonUtils;
+import com.muang.ai.claw.common.mybatis.core.dataobject.BaseDO;
+import com.muang.ai.claw.common.tenant.core.aop.TenantIgnore;
 import com.muang.ai.claw.module.infra.framework.file.core.client.FileClientConfig;
 import com.muang.ai.claw.module.infra.framework.file.core.client.db.DBFileClientConfig;
 import com.muang.ai.claw.module.infra.framework.file.core.client.ftp.FtpFileClientConfig;

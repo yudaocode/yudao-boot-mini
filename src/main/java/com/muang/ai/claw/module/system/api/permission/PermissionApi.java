@@ -1,6 +1,6 @@
 package com.muang.ai.claw.module.system.api.permission;
 
-import com.muang.ai.claw.framework.common.biz.system.permission.PermissionCommonApi;
+import com.muang.ai.claw.common.biz.system.permission.PermissionCommonApi;
 
 import java.util.Collection;
 import java.util.Set;

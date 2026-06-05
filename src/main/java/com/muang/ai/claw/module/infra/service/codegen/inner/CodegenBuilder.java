@@ -3,7 +3,7 @@ package com.muang.ai.claw.module.infra.service.codegen.inner;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.core.util.StrUtil;
-import com.muang.ai.claw.framework.mybatis.core.dataobject.BaseDO;
+import com.muang.ai.claw.common.mybatis.core.dataobject.BaseDO;
 import com.muang.ai.claw.module.infra.convert.codegen.CodegenConvert;
 import com.muang.ai.claw.module.infra.dal.dataobject.codegen.CodegenColumnDO;
 import com.muang.ai.claw.module.infra.dal.dataobject.codegen.CodegenTableDO;
@@ -65,7 +65,7 @@ public class CodegenBuilder {
      */
     public static final String TENANT_ID_FIELD = "tenantId";
     /**
-     * {@link com.muang.ai.claw.framework.mybatis.core.dataobject.BaseDO} 的字段
+     * {@link com.muang.ai.claw.common.mybatis.core.dataobject.BaseDO} 的字段
      */
     public static final Set<String> BASE_DO_FIELDS = new HashSet<>();
     /**

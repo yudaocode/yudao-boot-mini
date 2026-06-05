@@ -1,8 +1,8 @@
 package com.muang.ai.claw.module.system.controller.admin.user.vo.user;
 
-import com.muang.ai.claw.framework.common.enums.CommonStatusEnum;
-import com.muang.ai.claw.framework.common.validation.InEnum;
-import com.muang.ai.claw.framework.dict.validation.InDict;
+import com.muang.ai.claw.constant.CommonStatusEnum;
+import com.muang.ai.claw.common.validation.InEnum;
+import com.muang.ai.claw.common.dict.validation.InDict;
 import com.muang.ai.claw.module.system.enums.DictTypeConstants;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;

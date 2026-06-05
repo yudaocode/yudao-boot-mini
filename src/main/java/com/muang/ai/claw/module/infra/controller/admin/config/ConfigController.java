@@ -1,10 +1,10 @@
 package com.muang.ai.claw.module.infra.controller.admin.config;
 
-import com.muang.ai.claw.framework.apilog.core.annotation.ApiAccessLog;
-import com.muang.ai.claw.framework.common.pojo.CommonResult;
-import com.muang.ai.claw.framework.common.pojo.PageParam;
-import com.muang.ai.claw.framework.common.pojo.PageResult;
-import com.muang.ai.claw.framework.excel.core.util.ExcelUtils;
+import com.muang.ai.claw.common.apilog.core.annotation.ApiAccessLog;
+import com.muang.ai.claw.common.pojo.CommonResult;
+import com.muang.ai.claw.common.pojo.PageParam;
+import com.muang.ai.claw.common.pojo.PageResult;
+import com.muang.ai.claw.common.excel.core.util.ExcelUtils;
 import com.muang.ai.claw.module.infra.controller.admin.config.vo.ConfigPageReqVO;
 import com.muang.ai.claw.module.infra.controller.admin.config.vo.ConfigRespVO;
 import com.muang.ai.claw.module.infra.controller.admin.config.vo.ConfigSaveReqVO;
@@ -25,9 +25,9 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.util.List;
 
-import static com.muang.ai.claw.framework.apilog.core.enums.OperateTypeEnum.EXPORT;
-import static com.muang.ai.claw.framework.common.exception.util.ServiceExceptionUtil.exception;
-import static com.muang.ai.claw.framework.common.pojo.CommonResult.success;
+import static com.muang.ai.claw.common.apilog.core.enums.OperateTypeEnum.EXPORT;
+import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
+import static com.muang.ai.claw.common.pojo.CommonResult.success;
 
 @Tag(name = "管理后台 - 参数配置")
 @RestController

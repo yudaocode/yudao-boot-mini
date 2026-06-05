@@ -21,8 +21,8 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.util.Arrays;
 
-import com.muang.ai.claw.framework.tenant.core.context.TenantContextHolder;
-import com.muang.ai.claw.framework.tenant.core.util.TenantUtils;
+import com.muang.ai.claw.common.tenant.core.context.TenantContextHolder;
+import com.muang.ai.claw.common.tenant.core.util.TenantUtils;
 import org.springframework.core.DefaultParameterNameDiscoverer;
 import org.springframework.core.MethodParameter;
 import org.springframework.core.ParameterNameDiscoverer;
@@ -32,7 +32,7 @@ import org.springframework.messaging.Message;
 import org.springframework.messaging.handler.HandlerMethod;
 import org.springframework.util.ObjectUtils;
 
-import static com.muang.ai.claw.framework.web.core.util.WebFrameworkUtils.HEADER_TENANT_ID;
+import static com.muang.ai.claw.common.web.core.util.WebFrameworkUtils.HEADER_TENANT_ID;
 
 /**
  * Extension of {@link HandlerMethod} that invokes the underlying method with

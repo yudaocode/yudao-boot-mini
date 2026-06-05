@@ -1,6 +1,6 @@
 package com.muang.ai.claw.module.system.api.permission;
 
-import com.muang.ai.claw.framework.common.biz.system.permission.dto.DeptDataPermissionRespDTO;
+import com.muang.ai.claw.common.biz.system.permission.dto.DeptDataPermissionRespDTO;
 import com.muang.ai.claw.module.system.service.permission.PermissionService;
 import org.springframework.stereotype.Service;
 

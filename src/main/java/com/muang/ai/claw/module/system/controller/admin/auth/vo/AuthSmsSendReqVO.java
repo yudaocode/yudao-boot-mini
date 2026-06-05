@@ -1,7 +1,7 @@
 package com.muang.ai.claw.module.system.controller.admin.auth.vo;
 
-import com.muang.ai.claw.framework.common.validation.InEnum;
-import com.muang.ai.claw.framework.common.validation.Mobile;
+import com.muang.ai.claw.common.validation.InEnum;
+import com.muang.ai.claw.common.validation.Mobile;
 import com.muang.ai.claw.module.system.enums.sms.SmsSceneEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;

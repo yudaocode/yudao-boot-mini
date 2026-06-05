@@ -2,9 +2,9 @@ package com.muang.ai.claw.module.system.api.user;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjUtil;
-import com.muang.ai.claw.framework.common.util.object.BeanUtils;
-import com.muang.ai.claw.framework.datapermission.core.annotation.DataPermission;
-import com.muang.ai.claw.framework.datapermission.core.util.DataPermissionUtils;
+import com.muang.ai.claw.util.object.BeanUtils;
+import com.muang.ai.claw.common.datapermission.core.annotation.DataPermission;
+import com.muang.ai.claw.common.datapermission.core.util.DataPermissionUtils;
 import com.muang.ai.claw.module.system.api.user.dto.AdminUserRespDTO;
 import com.muang.ai.claw.module.system.dal.dataobject.dept.DeptDO;
 import com.muang.ai.claw.module.system.dal.dataobject.user.AdminUserDO;
@@ -18,7 +18,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import static com.muang.ai.claw.framework.common.util.collection.CollectionUtils.convertSet;
+import static com.muang.ai.claw.util.collection.CollectionUtils.convertSet;
 
 /**
  * Admin 用户 API 实现类

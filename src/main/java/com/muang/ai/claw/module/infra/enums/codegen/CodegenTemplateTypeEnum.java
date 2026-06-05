@@ -1,6 +1,6 @@
 package com.muang.ai.claw.module.infra.enums.codegen;
 
-import com.muang.ai.claw.framework.common.util.object.ObjectUtils;
+import com.muang.ai.claw.util.object.ObjectUtils;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

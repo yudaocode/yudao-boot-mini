@@ -1,6 +1,6 @@
 package com.muang.ai.claw.module.system.api.dept.dto;
 
-import com.muang.ai.claw.framework.common.enums.CommonStatusEnum;
+import com.muang.ai.claw.constant.CommonStatusEnum;
 import lombok.Data;
 
 /**

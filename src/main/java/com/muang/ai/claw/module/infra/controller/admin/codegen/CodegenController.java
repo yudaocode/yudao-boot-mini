@@ -2,9 +2,9 @@ package com.muang.ai.claw.module.infra.controller.admin.codegen;
 
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.ZipUtil;
-import com.muang.ai.claw.framework.common.pojo.CommonResult;
-import com.muang.ai.claw.framework.common.pojo.PageResult;
-import com.muang.ai.claw.framework.common.util.object.BeanUtils;
+import com.muang.ai.claw.common.pojo.CommonResult;
+import com.muang.ai.claw.common.pojo.PageResult;
+import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.module.infra.controller.admin.codegen.vo.CodegenCreateListReqVO;
 import com.muang.ai.claw.module.infra.controller.admin.codegen.vo.CodegenDetailRespVO;
 import com.muang.ai.claw.module.infra.controller.admin.codegen.vo.CodegenPreviewRespVO;
@@ -33,8 +33,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import static com.muang.ai.claw.framework.common.pojo.CommonResult.success;
-import static com.muang.ai.claw.framework.security.core.util.SecurityFrameworkUtils.getLoginUserNickname;
+import static com.muang.ai.claw.common.pojo.CommonResult.success;
+import static com.muang.ai.claw.common.security.core.util.SecurityFrameworkUtils.getLoginUserNickname;
 import static com.muang.ai.claw.module.infra.framework.file.core.utils.FileTypeUtils.writeAttachment;
 
 @Tag(name = "管理后台 - 代码生成器")

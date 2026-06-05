@@ -1,11 +1,11 @@
 package com.muang.ai.claw.module.infra.service.job;
 
 import cn.hutool.extra.spring.SpringUtil;
-import com.muang.ai.claw.framework.common.pojo.PageResult;
-import com.muang.ai.claw.framework.common.util.object.BeanUtils;
-import com.muang.ai.claw.framework.quartz.core.handler.JobHandler;
-import com.muang.ai.claw.framework.quartz.core.scheduler.SchedulerManager;
-import com.muang.ai.claw.framework.quartz.core.util.CronUtils;
+import com.muang.ai.claw.common.pojo.PageResult;
+import com.muang.ai.claw.util.object.BeanUtils;
+import com.muang.ai.claw.common.quartz.core.handler.JobHandler;
+import com.muang.ai.claw.common.quartz.core.scheduler.SchedulerManager;
+import com.muang.ai.claw.common.quartz.core.util.CronUtils;
 import com.muang.ai.claw.module.infra.controller.admin.job.vo.job.JobPageReqVO;
 import com.muang.ai.claw.module.infra.controller.admin.job.vo.job.JobSaveReqVO;
 import com.muang.ai.claw.module.infra.dal.dataobject.job.JobDO;
@@ -22,8 +22,8 @@ import org.springframework.validation.annotation.Validated;
 import java.util.List;
 import java.util.Objects;
 
-import static com.muang.ai.claw.framework.common.exception.util.ServiceExceptionUtil.exception;
-import static com.muang.ai.claw.framework.common.util.collection.CollectionUtils.containsAny;
+import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
+import static com.muang.ai.claw.util.collection.CollectionUtils.containsAny;
 import static com.muang.ai.claw.module.infra.enums.ErrorCodeConstants.*;
 
 /**

@@ -1,9 +1,9 @@
 package com.muang.ai.claw.module.system.controller.app.tenant;
 
-import com.muang.ai.claw.framework.common.enums.CommonStatusEnum;
-import com.muang.ai.claw.framework.common.pojo.CommonResult;
-import com.muang.ai.claw.framework.common.util.object.BeanUtils;
-import com.muang.ai.claw.framework.tenant.core.aop.TenantIgnore;
+import com.muang.ai.claw.constant.CommonStatusEnum;
+import com.muang.ai.claw.common.pojo.CommonResult;
+import com.muang.ai.claw.util.object.BeanUtils;
+import com.muang.ai.claw.common.tenant.core.aop.TenantIgnore;
 import com.muang.ai.claw.module.system.controller.app.tenant.vo.AppTenantRespVO;
 import com.muang.ai.claw.module.system.dal.dataobject.tenant.TenantDO;
 import com.muang.ai.claw.module.system.service.tenant.TenantService;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import static com.muang.ai.claw.framework.common.pojo.CommonResult.success;
+import static com.muang.ai.claw.common.pojo.CommonResult.success;
 
 @Tag(name = "用户 App - 租户")
 @RestController

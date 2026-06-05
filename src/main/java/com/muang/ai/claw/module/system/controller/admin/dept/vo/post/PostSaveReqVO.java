@@ -1,7 +1,7 @@
 package com.muang.ai.claw.module.system.controller.admin.dept.vo.post;
 
-import com.muang.ai.claw.framework.common.enums.CommonStatusEnum;
-import com.muang.ai.claw.framework.common.validation.InEnum;
+import com.muang.ai.claw.constant.CommonStatusEnum;
+import com.muang.ai.claw.common.validation.InEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 

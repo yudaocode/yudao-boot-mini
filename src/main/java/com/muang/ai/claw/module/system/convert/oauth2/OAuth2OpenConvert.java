@@ -1,11 +1,11 @@
 package com.muang.ai.claw.module.system.convert.oauth2;
 
 import cn.hutool.core.date.LocalDateTimeUtil;
-import com.muang.ai.claw.framework.common.core.KeyValue;
-import com.muang.ai.claw.framework.common.enums.UserTypeEnum;
-import com.muang.ai.claw.framework.common.util.collection.CollectionUtils;
-import com.muang.ai.claw.framework.common.util.object.BeanUtils;
-import com.muang.ai.claw.framework.security.core.util.SecurityFrameworkUtils;
+import com.muang.ai.claw.common.core.KeyValue;
+import com.muang.ai.claw.constant.UserTypeEnum;
+import com.muang.ai.claw.util.collection.CollectionUtils;
+import com.muang.ai.claw.util.object.BeanUtils;
+import com.muang.ai.claw.common.security.core.util.SecurityFrameworkUtils;
 import com.muang.ai.claw.module.system.controller.admin.oauth2.vo.open.OAuth2OpenAccessTokenRespVO;
 import com.muang.ai.claw.module.system.controller.admin.oauth2.vo.open.OAuth2OpenAuthorizeInfoRespVO;
 import com.muang.ai.claw.module.system.controller.admin.oauth2.vo.open.OAuth2OpenCheckTokenRespVO;

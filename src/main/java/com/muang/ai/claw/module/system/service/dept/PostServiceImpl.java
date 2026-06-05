@@ -1,9 +1,9 @@
 package com.muang.ai.claw.module.system.service.dept;
 
 import cn.hutool.core.collection.CollUtil;
-import com.muang.ai.claw.framework.common.enums.CommonStatusEnum;
-import com.muang.ai.claw.framework.common.pojo.PageResult;
-import com.muang.ai.claw.framework.common.util.object.BeanUtils;
+import com.muang.ai.claw.constant.CommonStatusEnum;
+import com.muang.ai.claw.common.pojo.PageResult;
+import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.module.system.controller.admin.dept.vo.post.PostPageReqVO;
 import com.muang.ai.claw.module.system.controller.admin.dept.vo.post.PostSaveReqVO;
 import com.muang.ai.claw.module.system.dal.dataobject.dept.PostDO;
@@ -17,8 +17,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import static com.muang.ai.claw.framework.common.exception.util.ServiceExceptionUtil.exception;
-import static com.muang.ai.claw.framework.common.util.collection.CollectionUtils.convertMap;
+import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
+import static com.muang.ai.claw.util.collection.CollectionUtils.convertMap;
 import static com.muang.ai.claw.module.system.enums.ErrorCodeConstants.*;
 
 /**

@@ -1,6 +1,6 @@
 package com.muang.ai.claw.module.system.api.user.dto;
 
-import com.muang.ai.claw.framework.common.enums.CommonStatusEnum;
+import com.muang.ai.claw.constant.CommonStatusEnum;
 import lombok.Data;
 
 import java.util.Set;

@@ -1,8 +1,8 @@
 package com.muang.ai.claw.module.system.convert.user;
 
-import com.muang.ai.claw.framework.common.util.collection.CollectionUtils;
-import com.muang.ai.claw.framework.common.util.collection.MapUtils;
-import com.muang.ai.claw.framework.common.util.object.BeanUtils;
+import com.muang.ai.claw.util.collection.CollectionUtils;
+import com.muang.ai.claw.util.collection.MapUtils;
+import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.module.system.controller.admin.dept.vo.dept.DeptSimpleRespVO;
 import com.muang.ai.claw.module.system.controller.admin.dept.vo.post.PostSimpleRespVO;
 import com.muang.ai.claw.module.system.controller.admin.permission.vo.role.RoleSimpleRespVO;

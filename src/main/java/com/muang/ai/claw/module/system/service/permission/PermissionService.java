@@ -1,6 +1,6 @@
 package com.muang.ai.claw.module.system.service.permission;
 
-import com.muang.ai.claw.framework.common.biz.system.permission.dto.DeptDataPermissionRespDTO;
+import com.muang.ai.claw.common.biz.system.permission.dto.DeptDataPermissionRespDTO;
 
 import java.util.Collection;
 import java.util.Set;

@@ -1,7 +1,7 @@
 package com.muang.ai.claw.module.system.controller.admin.user.vo.user;
 
-import com.muang.ai.claw.framework.excel.core.annotations.DictFormat;
-import com.muang.ai.claw.framework.excel.core.convert.DictConvert;
+import com.muang.ai.claw.common.excel.core.annotations.DictFormat;
+import com.muang.ai.claw.common.excel.core.convert.DictConvert;
 import com.muang.ai.claw.module.system.enums.DictTypeConstants;
 import cn.idev.excel.annotation.ExcelIgnoreUnannotated;
 import cn.idev.excel.annotation.ExcelProperty;

@@ -1,6 +1,6 @@
 package com.muang.ai.claw.module.system.enums;
 
-import com.muang.ai.claw.framework.common.exception.ErrorCode;
+import com.muang.ai.claw.common.exception.ErrorCode;
 
 /**
  * System 错误码枚举类

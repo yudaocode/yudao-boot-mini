@@ -3,9 +3,9 @@ package com.muang.ai.claw.module.infra.service.file;
 import cn.hutool.core.io.resource.ResourceUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
-import com.muang.ai.claw.framework.common.pojo.PageResult;
-import com.muang.ai.claw.framework.common.util.json.JsonUtils;
-import com.muang.ai.claw.framework.common.util.validation.ValidationUtils;
+import com.muang.ai.claw.common.pojo.PageResult;
+import com.muang.ai.claw.util.json.JsonUtils;
+import com.muang.ai.claw.util.validation.ValidationUtils;
 import com.muang.ai.claw.module.infra.controller.admin.file.vo.config.FileConfigPageReqVO;
 import com.muang.ai.claw.module.infra.controller.admin.file.vo.config.FileConfigSaveReqVO;
 import com.muang.ai.claw.module.infra.convert.file.FileConfigConvert;
@@ -30,8 +30,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import static com.muang.ai.claw.framework.common.exception.util.ServiceExceptionUtil.exception;
-import static com.muang.ai.claw.framework.common.util.cache.CacheUtils.buildAsyncReloadingCache;
+import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
+import static com.muang.ai.claw.util.cache.CacheUtils.buildAsyncReloadingCache;
 import static com.muang.ai.claw.module.infra.enums.ErrorCodeConstants.FILE_CONFIG_DELETE_FAIL_MASTER;
 import static com.muang.ai.claw.module.infra.enums.ErrorCodeConstants.FILE_CONFIG_NOT_EXISTS;
 

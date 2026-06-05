@@ -2,9 +2,9 @@ package com.muang.ai.claw.module.infra.service.codegen;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
-import com.muang.ai.claw.framework.common.pojo.PageResult;
-import com.muang.ai.claw.framework.common.util.object.BeanUtils;
-import com.muang.ai.claw.framework.mybatis.core.util.JdbcUtils;
+import com.muang.ai.claw.common.pojo.PageResult;
+import com.muang.ai.claw.util.object.BeanUtils;
+import com.muang.ai.claw.common.mybatis.core.util.JdbcUtils;
 import com.muang.ai.claw.module.infra.controller.admin.codegen.vo.CodegenCreateListReqVO;
 import com.muang.ai.claw.module.infra.controller.admin.codegen.vo.CodegenUpdateReqVO;
 import com.muang.ai.claw.module.infra.controller.admin.codegen.vo.table.CodegenTablePageReqVO;
@@ -34,9 +34,9 @@ import java.util.function.BiPredicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static com.muang.ai.claw.framework.common.exception.util.ServiceExceptionUtil.exception;
-import static com.muang.ai.claw.framework.common.util.collection.CollectionUtils.convertMap;
-import static com.muang.ai.claw.framework.common.util.collection.CollectionUtils.convertSet;
+import static com.muang.ai.claw.common.exception.util.ServiceExceptionUtil.exception;
+import static com.muang.ai.claw.util.collection.CollectionUtils.convertMap;
+import static com.muang.ai.claw.util.collection.CollectionUtils.convertSet;
 import static com.muang.ai.claw.module.infra.enums.ErrorCodeConstants.*;
 
 /**
