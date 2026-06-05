@@ -1,10 +1,11 @@
 package com.muang.ai.claw.module.system.controller.admin.logger.vo.operatelog;
 
-import com.muang.ai.claw.config.excel.annotations.DictFormat;
+import com.muang.ai.claw.config.excel.annotations.ExcelEnumFormat;
+import com.muang.ai.claw.config.excel.convert.ExcelEnumConvert;
+import com.muang.ai.claw.constant.UserTypeEnum;
 import com.muang.ai.claw.module.system.dal.dataobject.user.AdminUserDO;
 import cn.idev.excel.annotation.ExcelIgnoreUnannotated;
 import cn.idev.excel.annotation.ExcelProperty;
-import com.muang.ai.claw.module.system.constant.DictTypeConstants;
 import com.fhs.core.trans.anno.Trans;
 import com.fhs.core.trans.constant.TransType;
 import com.fhs.core.trans.vo.VO;
@@ -34,8 +35,8 @@ public class OperateLogRespVO implements VO {
     private String userName;
 
     @Schema(description = "用户类型", requiredMode = Schema.RequiredMode.REQUIRED, example = "1", implementation = Integer.class)
-    @ExcelProperty("用户类型")
-    @DictFormat(DictTypeConstants.USER_TYPE)
+    @ExcelProperty(value = "用户类型", converter = ExcelEnumConvert.class)
+    @ExcelEnumFormat(UserTypeEnum.class)
     private Integer userType;
 
     @Schema(description = "操作模块类型", requiredMode = Schema.RequiredMode.REQUIRED, example = "订单")

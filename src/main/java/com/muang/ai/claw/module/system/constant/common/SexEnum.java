@@ -12,15 +12,19 @@ import lombok.Getter;
 public enum SexEnum {
 
     /** 男 */
-    MALE(1),
+    MALE(1, "男"),
     /** 女 */
-    FEMALE(2),
+    FEMALE(2, "女"),
     /* 未知 */
-    UNKNOWN(0);
+    UNKNOWN(0, "未知");
 
     /**
      * 性别
      */
     private final Integer sex;
+    /**
+     * 名字
+     */
+    private final String name;
 
 }

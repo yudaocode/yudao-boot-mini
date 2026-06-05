@@ -1,8 +1,10 @@
 package com.muang.ai.claw.module.infra.controller.admin.config.vo;
 
-import com.muang.ai.claw.config.excel.annotations.DictFormat;
-import com.muang.ai.claw.config.excel.convert.DictConvert;
-import com.muang.ai.claw.module.infra.constant.DictTypeConstants;
+import com.muang.ai.claw.config.excel.convert.ExcelEnumConvert;
+import com.muang.ai.claw.config.excel.annotations.ExcelEnumFormat;
+import com.muang.ai.claw.config.excel.convert.ExcelBooleanConvert;
+import com.muang.ai.claw.module.infra.constant.config.ConfigTypeEnum;
+
 import cn.idev.excel.annotation.ExcelIgnoreUnannotated;
 import cn.idev.excel.annotation.ExcelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -36,13 +38,12 @@ public class ConfigRespVO {
     private String value;
 
     @Schema(description = "参数类型，参见 SysConfigTypeEnum 枚举", requiredMode = Schema.RequiredMode.REQUIRED, example = "1")
-    @ExcelProperty(value = "参数类型", converter = DictConvert.class)
-    @DictFormat(DictTypeConstants.CONFIG_TYPE)
+    @ExcelProperty(value = "参数类型", converter = ExcelEnumConvert.class)
+    @ExcelEnumFormat(ConfigTypeEnum.class)
     private Integer type;
 
     @Schema(description = "是否可见", requiredMode = Schema.RequiredMode.REQUIRED, example = "true")
-    @ExcelProperty(value = "是否可见", converter = DictConvert.class)
-    @DictFormat(DictTypeConstants.BOOLEAN_STRING)
+    @ExcelProperty(value = "是否可见", converter = ExcelBooleanConvert.class)
     private Boolean visible;
 
     @Schema(description = "备注", example = "备注一下很帅气！")

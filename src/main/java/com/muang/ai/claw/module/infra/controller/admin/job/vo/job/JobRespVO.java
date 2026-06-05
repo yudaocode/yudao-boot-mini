@@ -1,8 +1,9 @@
 package com.muang.ai.claw.module.infra.controller.admin.job.vo.job;
 
-import com.muang.ai.claw.config.excel.annotations.DictFormat;
-import com.muang.ai.claw.config.excel.convert.DictConvert;
-import com.muang.ai.claw.module.infra.constant.DictTypeConstants;
+import com.muang.ai.claw.config.excel.convert.ExcelEnumConvert;
+import com.muang.ai.claw.config.excel.annotations.ExcelEnumFormat;
+import com.muang.ai.claw.module.infra.constant.job.JobStatusEnum;
+
 import cn.idev.excel.annotation.ExcelIgnoreUnannotated;
 import cn.idev.excel.annotation.ExcelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -25,8 +26,8 @@ public class JobRespVO {
     private String name;
 
     @Schema(description = "任务状态", requiredMode = Schema.RequiredMode.REQUIRED, example = "1")
-    @ExcelProperty(value = "任务状态", converter = DictConvert.class)
-    @DictFormat(DictTypeConstants.JOB_STATUS)
+    @ExcelProperty(value = "任务状态", converter = ExcelEnumConvert.class)
+    @ExcelEnumFormat(JobStatusEnum.class)
     private Integer status;
 
     @Schema(description = "处理器的名字", requiredMode = Schema.RequiredMode.REQUIRED, example = "sysUserSessionTimeoutJob")

@@ -1,8 +1,10 @@
 package com.muang.ai.claw.module.infra.controller.admin.logger.vo.apierrorlog;
 
-import com.muang.ai.claw.config.excel.annotations.DictFormat;
-import com.muang.ai.claw.config.excel.convert.DictConvert;
-import com.muang.ai.claw.module.infra.constant.DictTypeConstants;
+import com.muang.ai.claw.config.excel.convert.ExcelEnumConvert;
+import com.muang.ai.claw.config.excel.annotations.ExcelEnumFormat;
+import com.muang.ai.claw.constant.UserTypeEnum;
+import com.muang.ai.claw.module.infra.constant.logger.ApiErrorLogProcessStatusEnum;
+
 import cn.idev.excel.annotation.ExcelIgnoreUnannotated;
 import cn.idev.excel.annotation.ExcelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -28,8 +30,8 @@ public class ApiErrorLogRespVO {
     private Long userId;
 
     @Schema(description = "用户类型", requiredMode = Schema.RequiredMode.REQUIRED, example = "1")
-    @ExcelProperty(value = "用户类型", converter = DictConvert.class)
-    @DictFormat(DictTypeConstants.USER_TYPE)
+    @ExcelProperty(value = "用户类型", converter = ExcelEnumConvert.class)
+    @ExcelEnumFormat(UserTypeEnum.class)
     private Integer userType;
 
     @Schema(description = "应用名", requiredMode = Schema.RequiredMode.REQUIRED, example = "dashboard")
@@ -93,8 +95,8 @@ public class ApiErrorLogRespVO {
     private Integer exceptionLineNumber;
 
     @Schema(description = "处理状态", requiredMode = Schema.RequiredMode.REQUIRED, example = "0")
-    @ExcelProperty(value = "处理状态", converter = DictConvert.class)
-    @DictFormat(DictTypeConstants.API_ERROR_LOG_PROCESS_STATUS)
+    @ExcelProperty(value = "处理状态", converter = ExcelEnumConvert.class)
+    @ExcelEnumFormat(ApiErrorLogProcessStatusEnum.class)
     private Integer processStatus;
 
     @Schema(description = "处理时间", requiredMode = Schema.RequiredMode.REQUIRED)

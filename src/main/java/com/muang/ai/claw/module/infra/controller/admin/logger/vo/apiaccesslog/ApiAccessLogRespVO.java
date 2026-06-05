@@ -1,8 +1,10 @@
 package com.muang.ai.claw.module.infra.controller.admin.logger.vo.apiaccesslog;
 
-import com.muang.ai.claw.config.excel.annotations.DictFormat;
-import com.muang.ai.claw.config.excel.convert.DictConvert;
-import com.muang.ai.claw.module.infra.constant.DictTypeConstants;
+import com.muang.ai.claw.config.excel.convert.ExcelEnumConvert;
+import com.muang.ai.claw.config.excel.annotations.ExcelEnumFormat;
+import com.muang.ai.claw.config.apilog.core.enums.OperateTypeEnum;
+import com.muang.ai.claw.constant.UserTypeEnum;
+
 import cn.idev.excel.annotation.ExcelIgnoreUnannotated;
 import cn.idev.excel.annotation.ExcelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -28,8 +30,8 @@ public class ApiAccessLogRespVO {
     private Long userId;
 
     @Schema(description = "用户类型，参见 UserTypeEnum 枚举", requiredMode = Schema.RequiredMode.REQUIRED, example = "2")
-    @ExcelProperty(value = "用户类型", converter = DictConvert.class)
-    @DictFormat(DictTypeConstants.USER_TYPE)
+    @ExcelProperty(value = "用户类型", converter = ExcelEnumConvert.class)
+    @ExcelEnumFormat(UserTypeEnum.class)
     private Integer userType;
 
     @Schema(description = "应用名", requiredMode = Schema.RequiredMode.REQUIRED, example = "dashboard")
@@ -69,8 +71,8 @@ public class ApiAccessLogRespVO {
     private String operateName;
 
     @Schema(description = "操作分类", requiredMode = Schema.RequiredMode.REQUIRED, example = "1")
-    @ExcelProperty(value = "操作分类", converter = DictConvert.class)
-    @DictFormat(DictTypeConstants.OPERATE_TYPE)
+    @ExcelProperty(value = "操作分类", converter = ExcelEnumConvert.class)
+    @ExcelEnumFormat(OperateTypeEnum.class)
     private Integer operateType;
 
     @Schema(description = "开始请求时间", requiredMode = Schema.RequiredMode.REQUIRED)

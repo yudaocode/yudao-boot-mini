@@ -1,8 +1,9 @@
 package com.muang.ai.claw.module.system.controller.admin.dept.vo.post;
 
-import com.muang.ai.claw.config.excel.annotations.DictFormat;
-import com.muang.ai.claw.config.excel.convert.DictConvert;
-import com.muang.ai.claw.module.system.constant.DictTypeConstants;
+import com.muang.ai.claw.config.excel.convert.ExcelEnumConvert;
+import com.muang.ai.claw.config.excel.annotations.ExcelEnumFormat;
+import com.muang.ai.claw.constant.CommonStatusEnum;
+
 import cn.idev.excel.annotation.ExcelIgnoreUnannotated;
 import cn.idev.excel.annotation.ExcelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -32,8 +33,8 @@ public class PostRespVO {
     private Integer sort;
 
     @Schema(description = "状态，参见 CommonStatusEnum 枚举类", requiredMode = Schema.RequiredMode.REQUIRED, example = "1")
-    @ExcelProperty(value = "状态", converter = DictConvert.class)
-    @DictFormat(DictTypeConstants.COMMON_STATUS)
+    @ExcelProperty(value = "状态", converter = ExcelEnumConvert.class)
+    @ExcelEnumFormat(CommonStatusEnum.class)
     private Integer status;
 
     @Schema(description = "备注", example = "快乐的备注")

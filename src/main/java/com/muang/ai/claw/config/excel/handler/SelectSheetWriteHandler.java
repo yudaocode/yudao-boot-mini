@@ -7,7 +7,6 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import cn.hutool.poi.excel.ExcelUtil;
 import com.muang.ai.claw.common.core.KeyValue;
-import com.muang.ai.claw.config.dict.core.DictFrameworkUtils;
 import com.muang.ai.claw.config.excel.annotations.ExcelColumnSelect;
 import com.muang.ai.claw.config.excel.function.ExcelColumnSelectFunction;
 import cn.idev.excel.annotation.ExcelIgnore;
@@ -105,18 +104,11 @@ public class SelectSheetWriteHandler implements SheetWriteHandler {
      */
     private void getSelectDataList(int colIndex, Field field) {
         ExcelColumnSelect columnSelect = field.getAnnotation(ExcelColumnSelect.class);
-        String dictType = columnSelect.dictType();
         String functionName = columnSelect.functionName();
-        Assert.isTrue(ObjectUtil.isNotEmpty(dictType) || ObjectUtil.isNotEmpty(functionName),
-                "Field({}) 的 @ExcelColumnSelect 注解，dictType 和 functionName 不能同时为空", field.getName());
+        Assert.isTrue(ObjectUtil.isNotEmpty(functionName),
+                "Field({}) 的 @ExcelColumnSelect 注解，functionName 不能为空", field.getName());
 
-        // 情况一：使用 dictType 获得下拉数据
-        if (StrUtil.isNotEmpty(dictType)) { // 情况一： 字典数据 （默认）
-            selectMap.put(colIndex, DictFrameworkUtils.getDictDataLabelList(dictType));
-            return;
-        }
-
-        // 情况二：使用 functionName 获得下拉数据
+        // 使用 functionName 获得下拉数据
         Map<String, ExcelColumnSelectFunction> functionMap = SpringUtil.getApplicationContext().getBeansOfType(ExcelColumnSelectFunction.class);
         ExcelColumnSelectFunction function = CollUtil.findOne(functionMap.values(), item -> item.getName().equals(functionName));
         Assert.notNull(function, "未找到对应的 function({})", functionName);

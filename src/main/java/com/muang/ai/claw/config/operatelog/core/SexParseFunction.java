@@ -1,9 +1,11 @@
 package com.muang.ai.claw.config.operatelog.core;
 
 import cn.hutool.core.util.StrUtil;
-import com.muang.ai.claw.config.dict.core.DictFrameworkUtils;
-import com.muang.ai.claw.module.system.constant.DictTypeConstants;
+import cn.hutool.core.util.ObjectUtil;
+import com.muang.ai.claw.module.system.constant.common.SexEnum;
 import com.mzt.logapi.service.IParseFunction;
+
+import java.util.Arrays;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -33,7 +35,10 @@ public class SexParseFunction implements IParseFunction {
         if (StrUtil.isEmptyIfStr(value)) {
             return "";
         }
-        return DictFrameworkUtils.parseDictDataLabel(DictTypeConstants.USER_SEX, value.toString());
+        Integer sex = Integer.valueOf(value.toString());
+        return Arrays.stream(SexEnum.values())
+                .filter(item -> ObjectUtil.equal(item.getSex(), sex))
+                .findFirst().map(SexEnum::getName).orElse("");
     }
 
 }

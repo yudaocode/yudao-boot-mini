@@ -1,9 +1,11 @@
 package com.muang.ai.claw.module.system.controller.admin.user.vo.user;
 
+import com.muang.ai.claw.config.excel.convert.ExcelEnumConvert;
+import com.muang.ai.claw.config.excel.annotations.ExcelEnumFormat;
+import com.muang.ai.claw.constant.CommonStatusEnum;
+import com.muang.ai.claw.module.system.constant.common.SexEnum;
+
 import cn.idev.excel.annotation.ExcelProperty;
-import com.muang.ai.claw.config.excel.annotations.DictFormat;
-import com.muang.ai.claw.config.excel.convert.DictConvert;
-import com.muang.ai.claw.module.system.constant.DictTypeConstants;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -33,12 +35,12 @@ public class UserImportExcelVO {
     @ExcelProperty("手机号码")
     private String mobile;
 
-    @ExcelProperty(value = "用户性别", converter = DictConvert.class)
-    @DictFormat(DictTypeConstants.USER_SEX)
+    @ExcelProperty(value = "用户性别", converter = ExcelEnumConvert.class)
+    @ExcelEnumFormat(SexEnum.class)
     private Integer sex;
 
-    @ExcelProperty(value = "账号状态", converter = DictConvert.class)
-    @DictFormat(DictTypeConstants.COMMON_STATUS)
+    @ExcelProperty(value = "账号状态", converter = ExcelEnumConvert.class)
+    @ExcelEnumFormat(CommonStatusEnum.class)
     private Integer status;
 
 }

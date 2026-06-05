@@ -1,8 +1,6 @@
 package com.muang.ai.claw.config.operatelog.core;
 
 import cn.hutool.core.util.StrUtil;
-import com.muang.ai.claw.config.dict.core.DictFrameworkUtils;
-import com.muang.ai.claw.module.infra.constant.DictTypeConstants;
 import com.mzt.logapi.service.IParseFunction;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -33,7 +31,7 @@ public class BooleanParseFunction implements IParseFunction {
         if (StrUtil.isEmptyIfStr(value)) {
             return "";
         }
-        return DictFrameworkUtils.parseDictDataLabel(DictTypeConstants.BOOLEAN_STRING, value.toString());
+        return Boolean.parseBoolean(value.toString()) ? "是" : "否";
     }
 
 }

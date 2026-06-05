@@ -1,8 +1,10 @@
 package com.muang.ai.claw.module.system.controller.admin.logger.vo.loginlog;
 
-import com.muang.ai.claw.config.excel.annotations.DictFormat;
-import com.muang.ai.claw.config.excel.convert.DictConvert;
-import com.muang.ai.claw.module.system.constant.DictTypeConstants;
+import com.muang.ai.claw.config.excel.convert.ExcelEnumConvert;
+import com.muang.ai.claw.config.excel.annotations.ExcelEnumFormat;
+import com.muang.ai.claw.module.system.constant.logger.LoginLogTypeEnum;
+import com.muang.ai.claw.module.system.constant.logger.LoginResultEnum;
+
 import cn.idev.excel.annotation.ExcelIgnoreUnannotated;
 import cn.idev.excel.annotation.ExcelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -20,8 +22,8 @@ public class LoginLogRespVO {
     private Long id;
 
     @Schema(description = "日志类型，参见 LoginLogTypeEnum 枚举类", requiredMode = Schema.RequiredMode.REQUIRED, example = "1")
-    @ExcelProperty(value = "日志类型", converter = DictConvert.class)
-    @DictFormat(DictTypeConstants.LOGIN_TYPE)
+    @ExcelProperty(value = "日志类型", converter = ExcelEnumConvert.class)
+    @ExcelEnumFormat(LoginLogTypeEnum.class)
     private Integer logType;
 
     @Schema(description = "用户编号", example = "666")
@@ -38,8 +40,8 @@ public class LoginLogRespVO {
     private String username;
 
     @Schema(description = "登录结果，参见 LoginResultEnum 枚举类", requiredMode = Schema.RequiredMode.REQUIRED, example = "1")
-    @ExcelProperty(value = "登录结果", converter = DictConvert.class)
-    @DictFormat(DictTypeConstants.LOGIN_RESULT)
+    @ExcelProperty(value = "登录结果", converter = ExcelEnumConvert.class)
+    @ExcelEnumFormat(LoginResultEnum.class)
     private Integer result;
 
     @Schema(description = "用户 IP", requiredMode = Schema.RequiredMode.REQUIRED, example = "127.0.0.1")

@@ -1,8 +1,10 @@
 package com.muang.ai.claw.module.system.controller.admin.permission.vo.role;
 
-import com.muang.ai.claw.config.excel.annotations.DictFormat;
-import com.muang.ai.claw.config.excel.convert.DictConvert;
-import com.muang.ai.claw.module.system.constant.DictTypeConstants;
+import com.muang.ai.claw.config.excel.convert.ExcelEnumConvert;
+import com.muang.ai.claw.config.excel.annotations.ExcelEnumFormat;
+import com.muang.ai.claw.constant.CommonStatusEnum;
+import com.muang.ai.claw.module.system.constant.permission.DataScopeEnum;
+
 import cn.idev.excel.annotation.ExcelIgnoreUnannotated;
 import cn.idev.excel.annotation.ExcelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -35,8 +37,8 @@ public class RoleRespVO {
     private Integer sort;
 
     @Schema(description = "状态，参见 CommonStatusEnum 枚举类", requiredMode = Schema.RequiredMode.REQUIRED, example = "1")
-    @ExcelProperty(value = "角色状态", converter = DictConvert.class)
-    @DictFormat(DictTypeConstants.COMMON_STATUS)
+    @ExcelProperty(value = "角色状态", converter = ExcelEnumConvert.class)
+    @ExcelEnumFormat(CommonStatusEnum.class)
     private Integer status;
 
     @Schema(description = "角色类型，参见 RoleTypeEnum 枚举类", requiredMode = Schema.RequiredMode.REQUIRED, example = "1")
@@ -46,8 +48,8 @@ public class RoleRespVO {
     private String remark;
 
     @Schema(description = "数据范围，参见 DataScopeEnum 枚举类", requiredMode = Schema.RequiredMode.REQUIRED, example = "1")
-    @ExcelProperty(value = "数据范围", converter = DictConvert.class)
-    @DictFormat(DictTypeConstants.DATA_SCOPE)
+    @ExcelProperty(value = "数据范围", converter = ExcelEnumConvert.class)
+    @ExcelEnumFormat(DataScopeEnum.class)
     private Integer dataScope;
 
     @Schema(description = "数据范围(指定部门数组)", example = "1")

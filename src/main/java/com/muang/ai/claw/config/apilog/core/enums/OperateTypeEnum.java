@@ -15,37 +15,41 @@ public enum OperateTypeEnum {
     /**
      * 查询
      */
-    GET(1),
+    GET(1, "查询"),
     /**
      * 新增
      */
-    CREATE(2),
+    CREATE(2, "新增"),
     /**
      * 修改
      */
-    UPDATE(3),
+    UPDATE(3, "修改"),
     /**
      * 删除
      */
-    DELETE(4),
+    DELETE(4, "删除"),
     /**
      * 导出
      */
-    EXPORT(5),
+    EXPORT(5, "导出"),
     /**
      * 导入
      */
-    IMPORT(6),
+    IMPORT(6, "导入"),
     /**
      * 其它
      *
      * 在无法归类时，可以选择使用其它。因为还有操作名可以进一步标识
      */
-    OTHER(0);
+    OTHER(0, "其它");
 
     /**
      * 类型
      */
     private final Integer type;
+    /**
+     * 名字
+     */
+    private final String name;
 
 }
