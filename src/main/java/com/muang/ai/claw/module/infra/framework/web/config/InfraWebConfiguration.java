@@ -1,6 +1,6 @@
 package com.muang.ai.claw.module.infra.framework.web.config;
 
-import com.muang.ai.claw.common.swagger.config.YudaoSwaggerAutoConfiguration;
+import com.muang.ai.claw.common.swagger.config.SwaggerAutoConfiguration;
 import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +17,7 @@ public class InfraWebConfiguration {
      */
     @Bean
     public GroupedOpenApi infraGroupedOpenApi() {
-        return YudaoSwaggerAutoConfiguration.buildGroupedOpenApi("infra");
+        return SwaggerAutoConfiguration.buildGroupedOpenApi("infra");
     }
 
 }

@@ -37,7 +37,7 @@ public class WebProperties {
          * 意义：通过该前缀，避免 Swagger、Actuator 意外通过 Nginx 暴露出来给外部，带来安全性问题
          *      这样，Nginx 只需要配置转发到 /api/* 的所有接口即可。
          *
-         * @see YudaoWebAutoConfiguration#configurePathMatch(PathMatchConfigurer)
+         * @see WebAutoConfiguration#configurePathMatch(PathMatchConfigurer)
          */
         @NotEmpty(message = "API 前缀不能为空")
         private String prefix;
