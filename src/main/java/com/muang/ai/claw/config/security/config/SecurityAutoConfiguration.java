@@ -1,7 +1,7 @@
 package com.muang.ai.claw.config.security.config;
 
-import com.muang.ai.claw.common.biz.system.oauth2.OAuth2TokenCommonApi;
-import com.muang.ai.claw.common.biz.system.permission.PermissionCommonApi;
+import com.muang.ai.claw.module.system.api.oauth2.OAuth2TokenApi;
+import com.muang.ai.claw.module.system.api.permission.PermissionApi;
 import com.muang.ai.claw.config.security.core.context.TransmittableThreadLocalSecurityContextHolderStrategy;
 import com.muang.ai.claw.config.security.core.filter.TokenAuthenticationFilter;
 import com.muang.ai.claw.config.security.core.handler.AccessDeniedHandlerImpl;
@@ -67,12 +67,12 @@ public class SecurityAutoConfiguration {
      */
     @Bean
     public TokenAuthenticationFilter authenticationTokenFilter(GlobalExceptionHandler globalExceptionHandler,
-                                                               OAuth2TokenCommonApi oauth2TokenApi) {
+                                                               OAuth2TokenApi oauth2TokenApi) {
         return new TokenAuthenticationFilter(securityProperties, globalExceptionHandler, oauth2TokenApi);
     }
 
     @Bean("ss") // 使用 Spring Security 的缩写，方便使用
-    public SecurityFrameworkService securityFrameworkService(PermissionCommonApi permissionApi) {
+    public SecurityFrameworkService securityFrameworkService(PermissionApi permissionApi) {
         return new SecurityFrameworkService(permissionApi);
     }
 

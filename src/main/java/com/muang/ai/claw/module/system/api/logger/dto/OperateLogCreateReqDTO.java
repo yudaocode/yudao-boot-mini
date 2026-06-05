@@ -1,4 +1,4 @@
-package com.muang.ai.claw.common.biz.system.logger.dto;
+package com.muang.ai.claw.module.system.api.logger.dto;
 
 import com.muang.ai.claw.constant.UserTypeEnum;
 import jakarta.validation.constraints.NotEmpty;

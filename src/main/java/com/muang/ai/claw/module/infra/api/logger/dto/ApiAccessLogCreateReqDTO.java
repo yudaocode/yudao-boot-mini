@@ -1,4 +1,4 @@
-package com.muang.ai.claw.common.biz.infra.logger.dto;
+package com.muang.ai.claw.module.infra.api.logger.dto;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;

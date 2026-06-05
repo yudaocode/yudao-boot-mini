@@ -1,4 +1,4 @@
-package com.muang.ai.claw.common.biz.system.oauth2.dto;
+package com.muang.ai.claw.module.system.api.oauth2.dto;
 
 import lombok.Data;
 

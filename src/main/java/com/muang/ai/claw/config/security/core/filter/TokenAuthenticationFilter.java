@@ -2,8 +2,8 @@ package com.muang.ai.claw.config.security.core.filter;
 
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
-import com.muang.ai.claw.common.biz.system.oauth2.OAuth2TokenCommonApi;
-import com.muang.ai.claw.common.biz.system.oauth2.dto.OAuth2AccessTokenCheckRespDTO;
+import com.muang.ai.claw.module.system.api.oauth2.OAuth2TokenApi;
+import com.muang.ai.claw.module.system.api.oauth2.dto.OAuth2AccessTokenCheckRespDTO;
 import com.muang.ai.claw.common.exception.ServiceException;
 import com.muang.ai.claw.common.core.CommonResult;
 import com.muang.ai.claw.util.servlet.ServletUtils;
@@ -34,7 +34,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
     private final GlobalExceptionHandler globalExceptionHandler;
 
-    private final OAuth2TokenCommonApi oauth2TokenApi;
+    private final OAuth2TokenApi oauth2TokenApi;
 
     @Override
     @SuppressWarnings("NullableProblems")

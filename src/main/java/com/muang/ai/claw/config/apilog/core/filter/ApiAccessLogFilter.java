@@ -9,8 +9,8 @@ import cn.hutool.core.util.BooleanUtil;
 import cn.hutool.core.util.StrUtil;
 import com.muang.ai.claw.config.apilog.core.annotation.ApiAccessLog;
 import com.muang.ai.claw.config.apilog.core.enums.OperateTypeEnum;
-import com.muang.ai.claw.common.biz.infra.logger.ApiAccessLogCommonApi;
-import com.muang.ai.claw.common.biz.infra.logger.dto.ApiAccessLogCreateReqDTO;
+import com.muang.ai.claw.module.infra.api.logger.ApiAccessLogApi;
+import com.muang.ai.claw.module.infra.api.logger.dto.ApiAccessLogCreateReqDTO;
 import com.muang.ai.claw.common.exception.enums.GlobalErrorCodeConstants;
 import com.muang.ai.claw.common.core.CommonResult;
 import com.muang.ai.claw.util.json.JsonUtils;
@@ -52,9 +52,9 @@ public class ApiAccessLogFilter extends ApiRequestFilter {
 
     private final String applicationName;
 
-    private final ApiAccessLogCommonApi apiAccessLogApi;
+    private final ApiAccessLogApi apiAccessLogApi;
 
-    public ApiAccessLogFilter(WebProperties webProperties, String applicationName, ApiAccessLogCommonApi apiAccessLogApi) {
+    public ApiAccessLogFilter(WebProperties webProperties, String applicationName, ApiAccessLogApi apiAccessLogApi) {
         super(webProperties);
         this.applicationName = applicationName;
         this.apiAccessLogApi = apiAccessLogApi;

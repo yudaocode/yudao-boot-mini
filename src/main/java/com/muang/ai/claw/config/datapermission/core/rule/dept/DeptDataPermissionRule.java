@@ -3,8 +3,8 @@ package com.muang.ai.claw.config.datapermission.core.rule.dept;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
-import com.muang.ai.claw.common.biz.system.permission.PermissionCommonApi;
-import com.muang.ai.claw.common.biz.system.permission.dto.DeptDataPermissionRespDTO;
+import com.muang.ai.claw.module.system.api.permission.PermissionApi;
+import com.muang.ai.claw.module.system.api.permission.dto.DeptDataPermissionRespDTO;
 import com.muang.ai.claw.constant.UserTypeEnum;
 import com.muang.ai.claw.util.collection.CollectionUtils;
 import com.muang.ai.claw.util.json.JsonUtils;
@@ -58,7 +58,7 @@ public class DeptDataPermissionRule implements DataPermissionRule {
     private static final String DEPT_COLUMN_NAME = "dept_id";
     private static final String USER_COLUMN_NAME = "user_id";
 
-    private final PermissionCommonApi permissionApi;
+    private final PermissionApi permissionApi;
 
     /**
      * 基于部门的表字段配置

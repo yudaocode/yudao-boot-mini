@@ -1,7 +1,7 @@
 package com.muang.ai.claw.config.web.config;
 
 import cn.hutool.core.util.StrUtil;
-import com.muang.ai.claw.common.biz.infra.logger.ApiErrorLogCommonApi;
+import com.muang.ai.claw.module.infra.api.logger.ApiErrorLogApi;
 import com.muang.ai.claw.constant.WebFilterOrderEnum;
 import com.muang.ai.claw.config.web.core.filter.CacheRequestBodyFilter;
 import com.muang.ai.claw.config.web.core.filter.DemoFilter;
@@ -82,7 +82,7 @@ public class WebAutoConfiguration {
 
     @Bean
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
-    public GlobalExceptionHandler globalExceptionHandler(ApiErrorLogCommonApi apiErrorLogApi) {
+    public GlobalExceptionHandler globalExceptionHandler(ApiErrorLogApi apiErrorLogApi) {
         return new GlobalExceptionHandler(applicationName, apiErrorLogApi);
     }
 

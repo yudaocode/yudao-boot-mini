@@ -1,7 +1,7 @@
 package com.muang.ai.claw.config.security.core.service;
 
 import cn.hutool.core.collection.CollUtil;
-import com.muang.ai.claw.common.biz.system.permission.PermissionCommonApi;
+import com.muang.ai.claw.module.system.api.permission.PermissionApi;
 import com.muang.ai.claw.config.security.core.LoginUser;
 import com.muang.ai.claw.config.security.core.util.SecurityFrameworkUtils;
 import lombok.AllArgsConstructor;
@@ -18,7 +18,7 @@ import static com.muang.ai.claw.config.security.core.util.SecurityFrameworkUtils
 @AllArgsConstructor
 public class SecurityFrameworkService {
 
-    private final PermissionCommonApi permissionApi;
+    private final PermissionApi permissionApi;
 
     public boolean hasPermission(String permission) {
         return hasAnyPermissions(permission);

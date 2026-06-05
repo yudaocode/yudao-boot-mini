@@ -5,8 +5,8 @@ import cn.hutool.core.exceptions.ExceptionUtil;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.ObjUtil;
 import cn.hutool.core.util.StrUtil;
-import com.muang.ai.claw.common.biz.infra.logger.ApiErrorLogCommonApi;
-import com.muang.ai.claw.common.biz.infra.logger.dto.ApiErrorLogCreateReqDTO;
+import com.muang.ai.claw.module.infra.api.logger.ApiErrorLogApi;
+import com.muang.ai.claw.module.infra.api.logger.dto.ApiErrorLogCreateReqDTO;
 import com.muang.ai.claw.common.exception.ServiceException;
 import com.muang.ai.claw.common.exception.util.ServiceExceptionUtil;
 import com.muang.ai.claw.common.core.CommonResult;
@@ -64,7 +64,7 @@ public class GlobalExceptionHandler {
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     private final String applicationName;
 
-    private final ApiErrorLogCommonApi apiErrorLogApi;
+    private final ApiErrorLogApi apiErrorLogApi;
 
     /**
      * 处理所有异常，主要是提供给 Filter 使用
