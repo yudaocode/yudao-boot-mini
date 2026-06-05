@@ -11,7 +11,7 @@
         <relativePath/>
     </parent>
 
-    <groupId>cn.iocoder.boot</groupId>
+    <groupId>com.muang.ai</groupId>
     <artifactId>yudao-server</artifactId>
     <version>2026.05-SNAPSHOT</version>
     <packaging>jar</packaging>
