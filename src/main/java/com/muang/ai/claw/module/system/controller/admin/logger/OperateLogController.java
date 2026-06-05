@@ -6,12 +6,10 @@ import com.muang.ai.claw.common.core.PageParam;
 import com.muang.ai.claw.common.core.PageResult;
 import com.muang.ai.claw.util.object.BeanUtils;
 import com.muang.ai.claw.config.excel.util.ExcelUtils;
-import com.muang.ai.claw.config.translate.core.TranslateUtils;
 import com.muang.ai.claw.module.system.controller.admin.logger.vo.operatelog.OperateLogPageForm;
 import com.muang.ai.claw.module.system.controller.admin.logger.vo.operatelog.OperateLogRespVO;
 import com.muang.ai.claw.module.system.dal.dataobject.logger.OperateLogDO;
 import com.muang.ai.claw.module.system.service.logger.OperateLogService;
-import com.fhs.core.trans.anno.TransMethodResult;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -52,7 +50,6 @@ public class OperateLogController {
     @GetMapping("/page")
     @Operation(summary = "查看操作日志分页列表")
     @PreAuthorize("@ss.hasPermission('system:operate-log:query')")
-    @TransMethodResult
     public CommonResult<PageResult<OperateLogRespVO>> pageOperateLog(@Valid OperateLogPageForm pageReqVO) {
         PageResult<OperateLogDO> pageResult = operateLogService.getOperateLogPage(pageReqVO);
         return success(BeanUtils.toBean(pageResult, OperateLogRespVO.class));
@@ -61,13 +58,12 @@ public class OperateLogController {
     @Operation(summary = "导出操作日志")
     @GetMapping("/export-excel")
     @PreAuthorize("@ss.hasPermission('system:operate-log:export')")
-    @TransMethodResult
     @ApiAccessLog(operateType = EXPORT)
     public void exportOperateLog(HttpServletResponse response, @Valid OperateLogPageForm exportReqVO) throws IOException {
         exportReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
         List<OperateLogDO> list = operateLogService.getOperateLogPage(exportReqVO).getList();
         ExcelUtils.write(response, "操作日志.xls", "数据列表", OperateLogRespVO.class,
-                TranslateUtils.translate(BeanUtils.toBean(list, OperateLogRespVO.class)));
+                BeanUtils.toBean(list, OperateLogRespVO.class));
     }
 
 }

@@ -4,7 +4,6 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ArrayUtil;
 import com.muang.ai.claw.config.datapermission.core.annotation.DataPermission;
 import com.muang.ai.claw.config.datapermission.core.aop.DataPermissionContextHolder;
-import com.fhs.trans.service.impl.SimpleTransService;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Collections;
@@ -44,10 +43,6 @@ public class DataPermissionRuleFactoryImpl implements DataPermissionRuleFactory 
         if (!dataPermission.enable()) {
             return Collections.emptyList();
         }
-        // 1.4 特殊：数据翻译时，强制忽略数据权限 https://github.com/YunaiV/ruoyi-vue-pro/issues/1007
-        if (isTranslateCall()) {
-            return Collections.emptyList();
-        }
 
         // 2.1 情况一：已配置，只选择部分规则
         if (ArrayUtil.isNotEmpty(dataPermission.includeRules())) {
@@ -61,23 +56,6 @@ public class DataPermissionRuleFactoryImpl implements DataPermissionRuleFactory 
         }
         // 2.3 已配置，全部规则
         return rules;
-    }
-
-    /**
-     * 判断是否为数据翻译 {@link com.fhs.core.trans.anno.Trans} 的调用
-     *
-     * 目前暂时只有这个办法，已经和 easy-trans 做过沟通
-     *
-     * @return 是否
-     */
-    private boolean isTranslateCall() {
-        StackTraceElement[] stack = Thread.currentThread().getStackTrace();
-        for (StackTraceElement e : stack) {
-            if (SimpleTransService.class.getName().equals(e.getClassName())) {
-                return true;
-            }
-        }
-        return false;
     }
 
 }

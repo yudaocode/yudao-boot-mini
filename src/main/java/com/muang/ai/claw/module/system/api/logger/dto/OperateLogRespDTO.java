@@ -1,8 +1,5 @@
 package com.muang.ai.claw.module.system.api.logger.dto;
 
-import com.fhs.core.trans.anno.Trans;
-import com.fhs.core.trans.constant.TransType;
-import com.fhs.core.trans.vo.VO;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -13,7 +10,7 @@ import java.time.LocalDateTime;
  * @author HUIHUI
  */
 @Data
-public class OperateLogRespDTO implements VO {
+public class OperateLogRespDTO {
 
     /**
      * 日志编号
@@ -26,8 +23,6 @@ public class OperateLogRespDTO implements VO {
     /**
      * 用户编号
      */
-    @Trans(type = TransType.SIMPLE, targetClassName = "com.muang.ai.claw.module.system.dal.dataobject.user.AdminUserDO",
-            fields = "nickname", ref = "userName")
     private Long userId;
     /**
      * 用户名称
