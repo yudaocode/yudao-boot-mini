@@ -34,6 +34,7 @@
         <kingbase.jdbc.version>9.0.1.jre7</kingbase.jdbc.version>
         <opengauss.jdbc.version>7.0.0-RC3-og</opengauss.jdbc.version>
         <taos.version>3.9.2</taos.version>
+        <iotdb.version>2.0.8</iotdb.version>  <!-- TODO 特殊：暂不升级 2.0.10/2.0.11，其 TablePreparedStatement.execute 不设置 ResultSet，导致 Mapper 的 SELECT 为空、COUNT 为 null -->
         <!-- 消息队列 -->
         <rocketmq-spring.version>2.3.6</rocketmq-spring.version>
         <!-- 服务保障相关 -->
@@ -42,7 +43,7 @@
         <skywalking.version>9.7.0</skywalking.version>
         <spring-boot-admin.version>3.5.9</spring-boot-admin.version>
         <opentelemetry.version>1.66.0</opentelemetry.version>
-        <!-- Test 测试相关 -->
+
         <h2.version>2.3.232</h2.version>
         <podam.version>8.0.2.RELEASE</podam.version>
         <jedis-mock.version>1.1.19</jedis-mock.version>
@@ -58,7 +59,7 @@
         <mapstruct.version>1.7.0.Beta2</mapstruct.version>
         <hutool-5.version>5.8.47</hutool-5.version>
         <hutool-6.version>6.0.0-M22</hutool-6.version>
-        <fastexcel.version>1.3.0</fastexcel.version>
+        <fesod.version>2.1.0-incubating</fesod.version>
         <aviator.version>5.4.4</aviator.version>
         <velocity.version>2.4.1</velocity.version>
         <fastjson2.version>2.0.65</fastjson2.version>
@@ -312,6 +313,12 @@
                 <version>${taos.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.apache.iotdb</groupId>
+                <artifactId>iotdb-jdbc</artifactId>
+                <version>${iotdb.version}</version>
+            </dependency>
+
             <!-- Job 定时任务相关 -->
             <dependency>
                 <groupId>cn.iocoder.boot</groupId>
@@ -402,28 +409,6 @@
             </dependency>
 
             <dependency>
-                <groupId>org.mockito</groupId>
-                <artifactId>mockito-inline</artifactId>
-                <version>${mockito-inline.version}</version> <!-- 支持 Mockito 的 final 类与 static 方法的 mock -->
-            </dependency>
-
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-test</artifactId>
-                <version>${spring.boot.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <artifactId>asm</artifactId>
-                        <groupId>org.ow2.asm</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>org.mockito</groupId>
-                        <artifactId>mockito-core</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-
-            <dependency>
                 <groupId>com.h2database</groupId>
                 <artifactId>h2</artifactId>
                 <version>${h2.version}</version>
@@ -501,9 +486,9 @@
             </dependency>
 
             <dependency>
-                <groupId>cn.idev.excel</groupId>
-                <artifactId>fastexcel</artifactId>
-                <version>${fastexcel.version}</version>
+                <groupId>org.apache.fesod</groupId>
+                <artifactId>fesod-sheet</artifactId>
+                <version>${fesod.version}</version>
             </dependency>
 
             <dependency>
@@ -623,12 +608,6 @@
                 <groupId>com.squareup.okhttp3</groupId>
                 <artifactId>okhttp</artifactId>
                 <version>${okhttp.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.squareup.okhttp3</groupId>
-                <artifactId>mockwebserver</artifactId>
-                <version>${okhttp.version}</version>
-                <scope>test</scope>
             </dependency>
 
             <!-- CoAP - Eclipse Californium -->
