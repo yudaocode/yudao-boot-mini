@@ -138,12 +138,6 @@
             <artifactId>easy-trans-anno</artifactId> <!-- 默认引入的原因，方便 xxx-module-api 包使用 -->
         </dependency>
 
-        <!-- Test 测试相关 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
 
 </project>

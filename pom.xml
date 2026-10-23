@@ -33,6 +33,7 @@
 <!--        <module>yudao-module-im</module>-->
 <!-- 请参考 https://doc.iocoder.cn/ai/build/ 文档，完成 AI 模块的启动！！！ -->
 <!--        <module>yudao-module-ai</module>-->
+<!--        <module>yudao-module-ai1-springai</module>-->
     </modules>
 
     <name>${project.artifactId}</name>
@@ -45,10 +46,10 @@
         <java.version>25</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
-        <maven-surefire-plugin.version>3.5.3</maven-surefire-plugin.version>
+
         <maven-compiler-plugin.version>3.14.0</maven-compiler-plugin.version>
         <flatten-maven-plugin.version>1.7.2</flatten-maven-plugin.version>
-        <!-- maven-surefire-plugin 暂时无法通过 bom 的依赖读取（兼容老版本 IDEA 2024 及以前版本） -->
+
         <lombok.version>1.18.48</lombok.version>
         <spring.boot.version>4.1.0</spring.boot.version>
         <mapstruct.version>1.7.0.Beta2</mapstruct.version>
@@ -70,13 +71,7 @@
     <build>
         <pluginManagement>
             <plugins>
-                <!-- maven-surefire-plugin 插件，用于运行单元测试。 -->
-                <!-- 注意，需要使用 3.0.X+，因为要支持 Junit 5 版本 -->
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <version>${maven-surefire-plugin.version}</version>
-                </plugin>
+
                 <!-- maven-compiler-plugin 插件，解决 spring-boot-configuration-processor + Lombok + MapStruct 组合 -->
                 <!-- https://stackoverflow.com/questions/33483697/re-run-spring-boot-configuration-annotation-processor-to-update-generated-metada -->
                 <plugin>
