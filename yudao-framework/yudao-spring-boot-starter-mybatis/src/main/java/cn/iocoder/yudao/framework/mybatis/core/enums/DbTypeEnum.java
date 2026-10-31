@@ -36,7 +36,7 @@ public enum DbTypeEnum {
     /**
      * PostgreSQL
      *
-     * 华为 openGauss 使用 ProductName 与 PostgreSQL 相同
+     * 华为 openGauss（PostgreSQL JDBC 驱动）、MogDB（io.mogdb 的 openGauss JDBC 驱动）使用 ProductName 与 PostgreSQL 相同
      */
     POSTGRE_SQL(DbType.POSTGRE_SQL, "PostgreSQL", "POSITION(',' || CAST(#{value} AS VARCHAR) || ',' IN ',' || #{column} || ',') > 0"),
 
@@ -62,7 +62,29 @@ public enum DbTypeEnum {
     /**
      * OceanBase
      */
-    OCEAN_BASE(DbType.OCEAN_BASE, "OceanBase", "FIND_IN_SET(#{value}, #{column}) <> 0")
+    OCEAN_BASE(DbType.OCEAN_BASE, "OceanBase", "FIND_IN_SET(#{value}, #{column}) <> 0"),
+
+    /**
+     * 华为 GaussDB
+     *
+     * 原生驱动（jdbc:gaussdb:）使用的 ProductName 为 GaussDB，需要使用 PG 兼容模式（DBCOMPATIBILITY = 'PG'）创建的数据库
+     */
+    GAUSS_DB(DbType.GAUSS_DB, "GaussDB", "POSITION(',' || CAST(#{value} AS VARCHAR) || ',' IN ',' || #{column} || ',') > 0"),
+
+    /**
+     * openGauss
+     *
+     * org.opengauss 的 openGauss JDBC 驱动（jdbc:opengauss:）使用的 ProductName 为 openGauss，连接 MogDB 时也是如此；
+     * 需要使用 PG 兼容模式（DBCOMPATIBILITY = 'PG'）创建的数据库
+     */
+    OPENGAUSS(DbType.OPENGAUSS, "openGauss", "POSITION(',' || CAST(#{value} AS VARCHAR) || ',' IN ',' || #{column} || ',') > 0"),
+
+    /**
+     * 神通
+     *
+     * 没有 FIND_IN_SET 函数；CAST(... AS VARCHAR) 不指定长度时为 VARCHAR(1)，所以不使用 CAST
+     */
+    OSCAR(DbType.OSCAR, "OSCAR", "POSITION(',' || #{value} || ',' IN ',' || #{column} || ',') > 0")
 
     ;
 
@@ -85,11 +107,19 @@ public enum DbTypeEnum {
      */
     private final String findInSetTemplate;
 
+    /**
+     * 根据数据库产品名获得 MyBatis Plus 类型
+     *
+     * @param databaseProductName 数据库产品名
+     * @return MyBatis Plus 类型；产品名为空或未登记时返回 null
+     */
     public static DbType find(String databaseProductName) {
         if (StrUtil.isBlank(databaseProductName)) {
             return null;
         }
-        return MAP_BY_NAME.get(databaseProductName).getMpDbType();
+        return Optional.ofNullable(MAP_BY_NAME.get(databaseProductName))
+                .map(DbTypeEnum::getMpDbType)
+                .orElse(null);
     }
 
     public static String getFindInSetTemplate(DbType dbType) {
